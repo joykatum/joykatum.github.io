@@ -1,0 +1,6 @@
+{
+  "name": "JoykaTum",
+  "description": "Professional virtual simulator for conga, bongo, batá, djembe, darbuka, bombo, barril, pandero, and tabla. Features gamepad mapping, dynamic subdivision layout, WebHID/WebMIDI/Keyboard inputs, and studio-grade DSP audio effects.",
+  "requestFramePermissions": ["gamepad"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

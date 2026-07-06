@@ -1,0 +1,15 @@
+{
+  "name": "ai-studio-applet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "node build.js",
+    "format": "prettier --write \"**/*.{html,css,js,json}\" --ignore-path .gitignore",
+    "lint": "prettier --check \"**/*.{html,css,js,json}\" --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.4"
+  }
+}

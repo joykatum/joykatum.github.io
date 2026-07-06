@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>JoykaTum</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container" id="app-container">
+      <div class="main-content">
+        <!-- Congas Stage Grid -->
+        <div class="stage-container">
+          <div class="drums-grid" id="drums-stage">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Standalone Audio Effects Dialog Backdrop (Modal) -->
+      <div class="effects-dialog-backdrop" id="effects-dialog-backdrop">
+        <div class="effects-dialog" id="effects-dialog">
+          <!-- Back Button (replaces x close button) -->
+          <button id="effects-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+
+          <!-- Audio Effects Section (Dialog Layout) -->
+          <div class="effects-section" id="effects-section">
+            <div class="section-header-fx">
+              <div class="effects-title-wrap">
+                <span class="effects-dialog-emoji">✨</span>
+                <div class="effects-dialog-titles">
+                  <span class="effects-dialog-brand">AUDIO LAB</span>
+                </div>
+                <span class="fx-active-dot" id="fx-active-dot"></span>
+              </div>
+            </div>
+
+            <!-- Try Effects Pill Buttons (dynamically populated) -->
+            <div class="try-effects-pills" id="try-effects-pills-container">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- Preset Selector Carousel / Dropdown -->
+            <div class="effects-presets-control">
+              <div class="preset-select-wrapper" id="preset-select-wrapper" style="display: flex; width: 100%">
+                <label for="fx-preset-select" style="margin-right: 8px">PRESETS:</label>
+                <button id="prev-preset-btn" class="preset-nav-btn" title="Previous Preset">◀</button>
+                <select id="fx-preset-select" style="flex: 1">
+                  <!-- Populated dynamically -->
+                </select>
+                <button id="next-preset-btn" class="preset-nav-btn" title="Next Preset">▶</button>
+                <button
+                  id="save-preset-btn"
+                  class="save-preset-btn"
+                  title="Save Current FX Settings"
+                  style="margin-left: 4px"
+                >
+                  💾<span class="save-btn-text"> SAVE</span>
+                </button>
+              </div>
+              <div
+                id="preset-save-container"
+                style="display: none; flex: 1; align-items: center; gap: 4px; width: 100%"
+              >
+                <input
+                  type="text"
+                  id="custom-preset-name"
+                  style="
+                    flex: 1;
+                    background: rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    color: white;
+                    padding: 4px 6px;
+                    border-radius: 4px;
+                    font-size: 0.85rem;
+                    outline: none;
+                  "
+                  placeholder="Preset Name..."
+                />
+                <button id="confirm-save-btn" class="save-preset-btn" style="padding: 4px 8px">✔</button>
+                <button id="cancel-save-btn" class="preset-nav-btn" style="padding: 4px 8px">✖</button>
+              </div>
+            </div>
+
+            <!-- Scrollable/Flow FX Sliders and XY Pad -->
+            <div class="effects-controls-grid">
+              <!-- Reverb Slider & Presets -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🪐 SPACE (REVERB)</span>
+                  <span class="fx-value-label" id="reverb-val-label">0%</span>
+                </div>
+                <input type="range" id="reverb-slider" min="0" max="100" value="0" class="fx-slider" />
+                <div class="reverb-presets-row">
+                  <button class="reverb-p-btn" data-preset="bedroom">Bedroom</button>
+                  <button class="reverb-p-btn" data-preset="concert">Concert</button>
+                  <button class="reverb-p-btn" data-preset="space">Space</button>
+                </div>
+              </div>
+
+              <!-- Delay Slider -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🔁 RHYTHM REPEATER (DELAY)</span>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Time: <span id="delay-time-label">0.30s</span></label>
+                  <input type="range" id="delay-time-slider" min="10" max="100" value="30" class="fx-slider" />
+                </div>
+                <div class="slider-sub-row">
+                  <label>Feedback: <span id="delay-fb-label">40%</span></label>
+                  <input type="range" id="delay-fb-slider" min="0" max="90" value="40" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- Pitch Shifter Slider -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">👤 CHARACTER (PITCH SHIFTER)</span>
+                  <span class="fx-value-label" id="pitch-val-label">0</span>
+                </div>
+                <input type="range" id="pitch-slider" min="-12" max="12" value="0" class="fx-slider" />
+                <div class="pitch-labels">
+                  <span>Deep Bass</span>
+                  <span>Normal</span>
+                  <span>Chipmunk</span>
+                </div>
+              </div>
+
+              <!-- DJ Filters (Type and X/Y Pad) -->
+              <div class="fx-control-card filter-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🎛️ DJ FILTER</span>
+                  <select id="filter-type-select">
+                    <option value="none">Filter Bypass</option>
+                    <option value="highpass">High-Pass</option>
+                    <option value="lowpass">Low-Pass</option>
+                  </select>
+                </div>
+                <!-- XY Pad Container -->
+                <div class="xy-pad-container" id="xy-pad">
+                  <div class="xy-pad-label-x">Frequency (Hz) →</div>
+                  <div class="xy-pad-label-y">← Resonance</div>
+                  <div class="xy-pad-dot" id="xy-pad-dot"></div>
+                </div>
+              </div>
+
+              <!-- Distortion Drive Slider -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">⚡ GRIT (DISTORTION)</span>
+                  <span class="fx-value-label" id="dist-val-label">0%</span>
+                </div>
+                <input type="range" id="dist-slider" min="0" max="100" value="0" class="fx-slider" />
+              </div>
+
+              <!-- 1. Spatial Swirl (Dynamic Auto-Pan) -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🌀 SPATIAL SWIRL (AUTO-PAN)</span>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Speed: <span id="pan-speed-label">1.0 Hz</span></label>
+                  <input
+                    type="range"
+                    id="pan-speed-slider"
+                    min="0.1"
+                    max="10.0"
+                    step="0.1"
+                    value="1.0"
+                    class="fx-slider"
+                  />
+                </div>
+                <div class="slider-sub-row">
+                  <label>Depth: <span id="pan-depth-label">0%</span></label>
+                  <input type="range" id="pan-depth-slider" min="0" max="100" value="0" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 2. Physical Modeling Resonator (Chamber Changer) -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🏺 CHAMBER CHANGER</span>
+                  <select
+                    id="resonator-type-select"
+                    style="
+                      background: rgba(0, 0, 0, 0.4);
+                      border: 1px solid rgba(255, 255, 255, 0.1);
+                      color: white;
+                      font-size: 0.6rem;
+                      border-radius: 4px;
+                      padding: 2px;
+                    "
+                  >
+                    <option value="none">Bypass</option>
+                    <option value="ceramic">Ancient Ceramic</option>
+                    <option value="metal">Hollow Metal</option>
+                    <option value="glass">Resonant Glass</option>
+                  </select>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Resonator Decay: <span id="resonator-decay-label">50%</span></label>
+                  <input type="range" id="resonator-decay-slider" min="0" max="100" value="50" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 3. Formant Shifter (Vocalizer) -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">🗣️ VOCALIZER (FORMANT SHIFTER)</span>
+                  <select
+                    id="formant-vowel-select"
+                    style="
+                      background: rgba(0, 0, 0, 0.4);
+                      border: 1px solid rgba(255, 255, 255, 0.1);
+                      color: white;
+                      font-size: 0.6rem;
+                      border-radius: 4px;
+                      padding: 2px;
+                    "
+                  >
+                    <option value="none">Bypass</option>
+                    <option value="A">"Ah" (A)</option>
+                    <option value="I">"Ee" (I)</option>
+                    <option value="E">"Eh" (E)</option>
+                    <option value="O">"Oh" (O)</option>
+                    <option value="U">"Oo" (U)</option>
+                    <option value="sweep">Vowel Sweep 🌀</option>
+                  </select>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Formant Mix: <span id="formant-mix-label">0%</span></label>
+                  <input type="range" id="formant-mix-slider" min="0" max="100" value="0" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 4. Transient Designer (Attack / Sustain) -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">💥 TRANSIENT SHAPER</span>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Attack: <span id="transient-attack-label">0%</span></label>
+                  <input type="range" id="transient-attack-slider" min="-100" max="100" value="0" class="fx-slider" />
+                </div>
+                <div class="slider-sub-row">
+                  <label>Sustain: <span id="transient-sustain-label">0%</span></label>
+                  <input type="range" id="transient-sustain-slider" min="-100" max="100" value="0" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 5. Spectral Freeze -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">❄️ SPECTRAL FREEZE</span>
+                  <label class="switch-container" style="transform: scale(0.85); transform-origin: right center">
+                    <input type="checkbox" id="spectral-freeze-checkbox" />
+                    <span class="switch-slider"></span>
+                    <span class="switch-label">FREEZE</span>
+                  </label>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Freeze Level: <span id="freeze-volume-label">50%</span></label>
+                  <input type="range" id="freeze-volume-slider" min="0" max="100" value="50" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 6. Lo-Fi Resampler (Bit-Crusher) -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">👾 LO-FI BIT-CRUSHER</span>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Bit Depth: <span id="bitcrusher-bits-label">16-bit</span></label>
+                  <input type="range" id="bitcrusher-bits-slider" min="2" max="16" value="16" class="fx-slider" />
+                </div>
+                <div class="slider-sub-row">
+                  <label>Crush Mix: <span id="bitcrusher-mix-label">0%</span></label>
+                  <input type="range" id="bitcrusher-mix-slider" min="0" max="100" value="0" class="fx-slider" />
+                </div>
+              </div>
+
+              <!-- 7. Envelope-Follower Ring Modulator -->
+              <div class="fx-control-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">📡 ENVELOPE RING-MOD</span>
+                </div>
+                <div class="slider-sub-row">
+                  <label>Carrier Frequency: <span id="ringmod-freq-label">200 Hz</span></label>
+                  <input
+                    type="range"
+                    id="ringmod-freq-slider"
+                    min="50"
+                    max="2000"
+                    step="10"
+                    value="200"
+                    class="fx-slider"
+                  />
+                </div>
+                <div class="slider-sub-row">
+                  <label>Modulation Depth: <span id="ringmod-depth-label">0%</span></label>
+                  <input type="range" id="ringmod-depth-slider" min="0" max="100" value="0" class="fx-slider" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standalone Educational Info Dialog Backdrop (Modal) -->
+      <div class="info-dialog-backdrop" id="info-dialog-backdrop">
+        <div class="info-dialog" id="info-dialog">
+          <!-- Close Button -->
+          <button id="info-close-btn" class="effects-close-btn" title="Close Info">&times;</button>
+
+          <!-- Info Section -->
+          <div style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
+            <div
+              class="section-header-fx"
+              style="
+                margin-bottom: 8px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              "
+            >
+              <span class="effects-dialog-emoji" id="info-emoji" style="margin-right: 4px">ℹ️</span>
+              <div class="effects-dialog-titles">
+                <span class="effects-dialog-brand" id="info-title" style="font-size: 1.1rem; line-height: 1.2"
+                  >DRUM INFO</span
+                >
+                <span
+                  class="effects-dialog-subtitle"
+                  id="info-subtitle"
+                  style="
+                    font-size: 0.72rem;
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                  "
+                  >Origin or Genre</span
+                >
+              </div>
+            </div>
+
+            <!-- Scrollable Content Body -->
+            <div id="info-body-content" style="flex: 1; overflow-y: auto; padding-right: 4px; margin-top: 8px">
+              <!-- Dynamic educational details will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standalone Drum & Control Dialog Backdrop (Modal Popup) -->
+      <div class="drum-dialog-backdrop" id="drum-panel-backdrop">
+        <div class="drum-dialog" id="drum-panel">
+          <!-- Back Button (replaces x close button) -->
+          <button id="settings-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+
+          <!-- Settings/Config Panel content (renamed to Drum Panel) -->
+          <div
+            class="settings-content"
+            id="settings-content"
+            style="display: flex; flex-direction: column; height: 100%"
+          >
+            <div
+              class="brand-and-title"
+              style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 8px"
+            >
+              <span class="section-title">✨ DRUM FILTERS</span>
+            </div>
+
+            <!-- Tag Filters Panel -->
+            <div
+              class="control-group"
+              id="tag-filters-container"
+              style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px"
+            >
+              <!-- Populated dynamically via JS with beautiful tag filters -->
+            </div>
+
+            <!-- Filter Results Summary -->
+            <div
+              id="filter-results-summary"
+              style="
+                margin-top: 12px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding-top: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+              "
+            >
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- End of selection controls -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Standalone Custom Pattern Creator Dialog Backdrop (Modal Popup) -->
+      <div class="drum-dialog-backdrop" id="pattern-creator-backdrop">
+        <div class="drum-dialog" id="pattern-creator-panel">
+          <!-- Back Button -->
+          <button id="pattern-creator-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+
+          <!-- Pattern Creator Panel content -->
+          <div
+            class="settings-content"
+            id="pattern-creator-content"
+            style="display: flex; flex-direction: column; height: 100%"
+          >
+            <div
+              class="brand-and-title"
+              style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 8px"
+            >
+              <span class="section-title">✨ CUSTOM PATTERN CREATOR</span>
+            </div>
+
+            <p style="font-size: 0.72rem; color: #94a3b8; margin-top: 0; margin-bottom: 12px; line-height: 1.4">
+              Design your own rhythm by clicking on the grid. Custom patterns are saved in local storage.
+            </p>
+
+            <div
+              class="pattern-creator-controls"
+              style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px"
+            >
+              <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px">
+                <label
+                  for="new-pattern-name"
+                  style="font-size: 0.65rem; color: #10b981; font-weight: 800; text-transform: uppercase"
+                  >PATTERN NAME:</label
+                >
+                <input
+                  type="text"
+                  id="new-pattern-name"
+                  placeholder="My Custom Rhythm"
+                  style="
+                    background: rgba(0, 0, 0, 0.3);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: white;
+                    padding: 6px 12px;
+                    border-radius: 8px;
+                    font-size: 0.85rem;
+                    outline: none;
+                    width: 100%;
+                    box-sizing: border-box;
+                  "
+                />
+              </div>
+              <div style="width: 110px; display: flex; flex-direction: column; gap: 4px">
+                <label
+                  for="new-pattern-steps"
+                  style="font-size: 0.65rem; color: #10b981; font-weight: 800; text-transform: uppercase"
+                  >STEPS:</label
+                >
+                <select
+                  id="new-pattern-steps"
+                  style="
+                    background: rgba(0, 0, 0, 0.3);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: white;
+                    padding: 6px;
+                    border-radius: 8px;
+                    font-size: 0.85rem;
+                    outline: none;
+                    width: 100%;
+                  "
+                >
+                  <option value="16">16 (4/4)</option>
+                  <option value="12">12 (6/8)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic grid container -->
+            <div
+              id="pattern-grid-container"
+              style="
+                overflow-x: auto;
+                background: rgba(0, 0, 0, 0.25);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+                padding: 12px;
+                margin-bottom: 12px;
+              "
+            >
+              <!-- Rendered dynamically by javascript -->
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-end">
+              <button
+                id="pattern-preview-btn"
+                class="footer-btn"
+                style="
+                  background: rgba(59, 130, 246, 0.15);
+                  border-color: rgba(59, 130, 246, 0.4);
+                  color: #60a5fa;
+                  font-size: 0.72rem;
+                  padding: 6px 12px;
+                  font-weight: 800;
+                "
+              >
+                🎧 LISTEN
+              </button>
+              <button
+                id="pattern-clear-btn"
+                class="footer-btn"
+                style="
+                  background: rgba(239, 68, 68, 0.1);
+                  border-color: rgba(239, 68, 68, 0.3);
+                  color: #ef4444;
+                  font-size: 0.72rem;
+                  padding: 6px 12px;
+                "
+              >
+                CLEAR GRID
+              </button>
+              <button
+                id="pattern-save-btn"
+                class="footer-btn"
+                style="
+                  background: rgba(16, 185, 129, 0.2);
+                  border-color: #10b981;
+                  color: #10b981;
+                  font-size: 0.72rem;
+                  padding: 6px 12px;
+                  font-weight: 800;
+                "
+              >
+                SAVE PATTERN
+              </button>
+            </div>
+            <div
+              id="pattern-creator-status"
+              style="font-size: 0.72rem; text-align: center; margin-top: 8px; color: #94a3b8; font-weight: 600"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Controller Description Footer -->
+    <div class="cheat-sheet-footer" id="cheat-sheet-footer">
+      <!-- Floating Collapse/Expand Toggle Button -->
+      <button id="footer-toggle-btn" class="footer-toggle-btn" title="Toggle Footer Panel">
+        <span id="footer-toggle-text">COLLAPSE CONTROLS</span>
+        <span id="footer-toggle-icon" class="toggle-icon">▼</span>
+      </button>
+
+      <!-- Footer Interactive Control Bar -->
+      <div class="footer-controls-row" id="footer-controls-row">
+        <!-- Drum Instrument Information -->
+        <div class="footer-control-group drum-group">
+          <span class="footer-control-label">🥁 DRUM:</span>
+          <div class="footer-group-controls">
+            <select
+              id="drum-instrument"
+              class="footer-select"
+              style="width: 155px; min-width: 155px; max-width: 155px; font-weight: 700; color: #10b981"
+            >
+              <option value="conga">Congas</option>
+            </select>
+
+            <!-- Sub Drum Selection (moved from second screen) -->
+            <div id="drum-selection-container" style="display: inline-flex; align-items: center">
+              <select
+                id="drum-selection"
+                class="footer-select"
+                style="
+                  width: 155px;
+                  min-width: 155px;
+                  max-width: 155px;
+                  color: #34d399;
+                  font-weight: 700;
+                  background: rgba(16, 185, 129, 0.08);
+                  border-color: rgba(16, 185, 129, 0.25);
+                "
+              >
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <!-- Filter Button -->
+            <button
+              id="settings-toggle-btn"
+              class="footer-btn filter-btn"
+              title="Open Drum Filters Panel"
+              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
+            >
+              <svg viewBox="0 0 24 24" style="width: 11px; height: 11px; fill: currentColor">
+                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm5 7h8v-2H8v2z" />
+              </svg>
+              FILTER
+            </button>
+            <!-- Drum Info Button -->
+            <button id="footer-drum-info-btn" class="footer-icon-btn" title="View Drum Info">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                style="width: 12px; height: 12px"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Play-along / Pattern Selection Mode -->
+        <div class="footer-control-group play-along-group">
+          <span class="footer-control-label">🎵 PATTERN:</span>
+          <div class="footer-group-controls">
+            <select id="pattern-select" class="footer-select" style="min-width: 120px">
+              <option value="none">⏹️ Off</option>
+            </select>
+            <button id="pattern-play-btn" class="footer-btn">PLAY</button>
+            <!-- Pattern Creator Dialog Button next to play button -->
+            <button
+              id="pattern-creator-toggle-btn"
+              class="footer-btn pattern-btn"
+              title="Toggle Custom Pattern Creator"
+              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
+            >
+              <svg viewBox="0 0 24 24" class="pattern-icon" style="width: 11px; height: 11px; fill: currentColor">
+                <path
+                  d="M4 4h16v16H4V4zm2 2v3h3V6H6zm5 0v3h3V6h-3zm5 0v3h3V6h-3zM6 11v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3zM6 16v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3z"
+                />
+              </svg>
+              CREATE
+            </button>
+            <div class="footer-bpm-wrapper">
+              <span class="footer-bpm-label"
+                >BPM: <span id="pattern-bpm-val" style="color: #10b981; font-weight: 800">100</span></span
+              >
+              <input
+                type="range"
+                id="pattern-bpm"
+                min="60"
+                max="180"
+                value="100"
+                class="footer-bpm-slider"
+                style="width: 70px"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Copy of Effects Selection with Lab Button -->
+        <div class="footer-control-group fx-group">
+          <span class="footer-control-label">✨ EFFECT:</span>
+          <div class="footer-group-controls">
+            <select id="footer-fx-preset-select" class="footer-select" style="min-width: 140px">
+              <option value="none">✨ No Effects (Bypass)</option>
+            </select>
+            <!-- Audio Effects Button moved here next to dropdown -->
+            <button
+              id="effects-toggle-btn"
+              class="footer-btn fx-btn"
+              title="Toggle Audio Effects"
+              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
+            >
+              <svg viewBox="0 0 24 24" class="fx-icon" style="width: 11px; height: 11px; fill: currentColor">
+                <path
+                  d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
+                />
+              </svg>
+              LAB
+            </button>
+          </div>
+        </div>
+
+        <!-- Combined Recorder & Format Group -->
+        <div class="footer-control-group record-group">
+          <span class="footer-control-label">🔴 RECORDER:</span>
+          <div
+            class="footer-group-controls"
+            style="flex-direction: column; align-items: stretch; gap: 8px; width: 100%"
+          >
+            <select
+              id="record-format-select"
+              class="footer-select"
+              style="font-weight: 700; width: 100%; max-width: 100%"
+            >
+              <option value="audio/webm">WebM</option>
+            </select>
+            <button
+              id="record-btn"
+              class="footer-btn record-btn"
+              title="Record Audio"
+              style="
+                background: rgba(220, 38, 38, 0.15);
+                border-color: rgba(220, 38, 38, 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                width: 100%;
+              "
+            >
+              <svg viewBox="0 0 24 24" class="record-icon" style="width: 12px; height: 12px; fill: #ef4444">
+                <circle cx="12" cy="12" r="8"></circle>
+              </svg>
+              <span id="record-btn-text" style="color: #ef4444; font-weight: 800; letter-spacing: 0.05em">REC</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="cheat-row hands-row"
+        id="footer-hands-row"
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          width: 100%;
+        "
+      >
+        <span class="cheat-item" id="cheat-left-hand"
+          ><b>LEFT</b>: ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
+        >
+        <span class="cheat-divider" id="cheat-divider-hands">|</span>
+        <span class="cheat-item" id="cheat-right-hand"
+          ><b>RIGHT</b>: ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
+        >
+      </div>
+    </div>
+
+    <script type="module" src="modules/main.js"></script>
+  </body>
+</html>
