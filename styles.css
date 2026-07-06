@@ -1228,13 +1228,11 @@ header p {
   .footer-control-group {
     display: flex !important;
     flex-direction: row !important;
-    justify-content: space-between !important;
     align-items: center !important;
     width: 100% !important;
     box-sizing: border-box !important;
     padding: 8px 12px !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
+    gap: 12px !important;
     background: rgba(18, 18, 26, 0.4) !important;
     border-radius: 12px !important;
     border: 1px solid rgba(255, 255, 255, 0.04) !important;
@@ -1244,6 +1242,16 @@ header p {
     font-size: 0.75rem !important;
     padding: 4px 8px !important;
     max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  #drum-instrument,
+  #drum-selection {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    flex: 1 1 0px !important;
   }
 
   .footer-btn {
@@ -1256,10 +1264,9 @@ header p {
 @media (min-width: 1024px) {
   .footer-controls-row {
     display: flex !important;
-    flex-direction: row !important;
+    flex-direction: column !important;
     align-items: stretch !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
+    gap: 8px !important;
     width: 100% !important;
     margin-bottom: 8px !important;
     padding-bottom: 8px !important;
@@ -1268,24 +1275,22 @@ header p {
 
   .footer-control-group {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
+    flex-direction: row !important;
+    align-items: center !important;
     justify-content: flex-start !important;
-    width: auto !important;
-    flex: 1 1 0px !important;
-    min-width: 200px !important;
+    width: 100% !important;
     box-sizing: border-box !important;
     background: rgba(18, 18, 26, 0.5) !important;
     padding: 10px 14px !important;
     border-radius: 12px !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.01) !important;
-    gap: 8px !important;
+    gap: 12px !important;
   }
 
   .footer-control-label {
-    font-size: 0.6rem !important;
-    margin-bottom: 2px !important;
+    font-size: 0.65rem !important;
+    margin-bottom: 0 !important;
   }
 }
 
@@ -1295,7 +1300,7 @@ header p {
   flex-direction: row !important;
   align-items: center !important;
   gap: 8px !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   width: 100% !important;
 }
 
@@ -1336,6 +1341,10 @@ header p {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
+  width: 120px !important;
+  flex-shrink: 0 !important;
+  text-align: left !important;
+  display: inline-block !important;
 }
 
 .footer-drum-name {
@@ -1381,9 +1390,16 @@ header p {
 
 #drum-instrument,
 #drum-selection {
-  width: 155px !important;
-  min-width: 155px !important;
-  max-width: 155px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: 1 1 0px !important;
+}
+
+#drum-selection-container {
+  flex: 1 1 0px !important;
+  min-width: 0 !important;
+  max-width: none !important;
 }
 
 .footer-select:hover,
@@ -1410,14 +1426,16 @@ header p {
   border-color: #059669;
 }
 
-.footer-btn.playing {
-  background: #ef4444;
-  border-color: #ef4444;
-  color: white;
+.footer-btn.playing,
+.footer-icon-btn.playing {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: white !important;
   animation: pulse-red 1.5s infinite;
 }
 
-.footer-btn.record-btn.recording {
+.footer-btn.record-btn.recording,
+.footer-icon-btn.record-btn.recording {
   background: #ef4444 !important;
   border-color: #ef4444 !important;
   color: white !important;
@@ -2416,5 +2434,49 @@ header p {
     transform: translateX(0) !important;
     border-color: var(--border) !important;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+/* Color filter button when a filter is active */
+#settings-toggle-btn.filter-selected {
+  color: #10b981 !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Beautiful custom styling for "No drums selected" display */
+.no-drums-selected-msg {
+  color: #94a3b8;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 30px 50px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Center and limit the footer controls to 800px maximum width */
+.footer-controls-row,
+#footer-hands-row {
+  max-width: 800px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

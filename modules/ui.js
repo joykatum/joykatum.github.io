@@ -240,6 +240,67 @@ export function setupPatternCreator() {
   renderPatternCreatorGrid();
 }
 
+function checkTypeMatch(key, item, tags) {
+  if (item === 'Multiple Sizes') {
+    const drumDef = drumTypes[key];
+    return !!(drumDef && drumDef.drums && drumDef.drums.length > 1);
+  }
+  if (item === 'Two-Headed') {
+    return [
+      'bata',
+      'bombo',
+      'candombe',
+      'janggu',
+      'mridangam',
+      'zabumba',
+      'dunun',
+      'dhol',
+      'snare_drum',
+      'surdo',
+      'alfaia',
+      'davul',
+      'kotsuzumi',
+      'repinique',
+      'talkingdrum',
+      'daiko',
+      'gran_cassa'
+    ].includes(key);
+  }
+  if (item === 'Not Really a Drum') {
+    return [
+      'agogo',
+      'bell_tree',
+      'mark_tree',
+      'claves',
+      'vibraslap',
+      'flexatone',
+      'waterphone',
+      'shekere',
+      'chocalho',
+      'temple_blocks',
+      'frog_rasp',
+      'spring_drum',
+      'thongophone',
+      'boomwhackers',
+      'cabasa',
+      'rainstick',
+      'kokiriko',
+      'guiro',
+      'spoons_bones',
+      'washboard',
+      'angklung',
+      'jaw_harp',
+      'slide_whistle',
+      'ratchet',
+      'udu',
+      'ghatam',
+      'handpan',
+      'steelpan'
+    ].includes(key);
+  }
+  return tags.type === item || tags.features.includes(item);
+}
+
 export function setupTagFilters() {
   const container = document.getElementById('tag-filters-container');
   if (!container) return;
@@ -267,7 +328,10 @@ export function setupTagFilters() {
     'Shaker',
     'Folk',
     'Effects',
-    'Sacred'
+    'Sacred',
+    'Multiple Sizes',
+    'Two-Headed',
+    'Not Really a Drum'
   ];
 
   const renderFilterRow = (title, items, isRegion) => {
@@ -288,7 +352,7 @@ export function setupTagFilters() {
                 hasMatch = Object.keys(drumTypes).some((key) => {
                   const tags = drumTags[key] || { region: 'Modern', type: 'Hand', features: [] };
                   const matchesRegion = selectedRegion === 'All' || tags.region === selectedRegion;
-                  const matchesType = tags.type === item || tags.features.includes(item);
+                  const matchesType = checkTypeMatch(key, item, tags);
                   return matchesRegion && matchesType;
                 });
               }
@@ -359,7 +423,7 @@ export function applyFilters() {
     const tags = drumTags[key] || { region: 'Modern', type: 'Hand', features: [] };
 
     const matchesRegion = selectedRegion === 'All' || tags.region === selectedRegion;
-    const matchesType = selectedType === 'All' || tags.type === selectedType || tags.features.includes(selectedType);
+    const matchesType = selectedType === 'All' || checkTypeMatch(key, selectedType, tags);
 
     if (matchesRegion && matchesType) {
       matchingDrums.push({ key, name: drum.name });
@@ -513,6 +577,16 @@ export function applyFilters() {
       summaryContainer.appendChild(listContainer);
     }
   }
+
+  // Update filter active button styling
+  const filterBtn = document.getElementById('settings-toggle-btn');
+  if (filterBtn) {
+    if (selectedRegion !== 'All' || selectedType !== 'All') {
+      filterBtn.classList.add('filter-selected');
+    } else {
+      filterBtn.classList.remove('filter-selected');
+    }
+  }
 }
 
 // Trigger particle feedback floating upwards & drum body glow
@@ -568,179 +642,170 @@ export function triggerHitEffect(drumId, hitType) {
   }
 }
 
-// Populate the dynamic sub-drum selection dropdown
-export function populateDrumSelectionOptions() {
-  const select = document.getElementById('drum-selection');
-  const container = document.getElementById('drum-selection-container');
-  if (!select || !container) return;
-
-  select.innerHTML = '';
-  const inst = state.currentInstrument;
-
-  let options = [];
-  if (inst === 'conga') {
-    options = [
-      { value: '5', text: 'All 5 Sizes' },
-      { value: '4', text: '4 (Quinto, Conga, Tumba, Super Tumba)' },
-      { value: '3', text: '3 (Quinto, Conga, Tumba)' },
-      { value: '2', text: '2 (Tumba, Conga)' },
-      { value: '1', text: '1 (Conga)' }
-    ];
-  } else if (inst === 'bata') {
-    options = [
-      { value: 'all', text: 'All 3 Bata (L/R Controller)' },
-      { value: 'okonkolo', text: 'Okónkolo (Both Heads)' },
-      { value: 'itotele', text: 'Itótele (Both Heads)' },
-      { value: 'iya', text: 'Iyá (Both Heads)' }
-    ];
-  } else if (inst === 'pandero') {
-    options = [
-      { value: 'all', text: 'All 3 (Requinto, Seguidor, Buleador)' },
-      { value: 'requinto', text: 'Requinto Only' },
-      { value: 'seguidor', text: 'Seguidor Only' },
-      { value: 'buleador', text: 'Buleador Only' }
-    ];
-  } else if (inst === 'barril') {
-    options = [
-      { value: 'both', text: 'Both (Primo & Buleador)' },
-      { value: 'primo', text: 'Primo Only' },
-      { value: 'buleador', text: 'Buleador Only' }
-    ];
-  } else if (inst === 'tabla') {
-    options = [
-      { value: 'both', text: 'Both (Bayan & Dayan)' },
-      { value: 'bayan', text: 'Bayan Only' },
-      { value: 'dayan', text: 'Dayan Only' }
-    ];
-  } else if (inst === 'candombe') {
-    options = [
-      { value: 'all', text: 'All 3 (Chico, Repique, Piano)' },
-      { value: 'chico', text: 'Chico Only' },
-      { value: 'repique', text: 'Repique Only' },
-      { value: 'piano', text: 'Piano Only' }
-    ];
-  } else if (inst === 'gwoka') {
-    options = [
-      { value: 'both', text: 'Both (Markeur & Boula)' },
-      { value: 'markeur', text: 'Markeur Only' },
-      { value: 'boula', text: 'Boula Only' }
-    ];
-  } else if (inst === 'chinese') {
-    options = [
-      { value: 'all', text: 'All 3 (Bangu, Tanggu, Dagu)' },
-      { value: 'bangu', text: 'Bangu Only' },
-      { value: 'tanggu', text: 'Tanggu Only' },
-      { value: 'dagu', text: 'Dagu Only' }
-    ];
-  } else if (inst === 'daiko') {
-    options = [
-      { value: 'all', text: 'All 3 (Shime, Nagado, O-Daiko)' },
-      { value: 'shime', text: 'Shime-daiko Only' },
-      { value: 'nagado', text: 'Nagado-daiko Only' },
-      { value: 'odaiko', text: 'O-daiko Only' }
-    ];
-  } else if (inst === 'janggu') {
-    options = [
-      { value: 'both', text: 'Both (Gungpyeon & Yeolpyeon)' },
-      { value: 'gungpyeon', text: 'Gungpyeon Only (Left Bass)' },
-      { value: 'yeolpyeon', text: 'Yeolpyeon Only (Right Treble)' }
-    ];
-  } else if (inst === 'mridangam') {
-    options = [
-      { value: 'both', text: 'Both (Thoppi & Valanthalai)' },
-      { value: 'thoppi', text: 'Thoppi Only (Bass)' },
-      { value: 'valanthalai', text: 'Valanthalai Only (Treble)' }
-    ];
-  } else if (inst === 'handpan') {
-    options = [
-      { value: 'both', text: 'Both (Ding & Tone Fields)' },
-      { value: 'ding', text: 'Central Ding Only' },
-      { value: 'tonefields', text: 'Tone Fields Only' }
-    ];
-  } else if (inst === 'dunun') {
-    options = [
-      { value: 'all', text: 'All 3 (Dununba, Sangban, Kenkeni)' },
-      { value: 'dununba', text: 'Dununba Only' },
-      { value: 'sangban', text: 'Sangban Only' },
-      { value: 'kenkeni', text: 'Kenkeni Only' }
-    ];
-  } else if (inst === 'log_drum') {
-    options = [
-      { value: 'both', text: 'Both (Low & High Tongues)' },
-      { value: 'low', text: 'Low Tongue Only' },
-      { value: 'high', text: 'High Tongue Only' }
-    ];
-  } else if (inst === 'temple_blocks') {
-    options = [
-      { value: 'all', text: 'All 3 Blocks (L / M / H)' },
-      { value: 'low', text: 'Low Block Only' },
-      { value: 'mid', text: 'Mid Block Only' },
-      { value: 'high', text: 'High Block Only' }
-    ];
-  } else if (inst === 'thongophone') {
-    options = [
-      { value: 'all', text: 'All 3 Pipes (L / M / H)' },
-      { value: 'low', text: 'Low Pipe Only' },
-      { value: 'mid', text: 'Mid Pipe Only' },
-      { value: 'high', text: 'High Pipe Only' }
-    ];
-  } else if (inst === 'boomwhackers') {
-    options = [
-      { value: 'all', text: 'All 3 Tubes (L / M / H)' },
-      { value: 'low', text: 'Low Tube Only' },
-      { value: 'mid', text: 'Mid Tube Only' },
-      { value: 'high', text: 'High Tube Only' }
-    ];
-  } else if (inst === 'tank_drum') {
-    options = [
-      { value: 'all', text: 'All 3 Tongues (L / M / H)' },
-      { value: 'low', text: 'Low Tongue Only' },
-      { value: 'mid', text: 'Mid Tongue Only' },
-      { value: 'high', text: 'High Tongue Only' }
-    ];
-  } else if (inst === 'angklung') {
-    options = [
-      { value: 'all', text: 'All 3 Bamboo Rattles (L / M / H)' },
-      { value: 'low', text: 'Low Rattle Only' },
-      { value: 'mid', text: 'Mid Rattle Only' },
-      { value: 'high', text: 'High Rattle Only' }
-    ];
-  } else if (inst === 'dhol') {
-    options = [
-      { value: 'both', text: 'Both (Dagga & Tilli)' },
-      { value: 'dagga', text: 'Dagga Only (Bass)' },
-      { value: 'tilli', text: 'Tilli Only (Treble)' }
-    ];
-  } else if (inst === 'agogo') {
-    options = [
-      { value: 'both', text: 'Both Bells (Low & High)' },
-      { value: 'low', text: 'Low Bell Only' },
-      { value: 'high', text: 'High Bell Only' }
-    ];
-  } else {
-    options = [{ value: '1', text: 'Standard Solo' }];
+function isDrumSelected(drum, inst) {
+  const selection = state.drumSelection;
+  if (!selection) {
+    return false;
+  }
+  if (selection === 'all' || selection === 'both') {
+    return true;
   }
 
-  options.sort((a, b) => a.text.localeCompare(b.text));
+  // Comma-separated parts
+  const parts = selection.split(',').map((p) => p.trim());
+  if (parts.includes(String(drum.id))) return true;
 
-  options.forEach((opt) => {
-    const el = document.createElement('option');
-    el.value = opt.value;
-    el.innerText = opt.text;
-    select.appendChild(el);
+  // Single string fallback
+  const labelLower = drum.label.toLowerCase();
+  const idStr = String(drum.id).toLowerCase();
+  if (labelLower.includes(selection) || idStr === selection || selection.includes(labelLower)) {
+    return true;
+  }
+
+  return false;
+}
+
+// Helper to create a styled checkbox label
+function createCheckbox(id, text, isChecked, onChange) {
+  const label = document.createElement('label');
+  label.className = 'drum-checkbox-label';
+  label.style.display = 'inline-flex';
+  label.style.alignItems = 'center';
+  label.style.gap = '6px';
+  label.style.fontSize = '0.65rem';
+  label.style.fontWeight = '700';
+  label.style.color = isChecked ? '#34d399' : '#94a3b8';
+  label.style.background = isChecked ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.02)';
+  label.style.border = isChecked ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)';
+  label.style.padding = '4px 8px';
+  label.style.borderRadius = '4px';
+  label.style.cursor = 'pointer';
+  label.style.userSelect = 'none';
+  label.style.transition = 'all 0.15s ease';
+
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = isChecked;
+  input.style.margin = '0';
+  input.style.cursor = 'pointer';
+  input.style.accentColor = '#10b981';
+
+  label.appendChild(input);
+
+  const span = document.createElement('span');
+  span.innerText = text.toUpperCase();
+  label.appendChild(span);
+
+  input.addEventListener('change', (e) => {
+    onChange(e.target.checked);
   });
 
-  const allowedValues = options.map((o) => o.value);
-  if (!state.drumSelection || !allowedValues.includes(state.drumSelection)) {
-    state.drumSelection = getDefaultDrumSelection(inst);
-  }
-  select.value = state.drumSelection;
+  // Add hover effects
+  label.addEventListener('mouseenter', () => {
+    if (!input.checked) {
+      label.style.background = 'rgba(16, 185, 129, 0.05)';
+      label.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+      label.style.color = '#e2e8f0';
+    }
+  });
+  label.addEventListener('mouseleave', () => {
+    if (!input.checked) {
+      label.style.background = 'rgba(255, 255, 255, 0.02)';
+      label.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      label.style.color = '#94a3b8';
+    }
+  });
 
+  return { label, input };
+}
+
+// Populate the dynamic sub-drum selection checkboxes
+export function populateDrumSelectionOptions() {
+  const container = document.getElementById('drum-selection-container');
+  if (!container) return;
+
+  container.innerHTML = '';
+  const inst = state.currentInstrument;
   const instDef = drumTypes[inst];
-  if (options.length > 1 && !(instDef && instDef.drums.length === 1)) {
-    container.style.display = 'inline-flex';
+  if (!instDef) return;
+
+  const drums = instDef.drums || [];
+  const inseparableInstruments = ['janggu', 'mridangam', 'handpan', 'log_drum', 'dhol', 'agogo', 'tabla'];
+  const isSeparable = drums.length > 1 && !inseparableInstruments.includes(inst);
+
+  const singleDrumModeContainer = document.getElementById('single-drum-mode-container');
+  const pickDrumsGroup = document.getElementById('pick-drums-group');
+
+  if (isSeparable) {
+    container.style.display = 'flex';
+    if (singleDrumModeContainer) singleDrumModeContainer.style.display = 'flex';
+    if (pickDrumsGroup) pickDrumsGroup.style.display = 'flex';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'drum-checkboxes-group';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'row';
+    wrapper.style.flexWrap = 'wrap';
+    wrapper.style.gap = '8px';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.width = '100%';
+
+    // Determine checked state for each drum variant
+    const drumCheckedStates = drums.map((d) => isDrumSelected(d, inst));
+    const allChecked = drumCheckedStates.every(Boolean);
+
+    // Create the "ALL" checkbox
+    const allCb = createCheckbox('all', 'All', allChecked, (checked) => {
+      let newSelection = '';
+      if (checked) {
+        newSelection = 'all';
+      } else {
+        newSelection = '';
+      }
+      state.drumSelection = newSelection;
+      localStorage.setItem('drumSelection', state.drumSelection);
+      updateActiveDrumsForVisible();
+      renderDrums();
+      populateDrumSelectionOptions(); // refresh checkbox labels and styles
+    });
+    wrapper.appendChild(allCb.label);
+
+    // Create checkboxes for each drum variant
+    drums.forEach((d, idx) => {
+      const isChecked = drumCheckedStates[idx];
+      const cb = createCheckbox(String(d.id), d.label, isChecked, (checked) => {
+        const nextCheckedStates = drums.map((drum, i) => (i === idx ? checked : drumCheckedStates[i]));
+        const numChecked = nextCheckedStates.filter(Boolean).length;
+
+        let newSelection = '';
+        if (numChecked === drums.length) {
+          newSelection = 'all';
+        } else if (numChecked === 0) {
+          newSelection = '';
+        } else {
+          const checkedIds = [];
+          drums.forEach((drum, i) => {
+            if (nextCheckedStates[i]) {
+              checkedIds.push(drum.id);
+            }
+          });
+          newSelection = checkedIds.join(',');
+        }
+
+        state.drumSelection = newSelection;
+        localStorage.setItem('drumSelection', state.drumSelection);
+        updateActiveDrumsForVisible();
+        renderDrums();
+        populateDrumSelectionOptions(); // refresh checkbox labels and styles
+      });
+      wrapper.appendChild(cb.label);
+    });
+
+    container.appendChild(wrapper);
   } else {
     container.style.display = 'none';
+    if (singleDrumModeContainer) singleDrumModeContainer.style.display = 'none';
+    if (pickDrumsGroup) pickDrumsGroup.style.display = 'none';
   }
 }
 
@@ -763,7 +828,7 @@ export function populateTryEffectsPills() {
     const btn = document.createElement('button');
     btn.className = 'try-btn';
     btn.dataset.sound = touch.id;
-    btn.innerText = touch.shortName;
+    btn.innerText = touch.label;
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -800,6 +865,12 @@ export function renderDrums() {
   stage.innerHTML = '';
 
   const visible = getVisibleDrums();
+
+  if (visible.length === 0) {
+    stage.className = 'drums-grid count-0';
+    stage.innerHTML = '<div class="no-drums-selected-msg">No drums selected</div>';
+    return;
+  }
 
   // Set dynamic count class for responsive sizing/scaling
   let extraClass = '';
@@ -1026,7 +1097,7 @@ export function renderDrums() {
 // Refresh visual active indicators and glowing states
 export function updateActiveDrumUI() {
   const visibleDrums = getVisibleDrums();
-  const showActiveGlow = visibleDrums.length > 2;
+  const showActiveGlow = visibleDrums.length > 2 || (visibleDrums.length > 1 && state.singleDrumMode);
 
   document.querySelectorAll('.drum-wrapper').forEach((wrapper) => {
     const idStr = wrapper.dataset.id;
@@ -1048,7 +1119,10 @@ export function updateActiveDrumUI() {
     const visibleDrums = getVisibleDrums();
     const instDef = drumTypes[state.currentInstrument];
     const totalDrums = instDef ? instDef.drums.length : visibleDrums.length;
-    const canCycle = visibleDrums.length > 2 || (visibleDrums.length > 1 && state.currentInstrument === 'bata');
+    const canCycle =
+      visibleDrums.length > 2 ||
+      (visibleDrums.length > 1 && state.currentInstrument === 'bata') ||
+      (visibleDrums.length > 1 && state.singleDrumMode);
 
     let badgeText = [];
     if (canCycle) {
@@ -1070,9 +1144,18 @@ export function updateActiveDrumsForVisible() {
   const visible = getVisibleDrums();
   const instDef = drumTypes[state.currentInstrument];
 
-  if (visible.length === 1) {
-    state.leftActiveDrumId = visible[0].id;
-    state.rightActiveDrumId = visible[0].id;
+  if (visible.length === 1 || state.singleDrumMode) {
+    let targetId = visible[0].id;
+    if (
+      visible.length > 1 &&
+      instDef &&
+      instDef.defaultLeft !== undefined &&
+      visible.find((d) => d.id === instDef.defaultLeft)
+    ) {
+      targetId = instDef.defaultLeft;
+    }
+    state.leftActiveDrumId = targetId;
+    state.rightActiveDrumId = targetId;
   } else if (visible.length >= 2) {
     if (
       instDef &&
@@ -1208,7 +1291,7 @@ export function updateControllerCheatSheet() {
   const getDirectionLabel = (mapping, direction, tList) => {
     const touchId = mapping[direction];
     const touch = tList.find((t) => t.id === touchId);
-    return touch ? touch.shortName : (touchId || '').replace(/_/g, ' ').toUpperCase();
+    return touch ? touch.label : (touchId || '').replace(/_/g, ' ').toUpperCase();
   };
 
   const getHandText = (mapping) => {
@@ -1222,24 +1305,79 @@ export function updateControllerCheatSheet() {
       return normal;
     };
 
-    const upPart = getPart('up');
-    const downPart = getPart('down');
-    const leftPart = getPart('left');
-    const rightPart = getPart('right');
+    const dirs = ['up', 'down', 'left', 'right'];
+    const parts = {
+      up: getPart('up'),
+      down: getPart('down'),
+      left: getPart('left'),
+      right: getPart('right')
+    };
 
-    return `↑${upPart} | ↓${downPart} | ←${leftPart} | →${rightPart}`;
+    // Group directions by their formatted part text
+    const groups = {};
+    dirs.forEach((d) => {
+      const p = parts[d];
+      if (!p || p.trim() === '') return;
+      if (!groups[p]) {
+        groups[p] = [];
+      }
+      groups[p].push(d);
+    });
+
+    const syms = {
+      up: '↑',
+      down: '↓',
+      left: '←',
+      right: '→'
+    };
+
+    const groupStrings = [];
+    for (const [partText, dirList] of Object.entries(groups)) {
+      if (dirList.length === 4) {
+        groupStrings.push(partText);
+      } else {
+        const dirSyms = dirList.map((d) => syms[d]).join('');
+        groupStrings.push(`${dirSyms} ${partText}`);
+      }
+    }
+
+    return groupStrings.join(' &nbsp;|&nbsp; ');
   };
 
   const leftText = getHandText(mappingObj.left);
   const rightText = getHandText(mappingObj.right);
 
+  const instDef = drumTypes[inst];
+  const leftDrumLabel = (instDef && instDef.drums.find((d) => d.id == state.leftActiveDrumId)?.label) || 'LEFT';
+  const rightDrumLabel = (instDef && instDef.drums.find((d) => d.id == state.rightActiveDrumId)?.label) || 'RIGHT';
+
+  const lName = leftDrumLabel.split(' (')[0].toUpperCase();
+  const rName = rightDrumLabel.split(' (')[0].toUpperCase();
+
+  const areDrumsDifferent = state.leftActiveDrumId !== state.rightActiveDrumId && lName !== rName;
+
+  const handsRow = document.getElementById('footer-hands-row');
+  if (handsRow) {
+    handsRow.style.display = 'flex';
+  }
+
   if (leftText === rightText) {
+    // Both hands have the exact same mapping - just show it without any hand labels
     leftEl.innerHTML = leftText;
+    leftEl.style.display = 'inline';
+    rightEl.innerHTML = '';
     rightEl.style.display = 'none';
     if (dividerHands) dividerHands.style.display = 'none';
   } else {
-    leftEl.innerHTML = `<b>LEFT</b>: ${leftText}`;
-    rightEl.innerHTML = `<b>RIGHT</b>: ${rightText}`;
+    // Different mappings (distinct hands)
+    if (areDrumsDifferent) {
+      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">${lName}</span> ${leftText}`;
+      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">${rName}</span> ${rightText}`;
+    } else {
+      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">LEFT</span> ${leftText}`;
+      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">RIGHT</span> ${rightText}`;
+    }
+    leftEl.style.display = 'inline';
     rightEl.style.display = 'inline';
     if (dividerHands) dividerHands.style.display = 'inline';
   }
@@ -1266,7 +1404,6 @@ export function setupAudioEffectsPanel() {
   // Setup Recording UI
   const formatSelect = document.getElementById('record-format-select');
   const recordBtn = document.getElementById('record-btn');
-  const recordBtnText = document.getElementById('record-btn-text');
 
   if (formatSelect) {
     const formats = getSupportedFormats();
@@ -1282,15 +1419,20 @@ export function setupAudioEffectsPanel() {
   if (recordBtn && formatSelect) {
     recordBtn.addEventListener('click', () => {
       initAudio();
+      const recordIconSvg = document.getElementById('record-icon-svg');
       if (isRecording) {
         stopRecording();
         recordBtn.classList.remove('recording');
-        recordBtnText.innerText = 'REC';
+        if (recordIconSvg) {
+          recordIconSvg.innerHTML = '<circle cx="12" cy="12" r="8"></circle>';
+        }
         formatSelect.disabled = false;
       } else {
         startRecording(formatSelect.value);
         recordBtn.classList.add('recording');
-        recordBtnText.innerText = 'STOP';
+        if (recordIconSvg) {
+          recordIconSvg.innerHTML = '<rect x="4" y="4" width="16" height="16" rx="2"></rect>';
+        }
         formatSelect.disabled = true;
       }
     });

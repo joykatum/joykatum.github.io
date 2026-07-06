@@ -1,12 +1,13 @@
 import { drumInfo, patternInfo, drumTags } from './drumInfo.js';
 import { state } from './state.js';
 import { initAudio } from './audio.js';
-import { drumTypes } from './drumTypes.js';
+import { drumTypes, instrumentTouches } from './drumTypes.js';
 
 export function setupEducationalDialog() {
   const drumBtn = document.getElementById('drum-info-btn');
   const footerDrumBtn = document.getElementById('footer-drum-info-btn');
   const patternBtn = document.getElementById('pattern-info-btn');
+  const tapsBtn = document.getElementById('footer-taps-info-btn');
   const infoBackdrop = document.getElementById('info-dialog-backdrop');
   const infoCloseBtn = document.getElementById('info-close-btn');
 
@@ -21,6 +22,13 @@ export function setupEducationalDialog() {
 
   if (footerDrumBtn) {
     footerDrumBtn.addEventListener('click', onDrumInfoClick);
+  }
+
+  if (tapsBtn) {
+    tapsBtn.addEventListener('click', () => {
+      initAudio();
+      showTapsInfo(state.currentInstrument);
+    });
   }
 
   if (patternBtn) {
@@ -225,6 +233,46 @@ export function showPatternInfo(patternId) {
             </a>`
                 : ''
             }
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  bodyEl.innerHTML = html;
+  backdrop.classList.add('show');
+}
+
+export function showTapsInfo(instrumentId) {
+  const backdrop = document.getElementById('info-dialog-backdrop');
+  const emojiEl = document.getElementById('info-emoji');
+  const titleEl = document.getElementById('info-title');
+  const subtitleEl = document.getElementById('info-subtitle');
+  const bodyEl = document.getElementById('info-body-content');
+
+  if (!backdrop || !bodyEl) return;
+
+  const instDef = drumTypes[instrumentId];
+  const name = instDef ? instDef.name.toUpperCase() : instrumentId.toUpperCase();
+
+  if (emojiEl) emojiEl.innerText = '👉';
+  if (titleEl) titleEl.innerText = `${name} TAP DETAILS`;
+  if (subtitleEl) subtitleEl.innerText = 'TOUCH TECHNIQUE & SONIC PROPERTIES';
+
+  const touches = instrumentTouches[instrumentId] || [];
+
+  let html = '';
+  if (touches.length === 0) {
+    html = `<p class="info-paragraph">No custom tap techniques defined for this instrument.</p>`;
+  } else {
+    touches.forEach((touch) => {
+      html += `
+        <div class="info-list-item" style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-weight: 800; color: #10b981; font-size: 0.95rem;">${touch.label}</span>
+          </div>
+          <div style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.4; margin-top: 2px;">
+            ${touch.description || ''}
           </div>
         </div>
       `;

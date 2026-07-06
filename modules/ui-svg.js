@@ -123,15 +123,50 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
 
   let shapes = '';
   if (instrument === 'cajon') {
+    // Elegant screws around the front plate
+    let screws = '';
+    const screwPositions = [
+      { x: 10, y: 10 },
+      { x: 30, y: 10 },
+      { x: 50, y: 10 },
+      { x: 70, y: 10 },
+      { x: 90, y: 10 },
+      { x: 10, y: 30 },
+      { x: 90, y: 30 },
+      { x: 10, y: 50 },
+      { x: 90, y: 50 },
+      { x: 10, y: 70 },
+      { x: 90, y: 70 },
+      { x: 10, y: 90 },
+      { x: 30, y: 90 },
+      { x: 50, y: 90 },
+      { x: 70, y: 90 },
+      { x: 90, y: 90 }
+    ];
+    screwPositions.forEach((pos) => {
+      screws += `<circle cx="${pos.x}" cy="${pos.y}" r="1.2" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="0.3"/>`;
+      screws += `<line x1="${pos.x - 0.7}" y1="${pos.y}" x2="${pos.x + 0.7}" y2="${pos.y}" stroke="#475569" stroke-width="0.2"/>`;
+    });
+
     shapes = `
             <!-- Heavy bottom shadow -->
-            <rect x="2" y="3" width="96" height="96" rx="8" fill="#020617" opacity="0.6" filter="blur(2px)"/>
+            <rect x="2" y="4" width="96" height="96" rx="8" fill="#020617" opacity="0.65" filter="blur(2.5px)"/>
             
-            <!-- Plain Wood box body -->
-            <rect x="4" y="4" width="92" height="92" rx="8" fill="url(#skin-${id})" stroke="#1e1b18" stroke-width="2"/>
+            <!-- Real dark wood body frame (outer sides) -->
+            <rect x="4" y="4" width="92" height="92" rx="8" fill="#451a03" stroke="#1c0d02" stroke-width="1.5"/>
             
-            <!-- Ambient 3D lighting cover -->
-            <rect x="4" y="4" width="92" height="92" rx="8" fill="url(#overlay-${id})"/>
+            <!-- Premium front plate (Tapa) -->
+            <rect x="7" y="7" width="86" height="86" rx="5" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
+            
+            <!-- Elegant wood grain lines -->
+            <path d="M 12 12 Q 30 18, 50 12 T 88 15 M 15 35 Q 40 38, 60 32 T 85 35 M 12 65 Q 35 60, 55 68 T 88 62" fill="none" stroke="#271305" stroke-width="0.5" opacity="0.2"/>
+            
+            <!-- Tapa Screws -->
+            ${screws}
+            
+            <!-- Darker top/bottom shading to give cylindrical/curved depth -->
+            <rect x="7" y="7" width="86" height="86" rx="5" fill="url(#overlay-${id})" opacity="0.75"/>
+            <rect x="7" y="7" width="86" height="86" rx="5" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1"/>
         `;
   } else if (instrument === 'bata' || instrument === 'djembe') {
     shapes = `
@@ -201,21 +236,74 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
         `;
   } else if (instrument === 'ghatam') {
     shapes = `
-            <circle cx="50" cy="52" r="47" fill="#020617" opacity="0.7" filter="blur(3px)"/>
-            <circle cx="50" cy="50" r="47" fill="url(#skin-${id})"/>
-            <circle cx="50" cy="50" r="41" fill="none" stroke="#451a03" stroke-width="1.2" opacity="0.25"/>
-            <circle cx="50" cy="50" r="32" fill="none" stroke="#451a03" stroke-width="0.8" opacity="0.2"/>
-            <circle cx="50" cy="50" r="16" fill="none" stroke="#7c2d12" stroke-width="3"/>
-            <circle cx="50" cy="50" r="13" fill="#0c0402"/>
-            <circle cx="50" cy="50" r="47" fill="url(#overlay-${id})" opacity="1.2"/>
+            <!-- Heavy bottom shadow -->
+            <circle cx="50" cy="54" r="45" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- Beautiful spherical terracotta pot -->
+            <circle cx="50" cy="50" r="44" fill="url(#skin-${id})" stroke="#451a03" stroke-width="1.8"/>
+            
+            <!-- Flared pot collar/rim on top seen in perspective -->
+            <ellipse cx="50" cy="18" rx="14" ry="4.5" fill="none" stroke="#2c1404" stroke-width="3"/>
+            <ellipse cx="50" cy="18" rx="12" ry="3.5" fill="#140700" stroke="#451a03" stroke-width="1"/>
+            
+            <!-- Shading overlay to make it highly 3D/spherical -->
+            <circle cx="50" cy="50" r="44" fill="url(#overlay-${id})" opacity="0.95"/>
+            
+            <!-- Highlight to emphasize 3D sphere -->
+            <ellipse cx="32" cy="32" rx="5" ry="10" fill="#ffffff" opacity="0.15" transform="rotate(-30, 32, 32)"/>
+        `;
+  } else if (instrument === 'janggu') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Hourglass lacquered wood body in background -->
+            <path d="M 28 18 Q 50 44, 50 50 Q 50 56, 72 82 L 28 82 Q 50 56, 50 50 Q 50 44, 72 18 Z" fill="#7f1d1d" stroke="#450a0a" stroke-width="1.5" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.5))"/>
+            
+            <!-- Thick rope laces (shirabe) connecting the two heads -->
+            <path d="M 25 20 L 25 80 M 75 20 L 75 80 M 25 20 L 75 80 M 75 20 L 25 80 M 50 20 L 50 80 M 25 20 L 50 80 M 75 20 L 50 80 M 25 80 L 50 20 M 75 80 L 50 20" stroke="#fef08a" stroke-width="1.2" opacity="0.8" filter="drop-shadow(0.5px 1px 1px rgba(0,0,0,0.3))"/>
+            
+            <!-- Sliding leather tuning collars (buba) on ropes -->
+            <rect x="35" y="32" width="4" height="6" rx="1" fill="#7c2d12" stroke="#451a03" stroke-width="0.5"/>
+            <rect x="61" y="32" width="4" height="6" rx="1" fill="#7c2d12" stroke="#451a03" stroke-width="0.5"/>
+            <rect x="48" y="62" width="4" height="6" rx="1" fill="#7c2d12" stroke="#451a03" stroke-width="0.5"/>
+            <rect x="35" y="62" width="4" height="6" rx="1" fill="#7c2d12" stroke="#451a03" stroke-width="0.5"/>
+            
+            <!-- Left head (Gungpyeon, thicker white/cream hide) -->
+            <ellipse cx="50" cy="20" rx="26" ry="7" fill="#fdf3e7" stroke="#ad845b" stroke-width="2" filter="drop-shadow(0px -1px 2px rgba(0,0,0,0.3))"/>
+            <ellipse cx="50" cy="20" rx="22" ry="5.5" fill="none" stroke="#e3be96" stroke-width="0.8" opacity="0.6"/>
+            
+            <!-- Right head (Yeolpyeon, thinner yellowish hide) -->
+            <ellipse cx="50" cy="80" rx="26" ry="7" fill="#f5caa0" stroke="#8a5b30" stroke-width="2" filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.3))"/>
+            <ellipse cx="50" cy="80" rx="22" ry="5.5" fill="none" stroke="#ca9463" stroke-width="0.8" opacity="0.6"/>
+            
+            <!-- Central waist cord band -->
+            <rect x="44" y="47" width="12" height="6" rx="1.5" fill="#18181b" stroke="#27272a" stroke-width="0.5"/>
         `;
   } else if (instrument === 'udu') {
     shapes = `
-            <circle cx="50" cy="52" r="47" fill="#020617" opacity="0.7" filter="blur(3px)"/>
-            <circle cx="50" cy="50" r="47" fill="url(#skin-${id})"/>
-            <ellipse cx="65" cy="55" rx="9" ry="7" fill="#090302" stroke="#3a1305" stroke-width="1.5" transform="rotate(-15, 65, 55)"/>
-            <ellipse cx="35" cy="25" rx="10" ry="6" fill="#090302" stroke="#7c2d12" stroke-width="2" transform="rotate(-20, 35, 25)"/>
-            <circle cx="50" cy="50" r="47" fill="url(#overlay-${id})" opacity="1.2"/>
+            <!-- Heavy bottom shadow -->
+            <circle cx="50" cy="56" r="44" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
+            
+            <!-- Elegant clay pot body -->
+            <path d="M 50 16 Q 22 25, 22 58 Q 22 92, 50 92 Q 78 92, 78 58 Q 78 25, 50 16 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8" filter="drop-shadow(0 2px 3.5px rgba(0,0,0,0.45))"/>
+            
+            <!-- Flared Pot Neck/Rim -->
+            <path d="M 50 16 Q 42 16, 42 8 Q 42 5, 50 5 Q 58 5, 58 8 Q 58 16, 50 16 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8"/>
+            <ellipse cx="50" cy="7" rx="6" ry="2" fill="#090302" stroke="#1c0d02" stroke-width="0.8"/>
+            
+            <!-- Traditional painted white/ochre decorative rings around the belly -->
+            <path d="M 23 48 Q 50 58, 77 48" fill="none" stroke="#fef08a" stroke-width="1.2" opacity="0.35"/>
+            <path d="M 22 54 Q 50 64, 78 54" fill="none" stroke="#fef08a" stroke-width="1.8" opacity="0.35"/>
+            
+            <!-- Side Hole (resonant chamber) with shaded interior depth -->
+            <ellipse cx="36" cy="46" rx="9.5" ry="7.5" fill="#090302" stroke="#451a03" stroke-width="1.5" transform="rotate(-15, 36, 46)" filter="drop-shadow(1px 2px 1.5px rgba(0,0,0,0.5))"/>
+            <ellipse cx="35" cy="45.5" rx="8" ry="6" fill="#040100"/>
+            
+            <!-- Belly highlight -->
+            <ellipse cx="62" cy="40" rx="6" ry="12" fill="#ffffff" opacity="0.12" transform="rotate(-25, 62, 40)"/>
+            
+            <!-- Ambient 3D clay pot overlay -->
+            <path d="M 50 16 Q 22 25, 22 58 Q 22 92, 50 92 Q 78 92, 78 58 Q 78 25, 50 16 Z" fill="url(#overlay-${id})" opacity="0.9"/>
         `;
   } else if (instrument === 'kundu') {
     shapes = `
@@ -237,23 +325,59 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
             <circle cx="50" cy="50" r="44.5" fill="url(#overlay-${id})" opacity="0.5"/>
         `;
   } else if (instrument === 'chocalho') {
+    // Highly detailed Brazilian Chocalho (shaker with metal jingles)
+    let jingles = '';
+    const rows = [24, 42, 60, 78];
+    rows.forEach((y, rowIndex) => {
+      // Draw the metal rod
+      jingles += `<line x1="26" y1="${y}" x2="74" y2="${y}" stroke="url(#chrome-${id})" stroke-width="1.8" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.35))"/>`;
+      // Draw 3 pairs of metallic pratinelas (jingles) on each rod
+      const xPositions = [35, 50, 65];
+      xPositions.forEach((x, colIndex) => {
+        const isGold = (rowIndex + colIndex) % 2 === 0;
+        const fillJingle = isGold ? '#fbbf24' : '#cbd5e1';
+        const strokeJingle = isGold ? '#78350f' : '#475569';
+        const innerFill = isGold ? '#d97706' : '#94a3b8';
+
+        jingles += `
+          <!-- Jingle Pair Left Cup -->
+          <ellipse cx="${x - 3}" cy="${y}" rx="5.5" ry="7" fill="${fillJingle}" stroke="${strokeJingle}" stroke-width="0.6" filter="drop-shadow(-1px 1.5px 1.5px rgba(0,0,0,0.4))"/>
+          <ellipse cx="${x - 4}" cy="${y}" rx="3" ry="5.5" fill="${innerFill}" opacity="0.8"/>
+          <circle cx="${x - 3}" cy="${y}" r="0.8" fill="#0f172a"/>
+          
+          <!-- Jingle Pair Right Cup (overlapping) -->
+          <ellipse cx="${x + 3}" cy="${y}" rx="5.5" ry="7" fill="${fillJingle}" stroke="${strokeJingle}" stroke-width="0.6" filter="drop-shadow(1px 1.5px 1.5px rgba(0,0,0,0.4))"/>
+          <ellipse cx="${x + 2}" cy="${y}" rx="3" ry="5.5" fill="${innerFill}" opacity="0.8"/>
+          <circle cx="${x + 3}" cy="${y}" r="0.8" fill="#0f172a"/>
+        `;
+      });
+    });
+
     shapes = `
-            <rect x="15" y="15" width="70" height="70" rx="6" fill="#1e293b" opacity="0.15"/>
-            <rect x="25" y="10" width="8" height="80" rx="3" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
-            <rect x="67" y="10" width="8" height="80" rx="3" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
-            <rect x="44" y="35" width="12" height="30" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
-            <line x1="33" y1="22" x2="67" y2="22" stroke="url(#chrome-${id})" stroke-width="1.5"/>
-            <circle cx="39" cy="22" r="4.5" fill="#eab308" stroke="#854d0e" stroke-width="0.5"/>
-            <circle cx="61" cy="22" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="0.5"/>
-            <line x1="33" y1="38" x2="67" y2="38" stroke="url(#chrome-${id})" stroke-width="1.5"/>
-            <circle cx="38" cy="38" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="0.5"/>
-            <circle cx="62" cy="38" r="4.5" fill="#eab308" stroke="#854d0e" stroke-width="0.5"/>
-            <line x1="33" y1="62" x2="67" y2="62" stroke="url(#chrome-${id})" stroke-width="1.5"/>
-            <circle cx="38" cy="62" r="4.5" fill="#eab308" stroke="#854d0e" stroke-width="0.5"/>
-            <circle cx="62" cy="62" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="0.5"/>
-            <line x1="33" y1="78" x2="67" y2="78" stroke="url(#chrome-${id})" stroke-width="1.5"/>
-            <circle cx="39" cy="78" r="4.5" fill="#cbd5e1" stroke="#475569" stroke-width="0.5"/>
-            <circle cx="61" cy="78" r="4.5" fill="#eab308" stroke="#854d0e" stroke-width="0.5"/>
+            <!-- Heavy bottom shadow -->
+            <rect x="18" y="10" width="64" height="82" rx="4" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- Thick aluminum frame (outer structure) -->
+            <rect x="22" y="8" width="56" height="84" rx="3" fill="none" stroke="url(#chrome-${id})" stroke-width="3" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            
+            <!-- Left and Right polished mahogany wood grip handles -->
+            <rect x="16" y="12" width="7" height="76" rx="3.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.2" filter="drop-shadow(-2px 1.5px 2px rgba(0,0,0,0.45))"/>
+            <rect x="77" y="12" width="7" height="76" rx="3.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.2" filter="drop-shadow(2px 1.5px 2px rgba(0,0,0,0.45))"/>
+            
+            <!-- Handle grip wrap lines -->
+            <path d="M 16 25 L 23 25 M 16 38 L 23 38 M 16 50 L 23 50 M 16 62 L 23 62 M 16 75 L 23 75" stroke="#1c0d02" stroke-width="0.8" opacity="0.4"/>
+            <path d="M 77 25 L 84 25 M 77 38 L 84 38 M 77 50 L 84 50 M 77 62 L 84 62 M 77 75 L 84 75" stroke="#1c0d02" stroke-width="0.8" opacity="0.4"/>
+            
+            <!-- Shiny steel cross struts at top and bottom -->
+            <rect x="22" y="12" width="56" height="4" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+            <rect x="22" y="84" width="56" height="4" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+            
+            <!-- Rows of jingles -->
+            ${jingles}
+            
+            <!-- Ambient 3D shading of handles -->
+            <rect x="16" y="12" width="7" height="76" rx="3.5" fill="url(#overlay-${id})" opacity="0.4"/>
+            <rect x="77" y="12" width="7" height="76" rx="3.5" fill="url(#overlay-${id})" opacity="0.4"/>
         `;
   } else if (instrument === 'handpan') {
     shapes = `
@@ -283,42 +407,215 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
             <circle cx="50" cy="50" r="47.5" fill="url(#overlay-${id})" opacity="1.2"/>
         `;
   } else if (instrument === 'waterphone') {
+    // Beautiful top-down 3D Waterphone
+    let tines = '';
+    const numTines = 18;
+    for (let i = 0; i < numTines; i++) {
+      const angle = (i * 360) / numTines;
+      const rad = (angle * Math.PI) / 180;
+      // Tines vary in length to represent different pitches
+      const len = 12 + Math.abs(Math.sin(i * 1.5)) * 14;
+      const startR = 30; // Starts at reservoir outer wall
+      const endR = startR + len;
+      const x1 = 50 + startR * Math.cos(rad);
+      const y1 = 50 + startR * Math.sin(rad);
+      const x2 = 50 + endR * Math.cos(rad);
+      const y2 = 50 + endR * Math.sin(rad);
+
+      tines += `
+        <!-- Golden Brass Tine -->
+        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" filter="drop-shadow(1px 2px 1.5px rgba(0,0,0,0.4))"/>
+        <!-- Hammered Tip Bead -->
+        <circle cx="${x2}" cy="${y2}" r="1.8" fill="#f59e0b" stroke="#78350f" stroke-width="0.5"/>
+      `;
+    }
     shapes = `
-            <circle cx="50" cy="51" r="35" fill="#020617" opacity="0.8" filter="blur(3px)"/>
-            <circle cx="50" cy="50" r="43" fill="none" stroke="#ca8a04" stroke-width="12" stroke-dasharray="1.2 5" opacity="0.9" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.5))"/>
-            <circle cx="50" cy="50" r="35" fill="url(#chrome-${id})" stroke="#334155" stroke-width="1.5"/>
-            <circle cx="50" cy="50" r="30" fill="#0ea5e9" opacity="0.25"/>
-            <circle cx="50" cy="50" r="28" fill="none" stroke="#38bdf8" stroke-width="0.8" opacity="0.4"/>
-            <circle cx="50" cy="50" r="35" fill="url(#overlay-${id})" opacity="1.4"/>
+            <!-- Heavy bottom shadow -->
+            <circle cx="50" cy="53" r="46" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Radiating Brass Tines -->
+            ${tines}
+            
+            <!-- Central Bronze Reservoir Bowl (The Water Basin) -->
+            <circle cx="50" cy="50" r="30" fill="url(#chrome-${id})" stroke="#451a03" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.45))"/>
+            
+            <!-- Deep Water Reservoir interior with glowing blue water and ripple layers -->
+            <circle cx="50" cy="50" r="23" fill="#0284c7" stroke="#0369a1" stroke-width="1"/>
+            <circle cx="50" cy="50" r="23" fill="url(#overlay-${id})" opacity="0.4"/>
+            <!-- Concentric Water Ripples -->
+            <circle cx="50" cy="50" r="17" fill="none" stroke="#e0f2fe" stroke-width="0.8" opacity="0.4" stroke-dasharray="8, 4"/>
+            <circle cx="50" cy="50" r="11" fill="none" stroke="#e0f2fe" stroke-width="0.5" opacity="0.6" stroke-dasharray="4, 3"/>
+            
+            <!-- Central Golden Column/Filling Spout (Neck) -->
+            <circle cx="50" cy="50" r="6" fill="#ca8a04" stroke="#451a03" stroke-width="1.2" filter="drop-shadow(0px 1.5px 2px rgba(0,0,0,0.4))"/>
+            <circle cx="50" cy="50" r="2" fill="#1e293b"/>
+            
+            <!-- Shiny highlights on the brass reservoir surface -->
+            <path d="M 28 32 A 26 26 0 0 1 32 28" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+            
+            <!-- Ambient 3D sphere gradient overlay -->
+            <circle cx="50" cy="50" r="30" fill="url(#overlay-${id})" opacity="0.8"/>
         `;
   } else if (instrument === 'vibraslap') {
+    // Premium 3D Wooden & Chrome Vibraslap
     shapes = `
-            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            <!-- Backdrop drop shadow -->
+            <path d="M 22 84 L 52 19 L 82 69" fill="none" stroke="#020617" stroke-width="8" opacity="0.3" filter="blur(3.5px)"/>
+            
+            <!-- Chrome-Plated Spring Steel Wire Rod -->
             <path d="M 20 80 L 50 15 L 80 65" fill="none" stroke="url(#chrome-${id})" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.4))"/>
-            <circle cx="20" cy="80" r="9" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5" filter="drop-shadow(0px 1px 1.5px rgba(0,0,0,0.4))"/>
+            
+            <!-- Steel Winding Elbow Coil (Tension spring details at the corner) -->
+            <circle cx="50" cy="15" r="4.5" fill="none" stroke="#94a3b8" stroke-width="2.5" opacity="0.8"/>
+            <path d="M 46 13 Q 50 10, 54 13" fill="none" stroke="#cbd5e1" stroke-width="1.8"/>
+            
+            <!-- Wooden Strike Ball (Turned cherry wood with grain & highlights) -->
+            <circle cx="20" cy="80" r="10.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5" filter="drop-shadow(-2px 2.5px 3px rgba(0,0,0,0.5))"/>
+            <!-- Ball wood lines -->
+            <path d="M 14 76 Q 20 74, 26 76 M 12 80 Q 20 78, 28 80 M 14 84 Q 20 82, 26 84" fill="none" stroke="#271305" stroke-width="0.5" opacity="0.25"/>
+            <circle cx="18" cy="77" r="3" fill="#ffffff" opacity="0.12"/>
+            
+            <!-- Dynamic angled Wooden Resonator Box (holding rattle teeth) -->
             <g transform="rotate(-15, 79, 66)">
-              <rect x="68" y="50" width="22" height="26" rx="3" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5"/>
-              <rect x="71" y="70" width="16" height="3" rx="1" fill="#0c0402"/>
-              <rect x="68" y="50" width="22" height="26" rx="3" fill="url(#overlay-${id})" opacity="0.8"/>
+              <!-- Box shadow -->
+              <rect x="66" y="48" width="24" height="28" rx="4" fill="#020617" opacity="0.3" filter="blur(1.5px)"/>
+              
+              <!-- Wooden Box outer body -->
+              <rect x="68" y="50" width="22" height="26" rx="3" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5"/>
+              
+              <!-- Wood texture -->
+              <line x1="70" y1="53" x2="88" y2="53" stroke="#271305" stroke-width="0.5" opacity="0.2"/>
+              <line x1="70" y1="73" x2="88" y2="73" stroke="#271305" stroke-width="0.5" opacity="0.2"/>
+              
+              <!-- Sound Chamber Mouth Slit (dark cavity) -->
+              <rect x="71" y="66" width="16" height="5" rx="1" fill="#0c0402" stroke="#1c0d02" stroke-width="0.5"/>
+              
+              <!-- Inside Metallic Rattle Pin Tips (teeth visible inside cavity) -->
+              <circle cx="74" cy="68.5" r="0.8" fill="#e2e8f0"/>
+              <circle cx="76.5" cy="68.5" r="0.8" fill="#cbd5e1"/>
+              <circle cx="79" cy="68.5" r="0.8" fill="#94a3b8"/>
+              <circle cx="81.5" cy="68.5" r="0.8" fill="#e2e8f0"/>
+              <circle cx="84" cy="68.5" r="0.8" fill="#cbd5e1"/>
+              
+              <!-- Golden Wing Adjustment Nut / Thumb Screw on top -->
+              <path d="M 75 42 Q 79 38, 79 46 Q 79 50, 75 48 Z" fill="#fbbf24" stroke="#78350f" stroke-width="0.5"/>
+              <path d="M 83 42 Q 79 38, 79 46 Q 79 50, 83 48 Z" fill="#fbbf24" stroke="#78350f" stroke-width="0.5"/>
+              <circle cx="79" cy="46" r="1.8" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+              
+              <!-- 3D Overlays for the box -->
+              <rect x="68" y="50" width="22" height="26" rx="3" fill="url(#overlay-${id})" opacity="0.6"/>
+              <path d="M 68 51 L 90 51" stroke="#ffffff" stroke-width="0.5" opacity="0.12"/>
             </g>
         `;
   } else if (instrument === 'spring_drum' || instrument === 'thunderdrum') {
+    // Beautiful detailed 3D Thunder/Spring Drum
+    let springCoils = '';
+    const startY = 46;
+    const endY = 96;
+    const numCoils = 14;
+    for (let i = 0; i < numCoils; i++) {
+      const cy1 = startY + (i / numCoils) * (endY - startY);
+      const cy2 = startY + ((i + 1) / numCoils) * (endY - startY);
+      const midY = (cy1 + cy2) / 2;
+      // Zig-zag/coil loop paths to represent 3D spring
+      springCoils += `
+        <!-- Spring Drop Shadow -->
+        <path d="M 50 ${cy1} Q 58 ${midY}, 50 ${cy2}" fill="none" stroke="#020617" stroke-width="3" opacity="0.3" filter="blur(1px)"/>
+        <!-- Steel Spring loop segment -->
+        <path d="M 50 ${cy1} Q 57 ${midY}, 50 ${cy2}" fill="none" stroke="url(#chrome-${id})" stroke-width="2" stroke-linecap="round"/>
+        <path d="M 50 ${cy1} Q 43 ${midY}, 50 ${cy2}" fill="none" stroke="#64748b" stroke-width="0.6" opacity="0.4"/>
+      `;
+    }
     shapes = `
-            <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
-            <circle cx="50" cy="50" r="48" fill="url(#skin-${id})"/>
-            <circle cx="50" cy="50" r="5" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.8"/>
-            <path d="M 50 50 C 42 55, 58 60, 50 65 C 42 70, 58 75, 50 80 C 42 85, 58 90, 50 95" fill="none" stroke="url(#chrome-${id})" stroke-width="2.5" stroke-linecap="round" filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.4))"/>
-            <circle cx="50" cy="50" r="47" fill="none" stroke="url(#chrome-${id})" stroke-width="3.5"/>
-            <circle cx="50" cy="50" r="47" fill="url(#overlay-${id})" opacity="1.2"/>
+            <!-- Heavy bottom shadow -->
+            <ellipse cx="50" cy="52" rx="36" ry="12" fill="#020617" opacity="0.7" filter="blur(3px)"/>
+            
+            <!-- Long hanging coiling spring -->
+            ${springCoils}
+            
+            <!-- Main Cylinder Resonance Tube (gorgeous decorated body) -->
+            <path d="M 18 16 L 18 40 C 18 46, 82 46, 82 40 L 82 16 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.45))"/>
+            
+            <!-- High-quality tribal/lightning decal on the body -->
+            <path d="M 22 25 L 34 32 L 28 35 L 42 42 L 36 28 L 48 34" fill="none" stroke="#e11d48" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+            <path d="M 78 25 L 66 32 L 72 35 L 58 42 L 64 28 L 52 34" fill="none" stroke="#ea580c" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+            
+            <!-- Natural Goatskin Drum Head at top (tilted oval perspective) -->
+            <ellipse cx="50" cy="16" rx="32" ry="10" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+            <ellipse cx="50" cy="16" rx="32" ry="10" fill="url(#skin-${id})" opacity="0.7"/>
+            <ellipse cx="50" cy="16" rx="30" ry="8.5" fill="none" stroke="#713f12" stroke-width="0.8" opacity="0.3"/>
+            
+            <!-- Center Grommet (where spring attaches) -->
+            <ellipse cx="50" cy="16" rx="3" ry="1" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+            <ellipse cx="50" cy="16" rx="1.2" ry="0.4" fill="#0f172a"/>
+            
+            <!-- Chrome tension collar rim around the top head -->
+            <ellipse cx="50" cy="15.2" rx="32.5" ry="10.2" fill="none" stroke="url(#chrome-${id})" stroke-width="1.5"/>
+            
+            <!-- Ambient 3D shading on cylinder -->
+            <path d="M 18 16 L 18 40 C 18 46, 82 46, 82 40 L 82 16 Z" fill="url(#overlay-${id})" opacity="0.7"/>
+            <!-- Cylinder edge glossy highlights -->
+            <path d="M 22 17 L 22 41" stroke="#ffffff" stroke-width="1.5" opacity="0.15"/>
         `;
   } else if (instrument === 'thongophone') {
+    // Highly detailed PVC Thongophone with colourful tubes and striker paddle
+    let pipes = '';
+    const pipeData = [
+      { x: 22, height: 72, color: '#2563eb', stroke: '#1d4ed8', note: 'C' },
+      { x: 36, height: 62, color: '#16a34a', stroke: '#15803d', note: 'E' },
+      { x: 50, height: 52, color: '#ea580c', stroke: '#c2410c', note: 'G' },
+      { x: 64, height: 44, color: '#dc2626', stroke: '#b91c1c', note: 'A' },
+      { x: 78, height: 36, color: '#7c3aed', stroke: '#6d28d9', note: 'C' }
+    ];
+
+    pipeData.forEach((p) => {
+      // Draw 3D pipe from bottom (y=90) up to its respective height
+      const yBottom = 92;
+      const yTop = yBottom - p.height;
+
+      pipes += `
+        <!-- Pipe Drop Shadow -->
+        <rect x="${p.x - 5.5}" y="${yTop}" width="11" height="${p.height}" rx="2" fill="#020617" opacity="0.3" filter="blur(1.5px)"/>
+        
+        <!-- PVC Pipe Body -->
+        <rect x="${p.x - 5}" y="${yTop}" width="10" height="${p.height}" rx="1.5" fill="${p.color}" stroke="${p.stroke}" stroke-width="1"/>
+        
+        <!-- Pipe Gloss Highlight -->
+        <rect x="${p.x - 4}" y="${yTop}" width="2.5" height="${p.height}" fill="#ffffff" opacity="0.25"/>
+        <rect x="${p.x + 1.5}" y="${yTop}" width="1.5" height="${p.height}" fill="#000000" opacity="0.12"/>
+        
+        <!-- Hollow Pipe Rim at Top (3D angled ellipse) -->
+        <ellipse cx="${p.x}" cy="${yTop}" rx="5" ry="1.8" fill="${p.stroke}" stroke="${p.stroke}" stroke-width="0.5"/>
+        <ellipse cx="${p.x}" cy="${yTop}" rx="3.5" ry="1.2" fill="#090d16"/>
+        
+        <!-- Note Labels -->
+        <text x="${p.x}" y="${yBottom - 6}" fill="#ffffff" font-family="monospace" font-size="5.5" font-weight="bold" text-anchor="middle" opacity="0.75">${p.note}</text>
+      `;
+    });
+
     shapes = `
-            <circle cx="50" cy="50" r="48" fill="#1e293b" opacity="0.08"/>
-            <g transform="translate(26, 68)"><circle cx="0" cy="0" r="13" fill="#1e40af" stroke="#172554" stroke-width="1.5"/><circle cx="0" cy="0" r="9" fill="#090d16"/></g>
-            <g transform="translate(24, 28)"><circle cx="0" cy="0" r="11" fill="#166534" stroke="#14532d" stroke-width="1.5"/><circle cx="0" cy="0" r="8" fill="#050c07"/></g>
-            <g transform="translate(74, 26)"><circle cx="0" cy="0" r="9.5" fill="#991b1b" stroke="#7f1d1d" stroke-width="1.2"/><circle cx="0" cy="0" r="6.5" fill="#0c0404"/></g>
-            <g transform="translate(72, 64)"><circle cx="0" cy="0" r="11" fill="#854d0e" stroke="#713f12" stroke-width="1.5"/><circle cx="0" cy="0" r="8" fill="#0c0802"/></g>
-            <g transform="translate(48, 48)"><circle cx="0" cy="0" r="13" fill="#3730a3" stroke="#312e81" stroke-width="1.8"/><circle cx="0" cy="0" r="10" fill="#080711"/></g>
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Heavy horizontal structural support frames holding pipes (Industrial iron bars) -->
+            <rect x="12" y="38" width="76" height="5" rx="1.5" fill="#334155" stroke="#1e293b" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
+            <rect x="12" y="72" width="76" height="5" rx="1.5" fill="#334155" stroke="#1e293b" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
+            <!-- Frame bolts -->
+            <circle cx="15" cy="40.5" r="1" fill="#cbd5e1"/>
+            <circle cx="85" cy="40.5" r="1" fill="#cbd5e1"/>
+            <circle cx="15" cy="74.5" r="1" fill="#cbd5e1"/>
+            <circle cx="85" cy="74.5" r="1" fill="#cbd5e1"/>
+            
+            <!-- Upgraded Pipes -->
+            ${pipes}
+            
+            <!-- Flat Leather Striker Paddle ("Thong") lying across the middle -->
+            <g transform="translate(48, 45) rotate(22)" filter="drop-shadow(1px 2px 2px rgba(0,0,0,0.45))">
+              <!-- Wooden Handle -->
+              <rect x="-1" y="5" width="2" height="32" rx="0.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="0.5"/>
+              <!-- Flat Rubber/EVA foam pad -->
+              <path d="M -5 -8 C -5 -12, 5 -12, 5 -8 L 4 5 C 4 8, -4 8, -4 5 Z" fill="#ec4899" stroke="#be185d" stroke-width="0.8"/>
+              <path d="M -3 -6 L 3 -6 M -3 -3 L 3 -3" stroke="#fbcfe8" stroke-width="0.6" opacity="0.5"/>
+            </g>
         `;
   } else if (instrument === 'gubguba') {
     shapes = `
@@ -333,21 +630,95 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
         `;
   } else if (instrument === 'boomwhackers') {
     shapes = `
-            <circle cx="50" cy="50" r="48" fill="#1e293b" opacity="0.08"/>
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
             <g transform="rotate(-30, 50, 50)">
-              <rect x="22" y="5" width="12" height="90" rx="2.5" fill="#ef4444" stroke="#991b1b" stroke-width="1.2"/>
-              <rect x="38" y="15" width="11" height="80" rx="2.5" fill="#22c55e" stroke="#166534" stroke-width="1.2"/>
-              <rect x="53" y="25" width="10" height="70" rx="2" fill="#eab308" stroke="#854d0e" stroke-width="1.2"/>
+              <!-- Red Tube (Low C) -->
+              <!-- Drop Shadow -->
+              <rect x="20" y="7" width="12" height="90" rx="2.5" fill="#020617" opacity="0.3" filter="blur(1px)"/>
+              <!-- Tube Body -->
+              <rect x="20" y="5" width="12" height="90" rx="2.5" fill="#ef4444" stroke="#b91c1c" stroke-width="1"/>
+              <!-- Gloss Highlight -->
+              <rect x="21" y="5" width="3" height="90" fill="#ffffff" opacity="0.3"/>
+              <!-- Black Pitch Label Band -->
+              <rect x="20" y="38" width="12" height="14" fill="#1e293b"/>
+              <text x="26" y="47" fill="#ffffff" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">C</text>
+              <!-- Hollow End Openings (3D Depth) -->
+              <ellipse cx="26" cy="5" rx="6" ry="2.2" fill="#7f1d1d" stroke="#b91c1c" stroke-width="0.5"/>
+              <ellipse cx="26" cy="95" rx="6" ry="2.2" fill="#7f1d1d"/>
+
+              <!-- Green Tube (F or G) -->
+              <rect x="36" y="17" width="12" height="78" rx="2.5" fill="#020617" opacity="0.3" filter="blur(1px)"/>
+              <rect x="36" y="15" width="12" height="78" rx="2.5" fill="#22c55e" stroke="#15803d" stroke-width="1"/>
+              <rect x="37" y="15" width="3" height="78" fill="#ffffff" opacity="0.3"/>
+              <rect x="36" y="44" width="12" height="14" fill="#1e293b"/>
+              <text x="42" y="53" fill="#ffffff" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">G</text>
+              <ellipse cx="42" cy="15" rx="6" ry="2.2" fill="#14532d" stroke="#15803d" stroke-width="0.5"/>
+              <ellipse cx="42" cy="93" rx="6" ry="2.2" fill="#14532d"/>
+
+              <!-- Yellow Tube (High C or E) -->
+              <rect x="52" y="27" width="12" height="66" rx="2.5" fill="#020617" opacity="0.3" filter="blur(1px)"/>
+              <rect x="52" y="25" width="12" height="66" rx="2.5" fill="#eab308" stroke="#a16207" stroke-width="1"/>
+              <rect x="53" y="25" width="3" height="66" fill="#ffffff" opacity="0.3"/>
+              <rect x="52" y="50" width="12" height="14" fill="#1e293b"/>
+              <text x="58" y="59" fill="#ffffff" font-family="monospace" font-size="7" font-weight="bold" text-anchor="middle">E</text>
+              <ellipse cx="58" cy="25" rx="6" ry="2.2" fill="#713f12" stroke="#a16207" stroke-width="0.5"/>
+              <ellipse cx="58" cy="91" rx="6" ry="2.2" fill="#713f12"/>
             </g>
         `;
   } else if (instrument === 'bell_tree') {
+    // Highly detailed 3D nesting Bell Tree with polished brass bowls and mahogany base
+    let bowlsHtml = '';
+    const numBells = 9;
+    for (let i = 0; i < numBells; i++) {
+      // Top bells are smaller, bottom bells are larger
+      const width = 24 + i * 5.5; // 24 to 68
+      const height = 6 + i * 1.5; // 6 to 18
+      const y = 20 + i * 6.5; // 20 to 72
+      const rx = width / 2;
+      const ry = height / 2.5;
+
+      const fillGold = i % 2 === 0 ? '#fbbf24' : '#f59e0b';
+      const strokeGold = '#78350f';
+
+      bowlsHtml += `
+        <!-- Bell ${i} Drop Shadow -->
+        <path d="M ${50 - rx} ${y} C ${50 - rx} ${y - ry}, ${50 + rx} ${y - ry}, ${50 + rx} ${y} L ${50 + rx - 2} ${y + height} C ${50 + rx - 2} ${y + height + 3}, ${50 - rx + 2} ${y + height + 3}, ${50 - rx + 2} ${y + height} Z" fill="#020617" opacity="0.18" filter="blur(1px)"/>
+        
+        <!-- Bell ${i} Brass Cup -->
+        <path d="M ${50 - rx} ${y} C ${50 - rx} ${y - ry}, ${50 + rx} ${y - ry}, ${50 + rx} ${y} L ${50 + rx - 2} ${y + height} C ${50 + rx - 2} ${y + height + 2}, ${50 - rx + 2} ${y + height + 2}, ${50 - rx + 2} ${y + height} Z" fill="${fillGold}" stroke="${strokeGold}" stroke-width="1.2" filter="drop-shadow(0 1.5px 2px rgba(0,0,0,0.3))"/>
+        
+        <!-- Bell Inner opening/rim outline -->
+        <ellipse cx="50" cy="${y + height}" rx="${rx - 2}" ry="${ry - 1}" fill="none" stroke="#ca8a04" stroke-width="0.5" opacity="0.6"/>
+        
+        <!-- Bell Specular Highlight -->
+        <path d="M ${50 - rx + 3} ${y + 2} Q 50 ${y - ry + 4}, ${50 + rx - 3} ${y + 2}" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.25"/>
+      `;
+    }
+
     shapes = `
-            <line x1="50" y1="6" x2="50" y2="94" stroke="url(#chrome-${id})" stroke-width="2.5"/>
-            <path d="M 12 78 C 12 60, 88 60, 88 78 L 82 82 Z" fill="#d97706" stroke="#713f12" stroke-width="1" filter="drop-shadow(0 2px 1.5px rgba(0,0,0,0.4))"/>
-            <path d="M 20 62 C 20 46, 80 46, 80 62 L 75 66 Z" fill="#eab308" stroke="#713f12" stroke-width="1" filter="drop-shadow(0 1.5px 1.5px rgba(0,0,0,0.4))"/>
-            <path d="M 28 46 C 28 32, 72 32, 72 46 L 68 50 Z" fill="#eab308" stroke="#854d0e" stroke-width="1" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
-            <path d="M 35 31 C 35 19, 65 19, 65 31 L 61 35 Z" fill="#fbbf24" stroke="#854d0e" stroke-width="0.8"/>
-            <path d="M 41 17 C 41 7, 59 7, 59 17 L 56 20 Z" fill="#fbbf24" stroke="#a16207" stroke-width="0.8"/>
+            <!-- Heavy bottom shadow for base -->
+            <rect x="22" y="86" width="56" height="10" rx="3" fill="#020617" opacity="0.65" filter="blur(2.5px)"/>
+            
+            <!-- Central steel mounting rod -->
+            <line x1="50" y1="8" x2="50" y2="88" stroke="url(#chrome-${id})" stroke-width="3" filter="drop-shadow(1px 0px 1px rgba(0,0,0,0.3))"/>
+            <circle cx="50" cy="8" r="2.2" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+            
+            <!-- Upgraded graduated brass bowls -->
+            ${bowlsHtml}
+            
+            <!-- Solid turned mahogany heavy base block -->
+            <rect x="24" y="84" width="52" height="10" rx="2" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.45))"/>
+            <!-- Base wood grain lines -->
+            <line x1="26" y1="87" x2="74" y2="87" stroke="#1c0d02" stroke-width="0.5" opacity="0.2"/>
+            <line x1="26" y1="91" x2="74" y2="91" stroke="#1c0d02" stroke-width="0.5" opacity="0.2"/>
+            
+            <!-- Base shiny metal mounting washer and collar -->
+            <rect x="44" y="81" width="12" height="3" rx="0.5" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.8"/>
+            <circle cx="50" cy="82.5" r="1" fill="#020617"/>
+            
+            <!-- Ambient 3D gradient cover for wood base -->
+            <rect x="24" y="84" width="52" height="10" rx="2" fill="url(#overlay-${id})" opacity="0.5"/>
         `;
   } else if (instrument === 'uchiwadaiko') {
     shapes = `
@@ -384,88 +755,468 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
             <circle cx="50" cy="50" r="20" fill="url(#overlay-${id})" opacity="1.3"/>
         `;
   } else if (instrument === 'ratchet') {
+    // Beautiful highly detailed 3D traditional wooden ratchet (cog rattle)
+    let gearTeeth = '';
+    const numTeeth = 8;
+    for (let i = 0; i < numTeeth; i++) {
+      const angle = (i * 360) / numTeeth;
+      // Beautiful sharp trapezoidal cog teeth radiating outwards
+      gearTeeth += `
+        <g transform="rotate(${angle})">
+          <path d="M -4 -13 L -2 -21 L 2 -21 L 4 -13 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="0.8"/>
+          <!-- Highlight on gear tooth -->
+          <line x1="-1.5" y1="-20.5" x2="1.5" y2="-20.5" stroke="#ffffff" stroke-width="0.4" opacity="0.15"/>
+        </g>
+      `;
+    }
+
     shapes = `
-            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
-            <g transform="rotate(-25, 50, 68)">
-              <rect x="48" y="45" width="4" height="40" rx="1.5" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
+            <!-- Backdrop shadow -->
+            <rect x="18" y="12" width="64" height="76" rx="6" fill="#020617" opacity="0.5" filter="blur(3px)"/>
+            
+            <!-- Long turned wooden grip handle running vertically -->
+            <rect x="46" y="32" width="8" height="58" rx="4" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5" filter="drop-shadow(2px 2px 2.5px rgba(0,0,0,0.4))"/>
+            <!-- Handle grip ridges -->
+            <line x1="46" y1="62" x2="54" y2="62" stroke="#1c0d02" stroke-width="0.8" opacity="0.35"/>
+            <line x1="46" y1="68" x2="54" y2="68" stroke="#1c0d02" stroke-width="0.8" opacity="0.35"/>
+            <line x1="46" y1="74" x2="54" y2="74" stroke="#1c0d02" stroke-width="0.8" opacity="0.35"/>
+            <line x1="46" y1="80" x2="54" y2="80" stroke="#1c0d02" stroke-width="0.8" opacity="0.35"/>
+            
+            <!-- Upgraded detailed center cog gear wheel -->
+            <g transform="translate(50, 32)">
+              <!-- Gear center shadow -->
+              <circle cx="0" cy="0" r="14" fill="#020617" opacity="0.25"/>
+              <!-- Gear core body -->
+              <circle cx="0" cy="0" r="14" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5"/>
+              <!-- Cog teeth -->
+              ${gearTeeth}
+              <!-- Metallic center pivot bolt pin -->
+              <circle cx="0" cy="0" r="3.5" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.6"/>
+              <circle cx="0" cy="0" r="1" fill="#020617"/>
             </g>
-            <g transform="translate(50, 50)">
-              <circle cx="0" cy="0" r="18" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.2"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(0)"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(60)"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(120)"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(180)"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(240)"/>
-              <rect x="-2" y="-21" width="4" height="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="0.8" transform="rotate(300)"/>
-              <circle cx="0" cy="0" r="4" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="0.5"/>
+            
+            <!-- Wooden Outer Frame (u-shaped bracket swinging around handle) -->
+            <!-- Back support arm -->
+            <path d="M 22 18 L 78 18 L 78 46 L 70 46 L 70 24 L 22 24 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.35))"/>
+            
+            <!-- Flexible Birch wood clicking tongue/reed under tension pressing the cog -->
+            <path d="M 22 21 C 32 21, 40 24, 46 29" fill="none" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" filter="drop-shadow(1px 1px 1px rgba(0,0,0,0.4))"/>
+            <path d="M 22 21 C 32 21, 40 24, 46 29" fill="none" stroke="#ca8a04" stroke-width="0.8" stroke-linecap="round"/>
+            <!-- Fixing rivets on the tongue -->
+            <circle cx="25" cy="21" r="1" fill="url(#chrome-${id})" stroke="#1c0d02" stroke-width="0.5"/>
+            <circle cx="28" cy="21" r="1" fill="url(#chrome-${id})" stroke="#1c0d02" stroke-width="0.5"/>
+            
+            <!-- Structural brass weights / corner reinforcements on the frame -->
+            <rect x="74" y="14" width="6" height="8" rx="1.5" fill="#eab308" stroke="#854d0e" stroke-width="0.8"/>
+            <circle cx="77" cy="18" r="1" fill="#020617"/>
+            
+            <!-- Ambient lighting covers -->
+            <rect x="46" y="32" width="8" height="58" rx="4" fill="url(#overlay-${id})" opacity="0.4"/>
+            <g transform="translate(50,32)">
+              <circle cx="0" cy="0" r="14" fill="url(#overlay-${id})" opacity="0.5"/>
             </g>
-            <path d="M 20 30 Q 32 27, 49 31" fill="none" stroke="url(#skin-${id})" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
         `;
   } else if (instrument === 'log_drum') {
     shapes = `
-      <rect x="10" y="25" width="80" height="50" rx="8" fill="url(#skin-${id})" stroke="#271305" stroke-width="2" filter="drop-shadow(0 4px 4px rgba(0,0,0,0.4))"/>
-      <rect x="20" y="45" width="25" height="10" rx="2" fill="#271305" opacity="0.8"/>
-      <rect x="55" y="45" width="25" height="10" rx="2" fill="#271305" opacity="0.8"/>
-      <path d="M 45 45 L 45 55 M 55 45 L 55 55" stroke="#271305" stroke-width="2"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <rect x="8" y="28" width="84" height="48" rx="8" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Main 3D Cylindrical Log Body -->
+            <rect x="12" y="24" width="76" height="44" rx="10" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2"/>
+            
+            <!-- Tree Ring Endcaps (3D perspective) -->
+            <ellipse cx="12" cy="46" rx="4" ry="20" fill="#271305" stroke="#1c0d02" stroke-width="1"/>
+            <ellipse cx="12" cy="46" rx="2" ry="10" fill="#451a03"/>
+            <ellipse cx="88" cy="46" rx="4" ry="20" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1"/>
+            <ellipse cx="88" cy="46" rx="2" ry="10" fill="#271305"/>
+            
+            <!-- Rich wood grain textures -->
+            <path d="M 16 35 Q 50 32, 84 35" fill="none" stroke="#271305" stroke-width="0.8" opacity="0.3"/>
+            <path d="M 16 57 Q 50 60, 84 57" fill="none" stroke="#271305" stroke-width="0.8" opacity="0.3"/>
+            
+            <!-- Finely carved sound tongue slits (H-shape or elegant dual slit) -->
+            <!-- Background slit cutouts (dark void) -->
+            <path d="M 22 42 L 46 42 Q 48 42, 48 45 L 48 47 Q 48 50, 46 50 L 22 50 Z" fill="#0c0402" stroke="#1c0d02" stroke-width="1"/>
+            <path d="M 78 42 L 54 42 Q 52 42, 52 45 L 52 47 Q 52 50, 54 50 L 78 50 Z" fill="#0c0402" stroke="#1c0d02" stroke-width="1"/>
+            <rect x="47.5" y="40" width="5" height="12" rx="1" fill="#0c0402" stroke="#1c0d02" stroke-width="0.8"/>
+            
+            <!-- 3D highlight on log edges -->
+            <path d="M 12 25 L 88 25" stroke="#ffffff" stroke-width="0.8" opacity="0.15"/>
+            <rect x="12" y="24" width="76" height="44" rx="10" fill="url(#overlay-${id})" opacity="0.6"/>
+        `;
   } else if (instrument === 'temple_blocks') {
     shapes = `
-      <path d="M 20 50 C 20 20, 80 20, 80 50 C 80 80, 20 80, 20 50 Z" fill="url(#skin-${id})" stroke="#271305" stroke-width="2" filter="drop-shadow(0 4px 4px rgba(0,0,0,0.5))"/>
-      <path d="M 25 50 C 25 35, 75 35, 75 50" fill="none" stroke="#271305" stroke-width="4" stroke-linecap="round"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <path d="M 20 52 C 20 22, 80 22, 80 52 C 80 82, 20 82, 20 52 Z" fill="#020617" opacity="0.7" filter="blur(3px)"/>
+            
+            <!-- Traditional Ornate Wooden Fish Body (Bulbous with handle hook) -->
+            <path d="M 22 50 C 22 24, 78 24, 78 50 C 78 74, 58 78, 50 78 C 42 78, 22 74, 22 50 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2.5" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            
+            <!-- Curved stylized handle (Tail hook at the bottom) -->
+            <path d="M 42 76 C 42 86, 58 86, 58 76" fill="none" stroke="url(#skin-${id})" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 42 76 C 42 86, 58 86, 58 76" fill="none" stroke="#1c0d02" stroke-width="1" stroke-linecap="round"/>
+            
+            <!-- Prominent carved sound "mouth" slit with rounded bulbous ends -->
+            <path d="M 26 48 C 26 36, 74 36, 74 48" fill="none" stroke="#0a0301" stroke-width="5.5" stroke-linecap="round"/>
+            <path d="M 26 48 C 26 36, 74 36, 74 48" fill="none" stroke="#7c2d12" stroke-width="1.5" stroke-linecap="round"/>
+            
+            <!-- Hollow circular nostril cutouts (traditional fish look) -->
+            <circle cx="34" cy="36" r="3.2" fill="#0a0301" stroke="#1c0d02" stroke-width="0.8"/>
+            <circle cx="66" cy="36" r="3.2" fill="#0a0301" stroke="#1c0d02" stroke-width="0.8"/>
+            
+            <!-- Traditional scale carvings on the sides -->
+            <path d="M 28 54 Q 34 50, 40 54 M 60 54 Q 66 50, 72 54" fill="none" stroke="#1c0d02" stroke-width="1.2" opacity="0.4"/>
+            <path d="M 32 60 Q 40 56, 48 60 M 52 60 Q 60 56, 68 60" fill="none" stroke="#1c0d02" stroke-width="1.2" opacity="0.4"/>
+            
+            <!-- Ambient 3D lighting cover -->
+            <path d="M 22 50 C 22 24, 78 24, 78 50 C 78 74, 58 78, 50 78 C 42 78, 22 74, 22 50 Z" fill="url(#overlay-${id})" opacity="0.6"/>
+        `;
   } else if (instrument === 'frog_rasp') {
     shapes = `
-      <path d="M 30 50 C 30 20, 70 20, 70 50 C 70 70, 30 70, 30 50 Z" fill="url(#skin-${id})" stroke="#271305" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
-      <!-- Ridges -->
-      <path d="M 40 30 Q 50 25, 60 30 M 35 40 Q 50 35, 65 40 M 35 50 Q 50 45, 65 50 M 40 60 Q 50 55, 60 60" fill="none" stroke="#1c0d02" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="60" cy="35" r="3" fill="#0f172a"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <path d="M 28 52 C 28 22, 72 22, 72 52 C 72 72, 28 72, 28 52 Z" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- Carved wooden frog body -->
+            <path d="M 30 50 C 30 20, 70 20, 70 50 C 70 74, 58 78, 50 78 C 42 78, 30 74, 30 50 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            
+            <!-- Tucked rear wooden legs (3D curves) -->
+            <path d="M 30 62 C 22 62, 22 74, 34 74" fill="none" stroke="url(#skin-${id})" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 30 62 C 22 62, 22 74, 34 74" fill="none" stroke="#1c0d02" stroke-width="1" stroke-linecap="round"/>
+            <path d="M 70 62 C 78 62, 78 74, 66 74" fill="none" stroke="url(#skin-${id})" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 70 62 C 78 62, 78 74, 66 74" fill="none" stroke="#1c0d02" stroke-width="1" stroke-linecap="round"/>
+            
+            <!-- Stylest wooden feet at the front -->
+            <path d="M 40 76 L 38 82 M 43 77 L 42 83" stroke="#1c0d02" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 60 76 L 62 82 M 57 77 L 58 83" stroke="#1c0d02" stroke-width="2" stroke-linecap="round"/>
+            
+            <!-- Large expressive wooden eyes -->
+            <circle cx="38" cy="28" r="4.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.2"/>
+            <circle cx="38" cy="28" r="2.2" fill="#1c0d02"/>
+            <circle cx="62" cy="28" r="4.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.2"/>
+            <circle cx="62" cy="28" r="2.2" fill="#1c0d02"/>
+            
+            <!-- Hollow mouth chamber slit (where scraper stick goes) -->
+            <path d="M 32 46 Q 50 52, 68 46" fill="none" stroke="#0a0301" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Aligned spine ridges (the rasp) -->
+            <path d="M 50 25 L 50 65" stroke="#1c0d02" stroke-width="1.8" stroke-dasharray="2.5 3.5" stroke-linecap="round"/>
+            <path d="M 46 32 Q 50 28, 54 32" fill="none" stroke="#1c0d02" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 44 40 Q 50 36, 56 40" fill="none" stroke="#1c0d02" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 43 48 Q 50 44, 57 48" fill="none" stroke="#1c0d02" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 44 56 Q 50 52, 56 56" fill="none" stroke="#1c0d02" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 46 64 Q 50 60, 54 64" fill="none" stroke="#1c0d02" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            
+            <!-- Ambient 3D lighting cover -->
+            <path d="M 30 50 C 30 20, 70 20, 70 50 C 70 74, 58 78, 50 78 C 42 78, 30 74, 30 50 Z" fill="url(#overlay-${id})" opacity="0.6"/>
+        `;
   } else if (instrument === 'rainstick') {
+    // Double spiral thorn pin-points down the body
+    let thornPins = '';
+    for (let y = 18; y <= 82; y += 4) {
+      const angle = (y - 18) * 0.3;
+      const xOffset1 = 11 * Math.sin(angle);
+      const xOffset2 = 11 * Math.sin(angle + Math.PI);
+      thornPins += `<circle cx="${50 + xOffset1}" cy="${y}" r="0.8" fill="#1c0d02" opacity="0.8"/>`;
+      thornPins += `<circle cx="${50 + xOffset2}" cy="${y}" r="0.8" fill="#5c4033" opacity="0.5"/>`;
+    }
+
     shapes = `
-      <rect x="35" y="10" width="30" height="80" rx="15" fill="url(#skin-${id})" stroke="#271305" stroke-width="2" filter="drop-shadow(0 4px 4px rgba(0,0,0,0.4))"/>
-      <!-- Internal spirals indicated by lines -->
-      <path d="M 38 20 L 62 30 M 38 40 L 62 50 M 38 60 L 62 70 M 38 80 L 62 90" fill="none" stroke="#271305" stroke-width="1.5" opacity="0.6"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <rect x="32" y="12" width="36" height="78" rx="12" fill="#020617" opacity="0.65" filter="blur(2.5px)"/>
+            
+            <!-- Main Cactus Wood Trunk -->
+            <rect x="35" y="10" width="30" height="80" rx="8" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            
+            <!-- Fine cactus longitudinal fibers (wood texture) -->
+            <path d="M 38 12 L 38 88 M 44 12 L 44 88 M 56 12 L 56 88 M 62 12 L 62 88" fill="none" stroke="#271305" stroke-width="0.5" opacity="0.25"/>
+            
+            <!-- Spiral Thorn Pins -->
+            ${thornPins}
+            
+            <!-- Decorative Colorful Yarn Bands at Ends -->
+            <!-- Top Band -->
+            <rect x="34" y="15" width="32" height="6" fill="#dc2626" stroke="#1c0d02" stroke-width="0.5"/>
+            <rect x="34" y="21" width="32" height="4" fill="#fbbf24"/>
+            <!-- Bottom Band -->
+            <rect x="34" y="75" width="32" height="6" fill="#dc2626" stroke="#1c0d02" stroke-width="0.5"/>
+            <rect x="34" y="71" width="32" height="4" fill="#0ea5e9"/>
+            
+            <!-- Ambient 3D Cylinder Overlay -->
+            <rect x="35" y="10" width="30" height="80" rx="8" fill="url(#overlay-${id})" opacity="0.7"/>
+            <rect x="35" y="10" width="4" height="80" fill="#ffffff" opacity="0.12"/>
+        `;
   } else if (instrument === 'kokiriko') {
+    // Beautiful curved arch of 12 tightly-knit wood tiles with 3D rotations
+    let tiles = '';
+    const numTiles = 12;
+    for (let i = 0; i < numTiles; i++) {
+      // Calculate curve: a smooth sine-wave or circular arc from x=15 to x=85
+      const pct = i / (numTiles - 1);
+      const angle = pct * Math.PI; // 0 to 180 degrees
+      const cx = 50 + 35 * Math.cos(angle + Math.PI); // Arc centered on x=50
+      const cy = 68 - 42 * Math.sin(angle); // Elegant hanging arch
+
+      // Rotate each tile to be perpendicular to the arc tangent
+      const rotAngle = (pct - 0.5) * -110; // Steeper angle towards the sides
+
+      tiles += `
+                <g transform="translate(${cx}, ${cy}) rotate(${rotAngle})">
+                    <rect x="-4" y="-14" width="8" height="28" rx="1.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="0.8" filter="drop-shadow(0 1.5px 2px rgba(0,0,0,0.35))"/>
+                    <!-- Central binding cord hole -->
+                    <circle cx="0" cy="0" r="1.2" fill="#0f172a"/>
+                    <!-- Overlay lighting -->
+                    <rect x="-4" y="-14" width="8" height="28" rx="1.5" fill="url(#overlay-${id})" opacity="0.4"/>
+                </g>
+            `;
+    }
+
     shapes = `
-      <!-- Multiple wood slats connected by a cord -->
-      <path d="M 50 10 L 50 90" fill="none" stroke="#1e293b" stroke-width="2" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.5))"/>
-      <rect x="30" y="15" width="40" height="10" fill="url(#skin-${id})" stroke="#271305" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
-      <rect x="30" y="35" width="40" height="10" fill="url(#skin-${id})" stroke="#271305" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
-      <rect x="30" y="55" width="40" height="10" fill="url(#skin-${id})" stroke="#271305" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
-      <rect x="30" y="75" width="40" height="10" fill="url(#skin-${id})" stroke="#271305" stroke-width="1" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
-    `;
+            <!-- Heavy bottom shadow for the curve -->
+            <path d="M 12 68 Q 50 18, 88 68" fill="none" stroke="#020617" stroke-width="12" opacity="0.35" filter="blur(3px)" stroke-linecap="round"/>
+            
+            <!-- Thick leather loop handles at both ends -->
+            <path d="M 15 68 C 5 68, 5 84, 15 84 Z" fill="none" stroke="#271305" stroke-width="3" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
+            <path d="M 85 68 C 95 68, 95 84, 85 84 Z" fill="none" stroke="#271305" stroke-width="3" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
+            
+            <!-- Braided connecting cord looping behind/through the tiles -->
+            <path d="M 15 68 Q 50 26, 85 68" fill="none" stroke="#eab308" stroke-width="1.8" stroke-dasharray="2, 2" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+            
+            <!-- Highly detailed, curved wood slats -->
+            ${tiles}
+            
+            <!-- Shiny copper crimps on handles -->
+            <rect x="12" y="65" width="6" height="5" rx="1" fill="url(#chrome-${id})" stroke="#1c0d02" stroke-width="0.5"/>
+            <rect x="82" y="65" width="6" height="5" rx="1" fill="url(#chrome-${id})" stroke="#1c0d02" stroke-width="0.5"/>
+        `;
   } else if (instrument === 'cabasa') {
+    // Highly detailed 3D Chrome & Bead Chain Cabasa with Rosewood handle
+    let beadRows = '';
+    const startY = 24;
+    const endY = 66;
+    const numRows = 7;
+    for (let i = 0; i < numRows; i++) {
+      const y = startY + (i / (numRows - 1)) * (endY - startY);
+      // Create a nice 3D curved horizontal chain of beads
+      beadRows += `
+        <!-- Shadow of bead chain -->
+        <path d="M 22 ${y + 1} Q 50 ${y + 5.5}, 78 ${y + 1}" fill="none" stroke="#020617" stroke-width="3" opacity="0.25"/>
+        <!-- Silver Bead Chain -->
+        <path d="M 22 ${y} Q 50 ${y + 4.5}, 78 ${y}" fill="none" stroke="url(#chrome-${id})" stroke-width="2.5" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+        <!-- Extra metallic highlights on beads -->
+        <path d="M 22 ${y} Q 50 ${y + 4.5}, 78 ${y}" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-dasharray="0.4 2.6" opacity="0.6" stroke-linecap="round"/>
+      `;
+    }
+
     shapes = `
-      <rect x="40" y="10" width="20" height="30" rx="2" fill="url(#skin-${id})" stroke="#271305" stroke-width="2"/>
-      <circle cx="50" cy="60" r="25" fill="url(#chrome-${id})" stroke="#475569" stroke-width="2" filter="drop-shadow(0 3px 3px rgba(0,0,0,0.5))"/>
-      <!-- Beads -->
-      <path d="M 35 50 Q 50 55, 65 50 M 30 60 Q 50 65, 70 60 M 35 70 Q 50 75, 65 70" fill="none" stroke="#94a3b8" stroke-width="4" stroke-dasharray="4 2"/>
-    `;
+            <!-- Backdrop shadow -->
+            <rect x="20" y="16" width="60" height="78" rx="6" fill="#020617" opacity="0.4" filter="blur(3px)"/>
+            
+            <!-- Polished Rosewood handle at the bottom -->
+            <rect x="45" y="62" width="10" height="32" rx="4.5" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8" filter="drop-shadow(0 2px 2.5px rgba(0,0,0,0.45))"/>
+            <!-- Handle grip rings -->
+            <line x1="45" y1="74" x2="55" y2="74" stroke="#1c0d02" stroke-width="0.8" opacity="0.3"/>
+            <line x1="45" y1="80" x2="55" y2="80" stroke="#1c0d02" stroke-width="0.8" opacity="0.3"/>
+            <line x1="45" y1="86" x2="55" y2="86" stroke="#1c0d02" stroke-width="0.8" opacity="0.3"/>
+            
+            <!-- Metallic rod spacer/collar -->
+            <rect x="42" y="60" width="16" height="4" rx="1" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.8"/>
+            
+            <!-- Main Stainless Steel Core Cylinder -->
+            <rect x="22" y="18" width="56" height="44" rx="3" fill="url(#chrome-${id})" stroke="#334155" stroke-width="1.5" filter="drop-shadow(0 2.5px 3px rgba(0,0,0,0.3))"/>
+            
+            <!-- High-fidelity bead chain rows -->
+            ${beadRows}
+            
+            <!-- End plates (Top/Bottom brass washers capping the cylinder) -->
+            <ellipse cx="50" cy="18" rx="28" ry="1.8" fill="#eab308" stroke="#854d0e" stroke-width="0.6"/>
+            <ellipse cx="50" cy="62" rx="28" ry="1.8" fill="#eab308" stroke="#854d0e" stroke-width="0.6"/>
+            
+            <!-- Top retaining nut -->
+            <rect x="47" y="14" width="6" height="4" rx="1" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.5"/>
+            <circle cx="50" cy="14" r="1.5" fill="#1e293b"/>
+            
+            <!-- Cylinder shine & highlight overlay -->
+            <rect x="22" y="18" width="56" height="44" rx="3" fill="url(#overlay-${id})" opacity="0.45"/>
+            <rect x="22" y="18" width="14" height="44" fill="#ffffff" opacity="0.12"/>
+            
+            <!-- Handle lighting cover -->
+            <rect x="45" y="62" width="10" height="32" rx="4.5" fill="url(#overlay-${id})" opacity="0.4"/>
+        `;
   } else if (instrument === 'guiro') {
+    // Highly dense, realistic ridges wrapping around the curved body
+    let ridges = '';
+    for (let y = 24; y <= 76; y += 3) {
+      // Calculate responsive width of the gourd at height y
+      // Gourd shape: narrow at top (y=20, w=12), bulbous at bottom (y=65, w=24)
+      let rx = 12;
+      if (y < 45) {
+        // Tapering down/neck
+        const pct = (y - 20) / 25;
+        rx = 13 + pct * 9;
+      } else {
+        // Bulbous lower half
+        const pct = (y - 45) / 35;
+        rx = 22 - pct * pct * 10;
+      }
+      ridges += `<path d="M ${50 - rx} ${y} Q 50 ${y + rx * 0.15}, ${50 + rx} ${y}" fill="none" stroke="#1c0d02" stroke-width="1.5" stroke-linecap="round"/>`;
+    }
+
     shapes = `
-      <ellipse cx="50" cy="50" rx="25" ry="45" fill="url(#skin-${id})" stroke="#271305" stroke-width="2" filter="drop-shadow(0 4px 4px rgba(0,0,0,0.4))"/>
-      <!-- Ridges -->
-      <path d="M 30 30 Q 50 35, 70 30 M 27 40 Q 50 45, 73 40 M 26 50 Q 50 55, 74 50 M 27 60 Q 50 65, 73 60 M 30 70 Q 50 75, 70 70" fill="none" stroke="#271305" stroke-width="2"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <path d="M 50 4 Q 74 25, 74 55 Q 74 95, 50 96 Q 26 95, 26 55 Q 26 25, 50 4" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Real gourd body (elegant curves: narrow neck, fat bottom) -->
+            <path d="M 50 5 Q 72 25, 72 55 Q 72 94, 50 94 Q 28 94, 28 55 Q 28 25, 50 5 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2" filter="drop-shadow(0 2px 3.5px rgba(0,0,0,0.4))"/>
+            
+            <!-- Grip Holes (traditional on the back, shown with depth) -->
+            <ellipse cx="44" cy="52" rx="4" ry="5" fill="#0c0402" stroke="#1c0d02" stroke-width="0.8"/>
+            <ellipse cx="56" cy="52" rx="4" ry="5" fill="#0c0402" stroke="#1c0d02" stroke-width="0.8"/>
+            
+            <!-- Aligned Ridges -->
+            ${ridges}
+            
+            <!-- Highlight/Gloss sheen down the center -->
+            <path d="M 49 12 Q 42 45, 45 88" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.15" stroke-linecap="round"/>
+            
+            <!-- 3D Ambient overlay -->
+            <path d="M 50 5 Q 72 25, 72 55 Q 72 94, 50 94 Q 28 94, 28 55 Q 28 25, 50 5 Z" fill="url(#overlay-${id})" opacity="0.7"/>
+        `;
   } else if (instrument === 'washboard') {
+    // Beautiful 3D Zydeco-style Musical Washboard with corrugated tin & oak frame
+    let ridges = '';
+    const startY = 25;
+    const endY = 81;
+    const numRidges = 15;
+    for (let i = 0; i < numRidges; i++) {
+      const y = startY + (i / (numRidges - 1)) * (endY - startY);
+      ridges += `
+        <!-- High-fidelity corrugation ridge (gradient metallic strip) -->
+        <rect x="31" y="${y - 1}" width="38" height="2" fill="url(#chrome-${id})" opacity="0.9"/>
+        <line x1="31" y1="${y}" x2="69" y2="${y}" stroke="#1e293b" stroke-width="0.6" opacity="0.5"/>
+        <line x1="31" y1="${y - 0.8}" x2="69" y2="${y - 0.8}" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+      `;
+    }
+
     shapes = `
-      <rect x="25" y="10" width="50" height="80" rx="4" fill="url(#skin-${id})" stroke="#271305" stroke-width="3" filter="drop-shadow(0 4px 4px rgba(0,0,0,0.5))"/>
-      <rect x="35" y="20" width="30" height="60" fill="url(#chrome-${id})" stroke="#475569" stroke-width="1"/>
-      <!-- Corrugations -->
-      <path d="M 35 25 L 65 25 M 35 30 L 65 30 M 35 35 L 65 35 M 35 40 L 65 40 M 35 45 L 65 45 M 35 50 L 65 50 M 35 55 L 65 55 M 35 60 L 65 60 M 35 65 L 65 65 M 35 70 L 65 70 M 35 75 L 65 75" fill="none" stroke="#94a3b8" stroke-width="1"/>
-    `;
+            <!-- Heavy bottom shadow -->
+            <rect x="23" y="12" width="54" height="80" rx="3" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- Rustic Oak Wood Frame -->
+            <rect x="25" y="10" width="50" height="82" rx="2" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="2.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.4))"/>
+            
+            <!-- Wood joint pins / pegs -->
+            <circle cx="28" cy="13" r="0.8" fill="#1c0d02"/>
+            <circle cx="72" cy="13" r="0.8" fill="#1c0d02"/>
+            <circle cx="28" cy="89" r="0.8" fill="#1c0d02"/>
+            <circle cx="72" cy="89" r="0.8" fill="#1c0d02"/>
+            
+            <!-- Wood Grain Textures -->
+            <path d="M 28 15 L 28 85 M 72 15 L 72 85" stroke="#271305" stroke-width="0.5" opacity="0.2"/>
+            <path d="M 30 18 L 70 18" stroke="#271305" stroke-width="0.5" opacity="0.2"/>
+            
+            <!-- Dark cavity recess behind metal plate -->
+            <rect x="30" y="22" width="40" height="62" fill="#0c0a09"/>
+            
+            <!-- Galvanized Zinc Corrugated Metal Plate -->
+            <rect x="31" y="23" width="38" height="60" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="1"/>
+            
+            <!-- Render the high-fidelity ridges -->
+            ${ridges}
+            
+            <!-- Two Shiny Metal Jam Tins/Bells (Mounted on top Zydeco style) -->
+            <!-- Left Bell -->
+            <circle cx="36" cy="16" r="4.5" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.6" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+            <circle cx="36" cy="16" r="1.5" fill="#ca8a04"/>
+            <!-- Right Bell -->
+            <circle cx="64" cy="16" r="4" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.6" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+            <circle cx="64" cy="16" r="1.2" fill="#94a3b8"/>
+            
+            <!-- Ambient 3D lightning overlays -->
+            <rect x="25" y="10" width="50" height="82" rx="2" fill="url(#overlay-${id})" opacity="0.5"/>
+            <rect x="31" y="23" width="38" height="60" fill="url(#overlay-${id})" opacity="0.3"/>
+            
+            <!-- Playable Metal Thimbles (Drawn lying beside the washboard) -->
+            <g transform="translate(16, 74) rotate(-15)" filter="drop-shadow(1px 1.5px 2px rgba(0,0,0,0.4))">
+              <path d="M -2 -4 L 2 -4 L 3 3 L -3 3 Z" fill="url(#chrome-${id})" stroke="#334155" stroke-width="0.5"/>
+              <ellipse cx="0" cy="3" rx="3" ry="1" fill="#0f172a"/>
+              <circle cx="0" cy="-2" r="0.5" fill="#ffffff" opacity="0.6"/>
+            </g>
+            <g transform="translate(19, 81) rotate(15)" filter="drop-shadow(1px 1.5px 2px rgba(0,0,0,0.4))">
+              <path d="M -2 -4 L 2 -4 L 3 3 L -3 3 Z" fill="url(#chrome-${id})" stroke="#334155" stroke-width="0.5"/>
+              <ellipse cx="0" cy="3" rx="3" ry="1" fill="#0f172a"/>
+              <circle cx="0" cy="-2" r="0.5" fill="#ffffff" opacity="0.6"/>
+            </g>
+        `;
   } else if (instrument === 'angklung') {
+    // Beautiful, highly authentic Indonesian bamboo Angklung with dual tubes & black rattan lashings
     shapes = `
-      <!-- Base structure -->
-      <rect x="20" y="80" width="60" height="8" rx="2" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
-      <rect x="25" y="20" width="6" height="65" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
-      <rect x="69" y="20" width="6" height="65" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
-      <rect x="20" y="15" width="60" height="6" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
-      <!-- Bamboo tubes -->
-      <path d="M 40 30 L 40 75 A 5 5 0 0 0 50 75 L 50 30 Z" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
-      <path d="M 40 30 L 40 20 L 45 10 L 50 20 L 50 30 Z" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5"/>
-    `;
+            <!-- Backdrop drop shadow -->
+            <path d="M 20 84 L 80 84 M 27 22 L 27 82 M 71 22 L 71 82 M 20 18 L 80 18" stroke="#020617" stroke-width="6" opacity="0.35" filter="blur(3.5px)" stroke-linecap="round"/>
+            
+            <!-- Bamboo Base Support Frame Tube (Bottom horizontal segment) -->
+            <rect x="18" y="78" width="64" height="8" rx="2.5" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.4))"/>
+            <!-- Node ring on bottom tube -->
+            <ellipse cx="50" cy="82" rx="1.5" ry="4" fill="none" stroke="#271305" stroke-width="1" opacity="0.5"/>
+            
+            <!-- Bamboo Side Vertical Posts -->
+            <!-- Left Post -->
+            <rect x="25" y="16" width="6" height="66" rx="2" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5"/>
+            <!-- Right Post -->
+            <rect x="69" y="16" width="5" height="66" rx="1.5" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5"/>
+            
+            <!-- Top Horizontal Crossbar bamboo tube -->
+            <rect x="18" y="14" width="64" height="5" rx="1.5" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.2"/>
+            
+            <!-- Rattan Cord Lashings (Traditional black thread wrapping joints) -->
+            <!-- Top-Left Corner Wrapping -->
+            <rect x="24" y="13" width="8" height="7" rx="0.5" fill="#18181b" stroke="#09090b" stroke-width="0.3" opacity="0.9"/>
+            <line x1="24" y1="16" x2="32" y2="16" stroke="#2d2d30" stroke-width="0.5"/>
+            <!-- Top-Right Corner Wrapping -->
+            <rect x="68" y="13" width="7" height="7" rx="0.5" fill="#18181b" stroke="#09090b" stroke-width="0.3" opacity="0.9"/>
+            <line x1="68" y1="16" x2="75" y2="16" stroke="#2d2d30" stroke-width="0.5"/>
+            <!-- Bottom-Left Wrapping -->
+            <rect x="24" y="77" width="8" height="9" rx="0.5" fill="#18181b" stroke="#09090b" stroke-width="0.3" opacity="0.9"/>
+            <!-- Bottom-Right Wrapping -->
+            <rect x="68" y="77" width="7" height="9" rx="0.5" fill="#18181b" stroke="#09090b" stroke-width="0.3" opacity="0.9"/>
+            
+            <!-- Bamboo Tube 1: Large Bass Tube (Pitched lower) -->
+            <g filter="drop-shadow(1px 2px 2.5px rgba(0,0,0,0.45))">
+              <!-- Upper hanging stem of Tube 1 -->
+              <rect x="38" y="18" width="8" height="15" rx="1" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.2"/>
+              <!-- Hollow opening at top of Tube 1 -->
+              <ellipse cx="42" cy="18" rx="4" ry="1.2" fill="#09090b"/>
+              
+              <!-- Main Resonant Half-Cylinder Tube Body -->
+              <path d="M 38 33 L 38 72 C 38 76, 48 76, 48 72 L 48 33 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.8"/>
+              <!-- Hollow scoop/split face detail of bamboo -->
+              <path d="M 39 48 L 39 71 C 39 74, 47 74, 47 71 L 47 48 Z" fill="#271305" opacity="0.9" stroke="#1c0d02" stroke-width="0.5"/>
+              <path d="M 40 52 L 40 70 C 40 72, 46 72, 46 70 L 46 52 Z" fill="#09090b"/>
+              
+              <!-- Shading and shiny nodes of bamboo -->
+              <ellipse cx="43" cy="33" rx="5" ry="1" fill="none" stroke="#ca8a04" stroke-width="0.8" opacity="0.6"/>
+              <rect x="38" y="33" width="10" height="39" rx="1" fill="url(#overlay-${id})" opacity="0.4"/>
+            </g>
+            
+            <!-- Bamboo Tube 2: Small Treble Tube (Pitched higher, hanging to the right) -->
+            <g filter="drop-shadow(1px 2px 2px rgba(0,0,0,0.4))">
+              <!-- Upper hanging stem of Tube 2 -->
+              <rect x="54" y="24" width="6" height="12" rx="0.8" fill="url(#skin-${id})" stroke="#271305" stroke-width="1"/>
+              <!-- Hollow opening at top -->
+              <ellipse cx="57" cy="24" rx="3" ry="1" fill="#09090b"/>
+              
+              <!-- Main body -->
+              <path d="M 54 36 L 54 68 C 54 71.5, 61 71.5, 61 68 L 61 36 Z" fill="url(#skin-${id})" stroke="#1c0d02" stroke-width="1.5"/>
+              <!-- Hollow scoop split -->
+              <path d="M 54.8 48 L 54.8 67 C 54.8 69.5, 60.2 69.5, 60.2 67 L 60.2 48 Z" fill="#271305" opacity="0.9" stroke="#1c0d02" stroke-width="0.5"/>
+              <path d="M 55.4 51 L 55.4 66 C 55.4 68, 59.6 68, 59.6 66 L 59.6 51 Z" fill="#09090b"/>
+              
+              <ellipse cx="57.5" cy="36" rx="3.5" ry="0.8" fill="none" stroke="#ca8a04" stroke-width="0.6" opacity="0.5"/>
+              <rect x="54" y="36" width="7" height="32" rx="0.8" fill="url(#overlay-${id})" opacity="0.4"/>
+            </g>
+            
+            <!-- Frame Gloss and Lighting -->
+            <rect x="18" y="78" width="64" height="8" rx="2.5" fill="url(#overlay-${id})" opacity="0.5"/>
+        `;
   } else if (instrument === 'tabla') {
     shapes = `
             <!-- Heavy bottom shadow -->
@@ -489,25 +1240,38 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
         `;
   } else if (instrument === 'mridangam') {
     shapes = `
-            <!-- Heavy bottom shadow -->
-            <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
-            <!-- Dual skin/braid outer rim -->
-            <circle cx="50" cy="50" r="48" fill="none" stroke="#4a3628" stroke-width="3" stroke-dasharray="3 2"/>
-            <circle cx="50" cy="50" r="46.5" fill="none" stroke="#8b5a2b" stroke-width="1.5"/>
-            
-            <!-- Main head skin -->
-            <circle cx="50" cy="50" r="45" fill="url(#skin-${id})"/>
-            
-            <!-- Inner white rings surrounding the center paste -->
-            <circle cx="50" cy="50" r="28" fill="none" stroke="#1e1b18" stroke-width="1" opacity="0.3"/>
-            
-            <!-- Centered black paste (Syahi) with subtle layering -->
-            <circle cx="50" cy="50" r="16" fill="#171717" stroke="#0a0a0a" stroke-width="1" filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.6))"/>
-            <circle cx="49" cy="49" r="14.5" fill="none" stroke="#262626" stroke-width="0.5" opacity="0.5"/>
-            
-            <!-- Ambient 3D lighting cover -->
-            <circle cx="50" cy="50" r="45" fill="url(#overlay-${id})" opacity="0.8"/>
+            <!-- Diagonal heavy barrel wooden shell (heavy Jackwood) -->
+            <g transform="rotate(-15, 50, 50)">
+              <!-- Outer wooden barrel shadow -->
+              <rect x="21" y="22" width="58" height="56" rx="28" fill="#020617" opacity="0.45" filter="blur(3px)"/>
+              
+              <!-- Outer wooden barrel -->
+              <rect x="23" y="24" width="54" height="52" rx="26" fill="#3f1e15" stroke="#1c0a06" stroke-width="2"/>
+              
+              <!-- Horizontal light leather tension straps (Varan) -->
+              <path d="M 23 30 L 77 30 M 23 38 L 77 38 M 23 46 L 77 46 M 23 54 L 77 54 M 23 62 L 77 62 M 23 70 L 77 70" stroke="#d6d3d1" stroke-width="1.2" opacity="0.85" filter="drop-shadow(0.5px 0.5px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Wooden cylindrical tuning pegs tucked under straps -->
+              <rect x="36" y="26" width="6" height="4" rx="0.8" fill="#a8a29e" stroke="#57534e" stroke-width="0.5"/>
+              <rect x="58" y="26" width="6" height="4" rx="0.8" fill="#a8a29e" stroke="#57534e" stroke-width="0.5"/>
+              <rect x="42" y="70" width="6" height="4" rx="0.8" fill="#a8a29e" stroke="#57534e" stroke-width="0.5"/>
+              
+              <!-- Left head (Thoppi - wider bass head with outer ring) -->
+              <ellipse cx="23" cy="50" rx="6" ry="24" fill="#e7e5e4" stroke="#a8a29e" stroke-width="1.5"/>
+              <ellipse cx="23" cy="50" rx="3" ry="18" fill="#44403c" opacity="0.4"/>
+              
+              <!-- Right head (Valanthalai - treble head with central black paste) -->
+              <ellipse cx="77" cy="50" rx="6" ry="24" fill="#f5f5f4" stroke="#ad845b" stroke-width="1.5"/>
+              <!-- Central black paste Syahi with outer ring -->
+              <ellipse cx="77" cy="50" rx="4.5" ry="16" fill="none" stroke="#d6c3b0" stroke-width="0.8"/>
+              <ellipse cx="77" cy="50" rx="3.5" ry="10" fill="#171717" stroke="#0a0a0a" stroke-width="0.8"/>
+              <ellipse cx="76.5" cy="50" rx="2.5" ry="7" fill="none" stroke="#262626" stroke-width="0.4" opacity="0.6"/>
+              
+              <!-- Ambient 3D shading on wood barrel -->
+              <rect x="23" y="24" width="54" height="52" rx="26" fill="url(#overlay-${id})" opacity="0.75"/>
+            </g>
         `;
   } else if (instrument === 'cuica') {
     shapes = `
@@ -933,32 +1697,323 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
             </g>
         `;
   } else if (instrument === 'talkingdrum') {
-    let laces = '';
-    const laceAngles = [15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345];
-    laceAngles.forEach((angle) => {
-      const rad = (angle * Math.PI) / 180;
-      const x1 = 50 + 44 * Math.cos(rad);
-      const y1 = 50 + 44 * Math.sin(rad);
-      const x2 = 50 + 48 * Math.cos(rad);
-      const y2 = 50 + 48 * Math.sin(rad);
-      laces += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ca8a04" stroke-width="1.8" stroke-linecap="round"/>`;
-    });
     shapes = `
-            <!-- Heavy bottom shadow -->
-            <circle cx="50" cy="51.5" r="49" fill="#020617" opacity="0.6" filter="blur(2.5px)"/>
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
-            <!-- Thick leather wrap/flesh hoop ring -->
-            <circle cx="50" cy="50" r="47.5" fill="none" stroke="#4a3628" stroke-width="3"/>
+            <!-- Diagonal Hourglass wood body -->
+            <g transform="rotate(30, 50, 50)">
+              <!-- Body drop shadow -->
+              <path d="M 24 30 L 76 30 L 50 50 Z" fill="#020617" opacity="0.35" filter="blur(3px)"/>
+              
+              <!-- Central wooden hourglass core -->
+              <path d="M 28 30 Q 50 48, 50 50 Q 50 52, 72 70 L 28 70 Q 50 52, 50 50 Q 50 48, 72 30 Z" fill="#5c4033" stroke="#271305" stroke-width="1.2"/>
+              
+              <!-- Dense vertical tension leather laces running between heads -->
+              <path d="M 25 30 Q 50 48, 25 70 M 30 30 Q 50 48, 30 70 M 35 30 Q 50 48, 35 70 M 40 30 Q 50 48, 40 70 M 45 30 Q 50 48, 45 70 M 50 30 L 50 70 M 55 30 Q 50 48, 55 70 M 60 30 Q 50 48, 60 70 M 65 30 Q 50 48, 65 70 M 70 30 Q 50 48, 70 70 M 75 30 Q 50 48, 75 70" fill="none" stroke="#ca8a04" stroke-width="1.2" opacity="0.9" filter="drop-shadow(0.5px 0.5px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Center Squeezing/Wrapping cord (indicates pitch modulation) -->
+              <rect x="44" y="47" width="12" height="6" rx="1.5" fill="#dc2626" stroke="#991b1b" stroke-width="0.8"/>
+              
+              <!-- Left head (Natural goat skin) -->
+              <ellipse cx="50" cy="30" rx="26" ry="6.5" fill="url(#skin-${id})" stroke="#4a3628" stroke-width="2" filter="drop-shadow(0px -1.5px 2px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="30" rx="22" ry="5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+              
+              <!-- Right head (Natural goat skin) -->
+              <ellipse cx="50" cy="70" rx="26" ry="6.5" fill="url(#skin-${id})" stroke="#4a3628" stroke-width="2" filter="drop-shadow(0px 1.5px 2px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="70" rx="22" ry="5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+            </g>
+        `;
+  } else if (instrument === 'zabumba') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
-            <!-- Braided cords tensioners crossing the rim -->
-            ${laces}
+            <!-- Wide, shallow 3D cylindrical shell -->
+            <g transform="rotate(15, 50, 50)">
+              <!-- Shell drop shadow -->
+              <rect x="18" y="32" width="64" height="36" rx="8" fill="#020617" opacity="0.4" filter="blur(3px)"/>
+              
+              <!-- Polished blue/green metallic shell -->
+              <rect x="20" y="34" width="60" height="32" rx="4" fill="url(#skin-${id})" stroke="#0f172a" stroke-width="1.8"/>
+              
+              <!-- Vertical chrome tuning tension rods and brackets -->
+              <line x1="28" y1="30" x2="28" y2="70" stroke="url(#chrome-${id})" stroke-width="1.5"/>
+              <line x1="42" y1="30" x2="42" y2="70" stroke="url(#chrome-${id})" stroke-width="1.5"/>
+              <line x1="58" y1="30" x2="58" y2="70" stroke="url(#chrome-${id})" stroke-width="1.5"/>
+              <line x1="72" y1="30" x2="72" y2="70" stroke="url(#chrome-${id})" stroke-width="1.5"/>
+              
+              <!-- Chrome brackets on shell -->
+              <rect x="26.5" y="47" width="3" height="6" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.4"/>
+              <rect x="40.5" y="47" width="3" height="6" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.4"/>
+              <rect x="56.5" y="47" width="3" height="6" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.4"/>
+              <rect x="70.5" y="47" width="3" height="6" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="0.4"/>
+              
+              <!-- Top head with metal hoop -->
+              <ellipse cx="50" cy="34" rx="30" ry="8" fill="#f1f5f9" stroke="url(#chrome-${id})" stroke-width="2" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="34" rx="26" ry="6.5" fill="none" stroke="#94a3b8" stroke-width="0.5"/>
+              
+              <!-- Bottom head with metal hoop -->
+              <ellipse cx="50" cy="66" rx="30" ry="8" fill="#e2e8f0" stroke="url(#chrome-${id})" stroke-width="2" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Ambient 3D lighting over shell -->
+              <rect x="20" y="34" width="60" height="32" rx="4" fill="url(#overlay-${id})" opacity="0.65"/>
+              <line x1="22" y1="36" x2="22" y2="64" stroke="#ffffff" stroke-width="1" opacity="0.2"/>
+            </g>
+        `;
+  } else if (instrument === 'davul') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
-            <!-- Real goat skin drumhead -->
-            <circle cx="50" cy="50" r="44" fill="url(#skin-${id})"/>
-            <circle cx="50" cy="50" r="43.2" fill="none" stroke="#1e1b18" stroke-width="0.6" opacity="0.4"/>
+            <!-- Diagonal deep cylindrical wood body -->
+            <g transform="rotate(25, 50, 50)">
+              <!-- Body shadow -->
+              <rect x="22" y="24" width="56" height="52" rx="16" fill="#020617" opacity="0.4" filter="blur(3px)"/>
+              
+              <!-- Oak/walnut wood barrel body -->
+              <rect x="24" y="26" width="52" height="48" rx="8" fill="#451a03" stroke="#1c0d02" stroke-width="2" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.45))"/>
+              
+              <!-- Zig-zag traditional rope lacing across the wooden cylinder body -->
+              <path d="M 25 26 L 31 74 L 37 26 L 43 74 L 49 26 L 55 74 L 61 26 L 67 74 L 73 26 M 25 74 L 31 26 L 37 74 L 43 26 L 49 74 L 55 26 L 61 74 L 67 26 L 73 74" fill="none" stroke="#ca8a04" stroke-width="1.5" opacity="0.8" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0.5px 0.5px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Thick rope loops/knots at top and bottom rims -->
+              <circle cx="31" cy="26" r="1.5" fill="#a16207"/>
+              <circle cx="43" cy="26" r="1.5" fill="#a16207"/>
+              <circle cx="55" cy="26" r="1.5" fill="#a16207"/>
+              <circle cx="67" cy="26" r="1.5" fill="#a16207"/>
+              <circle cx="31" cy="74" r="1.5" fill="#a16207"/>
+              <circle cx="43" cy="74" r="1.5" fill="#a16207"/>
+              <circle cx="55" cy="74" r="1.5" fill="#a16207"/>
+              <circle cx="67" cy="74" r="1.5" fill="#a16207"/>
+              
+              <!-- Top thick goatskin head seen in perspective -->
+              <ellipse cx="50" cy="26" rx="26" ry="6.5" fill="url(#skin-${id})" stroke="#713f12" stroke-width="1.5" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="26" rx="22" ry="5.5" fill="none" stroke="#713f12" stroke-width="0.5" opacity="0.4"/>
+              
+              <!-- Bottom goatskin head seen in perspective -->
+              <ellipse cx="50" cy="74" rx="26" ry="6.5" fill="url(#skin-${id})" stroke="#713f12" stroke-width="1.5" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Ambient 3D shading on cylinder -->
+              <rect x="24" y="26" width="52" height="48" rx="8" fill="url(#overlay-${id})" opacity="0.75"/>
+            </g>
+        `;
+  } else if (instrument === 'alfaia') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
-            <!-- Ambient 3D lighting cover -->
-            <circle cx="50" cy="50" r="44" fill="url(#overlay-${id})"/>
+            <!-- Colorful Brazilian Maracatu drum -->
+            <g transform="rotate(-15, 50, 50)">
+              <!-- Body shadow -->
+              <rect x="22" y="24" width="56" height="52" rx="14" fill="#020617" opacity="0.4" filter="blur(3px)"/>
+              
+              <!-- Red painted wood cylinder body -->
+              <rect x="24" y="26" width="52" height="48" rx="6" fill="#b91c1c" stroke="#450a0a" stroke-width="2"/>
+              
+              <!-- Thick horizontal yellow painted wood hoops at top and bottom -->
+              <rect x="22" y="22" width="56" height="8" rx="2" fill="#eab308" stroke="#854d0e" stroke-width="1.2" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.3))"/>
+              <rect x="22" y="70" width="56" height="8" rx="2" fill="#eab308" stroke="#854d0e" stroke-width="1.2" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.3))"/>
+              
+              <!-- Heavy green/yellow ropes laced in V-patterns between the hoops -->
+              <path d="M 25 30 L 31 70 L 37 30 L 43 70 L 49 30 L 55 70 L 61 30 L 67 70 L 73 30" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0.5px 1px 1px rgba(0,0,0,0.35))"/>
+              
+              <!-- Top rawhide head seen in perspective -->
+              <ellipse cx="50" cy="22" rx="26" ry="6" fill="url(#skin-${id})" stroke="#713f12" stroke-width="1.2" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.25))"/>
+              
+              <!-- Bottom rawhide head seen in perspective -->
+              <ellipse cx="50" cy="78" rx="26" ry="6" fill="url(#skin-${id})" stroke="#713f12" stroke-width="1.2" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.25))"/>
+              
+              <!-- Ambient 3D shading -->
+              <rect x="24" y="26" width="52" height="48" rx="6" fill="url(#overlay-${id})" opacity="0.6"/>
+              <line x1="26" y1="28" x2="26" y2="72" stroke="#ffffff" stroke-width="1.2" opacity="0.15"/>
+            </g>
+        `;
+  } else if (instrument === 'snare_drum') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Highly detailed 3D metal snare drum -->
+            <g transform="rotate(10, 50, 50)">
+              <!-- Snare body shadow -->
+              <rect x="18" y="32" width="64" height="36" rx="8" fill="#020617" opacity="0.4" filter="blur(3.5px)"/>
+              
+              <!-- Polished steel/chrome shell -->
+              <rect x="20" y="34" width="60" height="32" rx="4" fill="url(#chrome-${id})" stroke="#475569" stroke-width="1.8"/>
+              <rect x="20" y="47" width="60" height="6" fill="#cbd5e1" opacity="0.5"/> <!-- Center bead line -->
+              
+              <!-- Vertical chrome tension rods and brackets -->
+              <line x1="28" y1="30" x2="28" y2="70" stroke="url(#chrome-${id})" stroke-width="1.2"/>
+              <line x1="39" y1="30" x2="39" y2="70" stroke="url(#chrome-${id})" stroke-width="1.2"/>
+              <line x1="50" y1="30" x2="50" y2="70" stroke="url(#chrome-${id})" stroke-width="1.2"/>
+              <line x1="61" y1="30" x2="61" y2="70" stroke="url(#chrome-${id})" stroke-width="1.2"/>
+              <line x1="72" y1="30" x2="72" y2="70" stroke="url(#chrome-${id})" stroke-width="1.2"/>
+              
+              <!-- Double lugs brackets -->
+              <circle cx="28" cy="40" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="28" cy="60" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="39" cy="40" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="39" cy="60" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="50" cy="40" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="50" cy="60" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="61" cy="40" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="61" cy="60" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="72" cy="40" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              <circle cx="72" cy="60" r="1.5" fill="#94a3b8" stroke="#475569" stroke-width="0.3"/>
+              
+              <!-- Snare throw-off/strainer switch detail on the side -->
+              <rect x="17" y="42" width="3" height="12" fill="url(#chrome-${id})" stroke="#334155" stroke-width="0.5"/>
+              <circle cx="18.5" cy="44" r="1" fill="#dc2626"/>
+              
+              <!-- Top batter head seen in perspective -->
+              <ellipse cx="50" cy="34" rx="30" ry="7" fill="#fdf2e9" stroke="url(#chrome-${id})" stroke-width="1.8" filter="drop-shadow(0 -1.5px 1.5px rgba(0,0,0,0.35))"/>
+              <ellipse cx="50" cy="34" rx="26" ry="5.8" fill="none" stroke="#d1d5db" stroke-width="0.5" opacity="0.6"/>
+              
+              <!-- Bottom head seen in perspective -->
+              <ellipse cx="50" cy="66" rx="30" ry="7" fill="#cbd5e1" stroke="url(#chrome-${id})" stroke-width="1.8" filter="drop-shadow(0 1.5px 1.5px rgba(0,0,0,0.35))"/>
+              
+              <!-- Ambient 3D shading on the metal shell -->
+              <rect x="20" y="34" width="60" height="32" rx="4" fill="url(#overlay-${id})" opacity="0.5"/>
+              <line x1="22" y1="36" x2="22" y2="64" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/>
+            </g>
+        `;
+  } else if (instrument === 'surdo') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Deep, large 3D cylindrical aluminum shell -->
+            <g transform="rotate(-5, 50, 50)">
+              <!-- Shell shadow -->
+              <rect x="22" y="20" width="56" height="60" rx="14" fill="#020617" opacity="0.4" filter="blur(3.5px)"/>
+              
+              <!-- Aluminum metal cylinder body -->
+              <rect x="24" y="22" width="52" height="56" rx="6" fill="url(#chrome-${id})" stroke="#475569" stroke-width="1.8" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.4))"/>
+              
+              <!-- Long vertical steel tension rods spanning the entire cylinder height -->
+              <line x1="29" y1="18" x2="29" y2="82" stroke="#94a3b8" stroke-width="1.2"/>
+              <line x1="39" y1="18" x2="39" y2="82" stroke="#94a3b8" stroke-width="1.2"/>
+              <line x1="50" y1="18" x2="50" y2="82" stroke="#94a3b8" stroke-width="1.2"/>
+              <line x1="61" y1="18" x2="61" y2="82" stroke="#94a3b8" stroke-width="1.2"/>
+              <line x1="71" y1="18" x2="71" y2="82" stroke="#94a3b8" stroke-width="1.2"/>
+              
+              <!-- Small silver brackets on shell holding the rods -->
+              <rect x="28" y="48" width="2" height="4" fill="#64748b"/>
+              <rect x="38" y="48" width="2" height="4" fill="#64748b"/>
+              <rect x="49" y="48" width="2" height="4" fill="#64748b"/>
+              <rect x="60" y="48" width="2" height="4" fill="#64748b"/>
+              <rect x="70" y="48" width="2" height="4" fill="#64748b"/>
+              
+              <!-- Top head with metal rim -->
+              <ellipse cx="50" cy="22" rx="26" ry="6" fill="#f8fafc" stroke="url(#chrome-${id})" stroke-width="2" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="22" rx="22" ry="5" fill="none" stroke="#94a3b8" stroke-width="0.5" opacity="0.5"/>
+              
+              <!-- Bottom head with metal rim -->
+              <ellipse cx="50" cy="78" rx="26" ry="6" fill="#cbd5e1" stroke="url(#chrome-${id})" stroke-width="2"/>
+              
+              <!-- Ambient 3D shading over shell -->
+              <rect x="24" y="22" width="52" height="56" rx="6" fill="url(#overlay-${id})" opacity="0.6"/>
+              <line x1="26" y1="24" x2="26" y2="76" stroke="#ffffff" stroke-width="1.5" opacity="0.25"/>
+            </g>
+        `;
+  } else if (instrument === 'dunun') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Deep cylindrical West African bass drum -->
+            <g transform="rotate(20, 50, 50)">
+              <!-- Body shadow -->
+              <rect x="20" y="24" width="60" height="52" rx="16" fill="#020617" opacity="0.4" filter="blur(3px)"/>
+              
+              <!-- Thick log wooden body shell -->
+              <rect x="22" y="26" width="56" height="48" rx="8" fill="#451a03" stroke="#1c0d02" stroke-width="2.2" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.5))"/>
+              <line x1="22" y1="36" x2="78" y2="36" stroke="#271305" stroke-width="0.8" opacity="0.4"/>
+              <line x1="22" y1="64" x2="78" y2="64" stroke="#271305" stroke-width="0.8" opacity="0.4"/>
+              
+              <!-- Zig-zag ropes tuning laces -->
+              <path d="M 24 26 L 31 74 L 38 26 L 45 74 L 52 26 L 59 74 L 66 26 L 73 74 L 76 26 M 24 74 L 31 26 L 38 74 L 45 26 L 52 74 L 59 26 L 66 74 L 73 26 L 76 74" fill="none" stroke="#fbbf24" stroke-width="1.4" opacity="0.8" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0.5px 0.5px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Thick hand-shaved rawhide drumheads on both ends -->
+              <ellipse cx="50" cy="26" rx="28" ry="7" fill="url(#skin-${id})" stroke="#a16207" stroke-width="2" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="74" rx="28" ry="7" fill="url(#skin-${id})" stroke="#a16207" stroke-width="2" filter="drop-shadow(0 1px 1px rgba(0,0,0,0.3))"/>
+              
+              <!-- Attached traditional metal Dunun bell (Kenken) mounted on top of body -->
+              <g transform="translate(50, 14) rotate(-15)">
+                <path d="M -8 0 L -12 -5 L 12 -5 L 8 0 Z" fill="url(#chrome-${id})" stroke="#475569" stroke-width="0.8" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.35))"/>
+                <line x1="-8" y1="-2" x2="8" y2="-2" stroke="#94a3b8" stroke-width="0.5"/>
+              </g>
+              
+              <!-- Ambient 3D shading on the wood body -->
+              <rect x="22" y="26" width="56" height="48" rx="8" fill="url(#overlay-${id})" opacity="0.7"/>
+            </g>
+        `;
+  } else if (instrument === 'repinique') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Brazilian high-pitched steel drum with stick -->
+            <g transform="rotate(12, 50, 50)">
+              <!-- Body shadow -->
+              <rect x="22" y="26" width="56" height="48" rx="12" fill="#020617" opacity="0.4" filter="blur(3.5px)"/>
+              
+              <!-- Medium-depth polished steel cylinder shell -->
+              <rect x="24" y="28" width="52" height="44" rx="5" fill="url(#chrome-${id})" stroke="#475569" stroke-width="1.8" filter="drop-shadow(0 3px 4px rgba(0,0,0,0.4))"/>
+              
+              <!-- Vertical chrome tension rods running along body -->
+              <line x1="29" y1="24" x2="29" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="39" y1="24" x2="39" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="50" y1="24" x2="50" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="61" y1="24" x2="61" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="71" y1="24" x2="71" y2="76" stroke="#94a3b8" stroke-width="1.5"/>
+              
+              <!-- Top synthetic head with chrome rim seen in perspective -->
+              <ellipse cx="50" cy="28" rx="26" ry="6" fill="#fdfefe" stroke="url(#chrome-${id})" stroke-width="2" filter="drop-shadow(0 -1px 1px rgba(0,0,0,0.3))"/>
+              <ellipse cx="50" cy="28" rx="22" ry="4.8" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+              
+              <!-- Bottom head seen in perspective -->
+              <ellipse cx="50" cy="72" rx="26" ry="6" fill="#cbd5e1" stroke="url(#chrome-${id})" stroke-width="2"/>
+              
+              <!-- A wooden drumstick laying diagonally across the top head -->
+              <line x1="26" y1="25" x2="72" y2="40" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round" filter="drop-shadow(1px 2px 2px rgba(0,0,0,0.45))"/>
+              <circle cx="72" cy="40" r="1.1" fill="#ca8a04"/>
+              
+              <!-- Ambient 3D metal shell gloss -->
+              <rect x="24" y="28" width="52" height="44" rx="5" fill="url(#overlay-${id})" opacity="0.55"/>
+              <line x1="26" y1="30" x2="26" y2="70" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/>
+            </g>
+        `;
+  } else if (instrument === 'gran_cassa') {
+    shapes = `
+            <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
+            
+            <!-- Large suspended orchestral bass drum inside a heavy metal cradle stand -->
+            <g transform="rotate(5, 50, 50)">
+              <!-- Stand bottom horizontal support shadow -->
+              <ellipse cx="50" cy="88" rx="36" ry="4" fill="#020617" opacity="0.75" filter="blur(2.5px)"/>
+              
+              <!-- Suspension stand outer circular frame (black tubular steel) -->
+              <circle cx="50" cy="48" r="44" fill="none" stroke="#09090b" stroke-width="3" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.5))"/>
+              <!-- Stand feet and vertical bars -->
+              <line x1="22" y1="76" x2="16" y2="88" stroke="#18181b" stroke-width="3.2" stroke-linecap="round"/>
+              <line x1="78" y1="76" x2="84" y2="88" stroke="#18181b" stroke-width="3.2" stroke-linecap="round"/>
+              <line x1="16" y1="88" x2="84" y2="88" stroke="#18181b" stroke-width="3.2" stroke-linecap="round"/>
+              
+              <!-- Circular wooden shell deep cylinder suspended inside stand -->
+              <circle cx="50" cy="48" r="32" fill="#2d1a12" stroke="#0c0402" stroke-width="2.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.45))"/>
+              
+              <!-- Thick calfskin white drumheads stretched over flesh hoops with tuning lugs -->
+              <circle cx="50" cy="48" r="29" fill="url(#skin-${id})" stroke="#8a5b30" stroke-width="1.5"/>
+              <circle cx="50" cy="48" r="26.5" fill="none" stroke="#ad845b" stroke-width="0.8" opacity="0.5"/>
+              
+              <!-- Elastic suspension bands/ropes connecting shell to the outer circular stand -->
+              <path d="M 50 4 L 50 16 M 50 92 L 50 80 M 6 48 L 18 48 M 94 48 L 82 48 M 18 16 L 8 26 M 82 16 L 92 26 M 18 80 L 8 70 M 82 80 L 92 70" stroke="#ef4444" stroke-width="1.4" opacity="0.85" stroke-linecap="round"/>
+              
+              <!-- Heavy fluffy mallet/beater hanging or crossing the drumhead -->
+              <g transform="translate(42, 38) rotate(-35)">
+                <!-- Handle -->
+                <line x1="-12" y1="28" x2="12" y2="-28" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round" filter="drop-shadow(1px 2px 2px rgba(0,0,0,0.4))"/>
+                <!-- Fluffy head -->
+                <circle cx="12" cy="-28" r="4.5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.5" filter="drop-shadow(0px 1.5px 1.5px rgba(0,0,0,0.3))"/>
+              </g>
+              
+              <!-- Ambient 3D shading on head -->
+              <circle cx="50" cy="48" r="29" fill="url(#overlay-${id})" opacity="0.75"/>
+            </g>
         `;
   } else if (instrument === 'gome') {
     shapes = `

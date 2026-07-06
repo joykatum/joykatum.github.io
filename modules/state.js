@@ -62,5 +62,7 @@ export const state = {
 
   // Custom Pattern Preview
   isPreviewPlaying: false,
-  currentEditingPattern: null
+  currentEditingPattern: null,
+
+  singleDrumMode: false
 };

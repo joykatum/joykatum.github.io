@@ -11,5 +11,11 @@
   },
   "devDependencies": {
     "prettier": "^3.9.4"
+  },
+  "dependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/generator": "^8.0.0",
+    "@babel/parser": "^8.0.0",
+    "@babel/traverse": "^8.0.0"
   }
 }

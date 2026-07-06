@@ -426,7 +426,7 @@
 
             <div
               class="pattern-creator-controls"
-              style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px"
+              style="display: flex; flex-wrap: nowrap; gap: 12px; margin-bottom: 12px"
             >
               <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px">
                 <label
@@ -556,48 +556,20 @@
         <!-- Drum Instrument Information -->
         <div class="footer-control-group drum-group">
           <span class="footer-control-label">🥁 DRUM:</span>
-          <div class="footer-group-controls">
+          <div
+            class="footer-group-controls"
+            id="drum-dropdowns-row"
+            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
+          >
             <select
               id="drum-instrument"
               class="footer-select"
-              style="width: 155px; min-width: 155px; max-width: 155px; font-weight: 700; color: #10b981"
+              style="flex: 1 1 0px; min-width: 0; font-weight: 700; color: #10b981"
             >
               <option value="conga">Congas</option>
             </select>
 
-            <!-- Sub Drum Selection (moved from second screen) -->
-            <div id="drum-selection-container" style="display: inline-flex; align-items: center">
-              <select
-                id="drum-selection"
-                class="footer-select"
-                style="
-                  width: 155px;
-                  min-width: 155px;
-                  max-width: 155px;
-                  color: #34d399;
-                  font-weight: 700;
-                  background: rgba(16, 185, 129, 0.08);
-                  border-color: rgba(16, 185, 129, 0.25);
-                "
-              >
-                <!-- Dynamically populated -->
-              </select>
-            </div>
-
-            <!-- Filter Button -->
-            <button
-              id="settings-toggle-btn"
-              class="footer-btn filter-btn"
-              title="Open Drum Filters Panel"
-              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
-            >
-              <svg viewBox="0 0 24 24" style="width: 11px; height: 11px; fill: currentColor">
-                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm5 7h8v-2H8v2z" />
-              </svg>
-              FILTER
-            </button>
-            <!-- Drum Info Button -->
-            <button id="footer-drum-info-btn" class="footer-icon-btn" title="View Drum Info">
+            <button id="footer-drum-info-btn" class="footer-icon-btn" title="Drum Info" style="margin: 0">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -605,40 +577,144 @@
                 stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                style="width: 12px; height: 12px"
+                style="width: 14px; height: 14px"
               >
-                <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+
+            <!-- Filter Button -->
+            <button
+              id="settings-toggle-btn"
+              class="footer-icon-btn filter-btn"
+              title="Open Drum Filters Panel"
+              style="margin: 0"
+            >
+              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
+                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm5 7h8v-2H8v2z" />
               </svg>
             </button>
           </div>
         </div>
 
+        <!-- Pick Drums Block -->
+        <div
+          class="footer-control-group pick-drums-group"
+          id="pick-drums-group"
+          style="
+            display: none;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+            width: 100%;
+          "
+        >
+          <span class="footer-control-label">🎯 PICK DRUMS:</span>
+          <div
+            class="footer-group-controls"
+            style="
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 8px !important;
+              width: 100% !important;
+              flex-wrap: wrap !important;
+            "
+          >
+            <div
+              id="drum-selection-container"
+              style="
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 8px !important;
+                width: 100% !important;
+                min-width: 0;
+              "
+            >
+              <!-- Dynamically populated checkboxes -->
+            </div>
+            <div
+              id="single-drum-mode-container"
+              style="
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                flex-shrink: 0;
+                margin-top: 4px;
+              "
+            >
+              <label style="font-size: 0.65rem; color: #94a3b8; font-weight: 600; white-space: nowrap; margin: 0"
+                >SINGLE DRUM MODE</label
+              >
+              <label class="switch-container" style="transform: scale(0.7); transform-origin: left center; margin: 0">
+                <input type="checkbox" id="single-drum-mode-checkbox" />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <!-- Play-along / Pattern Selection Mode -->
-        <div class="footer-control-group play-along-group">
-          <span class="footer-control-label">🎵 PATTERN:</span>
-          <div class="footer-group-controls">
-            <select id="pattern-select" class="footer-select" style="min-width: 120px">
+        <div
+          class="footer-control-group play-along-group"
+          style="flex-direction: column !important; align-items: stretch !important; gap: 8px !important; width: 100%"
+        >
+          <!-- Pattern selection row -->
+          <div
+            class="footer-group-controls"
+            id="pattern-dropdowns-row"
+            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
+          >
+            <span class="footer-control-label">🎵 PATTERN:</span>
+            <select id="pattern-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
               <option value="none">⏹️ Off</option>
             </select>
-            <button id="pattern-play-btn" class="footer-btn">PLAY</button>
-            <!-- Pattern Creator Dialog Button next to play button -->
+            <button id="pattern-play-btn" class="footer-icon-btn" title="Play/Stop Pattern" style="margin: 0">
+              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
             <button
               id="pattern-creator-toggle-btn"
-              class="footer-btn pattern-btn"
+              class="footer-icon-btn pattern-btn"
               title="Toggle Custom Pattern Creator"
-              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
+              style="margin: 0; flex-shrink: 0"
             >
-              <svg viewBox="0 0 24 24" class="pattern-icon" style="width: 11px; height: 11px; fill: currentColor">
+              <svg viewBox="0 0 24 24" class="pattern-icon" style="width: 14px; height: 14px; fill: currentColor">
                 <path
                   d="M4 4h16v16H4V4zm2 2v3h3V6H6zm5 0v3h3V6h-3zm5 0v3h3V6h-3zM6 11v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3zM6 16v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3z"
                 />
               </svg>
-              CREATE
             </button>
-            <div class="footer-bpm-wrapper">
-              <span class="footer-bpm-label"
+          </div>
+
+          <!-- BPM tempo row -->
+          <div
+            class="footer-group-controls"
+            id="pattern-bpm-row"
+            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
+          >
+            <span class="footer-control-label"></span>
+            <div
+              class="footer-bpm-wrapper"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex: 1 1 0px;
+                min-width: 120px;
+                margin: 0;
+                border-left: none !important;
+                padding-left: 0 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
+              "
+            >
+              <span class="footer-bpm-label" style="flex-shrink: 0; white-space: nowrap"
                 >BPM: <span id="pattern-bpm-val" style="color: #10b981; font-weight: 800">100</span></span
               >
               <input
@@ -648,7 +724,7 @@
                 max="180"
                 value="100"
                 class="footer-bpm-slider"
-                style="width: 70px"
+                style="flex: 1 1 0px; min-width: 0; width: auto !important"
               />
             </div>
           </div>
@@ -657,23 +733,21 @@
         <!-- Copy of Effects Selection with Lab Button -->
         <div class="footer-control-group fx-group">
           <span class="footer-control-label">✨ EFFECT:</span>
-          <div class="footer-group-controls">
-            <select id="footer-fx-preset-select" class="footer-select" style="min-width: 140px">
+          <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
+            <select id="footer-fx-preset-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
               <option value="none">✨ No Effects (Bypass)</option>
             </select>
-            <!-- Audio Effects Button moved here next to dropdown -->
             <button
               id="effects-toggle-btn"
-              class="footer-btn fx-btn"
-              title="Toggle Audio Effects"
-              style="font-weight: 800; display: flex; align-items: center; gap: 4px"
+              class="footer-icon-btn fx-btn"
+              title="Toggle Audio Effects Lab"
+              style="margin: 0"
             >
-              <svg viewBox="0 0 24 24" class="fx-icon" style="width: 11px; height: 11px; fill: currentColor">
+              <svg viewBox="0 0 24 24" class="fx-icon" style="width: 14px; height: 14px; fill: currentColor">
                 <path
                   d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
                 />
               </svg>
-              LAB
             </button>
           </div>
         </div>
@@ -681,35 +755,28 @@
         <!-- Combined Recorder & Format Group -->
         <div class="footer-control-group record-group">
           <span class="footer-control-label">🔴 RECORDER:</span>
-          <div
-            class="footer-group-controls"
-            style="flex-direction: column; align-items: stretch; gap: 8px; width: 100%"
-          >
+          <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
             <select
               id="record-format-select"
               class="footer-select"
-              style="font-weight: 700; width: 100%; max-width: 100%"
+              style="font-weight: 700; flex: 1 1 0px; min-width: 0"
             >
               <option value="audio/webm">WebM</option>
             </select>
             <button
               id="record-btn"
-              class="footer-btn record-btn"
+              class="footer-icon-btn record-btn"
               title="Record Audio"
-              style="
-                background: rgba(220, 38, 38, 0.15);
-                border-color: rgba(220, 38, 38, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 6px;
-                width: 100%;
-              "
+              style="background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3); margin: 0"
             >
-              <svg viewBox="0 0 24 24" class="record-icon" style="width: 12px; height: 12px; fill: #ef4444">
+              <svg
+                viewBox="0 0 24 24"
+                class="record-icon"
+                id="record-icon-svg"
+                style="width: 14px; height: 14px; fill: #ef4444"
+              >
                 <circle cx="12" cy="12" r="8"></circle>
               </svg>
-              <span id="record-btn-text" style="color: #ef4444; font-weight: 800; letter-spacing: 0.05em">REC</span>
             </button>
           </div>
         </div>
@@ -724,20 +791,51 @@
           align-items: center;
           justify-content: center;
           gap: 12px;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           width: 100%;
         "
       >
         <span class="cheat-item" id="cheat-left-hand"
-          ><b>LEFT</b>: ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
+          ><b>LEFT</b> ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
         >
         <span class="cheat-divider" id="cheat-divider-hands">|</span>
         <span class="cheat-item" id="cheat-right-hand"
-          ><b>RIGHT</b>: ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
+          ><b>RIGHT</b> ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
         >
+        <button
+          id="footer-taps-info-btn"
+          class="footer-icon-btn"
+          title="View Tap Details"
+          style="
+            margin: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: #34d399;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            transition: all 0.2s ease;
+          "
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </button>
       </div>
     </div>
-
     <script type="module" src="modules/main.js"></script>
   </body>
 </html>

@@ -23,11 +23,11 @@ export function startPattern(isPreview = false) {
 
   if (playBtn) {
     if (isPreview) {
-      playBtn.innerText = '⏹️ STOP';
+      playBtn.innerHTML = '⏹️ STOP';
       playBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
       playBtn.style.borderColor = '#f87171';
     } else {
-      playBtn.innerText = 'STOP';
+      playBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M6 6h12v12H6z"/></svg>`;
       playBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
       playBtn.style.borderColor = '#f87171';
     }
@@ -52,7 +52,7 @@ export function stopPattern() {
 
   const playBtn = document.getElementById('pattern-play-btn');
   if (playBtn) {
-    playBtn.innerText = 'PLAY';
+    playBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M8 5v14l11-7z"/></svg>`;
     playBtn.style.background = '';
     playBtn.style.borderColor = '';
   }

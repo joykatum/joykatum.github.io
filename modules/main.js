@@ -8,7 +8,8 @@ import {
   handleInstrumentChange,
   triggerHitEffect,
   updateActiveDrumsForVisible,
-  updatePatternInfoBtnVisibility
+  updatePatternInfoBtnVisibility,
+  updateActiveDrumUI
 } from './ui.js';
 import { startPattern, stopPattern, setOnStepTriggered } from './sequencer.js';
 import { initAudio } from './audio.js';
@@ -41,6 +42,17 @@ if (drumSelectionSelect) {
     localStorage.setItem('drumSelection', state.drumSelection);
     updateActiveDrumsForVisible();
     renderDrums();
+  });
+}
+
+// Single Drum Mode binding setup
+const singleDrumModeCheckbox = document.getElementById('single-drum-mode-checkbox');
+if (singleDrumModeCheckbox) {
+  singleDrumModeCheckbox.checked = state.singleDrumMode;
+  singleDrumModeCheckbox.addEventListener('change', (e) => {
+    state.singleDrumMode = e.target.checked;
+    updateActiveDrumsForVisible();
+    updateActiveDrumUI(); // just update active UI indicator
   });
 }
 

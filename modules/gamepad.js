@@ -264,7 +264,7 @@ export function handleGamepadInputLoop() {
     const instDef = drumTypes[state.currentInstrument];
     const totalDrums = instDef ? instDef.drums.length : visibleDrums.length;
 
-    if (state.currentInstrument === 'bata') {
+    if (state.currentInstrument === 'bata' || state.singleDrumMode) {
       const allowedIds = visibleDrums.map((d) => d.id);
       let idx = allowedIds.indexOf(state.leftActiveDrumId);
       if (idx === -1) idx = 0;
