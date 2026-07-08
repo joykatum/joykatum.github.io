@@ -316,12 +316,10 @@ export function populatePresetsDropdown(activeName) {
     if (!sel) return;
     sel.innerHTML = '';
 
-    if (isFooter) {
-      const opt = document.createElement('option');
-      opt.value = 'none';
-      opt.innerText = '✨ No Effects (Bypass)';
-      sel.appendChild(opt);
-    }
+    const opt = document.createElement('option');
+    opt.value = 'none';
+    opt.innerText = '✨ No Effects (Bypass)';
+    sel.appendChild(opt);
 
     // Add default presets sorted alphabetically
     const sortedDefaults = [...defaultPresets].sort((a, b) => compareStrings(a.name, b.name));
@@ -738,7 +736,7 @@ export function navigatePreset(dir) {
     const opt = select.options[index];
     if (opt && opt.value && opt.value !== '_custom_') {
       select.selectedIndex = index;
-      handlePresetChange(opt.value);
+      select.dispatchEvent(new Event('change'));
     }
   }
 }

@@ -621,7 +621,18 @@ export function applyFilters() {
 
 // Trigger particle feedback floating upwards & drum body glow
 export function triggerHitEffect(drumId, hitType) {
-  const wrapper = document.getElementById(`drum-${drumId}`);
+  let finalId = drumId;
+  let suffix = '';
+  if (
+    typeof drumId === 'string' &&
+    (drumId.includes('_macho') || drumId.includes('_hembra') || drumId.includes('_high') || drumId.includes('_low'))
+  ) {
+    const parts = drumId.split('_');
+    finalId = parts[0];
+    suffix = parts[1];
+  }
+
+  const wrapper = document.getElementById(`drum-${finalId}`);
   if (!wrapper) return;
 
   // Create the floating text
@@ -656,6 +667,22 @@ export function triggerHitEffect(drumId, hitType) {
       body = wrapper.querySelector('.drum-bata-big');
     } else if (hitType.includes('chacha') || hitType.includes('bell')) {
       body = wrapper.querySelector('.drum-bata-small');
+    }
+  } else if (state.currentInstrument === 'bongo') {
+    if (suffix === 'macho') {
+      body = wrapper.querySelector('.drum-bongo-macho');
+    } else if (suffix === 'hembra') {
+      body = wrapper.querySelector('.drum-bongo-hembra');
+    } else {
+      body = wrapper.querySelector('.drum-bongo-macho');
+    }
+  } else if (state.currentInstrument === 'agogo') {
+    if (suffix === 'high') {
+      body = wrapper.querySelector('.drum-agogo-high');
+    } else if (suffix === 'low') {
+      body = wrapper.querySelector('.drum-agogo-low');
+    } else {
+      body = wrapper.querySelector('.drum-agogo-high');
     }
   }
 
@@ -760,7 +787,7 @@ export function populateDrumSelectionOptions() {
   if (!instDef) return;
 
   const drums = instDef.drums || [];
-  const inseparableInstruments = ['janggu', 'mridangam', 'handpan', 'log_drum', 'dhol', 'agogo', 'tabla'];
+  const inseparableInstruments = ['janggu', 'mridangam', 'handpan', 'log_drum', 'dhol', 'agogo', 'tabla', 'bongo'];
   const isSeparable = drums.length > 1 && !inseparableInstruments.includes(inst);
 
   const singleDrumModeContainer = document.getElementById('single-drum-mode-container');
@@ -980,9 +1007,9 @@ export function updateActiveDrumUI() {
 
     let badgeText = [];
     if (canCycle) {
-      if (isLeft && isRight) badgeText.push('L/R');
-      else if (isLeft) badgeText.push('L');
-      else if (isRight) badgeText.push('R');
+      if (isLeft && isRight) badgeText.push('L1/q / R1/p');
+      else if (isLeft) badgeText.push('L1/q');
+      else if (isRight) badgeText.push('R1/p');
     }
 
     if (badgeText.length > 0) {
@@ -1266,7 +1293,7 @@ export function setupAudioEffectsPanel() {
   const recordBtn = document.getElementById('record-btn');
 
   if (formatSelect) {
-    const formats = getSupportedFormats();
+    const formats = getSupportedFormats().sort((a, b) => compareStrings(a.label, b.label));
     formatSelect.innerHTML = '';
     formats.forEach((f) => {
       const opt = document.createElement('option');
@@ -1621,11 +1648,11 @@ if (footerEl && footerToggleBtn) {
   const applyFooterCollapsedState = () => {
     if (isFooterCollapsed) {
       footerEl.classList.add('collapsed');
-      if (footerToggleText) footerToggleText.textContent = 'SHOW CONTROLS';
+      if (footerToggleText) footerToggleText.textContent = 'JoyKaTum | SHOW CONTROLS';
       if (footerToggleIcon) footerToggleIcon.textContent = '▲';
     } else {
       footerEl.classList.remove('collapsed');
-      if (footerToggleText) footerToggleText.textContent = 'COLLAPSE CONTROLS';
+      if (footerToggleText) footerToggleText.textContent = 'JoyKaTum | COLLAPSE CONTROLS';
       if (footerToggleIcon) footerToggleIcon.textContent = '▼';
     }
   };

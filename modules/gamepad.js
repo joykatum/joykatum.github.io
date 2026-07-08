@@ -139,8 +139,34 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
   const triggerPlay = (drumDef, type) => {
     const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
     if (instDef.sounds[type]) {
-      instDef.sounds[type](drumDef);
+      let virtualDrum = drumDef;
+      if (state.currentInstrument === 'bongo') {
+        virtualDrum = Object.assign({}, drumDef, {
+          id: hand === 'l' ? 0 : 1,
+          pitchMult: hand === 'l' ? 1.4 : 0.9
+        });
+      } else if (state.currentInstrument === 'agogo') {
+        virtualDrum = Object.assign({}, drumDef, {
+          id: hand === 'l' ? 1 : 0,
+          pitchMult: hand === 'l' ? 1.35 : 1.0
+        });
+      }
+      instDef.sounds[type](virtualDrum);
     }
+  };
+
+  const getTargetDrumDetails = () => {
+    const activeDrum = hand === 'l' ? state.leftActiveDrumId : state.rightActiveDrumId;
+    const visibleDrums = getVisibleDrums();
+    const drumDef = visibleDrums.find((d) => d.id === activeDrum) || visibleDrums[0] || { id: 0, pitchMult: 1.0 };
+
+    let finalDrumId = drumDef.id;
+    if (state.currentInstrument === 'bongo') {
+      finalDrumId = `${drumDef.id}_${hand === 'l' ? 'macho' : 'hembra'}`;
+    } else if (state.currentInstrument === 'agogo') {
+      finalDrumId = `${drumDef.id}_${hand === 'l' ? 'high' : 'low'}`;
+    }
+    return { drumDef, finalDrumId };
   };
 
   if (isPressed && !press.pressed) {
@@ -149,11 +175,9 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
     press.firedLong = false;
 
     if (!longSound) {
-      const activeDrum = hand === 'l' ? state.leftActiveDrumId : state.rightActiveDrumId;
-      const visibleDrums = getVisibleDrums();
-      const drumDef = visibleDrums.find((d) => d.id === activeDrum) || visibleDrums[0] || { id: 0, pitchMult: 1.0 };
+      const { drumDef, finalDrumId } = getTargetDrumDetails();
       triggerPlay(drumDef, shortSound);
-      triggerHitEffect(drumDef.id, shortSound);
+      triggerHitEffect(finalDrumId, shortSound);
       triggerGamepadVibration(gp, shortSound);
 
       if (hand === 'l') state.lastLeftHit = shortSound;
@@ -162,11 +186,9 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
   } else if (isPressed && press.pressed) {
     if (longSound && !press.firedLong && now - press.startTime > CONFIG.GAMEPAD.LONG_PRESS_THRESHOLD) {
       press.firedLong = true;
-      const activeDrum = hand === 'l' ? state.leftActiveDrumId : state.rightActiveDrumId;
-      const visibleDrums = getVisibleDrums();
-      const drumDef = visibleDrums.find((d) => d.id === activeDrum) || visibleDrums[0] || { id: 0, pitchMult: 1.0 };
+      const { drumDef, finalDrumId } = getTargetDrumDetails();
       triggerPlay(drumDef, longSound);
-      triggerHitEffect(drumDef.id, longSound);
+      triggerHitEffect(finalDrumId, longSound);
       triggerGamepadVibration(gp, longSound);
 
       if (hand === 'l') state.lastLeftHit = longSound;
@@ -174,11 +196,9 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
     }
   } else if (!isPressed && press.pressed) {
     if (longSound && !press.firedLong) {
-      const activeDrum = hand === 'l' ? state.leftActiveDrumId : state.rightActiveDrumId;
-      const visibleDrums = getVisibleDrums();
-      const drumDef = visibleDrums.find((d) => d.id === activeDrum) || visibleDrums[0] || { id: 0, pitchMult: 1.0 };
+      const { drumDef, finalDrumId } = getTargetDrumDetails();
       triggerPlay(drumDef, shortSound);
-      triggerHitEffect(drumDef.id, shortSound);
+      triggerHitEffect(finalDrumId, shortSound);
       triggerGamepadVibration(gp, shortSound);
 
       if (hand === 'l') state.lastLeftHit = shortSound;
@@ -212,46 +232,9 @@ export function handleGamepadInputLoop() {
     }
   }
 
-  if (!gp) {
-    if (statusEl && statusEl.innerText !== '') {
-      statusEl.innerText = '';
-    }
-    if (statusIconContainer) {
-      statusIconContainer.classList.remove('connected');
-    }
-    // Process keyboard hits even if no physical gamepad is connected
-    const inst = state.currentInstrument;
-    const mappingObj = instrumentMappings[inst] || instrumentMappings.conga;
-    const leftMap = mappingObj.left;
-    const rightMap = mappingObj.right;
-
-    processGamepadHit('up_l', null, 'l', leftMap.up, leftMap.upLong);
-    processGamepadHit('down_l', null, 'l', leftMap.down, leftMap.downLong);
-    processGamepadHit('left_l', null, 'l', leftMap.left, leftMap.leftLong, false);
-    processGamepadHit('right_l', null, 'l', leftMap.right, leftMap.rightLong, false);
-
-    processGamepadHit('up_r', null, 'r', rightMap.up, rightMap.upLong);
-    processGamepadHit('down_r', null, 'r', rightMap.down, rightMap.downLong);
-    processGamepadHit('left_r', null, 'r', rightMap.left, rightMap.leftLong, false);
-    processGamepadHit('right_r', null, 'r', rightMap.right, rightMap.rightLong, false);
-
-    processGamepadHit('click_r', null, 'r', rightMap.trigger || rightMap.up, null);
-
-    requestAnimationFrame(handleGamepadInputLoop);
-    return;
-  } else {
-    if (statusEl && !statusEl.innerText.includes(gp.id)) {
-      statusEl.innerText = `🎮 Connected: ${gp.id.substring(0, 25)}`;
-      statusEl.style.color = '#10b981';
-    }
-    if (statusIconContainer) {
-      statusIconContainer.classList.add('connected');
-    }
-  }
-
   // Edge trigger detection for L1/R1 to shift active drum selection
-  const l1Pressed = gp.buttons[4]?.pressed || false;
-  const r1Pressed = gp.buttons[5]?.pressed || false;
+  const l1Pressed = (gp && gp.buttons[4]?.pressed) || (state.keyboardState && state.keyboardState.l1) || false;
+  const r1Pressed = (gp && gp.buttons[5]?.pressed) || (state.keyboardState && state.keyboardState.r1) || false;
   const justL1 = l1Pressed && !state.prevL1State;
   const justR1 = r1Pressed && !state.prevR1State;
   state.prevL1State = l1Pressed;
@@ -266,7 +249,7 @@ export function handleGamepadInputLoop() {
     const instDef = drumTypes[state.currentInstrument];
     const totalDrums = instDef ? instDef.drums.length : visibleDrums.length;
 
-    if (state.currentInstrument === 'bata' || state.singleDrumMode) {
+    if (state.singleDrumMode || state.currentInstrument === 'bata') {
       const allowedIds = visibleDrums.map((d) => d.id);
       let idx = allowedIds.indexOf(state.leftActiveDrumId);
       if (idx === -1) idx = 0;
@@ -311,6 +294,44 @@ export function handleGamepadInputLoop() {
     updateActiveDrumUI();
   }
 
+  if (!gp) {
+    if (statusEl && statusEl.innerText !== '') {
+      statusEl.innerText = '';
+    }
+    if (statusIconContainer) {
+      statusIconContainer.classList.remove('connected');
+    }
+
+    // Process keyboard hits even if no physical gamepad is connected
+    const inst = state.currentInstrument;
+    const mappingObj = instrumentMappings[inst] || instrumentMappings.conga;
+    const leftMap = mappingObj.left;
+    const rightMap = mappingObj.right;
+
+    processGamepadHit('up_l', null, 'l', leftMap.up, leftMap.upLong);
+    processGamepadHit('down_l', null, 'l', leftMap.down, leftMap.downLong);
+    processGamepadHit('left_l', null, 'l', leftMap.left, leftMap.leftLong, false);
+    processGamepadHit('right_l', null, 'l', leftMap.right, leftMap.rightLong, false);
+
+    processGamepadHit('up_r', null, 'r', rightMap.up, rightMap.upLong);
+    processGamepadHit('down_r', null, 'r', rightMap.down, rightMap.downLong);
+    processGamepadHit('left_r', null, 'r', rightMap.left, rightMap.leftLong, false);
+    processGamepadHit('right_r', null, 'r', rightMap.right, rightMap.rightLong, false);
+
+    processGamepadHit('click_r', null, 'r', rightMap.trigger || rightMap.up, null);
+
+    requestAnimationFrame(handleGamepadInputLoop);
+    return;
+  } else {
+    if (statusEl && !statusEl.innerText.includes(gp.id)) {
+      statusEl.innerText = `🎮 Connected: ${gp.id.substring(0, 25)}`;
+      statusEl.style.color = '#10b981';
+    }
+    if (statusIconContainer) {
+      statusIconContainer.classList.add('connected');
+    }
+  }
+
   // Process hits
   const isUpL = checkInput(mapping.up_l, gp);
   const isDownL = checkInput(mapping.down_l, gp);
@@ -346,7 +367,7 @@ export function handleGamepadInputLoop() {
   requestAnimationFrame(handleGamepadInputLoop);
 }
 
-// Keyboard Control Scheme Mapping (ASDW / WASD and JKLI / IJKL)
+// Keyboard Control Scheme Mapping
 const KEY_MAP = {
   // Left Hand: WASD (w = up_l, s = down_l, a = left_l, d = right_l)
   KeyW: 'up_l',
@@ -362,7 +383,7 @@ const KEY_MAP = {
   d: 'right_l',
   D: 'right_l',
 
-  // Right Hand: JKLI / IJKL (i = up_r, k = down_r, j = left_r, l = right_r)
+  // Right Hand: JKLI (i = up_r, k = down_r, j = left_r, l = right_r)
   KeyI: 'up_r',
   i: 'up_r',
   I: 'up_r',
@@ -375,6 +396,14 @@ const KEY_MAP = {
   KeyL: 'right_r',
   l: 'right_r',
   L: 'right_r',
+
+  // Gamepad L1/R1 emulation
+  KeyQ: 'l1',
+  q: 'l1',
+  Q: 'l1',
+  KeyP: 'r1',
+  p: 'r1',
+  P: 'r1',
 
   // Arrow keys as intuitive fallback
   ArrowUp: 'up_r',
@@ -403,7 +432,9 @@ window.addEventListener('keydown', (e) => {
         up_r: false,
         down_r: false,
         left_r: false,
-        right_r: false
+        right_r: false,
+        l1: false,
+        r1: false
       };
     }
 
@@ -432,7 +463,9 @@ window.addEventListener('keyup', (e) => {
         up_r: false,
         down_r: false,
         left_r: false,
-        right_r: false
+        right_r: false,
+        l1: false,
+        r1: false
       };
     }
     state.keyboardState[mappedDirection] = false;

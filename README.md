@@ -6,9 +6,9 @@ A simple app to help simulate drums using game controller or an external Hori dr
 
 Install a joystick mapping app. For the Mac, I use [Enjoyable](https://yukkurigames.com/enjoyable/). 
 
-Map the keys **AWSD** to the key mapping app after inserting your controller to your USB port to the left hand, or **HUJK** if you prefer the right hand. But I normally don’t do this since the arrow keys are naturally mapped to them. 
+Map the keys **AWSD** to the key mapping app after inserting your controller to your USB port to the left hand, or **JKIL** if you prefer the right hand. But I normally don’t do this since the arrow keys are naturally mapped to them. 
 
-These should then just work. You can also map the **L** and **R** keys to the L and R buttons of the controller. 
+These should then just work. You can also map the **Q** and **R** keyboard keys to the L and R buttons of the controller. 
 
 The page should now be able to work on your stick. 
 

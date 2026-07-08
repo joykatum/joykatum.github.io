@@ -38,6 +38,10 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         let sideMap = mapping.left; // Default left
         if (inst === 'bata') {
           sideMap = headType === 'enu' ? mapping.right : mapping.left;
+        } else if (inst === 'bongo') {
+          sideMap = headType === 'macho' ? mapping.left : mapping.right;
+        } else if (inst === 'agogo') {
+          sideMap = headType === 'high' ? mapping.left : mapping.right;
         }
         if (isLong && secDef.dirLong && sideMap[secDef.dirLong] && sideMap[secDef.dirLong] !== sideMap[secDef.dir]) {
           return sideMap[secDef.dirLong];
@@ -54,6 +58,10 @@ export function createSectorOverlays(body, drum, headType = 'default') {
       let sideMap = mapping.left;
       if (inst === 'bata') {
         sideMap = headType === 'enu' ? mapping.right : mapping.left;
+      } else if (inst === 'bongo') {
+        sideMap = headType === 'macho' ? mapping.left : mapping.right;
+      } else if (inst === 'agogo') {
+        sideMap = headType === 'high' ? mapping.left : mapping.right;
       }
       return secDef.dirLong && sideMap[secDef.dirLong] && sideMap[secDef.dirLong] !== sideMap[secDef.dir];
     };
@@ -61,8 +69,27 @@ export function createSectorOverlays(body, drum, headType = 'default') {
     const triggerPlay = (soundType) => {
       const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
       if (instDef.sounds[soundType]) {
-        instDef.sounds[soundType](drum);
+        let virtualDrum = drum;
+        if (state.currentInstrument === 'bongo') {
+          virtualDrum = Object.assign({}, drum, {
+            id: headType === 'macho' ? 0 : 1,
+            pitchMult: headType === 'macho' ? 1.4 : 0.9
+          });
+        } else if (state.currentInstrument === 'agogo') {
+          virtualDrum = Object.assign({}, drum, {
+            id: headType === 'high' ? 1 : 0,
+            pitchMult: headType === 'high' ? 1.35 : 1.0
+          });
+        }
+        instDef.sounds[soundType](virtualDrum);
       }
+    };
+
+    const getHitEffectId = () => {
+      if (['macho', 'hembra', 'high', 'low'].includes(headType)) {
+        return `${drum.id}_${headType}`;
+      }
+      return drum.id;
     };
 
     const handlePressStart = (e) => {
@@ -76,14 +103,14 @@ export function createSectorOverlays(body, drum, headType = 'default') {
           if (isHolding) {
             const sound = getTouchSound(true);
             triggerPlay(sound);
-            triggerHitEffect(drum.id, sound);
+            triggerHitEffect(getHitEffectId(), sound);
             isHolding = false;
           }
         }, CONFIG.GAMEPAD.LONG_PRESS_THRESHOLD);
       } else {
         const sound = getTouchSound(false);
         triggerPlay(sound);
-        triggerHitEffect(drum.id, sound);
+        triggerHitEffect(getHitEffectId(), sound);
       }
     };
 
@@ -94,7 +121,7 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         if (isHolding) {
           const sound = getTouchSound(false);
           triggerPlay(sound);
-          triggerHitEffect(drum.id, sound);
+          triggerHitEffect(getHitEffectId(), sound);
         }
       }
       isHolding = false;
@@ -178,6 +205,52 @@ export function getBodyConfigs(d, instrument) {
       borderRadius: '50%',
       boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
     });
+  } else if (instrument === 'bongo') {
+    const bigSize = d.sizeValue || 24;
+    const smallSize = bigSize * 0.75;
+
+    configs.push({
+      type: 'macho',
+      className: 'drum-body drum-bongo-macho',
+      width: `calc(${smallSize} * var(--drum-unit))`,
+      height: `calc(${smallSize} * var(--drum-unit))`,
+      svg: generateDrumheadSVG(d.id + '_macho', 'blonde-light', 'bongo_macho'),
+      borderRadius: '50%',
+      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
+    });
+
+    configs.push({
+      type: 'hembra',
+      className: 'drum-body drum-bongo-hembra',
+      width: `calc(${bigSize} * var(--drum-unit))`,
+      height: `calc(${bigSize} * var(--drum-unit))`,
+      svg: generateDrumheadSVG(d.id + '_hembra', 'blonde', 'bongo_hembra'),
+      borderRadius: '50%',
+      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
+    });
+  } else if (instrument === 'agogo') {
+    const bigSize = d.sizeValue || 22;
+    const smallSize = bigSize * 0.78;
+
+    configs.push({
+      type: 'high',
+      className: 'drum-body drum-agogo-high',
+      width: `calc(${smallSize} * var(--drum-unit))`,
+      height: `calc(${smallSize} * var(--drum-unit))`,
+      svg: generateDrumheadSVG(d.id + '_high', 'silver', 'agogo_high'),
+      borderRadius: '30%',
+      boxStyle: 'box-shadow: 0 10px 25px rgba(0,0,0,0.45);'
+    });
+
+    configs.push({
+      type: 'low',
+      className: 'drum-body drum-agogo-low',
+      width: `calc(${bigSize} * var(--drum-unit))`,
+      height: `calc(${bigSize} * var(--drum-unit))`,
+      svg: generateDrumheadSVG(d.id + '_low', 'wood', 'agogo_low'),
+      borderRadius: '30%',
+      boxStyle: 'box-shadow: 0 10px 25px rgba(0,0,0,0.45);'
+    });
   } else {
     const sizeVal = d.sizeValue || 20;
     let borderRadius = '50%';
@@ -227,13 +300,44 @@ export function buildDrumWrapper(d) {
     wrapper.style.display = 'flex';
     wrapper.style.flexDirection = 'column';
     wrapper.style.gap = '2vh';
+  } else if (instrument === 'bongo') {
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'row';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.justifyContent = 'center';
+    wrapper.style.gap = '2vw';
+    wrapper.classList.add('conjoined-bongo-set');
+  } else if (instrument === 'agogo') {
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'row';
+    wrapper.style.alignItems = 'flex-end';
+    wrapper.style.justifyContent = 'center';
+    wrapper.style.gap = '2vw';
+    wrapper.classList.add('conjoined-agogo-set');
   }
 
   // Get body configs and build each body element
   const configs = getBodyConfigs(d, instrument);
-  configs.forEach((cfg) => {
+  configs.forEach((cfg, idx) => {
     const bodyEl = createDrumBody(d, cfg);
     wrapper.appendChild(bodyEl);
+
+    // Insert connecting bridge/handle visual decorations between the sub-bodies
+    if (idx === 0) {
+      if (instrument === 'bongo') {
+        const bridge = document.createElement('div');
+        bridge.className = 'bongo-bridge';
+        wrapper.appendChild(bridge);
+      } else if (instrument === 'agogo') {
+        const handle = document.createElement('div');
+        handle.className = 'agogo-handle';
+        wrapper.appendChild(handle);
+      } else if (instrument === 'bata') {
+        const bodyPart = document.createElement('div');
+        bodyPart.className = 'bata-hourglass-body';
+        wrapper.appendChild(bodyPart);
+      }
+    }
   });
 
   // Name & Button Indicator Labels under the conga

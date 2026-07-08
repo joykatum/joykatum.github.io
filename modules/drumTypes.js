@@ -54,10 +54,7 @@ export const drumTypes = {
       toque_tapado: (d) => playMembrane(130 * d.pitchMult, 0.05, 1.0, false),
       manoteo: (d) => playMembrane(90 * d.pitchMult, 0.1, 1.0, false),
       golpe_de_casco: (d) => playMembrane(400 * d.pitchMult, 0.05, 1.0, false)
-    },
-    defaultLeft: 3,
-    // Tumba
-    defaultRight: 2 // Conga
+    }
   },
   djembe: {
     name: 'Djembe',
@@ -96,17 +93,10 @@ export const drumTypes = {
     drums: [
       {
         id: 0,
-        label: 'Macho',
-        pitchMult: 1.4,
-        color: 'blonde-light',
-        sizeValue: 16
-      },
-      {
-        id: 1,
-        label: 'Hembra',
-        pitchMult: 0.9,
+        label: 'Bongos',
+        pitchMult: 1.0,
         color: 'blonde',
-        sizeValue: 20.5
+        sizeValue: 24
       }
     ],
     sounds: {
@@ -121,8 +111,7 @@ export const drumTypes = {
       glissando_de_dedo: (d) => playMembrane((d.id === 0 ? 600 : 300) * d.pitchMult, 0.2, 0.8, false)
     },
     defaultLeft: 0,
-    // Macho
-    defaultRight: 1 // Hembra
+    defaultRight: 0
   },
   bata: {
     name: 'Bata',
@@ -176,7 +165,7 @@ export const drumTypes = {
     },
     defaultLeft: 1,
     // Itótele
-    defaultRight: 2 // Iyá
+    defaultRight: 1 // Itótele
   },
   pandero: {
     name: 'Pandero',
@@ -260,11 +249,10 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      golpe_de_parche: (d) => {
-        playMembrane(750 * d.pitchMult, 0.08, 1.0, false);
-        playNoise(0.04, 3000, state.currentTiltVolume * 0.5);
-      },
-      golpe_de_aro: (d) => playMembrane(850 * d.pitchMult, 0.05, 1.0, false)
+      golpe_de_parche: (d) => playMembrane(72 * d.pitchMult, 0.6, 1.2, false),
+      golpe_de_parche_apagado: (d) => playMembrane(95 * d.pitchMult, 0.15, 1.0, true),
+      golpe_de_aro: (d) => playMembrane(480 * d.pitchMult, 0.08, 1.0, false),
+      golpe_de_casco: (d) => playMembrane(380 * d.pitchMult, 0.05, 1.0, false)
     },
     defaultLeft: 0,
     // Bombo
@@ -478,7 +466,9 @@ export const drumTypes = {
     ],
     sounds: {
       boul: (d) => playMembrane((d.id === 0 ? 160 : 100) * d.pitchMult, 0.1, 1.0, false),
-      mak: (d) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.55, 1.1, false)
+      mak: (d) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.55, 1.1, false),
+      tak_rim_strike: (d) => playMembrane(450 * d.pitchMult, 0.05, 1.0, true),
+      choke_muff: (d) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.1, 0.8, true)
     },
     defaultLeft: 1,
     // Boula
@@ -702,7 +692,9 @@ export const drumTypes = {
     ],
     sounds: {
       internal_stick_rub: (d) => playTablaSlideUp(750 * d.pitchMult, 1000 * d.pitchMult, 0.13),
-      external_thumb_press: (d) => playTablaSlideUp(450 * d.pitchMult, 850 * d.pitchMult, 0.22)
+      external_thumb_press: (d) => playTablaSlideUp(450 * d.pitchMult, 850 * d.pitchMult, 0.22),
+      high_to_low_slide: (d) => playTablaSlideUp(1000 * d.pitchMult, 600 * d.pitchMult, 0.2),
+      rim_tap: (d) => playMembrane(600 * d.pitchMult, 0.05, 1.0, false)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -747,7 +739,12 @@ export const drumTypes = {
     ],
     sounds: {
       fan_head_slap: (d) => playMembrane(480 * d.pitchMult, 0.04, 0.95, true),
-      handle_knock: (d) => playMembrane(190 * d.pitchMult, 0.05, 1.0, false)
+      handle_knock: (d) => playMembrane(190 * d.pitchMult, 0.05, 1.0, false),
+      rim_click: (d) => playMembrane(720 * d.pitchMult, 0.03, 1.0, true),
+      rapid_drum_roll: (d) => {
+        playNoise(0.18, 1200, state.currentTiltVolume * 0.5);
+        playMembrane(480 * d.pitchMult, 0.12, 0.8, false);
+      }
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -765,11 +762,12 @@ export const drumTypes = {
     ],
     sounds: {
       rolling_swirl: (d) => playNoise(0.55, 950, state.currentTiltVolume * 0.75),
-      frame_tap: (d) => playNoise(0.55, 950, state.currentTiltVolume * 0.75),
+      frame_tap: (d) => playMembrane(220 * d.pitchMult, 0.08, 1.0, true),
       sudden_frame_tilt: (d) => {
         playMembrane(95 * d.pitchMult, 0.65, 1.35, false);
         playNoise(0.14, 1100, state.currentTiltVolume * 0.45);
-      }
+      },
+      bead_shake_shimmer: (d) => playNoise(0.2, 4500, state.currentTiltVolume * 0.6)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -829,14 +827,12 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      ma_o: (d) => {
-        playMembrane(330 * d.pitchMult, 0.09, 0.92, true);
-        playNoise(0.04, 3100, state.currentTiltVolume * 0.85);
-      },
-      bacalhau: (d) => playMembrane(52 * d.pitchMult, 1.25, 1.55, false),
-      hoop_click: (d) => {
-        playMembrane(330 * d.pitchMult, 0.09, 0.92, true);
-        playNoise(0.04, 3100, state.currentTiltVolume * 0.85);
+      baqueta_bass: (d) => playMembrane(55 * d.pitchMult, 0.7, 1.3, false),
+      bacalhau_tap: (d) => playMembrane(520 * d.pitchMult, 0.08, 0.9, true),
+      hoop_click: (d) => playMembrane(950 * d.pitchMult, 0.04, 1.1, true),
+      hand_slap: (d) => {
+        playMembrane(180 * d.pitchMult, 0.12, 1.0, true);
+        playNoise(0.04, 2500, state.currentTiltVolume * 0.7);
       }
     },
     defaultLeft: 0,
@@ -916,9 +912,13 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      ceramic_side_body_slap: (d) => playMembrane(380 * d.pitchMult, 0.12, 1.1, true),
-      mouth_port_palm_pop: (d) => playMembrane(380 * d.pitchMult, 0.12, 1.1, true),
-      neck_scratch: (d) => playTablaSlideUp(140 * d.pitchMult, 220 * d.pitchMult, 0.35)
+      ceramic_side_body_slap: (d) => {
+        playMembrane(420 * d.pitchMult, 0.08, 1.1, true);
+        playNoise(0.02, 3500, state.currentTiltVolume * 0.4);
+      },
+      mouth_port_palm_pop: (d) => playMembrane(75 * d.pitchMult, 0.45, 1.3, false),
+      neck_scratch: (d) => playTablaSlideUp(140 * d.pitchMult, 220 * d.pitchMult, 0.35),
+      ceramic_finger_tap: (d) => playMembrane(680 * d.pitchMult, 0.04, 0.9, true)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -943,7 +943,8 @@ export const drumTypes = {
       head_tap: (d) => {
         playMembrane(110 * d.pitchMult, 1.8, 1.1, true);
         playNoise(1.5, 900, state.currentTiltVolume * 0.95);
-      }
+      },
+      spring_scrape: (d) => playNoise(0.4, 2500, state.currentTiltVolume * 0.6)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -991,7 +992,9 @@ export const drumTypes = {
     ],
     sounds: {
       ball_palm_strike: (d) => playNoise(0.5, 1800, state.currentTiltVolume * 0.7),
-      soundbox_strike: (d) => playNoise(1.2, 2200, state.currentTiltVolume * 1.4)
+      soundbox_strike: (d) => playNoise(1.2, 2200, state.currentTiltVolume * 1.4),
+      wire_twang: (d) => playMembrane(220 * d.pitchMult, 0.25, 0.8, false),
+      short_buzz: (d) => playNoise(0.15, 2000, state.currentTiltVolume * 0.5)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -1008,9 +1011,10 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      handle_shake_roll: (d) => playTablaSlideUp(220 * d.pitchMult, 680 * d.pitchMult, 0.6),
-      thumb_pitch_bend: (d) => playTablaSlideUp(220 * d.pitchMult, 680 * d.pitchMult, 0.6),
-      frame_knock: (d) => playTablaSlideUp(220 * d.pitchMult, 680 * d.pitchMult, 0.6)
+      handle_shake_roll: (d) => playTablaSlideUp(440 * d.pitchMult, 880 * d.pitchMult, 0.5),
+      thumb_pitch_bend: (d) => playTablaSlideUp(250 * d.pitchMult, 750 * d.pitchMult, 0.8),
+      frame_knock: (d) => playMembrane(950 * d.pitchMult, 0.04, 1.2, true),
+      blade_flick_down: (d) => playTablaSlideUp(880 * d.pitchMult, 330 * d.pitchMult, 0.6)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -1077,9 +1081,14 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      indentation_strike: (d) => playMembrane(180 * d.pitchMult, 0.1, 0.9, false),
-      rapid_chordal_roll: (d) => playMembrane(180 * d.pitchMult, 0.1, 0.9, false),
-      rim_ring: (d) => playMembrane(240 * d.pitchMult, 0.6, 1.5, false)
+      indentation_strike: (d) => playMembrane(440 * d.pitchMult, 0.45, 1.2, false),
+      rapid_chordal_roll: (d) => {
+        playMembrane(440 * d.pitchMult, 0.15, 0.8, false);
+        playMembrane(554 * d.pitchMult, 0.12, 0.7, false);
+        playMembrane(659 * d.pitchMult, 0.1, 0.6, false);
+      },
+      rim_ring: (d) => playMembrane(880 * d.pitchMult, 0.8, 1.4, false),
+      mute_slap: (d) => playMembrane(330 * d.pitchMult, 0.05, 0.9, true)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -1138,7 +1147,8 @@ export const drumTypes = {
     sounds: {
       dum: (d) => playMembrane(130 * d.pitchMult, 0.4, 1.1, false),
       tak: (d) => playMembrane(360 * d.pitchMult, 0.12, 0.9, true),
-      jingle_damp_split: (d) => playNoise(0.18, 4500, state.currentTiltVolume * 0.75)
+      jingle_damp_split: (d) => playNoise(0.18, 4500, state.currentTiltVolume * 0.75),
+      jingle_shake: (d) => playNoise(0.25, 6000, state.currentTiltVolume * 0.85)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -1197,7 +1207,11 @@ export const drumTypes = {
     sounds: {
       toque_aberto: (d) => playMembrane(220 * d.pitchMult, 0.2, 0.8, false),
       virada: (d) => playMembrane(450 * d.pitchMult, 0.08, 0.7, false),
-      muted_back_finger_press: (d) => playMembrane(300 * d.pitchMult, 0.05, 0.6, false)
+      muted_back_finger_press: (d) => playMembrane(300 * d.pitchMult, 0.05, 0.6, false),
+      rim_shot: (d) => {
+        playMembrane(580 * d.pitchMult, 0.05, 1.2, true);
+        playNoise(0.04, 4000, state.currentTiltVolume * 0.8);
+      }
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -2006,7 +2020,13 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      tongue_bounce: (d) => playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 1.2, 1.0, false)
+      tongue_bounce: (d) => playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 1.2, 1.0, false),
+      finger_slap: (d) => {
+        playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.7, 1.1, false);
+        playNoise(0.02, 5000, state.currentTiltVolume * 0.3);
+      },
+      muted_tap: (d) => playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.2, 0.8, true),
+      shell_strike: (d) => playMembrane(800 * d.pitchMult, 0.1, 1.0, true)
     },
     defaultLeft: 0,
     defaultRight: 2
@@ -2237,17 +2257,10 @@ export const drumTypes = {
     drums: [
       {
         id: 0,
-        label: 'Low Bell',
+        label: 'Agogô Bells',
         pitchMult: 1.0,
-        color: 'wood',
-        sizeValue: 16
-      },
-      {
-        id: 1,
-        label: 'High Bell',
-        pitchMult: 1.35,
-        color: 'blonde',
-        sizeValue: 14
+        color: 'silver',
+        sizeValue: 22
       }
     ],
     sounds: {
@@ -2268,7 +2281,7 @@ export const drumTypes = {
       }
     },
     defaultLeft: 0,
-    defaultRight: 1
+    defaultRight: 0
   },
   claves: {
     name: 'Claves',
@@ -2286,7 +2299,9 @@ export const drumTypes = {
       end_tap: (d) => {
         playMembrane(1650 * d.pitchMult, 0.02, 1.0, true);
         playNoise(0.01, 5000, state.currentTiltVolume * 0.4);
-      }
+      },
+      wooden_rub: (d) => playNoise(0.12, 1200, state.currentTiltVolume * 0.5),
+      cup_strike: (d) => playMembrane(950 * d.pitchMult, 0.06, 1.2, false)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -6211,15 +6226,15 @@ export const instrumentMappings = {
       trigger: 'abierto'
     },
     right: {
-      up: 'abierto',
-      down: 'tapado',
-      left: 'chach_snap',
-      right: 'cuerpo_knock',
+      up: 'chach_snap',
+      down: 'cuerpo_knock',
+      left: 'abierto',
+      right: 'tapado',
       upLong: '',
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'tapado'
+      trigger: 'chach_snap'
     }
   },
   pandero: {
@@ -6274,8 +6289,8 @@ export const instrumentMappings = {
     left: {
       up: 'golpe_de_parche',
       down: 'golpe_de_aro',
-      left: 'golpe_de_aro',
-      right: '',
+      left: 'golpe_de_parche_apagado',
+      right: 'golpe_de_casco',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6285,8 +6300,8 @@ export const instrumentMappings = {
     right: {
       up: 'golpe_de_parche',
       down: 'golpe_de_aro',
-      left: 'golpe_de_aro',
-      right: '',
+      left: 'golpe_de_parche_apagado',
+      right: 'golpe_de_casco',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6418,8 +6433,8 @@ export const instrumentMappings = {
     left: {
       up: 'boul',
       down: 'mak',
-      left: '',
-      right: '',
+      left: 'tak_rim_strike',
+      right: 'choke_muff',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6429,8 +6444,8 @@ export const instrumentMappings = {
     right: {
       up: 'boul',
       down: 'mak',
-      left: '',
-      right: '',
+      left: 'tak_rim_strike',
+      right: 'choke_muff',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6562,8 +6577,8 @@ export const instrumentMappings = {
     left: {
       up: 'internal_stick_rub',
       down: 'external_thumb_press',
-      left: '',
-      right: '',
+      left: 'high_to_low_slide',
+      right: 'rim_tap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6573,8 +6588,8 @@ export const instrumentMappings = {
     right: {
       up: 'internal_stick_rub',
       down: 'external_thumb_press',
-      left: '',
-      right: '',
+      left: 'high_to_low_slide',
+      right: 'rim_tap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6610,8 +6625,8 @@ export const instrumentMappings = {
     left: {
       up: 'fan_head_slap',
       down: 'handle_knock',
-      left: '',
-      right: '',
+      left: 'rim_click',
+      right: 'rapid_drum_roll',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6621,8 +6636,8 @@ export const instrumentMappings = {
     right: {
       up: 'fan_head_slap',
       down: 'handle_knock',
-      left: '',
-      right: '',
+      left: 'rim_click',
+      right: 'rapid_drum_roll',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6635,7 +6650,7 @@ export const instrumentMappings = {
       up: 'rolling_swirl',
       down: 'frame_tap',
       left: 'sudden_frame_tilt',
-      right: '',
+      right: 'bead_shake_shimmer',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6646,7 +6661,7 @@ export const instrumentMappings = {
       up: 'rolling_swirl',
       down: 'frame_tap',
       left: 'sudden_frame_tilt',
-      right: '',
+      right: 'bead_shake_shimmer',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6680,26 +6695,26 @@ export const instrumentMappings = {
   },
   zabumba: {
     left: {
-      up: 'ma_o',
-      down: 'bacalhau',
+      up: 'baqueta_bass',
+      down: 'bacalhau_tap',
       left: 'hoop_click',
-      right: '',
+      right: 'hand_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'ma_o'
+      trigger: 'baqueta_bass'
     },
     right: {
-      up: 'ma_o',
-      down: 'bacalhau',
+      up: 'baqueta_bass',
+      down: 'bacalhau_tap',
       left: 'hoop_click',
-      right: '',
+      right: 'hand_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'bacalhau'
+      trigger: 'bacalhau_tap'
     }
   },
   mridangam: {
@@ -6731,7 +6746,7 @@ export const instrumentMappings = {
       up: 'ceramic_side_body_slap',
       down: 'mouth_port_palm_pop',
       left: 'neck_scratch',
-      right: '',
+      right: 'ceramic_finger_tap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6742,7 +6757,7 @@ export const instrumentMappings = {
       up: 'ceramic_side_body_slap',
       down: 'mouth_port_palm_pop',
       left: 'neck_scratch',
-      right: '',
+      right: 'ceramic_finger_tap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6755,7 +6770,7 @@ export const instrumentMappings = {
       up: 'spring_mallet_strike',
       down: 'cylinder_shake_rumble',
       left: 'head_tap',
-      right: '',
+      right: 'spring_scrape',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6766,7 +6781,7 @@ export const instrumentMappings = {
       up: 'spring_mallet_strike',
       down: 'cylinder_shake_rumble',
       left: 'head_tap',
-      right: '',
+      right: 'spring_scrape',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6802,8 +6817,8 @@ export const instrumentMappings = {
     left: {
       up: 'ball_palm_strike',
       down: 'soundbox_strike',
-      left: '',
-      right: '',
+      left: 'wire_twang',
+      right: 'short_buzz',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6813,8 +6828,8 @@ export const instrumentMappings = {
     right: {
       up: 'ball_palm_strike',
       down: 'soundbox_strike',
-      left: '',
-      right: '',
+      left: 'wire_twang',
+      right: 'short_buzz',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6827,7 +6842,7 @@ export const instrumentMappings = {
       up: 'handle_shake_roll',
       down: 'thumb_pitch_bend',
       left: 'frame_knock',
-      right: '',
+      right: 'blade_flick_down',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6838,7 +6853,7 @@ export const instrumentMappings = {
       up: 'handle_shake_roll',
       down: 'thumb_pitch_bend',
       left: 'frame_knock',
-      right: '',
+      right: 'blade_flick_down',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6899,7 +6914,7 @@ export const instrumentMappings = {
       up: 'indentation_strike',
       down: 'rapid_chordal_roll',
       left: 'rim_ring',
-      right: '',
+      right: 'mute_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6910,7 +6925,7 @@ export const instrumentMappings = {
       up: 'indentation_strike',
       down: 'rapid_chordal_roll',
       left: 'rim_ring',
-      right: '',
+      right: 'mute_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -6970,7 +6985,7 @@ export const instrumentMappings = {
     left: {
       up: 'dum',
       down: 'tak',
-      left: 'dum',
+      left: 'jingle_shake',
       right: 'jingle_damp_split',
       upLong: '',
       downLong: '',
@@ -6981,7 +6996,7 @@ export const instrumentMappings = {
     right: {
       up: 'dum',
       down: 'tak',
-      left: 'dum',
+      left: 'jingle_shake',
       right: 'jingle_damp_split',
       upLong: '',
       downLong: '',
@@ -7043,7 +7058,7 @@ export const instrumentMappings = {
       up: 'toque_aberto',
       down: 'virada',
       left: 'muted_back_finger_press',
-      right: '',
+      right: 'rim_shot',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -7054,7 +7069,7 @@ export const instrumentMappings = {
       up: 'toque_aberto',
       down: 'virada',
       left: 'muted_back_finger_press',
-      right: '',
+      right: 'rim_shot',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -7833,9 +7848,9 @@ export const instrumentMappings = {
   tank_drum: {
     left: {
       up: 'tongue_bounce',
-      down: '',
-      left: '',
-      right: '',
+      down: 'finger_slap',
+      left: 'muted_tap',
+      right: 'shell_strike',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -7844,9 +7859,9 @@ export const instrumentMappings = {
     },
     right: {
       up: 'tongue_bounce',
-      down: '',
-      left: '',
-      right: '',
+      down: 'finger_slap',
+      left: 'muted_tap',
+      right: 'shell_strike',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -8098,8 +8113,8 @@ export const instrumentMappings = {
     left: {
       up: 'strike',
       down: 'end_tap',
-      left: '',
-      right: '',
+      left: 'wooden_rub',
+      right: 'cup_strike',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -8109,8 +8124,8 @@ export const instrumentMappings = {
     right: {
       up: 'strike',
       down: 'end_tap',
-      left: '',
-      right: '',
+      left: 'wooden_rub',
+      right: 'cup_strike',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -8649,7 +8664,7 @@ export function getDefaultDrumSelection(inst) {
   ) {
     return 'all';
   }
-  if (['barril', 'tabla', 'gwoka', 'janggu', 'mridangam', 'handpan', 'log_drum', 'dhol', 'agogo'].includes(inst)) {
+  if (['barril', 'tabla', 'gwoka', 'janggu', 'mridangam', 'handpan', 'log_drum', 'dhol'].includes(inst)) {
     return 'both';
   }
   return 'all';

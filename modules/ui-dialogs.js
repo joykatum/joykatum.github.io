@@ -94,8 +94,14 @@ export function showDrumInfo(instrumentId) {
   if (info.performers && info.performers.length > 0) {
     html += `<div class="info-section-title">🌟 Key Performers</div>`;
     info.performers.forEach((p) => {
-      const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(p.name)}`;
-      const appleSearchUrl = `https://music.apple.com/us/search?term=${encodeURIComponent(p.name)}`;
+      const spotifySearchUrl =
+        p.spotify && p.spotify.startsWith('http')
+          ? p.spotify
+          : `https://open.spotify.com/search/${encodeURIComponent(p.name)}`;
+      const appleSearchUrl =
+        p.apple && p.apple.startsWith('http')
+          ? p.apple
+          : `https://music.apple.com/us/search?term=${encodeURIComponent(p.name)}`;
       html += `
         <div class="info-list-item" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div class="info-item-name" style="flex: 1;">${p.name}</div>
@@ -125,8 +131,14 @@ export function showDrumInfo(instrumentId) {
     html += `<div class="info-section-title">🎵 Iconic Songs</div>`;
     info.songs.forEach((s) => {
       const query = `${s.artist} ${s.name}`;
-      const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(query)}`;
-      const appleSearchUrl = `https://music.apple.com/us/search?term=${encodeURIComponent(query)}`;
+      const spotifySearchUrl =
+        s.spotify && s.spotify.startsWith('http')
+          ? s.spotify
+          : `https://open.spotify.com/search/${encodeURIComponent(query)}`;
+      const appleSearchUrl =
+        s.apple && s.apple.startsWith('http')
+          ? s.apple
+          : `https://music.apple.com/us/search?term=${encodeURIComponent(query)}`;
       html += `
         <div class="info-list-item" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div class="info-item-name" style="flex: 1;">${s.name} <span style="font-weight: normal; color: var(--text-muted); font-size: 0.85rem;">by ${s.artist}</span></div>
@@ -223,8 +235,14 @@ export function showPatternInfo(patternId) {
     html += `<div class="info-section-title">🎵 Representative Songs</div>`;
     info.songs.forEach((s) => {
       const query = `${s.artist} ${s.name}`;
-      const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(query)}`;
-      const appleSearchUrl = `https://music.apple.com/us/search?term=${encodeURIComponent(query)}`;
+      const spotifySearchUrl =
+        s.spotify && s.spotify.startsWith('http')
+          ? s.spotify
+          : `https://open.spotify.com/search/${encodeURIComponent(query)}`;
+      const appleSearchUrl =
+        s.apple && s.apple.startsWith('http')
+          ? s.apple
+          : `https://music.apple.com/us/search?term=${encodeURIComponent(query)}`;
       html += `
         <div class="info-list-item" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div class="info-item-name" style="flex: 1;">${s.name} <span style="font-weight: normal; color: var(--text-muted); font-size: 0.85rem;">by ${s.artist}</span></div>

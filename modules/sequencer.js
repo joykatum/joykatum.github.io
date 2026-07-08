@@ -140,9 +140,25 @@ export function playPatternStep() {
       d = visibleDrums[drumIdx % visibleDrums.length];
     }
     if (d && instDef.sounds[soundType]) {
-      instDef.sounds[soundType](d);
+      let virtualDrum = d;
+      let finalDrumId = d.id;
+      if (inst === 'bongo') {
+        virtualDrum = Object.assign({}, d, {
+          id: drumIdx === 0 ? 0 : 1,
+          pitchMult: drumIdx === 0 ? 1.4 : 0.9
+        });
+        finalDrumId = `${d.id}_${drumIdx === 0 ? 'macho' : 'hembra'}`;
+      } else if (inst === 'agogo') {
+        virtualDrum = Object.assign({}, d, {
+          id: drumIdx === 1 ? 1 : 0,
+          pitchMult: drumIdx === 1 ? 1.35 : 1.0
+        });
+        finalDrumId = `${d.id}_${drumIdx === 1 ? 'high' : 'low'}`;
+      }
+
+      instDef.sounds[soundType](virtualDrum);
       if (onStepTriggeredCallback) {
-        onStepTriggeredCallback(d.id, soundType);
+        onStepTriggeredCallback(finalDrumId, soundType);
       }
     }
   };

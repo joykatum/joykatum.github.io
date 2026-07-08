@@ -1,6 +1,6 @@
 {
-  "name": "Remix: Remix: Remix: Virtual Conga",
-  "description": "Play the conga using a connected Gamepad. Maps different tones to analog sticks and buttons. Fully customizable.",
+  "name": "Virtual Conga & Percussion Suite",
+  "description": "Play conga and multiple ethnic percussion instruments using a connected gamepad or keyboard. Fully customizable mapping and audio settings.",
   "requestFramePermissions": ["gamepad"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
