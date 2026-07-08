@@ -17,7 +17,7 @@ export const state = {
 
   // Selected Instruments & Active Selection
   currentInstrument: localStorage.getItem('currentInstrument') || 'conga',
-  drumSelection: localStorage.getItem('drumSelection') || '',
+  drumSelection: localStorage.getItem('drumSelection') !== null ? localStorage.getItem('drumSelection') : 'all',
   numDrums: parseInt(localStorage.getItem('numDrums') || '5'),
   leftActiveDrumId: 0, // Will be set on load based on defaults
   rightActiveDrumId: 0, // Will be set on load based on defaults

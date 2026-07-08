@@ -1,10 +1,6 @@
 {
-  "name": "Remix: Remix: Virtual Conga",
+  "name": "Remix: Remix: Remix: Virtual Conga",
   "description": "Play the conga using a connected Gamepad. Maps different tones to analog sticks and buttons. Fully customizable.",
-  "requestFramePermissions": [
-    "gamepad"
-  ],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "requestFramePermissions": ["gamepad"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

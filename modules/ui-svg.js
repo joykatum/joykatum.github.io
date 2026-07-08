@@ -2058,6 +2058,616 @@ export function generateDrumheadSVG(id, colorType, instrument = 'conga') {
             <!-- Ambient 3D lighting cover -->
             <circle cx="50" cy="50" r="44.5" fill="url(#overlay-${id})"/>
         `;
+  } else if (instrument === 'mechanical_keyboard') {
+    shapes = `
+            <!-- Keyboard casing shadow -->
+            <rect x="6" y="24" width="88" height="54" rx="6" fill="#020617" opacity="0.75" filter="blur(3px)"/>
+            
+            <!-- Aluminum mechanical keyboard bezel -->
+            <rect x="8" y="22" width="84" height="52" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+            
+            <!-- Dark keycap grid plate -->
+            <rect x="12" y="26" width="76" height="44" rx="3" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+            
+            <!-- Escape Key (Cyan glow) -->
+            <rect x="14" y="28" width="8" height="6" rx="1.5" fill="#06b6d4" stroke="#0891b2" stroke-width="0.5" filter="drop-shadow(0 0 1.5px #06b6d4)"/>
+            <line x1="16" y1="30" x2="20" y2="30" stroke="#ffffff" stroke-width="0.5" opacity="0.5"/>
+            
+            <!-- Function Row / Number Keys (Gray) -->
+            <rect x="24" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="31" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="38" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="45" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="52" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="59" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="66" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="73" y="28" width="6" height="6" rx="1" fill="#334155"/>
+            
+            <!-- Backspace Key (Orange/Red) -->
+            <rect x="80" y="28" width="8" height="6" rx="1.5" fill="#f97316" stroke="#ea580c" stroke-width="0.5"/>
+            
+            <!-- QWERTY Row -->
+            <rect x="14" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="21" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="28" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="35" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="42" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="49" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="56" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="63" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="70" y="36" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="77" y="36" width="11" height="6" rx="1.5" fill="#f43f5e" stroke="#e11d48" stroke-width="0.5" filter="drop-shadow(0 0 1px #f43f5e)"/>
+            
+            <!-- ASDF Row -->
+            <rect x="14" y="44" width="8" height="6" rx="1" fill="#334155"/>
+            <rect x="23" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="30" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="37" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="44" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="51" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="58" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="65" y="44" width="6" height="6" rx="1" fill="#475569"/>
+            <rect x="72" y="44" width="16" height="6" rx="1.5" fill="#f43f5e" stroke="#e11d48" stroke-width="0.5"/>
+            
+            <!-- Bottom Spacebar Row -->
+            <rect x="14" y="52" width="8" height="6" rx="1" fill="#334155"/>
+            <rect x="24" y="52" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="32" y="52" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="40" y="52" width="30" height="6" rx="1.5" fill="#1e293b" stroke="#38bdf8" stroke-width="1" filter="drop-shadow(0 0 1.5px #38bdf8)"/>
+            <rect x="72" y="52" width="6" height="6" rx="1" fill="#334155"/>
+            <rect x="80" y="52" width="8" height="6" rx="1" fill="#334155"/>
+            
+            <!-- Elegant key status indicator lights -->
+            <circle cx="86" cy="24" r="0.8" fill="#10b981"/>
+            <circle cx="89" cy="24" r="0.8" fill="#64748b"/>
+            <circle cx="92" cy="24" r="0.8" fill="#64748b"/>
+        `;
+  } else if (instrument === 'synsonics_drums') {
+    shapes = `
+            <!-- Retro console shadow -->
+            <rect x="8" y="16" width="84" height="68" rx="10" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
+            
+            <!-- Sleek 1980s ABS plastic console casing -->
+            <rect x="10" y="14" width="80" height="66" rx="8" fill="#2d3139" stroke="#1a1c23" stroke-width="2"/>
+            
+            <!-- Retro dynamic dual-stripe decal lines (Teal/Orange) -->
+            <path d="M 10 24 L 90 24 M 10 26 L 90 26" stroke="#06b6d4" stroke-width="0.8" opacity="0.6"/>
+            <path d="M 10 28 L 90 28" stroke="#f97316" stroke-width="0.8" opacity="0.6"/>
+            
+            <!-- Vintage "SYNSONICS" logo -->
+            <rect x="18" y="18" width="28" height="5" rx="1" fill="#1e2026"/>
+            <text x="32" y="21.5" font-family="'Courier New', monospace" font-size="2.5" font-weight="900" fill="#06b6d4" text-anchor="middle" letter-spacing="0.2">SYNSONICS</text>
+            
+            <!-- LED status indicator light -->
+            <circle cx="80" cy="21" r="1.5" fill="#ef4444" filter="drop-shadow(0 0 2px #ef4444)"/>
+            
+            <!-- Circular rubber touchpads -->
+            <circle cx="32" cy="42" r="13" fill="#1e1f24" stroke="#475569" stroke-width="1.2"/>
+            <circle cx="32" cy="42" r="11" fill="#141519" stroke="#ef4444" stroke-width="1" opacity="0.8"/>
+            
+            <circle cx="68" cy="42" r="13" fill="#1e1f24" stroke="#475569" stroke-width="1.2"/>
+            <circle cx="68" cy="42" r="11" fill="#141519" stroke="#eab308" stroke-width="1" opacity="0.8"/>
+            
+            <circle cx="32" cy="68" r="13" fill="#1e1f24" stroke="#475569" stroke-width="1.2"/>
+            <circle cx="32" cy="68" r="11" fill="#141519" stroke="#06b6d4" stroke-width="1" opacity="0.8"/>
+            
+            <circle cx="68" cy="68" r="13" fill="#1e1f24" stroke="#475569" stroke-width="1.2"/>
+            <circle cx="68" cy="68" r="11" fill="#141519" stroke="#10b981" stroke-width="1" opacity="0.8"/>
+            
+            <!-- Slider bank -->
+            <rect x="47" y="45" width="6" height="24" rx="1" fill="#1e2026" stroke="#475569" stroke-width="0.5"/>
+            <line x1="50" y1="47" x2="50" y2="67" stroke="#475569" stroke-width="0.8" stroke-dasharray="2 2"/>
+            <rect x="48" y="54" width="4" height="2.5" rx="0.5" fill="#f97316"/>
+        `;
+  } else if (instrument === 'hydraulic_piston') {
+    shapes = `
+            <!-- Heavy bottom industrial shadow -->
+            <rect x="22" y="10" width="56" height="84" rx="8" fill="#020617" opacity="0.7" filter="blur(4px)"/>
+            
+            <!-- Piston outer heavy cast-iron jacket -->
+            <rect x="26" y="28" width="48" height="60" rx="4" fill="#334155" stroke="#1e293b" stroke-width="2.5"/>
+            <rect x="23" y="80" width="54" height="10" rx="2" fill="#1e293b"/>
+            
+            <!-- Industrial textures -->
+            <rect x="26" y="36" width="48" height="6" fill="#475569"/>
+            <rect x="26" y="56" width="48" height="6" fill="#475569"/>
+            
+            <!-- Bolts -->
+            <circle cx="30" cy="85" r="2.2" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="0.5"/>
+            <circle cx="70" cy="85" r="2.2" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="0.5"/>
+            
+            <!-- Piston rod -->
+            <rect x="42" y="4" width="16" height="30" fill="url(#chrome-${id})" stroke="#1e293b" stroke-width="1.5"/>
+            <rect x="38" y="24" width="24" height="6" rx="1.5" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
+            
+            <!-- Pipe -->
+            <path d="M 26 42 Q 10 42, 10 60 Q 10 74, 23 82" fill="none" stroke="url(#chrome-${id})" stroke-width="2.5" filter="drop-shadow(1px 2px 2px rgba(0,0,0,0.5))"/>
+            
+            <!-- Pressure gauge -->
+            <circle cx="50" cy="48" r="8.5" fill="#f8fafc" stroke="#1e293b" stroke-width="1.2"/>
+            <circle cx="50" cy="48" r="7" fill="none" stroke="#ef4444" stroke-width="0.6" stroke-dasharray="1 3" opacity="0.8"/>
+            <line x1="50" y1="48" x2="54" y2="44" stroke="#ef4444" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="50" cy="48" r="1.2" fill="#0f172a"/>
+            
+            <rect x="36" y="68" width="28" height="4" rx="1" fill="#0f172a"/>
+            
+            <!-- Steam clouds -->
+            <path d="M 40 18 C 36 14, 34 8, 38 4 C 42 0, 46 2, 48 6 C 50 10, 54 12, 52 16" fill="none" stroke="#e2e8f0" stroke-width="1.8" opacity="0.4" stroke-linecap="round" filter="blur(0.8px)"/>
+            <path d="M 52 18 C 56 14, 58 8, 54 4 C 50 0, 46 2, 44 6 C 42 10, 38 12, 40 16" fill="none" stroke="#e2e8f0" stroke-width="1.2" opacity="0.3" stroke-linecap="round" filter="blur(0.8px)"/>
+        `;
+  } else if (instrument === 'bop_it') {
+    shapes = `
+            <!-- Curved gamepad shadow -->
+            <path d="M 20 50 Q 50 25, 80 50 Q 50 75, 20 50" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Ergonomic purple body -->
+            <path d="M 18 50 Q 50 22, 82 50 Q 50 78, 18 50 Z" fill="#6b21a8" stroke="#3b0764" stroke-width="2.5" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.4))"/>
+            <path d="M 28 50 Q 50 32, 72 50 Q 50 68, 28 50" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.7" stroke-dasharray="3, 3"/>
+            
+            <!-- Center Bop It button -->
+            <circle cx="50" cy="50" r="14" fill="#22c55e" stroke="#15803d" stroke-width="1.8" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.5))"/>
+            <circle cx="50" cy="49" r="11" fill="none" stroke="#ffffff" stroke-width="0.6" opacity="0.4"/>
+            <text x="50" y="52" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="3.2" fill="#ffffff" text-anchor="middle" filter="drop-shadow(0.5px 0.5px 0.5px #15803d)">BOP IT</text>
+            
+            <!-- Twist handle -->
+            <path d="M 18 50 L 5 44 L 5 56 Z" fill="#eab308" stroke="#a16207" stroke-width="1.2"/>
+            <rect x="2" y="42" width="4" height="16" rx="1.5" fill="#eab308" stroke="#a16207" stroke-width="1"/>
+            <line x1="4" y1="45" x2="4" y2="55" stroke="#713f12" stroke-width="1" stroke-dasharray="1 2"/>
+            
+            <!-- Pull handle -->
+            <path d="M 82 50 L 91 46 L 91 54 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.2"/>
+            <rect x="91" y="42" width="6" height="16" rx="1" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.2"/>
+            <circle cx="94" cy="50" r="2.5" fill="#172554"/>
+            
+            <!-- Speaker holes -->
+            <circle cx="34" cy="40" r="0.8" fill="#180029"/>
+            <circle cx="37" cy="40" r="0.8" fill="#180029"/>
+            <circle cx="34" cy="43" r="0.8" fill="#180029"/>
+            <circle cx="37" cy="43" r="0.8" fill="#180029"/>
+            <circle cx="34" cy="46" r="0.8" fill="#180029"/>
+            <circle cx="66" cy="60" r="0.8" fill="#180029"/>
+            <circle cx="63" cy="60" r="0.8" fill="#180029"/>
+            <circle cx="66" cy="57" r="0.8" fill="#180029"/>
+            <circle cx="63" cy="57" r="0.8" fill="#180029"/>
+            <circle cx="66" cy="54" r="0.8" fill="#180029"/>
+        `;
+  } else if (instrument === 'moo_box') {
+    shapes = `
+            <!-- Heavy bottom shadow -->
+            <ellipse cx="50" cy="80" rx="36" ry="12" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>
+            
+            <!-- Tin Body -->
+            <rect x="18" y="14" width="64" height="64" fill="url(#skin-${id})" stroke="#1e293b" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+            
+            <!-- Cow spots -->
+            <path d="M 22 24 C 26 24, 28 28, 26 32 C 24 36, 20 34, 19 30 C 18 26, 20 24, 22 24 Z" fill="#1e1b18" opacity="0.85"/>
+            <path d="M 72 44 C 76 40, 80 44, 78 52 C 76 60, 68 58, 70 50 C 72 44, 70 46, 72 44 Z" fill="#1e1b18" opacity="0.85"/>
+            <path d="M 45 48 C 52 46, 56 52, 50 58 C 44 64, 38 60, 40 54 C 42 48, 42 50, 45 48 Z" fill="#1e1b18" opacity="0.85"/>
+            
+            <!-- Grass illustration -->
+            <path d="M 18 78 L 22 68 L 26 78 L 30 70 L 34 78" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/>
+            <path d="M 62 78 L 66 68 L 70 78 L 74 72 L 78 78" fill="none" stroke="#22c55e" stroke-width="1.2" opacity="0.7" stroke-linecap="round"/>
+            
+            <!-- Caps -->
+            <ellipse cx="50" cy="14" rx="32" ry="10" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
+            <ellipse cx="50" cy="14" rx="28" ry="8.5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
+            
+            <circle cx="50" cy="14" r="1" fill="#0f172a"/>
+            <circle cx="44" cy="13" r="0.8" fill="#0f172a"/>
+            <circle cx="56" cy="15" r="0.8" fill="#0f172a"/>
+            <circle cx="48" cy="9" r="0.8" fill="#0f172a"/>
+            <circle cx="52" cy="19" r="0.8" fill="#0f172a"/>
+            
+            <ellipse cx="50" cy="78" rx="32" ry="10" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
+        `;
+  } else if (instrument === 'pakhavaj') {
+    shapes = `
+            <!-- Bottom shadow -->
+            <path d="M 10 52 Q 50 82, 90 52" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
+            
+            <!-- Barrel body -->
+            <path d="M 14 36 Q 50 14, 86 28 L 86 72 Q 50 86, 14 64 Z" fill="#9a3412" stroke="#431407" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.45))"/>
+            <path d="M 22 42 Q 50 32, 78 40 M 20 54 Q 50 48, 80 52 M 22 64 Q 50 62, 76 60" fill="none" stroke="#431407" stroke-width="0.5" opacity="0.25"/>
+            
+            <!-- Laces -->
+            <path d="M 14 38 L 86 32 M 14 44 L 86 40 M 14 50 L 86 48 M 14 56 L 86 56 M 14 62 L 86 64" stroke="#f59e0b" stroke-width="1.2" opacity="0.75" filter="drop-shadow(0 1px 1.5px rgba(0,0,0,0.3))"/>
+            
+            <!-- Tuning blocks -->
+            <rect x="36" y="28" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(15, 39, 34)"/>
+            <rect x="48" y="32" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(10, 51, 38)"/>
+            <rect x="60" y="38" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(5, 63, 44)"/>
+            <rect x="32" y="56" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(-15, 35, 62)"/>
+            <rect x="44" y="58" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(-10, 47, 64)"/>
+            <rect x="56" y="58" width="6" height="12" rx="1" fill="#b45309" stroke="#431407" stroke-width="0.6" transform="rotate(-5, 59, 64)"/>
+            
+            <!-- Left head -->
+            <ellipse cx="14" cy="50" rx="8" ry="14" fill="#fef08a" stroke="#d97706" stroke-width="1.8"/>
+            <ellipse cx="14" cy="50" rx="4.5" ry="8" fill="#b45309" opacity="0.15"/>
+            
+            <!-- Right head -->
+            <ellipse cx="86" cy="50" rx="6" ry="11" fill="#fbcfe8" stroke="#be185d" stroke-width="1.8"/>
+            <ellipse cx="86" cy="50" rx="3.5" ry="6.5" fill="#18181b" stroke="#27272a" stroke-width="0.8"/>
+        `;
+  } else if (instrument === 'binzasara') {
+    shapes = `
+            <!-- Flowing wavy bottom shadow -->
+            <path d="M 12 56 Q 30 20, 50 56 T 88 56" fill="none" stroke="#020617" stroke-width="12" opacity="0.55" stroke-linecap="round" filter="blur(3.5px)"/>
+            
+            <!-- Spine cords -->
+            <path d="M 12 50 Q 30 16, 50 50 T 88 50" fill="none" stroke="#18181b" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 12 44 Q 30 10, 50 44 T 88 44" fill="none" stroke="#18181b" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            
+            <!-- Wooden slats -->
+            <rect x="15" y="44" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(25, 17, 53)"/>
+            <rect x="20" y="38" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(15, 22, 47)"/>
+            <rect x="25" y="33" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(5, 27, 42)"/>
+            <rect x="30" y="30" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(-5, 32, 39)"/>
+            <rect x="35" y="29" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(-15, 37, 38)"/>
+            <rect x="40" y="30" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(-25, 42, 39)"/>
+            <rect x="46" y="34" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(-15, 48, 43)"/>
+            <rect x="51" y="40" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(0, 53, 49)"/>
+            <rect x="56" y="46" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(15, 58, 55)"/>
+            <rect x="61" y="52" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(25, 63, 61)"/>
+            <rect x="66" y="55" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(15, 68, 64)"/>
+            <rect x="71" y="55" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(-5, 73, 64)"/>
+            <rect x="76" y="51" width="4" height="18" rx="0.5" fill="#b45309" stroke="#451a03" stroke-width="0.5" transform="rotate(-20, 78, 60)"/>
+            <rect x="81" y="45" width="4" height="18" rx="0.5" fill="#ca8a04" stroke="#713f12" stroke-width="0.5" transform="rotate(-30, 83, 54)"/>
+            
+            <!-- Handles -->
+            <rect x="8" y="40" width="6" height="24" rx="2.5" fill="#78350f" stroke="#451a03" stroke-width="1" transform="rotate(35, 11, 52)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            <circle cx="10" cy="46" r="1.5" fill="#fef08a" opacity="0.9"/>
+            <rect x="86" y="36" width="6" height="24" rx="2.5" fill="#78350f" stroke="#451a03" stroke-width="1" transform="rotate(-40, 89, 48)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))"/>
+            <circle cx="90" cy="42" r="1.5" fill="#fef08a" opacity="0.9"/>
+        `;
+  } else if (instrument === 'caxixi') {
+    shapes = `
+            <!-- Soft flat bottom shadow -->
+            <ellipse cx="50" cy="84" rx="24" ry="7.5" fill="#020617" opacity="0.6" filter="blur(2.5px)"/>
+            
+            <!-- Calabash gourd bottom plate -->
+            <ellipse cx="50" cy="82" rx="21" ry="6.5" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+            <ellipse cx="50" cy="81.5" rx="17" ry="4.5" fill="#f59e0b" stroke="#b45309" stroke-width="0.5" opacity="0.5"/>
+            
+            <!-- Straw woven body -->
+            <path d="M 50 26 C 42 45, 31 70, 30 80 Q 50 86, 70 80 C 69 70, 58 45, 50 26 Z" fill="url(#skin-${id})" stroke="#7c2d12" stroke-width="1.2" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.35))"/>
+            
+            <!-- Weave lines -->
+            <path d="M 45 35 L 67 76 M 40 43 L 64 80 M 35 52 L 56 82 M 31 63 L 44 83" fill="none" stroke="#7c2d12" stroke-width="0.8" opacity="0.45"/>
+            <path d="M 55 35 L 33 76 M 60 43 L 36 80 M 65 52 L 44 82 M 69 63 L 56 83" fill="none" stroke="#7c2d12" stroke-width="0.8" opacity="0.45"/>
+            
+            <!-- Horizontal rings -->
+            <path d="M 46 34 Q 50 36, 54 34 M 42 44 Q 50 47, 58 44 M 38 54 Q 50 58, 62 54 M 34 64 Q 50 68, 66 64 M 31 74 Q 50 78, 69 74" fill="none" stroke="#7c2d12" stroke-width="1.2" opacity="0.3"/>
+            
+            <!-- Woven handle loop -->
+            <path d="M 50 26 Q 50 5, 42 5 T 35 24 Q 42 24, 50 26" fill="none" stroke="#b45309" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0.5px 1px 1.5px rgba(0,0,0,0.4))"/>
+            <path d="M 50 26 Q 50 5, 58 5 T 65 24 Q 58 24, 50 26" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+        `;
+  } else if (instrument === 'slap_tubes') {
+    shapes = `
+            <!-- Shadow -->
+            <ellipse cx="50" cy="82" rx="34" ry="10" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- 4 Parallel Tubes of varying lengths -->
+            <!-- Tube 1 (Red/Orange) -->
+            <rect x="22" y="15" width="10" height="60" rx="3" fill="#ea580c" stroke="#7c2d12" stroke-width="1.2"/>
+            <rect x="22" y="15" width="10" height="3" fill="#ff7e33" opacity="0.5"/>
+            <circle cx="27" cy="18" r="1.5" fill="#7c2d12"/>
+            
+            <!-- Tube 2 (Teal) -->
+            <rect x="36" y="25" width="10" height="50" rx="3" fill="#0d9488" stroke="#115e59" stroke-width="1.2"/>
+            <rect x="36" y="25" width="10" height="3" fill="#2dd4bf" opacity="0.5"/>
+            <circle cx="41" cy="28" r="1.5" fill="#115e59"/>
+            
+            <!-- Tube 3 (Blue) -->
+            <rect x="50" y="32" width="10" height="43" rx="3" fill="#2563eb" stroke="#1e3a8a" stroke-width="1.2"/>
+            <rect x="50" y="32" width="10" height="3" fill="#60a5fa" opacity="0.5"/>
+            <circle cx="55" cy="35" r="1.5" fill="#1e3a8a"/>
+            
+            <!-- Tube 4 (Purple) -->
+            <rect x="64" y="40" width="10" height="35" rx="3" fill="#7c3aed" stroke="#4c1d95" stroke-width="1.2"/>
+            <rect x="64" y="40" width="10" height="3" fill="#a78bfa" opacity="0.5"/>
+            <circle cx="69" cy="43" r="1.5" fill="#4c1d95"/>
+            
+            <!-- Strike paddle overlay -->
+            <path d="M 12 40 L 40 45 L 35 55 L 12 43 Z" fill="#475569" stroke="#1e293b" stroke-width="1" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.4))" opacity="0.85"/>
+            <line x1="14" y1="42" x2="33" y2="46" stroke="#94a3b8" stroke-width="1"/>
+        `;
+  } else if (instrument === 'whistle_drum') {
+    shapes = `
+            <!-- Flat bottom shadow -->
+            <ellipse cx="50" cy="82" rx="28" ry="10" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>
+            
+            <!-- Clay Vessel Pot -->
+            <path d="M 50 18 Q 30 18, 30 30 Q 30 42, 22 55 Q 16 70, 30 78 Q 50 82, 70 78 Q 84 70, 78 55 Q 70 42, 70 30 Q 70 18, 50 18 Z" fill="#d97706" stroke="#78350f" stroke-width="2" filter="drop-shadow(0 4px 5px rgba(0,0,0,0.35))"/>
+            
+            <!-- Pot rim lip -->
+            <ellipse cx="50" cy="22" rx="16" ry="4" fill="#ca8a04" stroke="#78350f" stroke-width="1"/>
+            <ellipse cx="50" cy="22" rx="11" ry="2.5" fill="#451a03"/>
+            
+            <!-- Integrated Whistle chamber / duck bill shape -->
+            <path d="M 22 55 Q 12 50, 10 58 Q 10 66, 22 62 Z" fill="#b45309" stroke="#451a03" stroke-width="1.2"/>
+            <!-- Whistle mouth slot -->
+            <rect x="12" y="55" width="4" height="2" rx="0.5" fill="#1c1917" transform="rotate(-15, 14, 56)"/>
+            
+            <!-- Water wavy patterns on clay skin -->
+            <path d="M 32 60 Q 42 63, 50 60 T 68 60" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
+            <path d="M 30 68 Q 42 71, 50 68 T 70 68" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
+        `;
+  } else if (instrument === 'singing_bowl') {
+    shapes = `
+            <!-- Ground shadow -->
+            <ellipse cx="50" cy="80" rx="38" ry="12" fill="#020617" opacity="0.7" filter="blur(4px)"/>
+            
+            <!-- Brass Bowl body -->
+            <path d="M 12 36 C 12 65, 30 80, 50 80 C 70 80, 88 65, 88 36 Z" fill="#eab308" stroke="#854d0e" stroke-width="2.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+            <path d="M 16 38 C 16 63, 31 76, 50 76 C 69 76, 84 63, 84 38 Z" fill="#ca8a04" stroke="#a16207" stroke-width="1" opacity="0.6"/>
+            
+            <!-- Inner rim and gold reflection lip -->
+            <ellipse cx="50" cy="36" rx="38" ry="10" fill="#a16207" stroke="#854d0e" stroke-width="2"/>
+            <ellipse cx="50" cy="36" rx="36" ry="8" fill="#eab308" stroke="#ca8a04" stroke-width="0.8"/>
+            <ellipse cx="50" cy="36" rx="33" ry="6.5" fill="#713f12"/>
+            
+            <!-- Soundwave resonating concentric ripples -->
+            <ellipse cx="50" cy="36" rx="26" ry="5" fill="none" stroke="#fef08a" stroke-width="1.2" opacity="0.45" stroke-dasharray="3, 3"/>
+            <ellipse cx="50" cy="36" rx="18" ry="3.5" fill="none" stroke="#fef08a" stroke-width="1.0" opacity="0.6" stroke-dasharray="2, 2"/>
+            
+            <!-- Wooden mallet placed diagonally underneath -->
+            <rect x="65" y="10" width="8" height="60" rx="2" fill="#78350f" stroke="#451a03" stroke-width="1" transform="rotate(35, 69, 40)" filter="drop-shadow(2px 2px 3px rgba(0,0,0,0.5))"/>
+            <!-- Mallet felt / suede wrapping tip -->
+            <rect x="63" y="10" width="12" height="20" rx="1.5" fill="#f43f5e" stroke="#be185d" stroke-width="0.8" transform="rotate(35, 69, 40)"/>
+        `;
+  } else if (instrument === 'quijada') {
+    shapes = `
+            <!-- Floating shadow -->
+            <path d="M 15 78 C 30 78, 50 68, 85 78 C 50 86, 30 82, 15 78 Z" fill="#020617" opacity="0.55" filter="blur(3.5px)"/>
+            
+            <!-- Jawbone white/beige curve -->
+            <path d="M 12 30 C 12 70, 35 80, 85 70 C 88 55, 80 40, 75 42 C 78 55, 75 62, 50 64 C 30 64, 25 50, 24 30 Z" fill="#f5f5f4" stroke="#78716c" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.3))"/>
+            
+            <!-- Red/Teeth details on the upper border -->
+            <path d="M 32 64 C 35 63, 45 63, 50 64 C 60 63, 70 61, 74 54" fill="none" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round"/>
+            
+            <!-- Individual Bone Teeth (rattles) -->
+            <circle cx="34" cy="62" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="38" cy="61.5" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="42" cy="61" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="46" cy="61" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="50" cy="61.5" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="54" cy="61.5" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="58" cy="61" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="62" cy="60" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="66" cy="58" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            <circle cx="70" cy="56" r="1.5" fill="#fafaf9" stroke="#78716c" stroke-width="0.5"/>
+            
+            <!-- Hollow cavity lines -->
+            <path d="M 16 35 C 16 55, 20 62, 28 66" fill="none" stroke="#d6d3d1" stroke-width="1.5"/>
+            <ellipse cx="80" cy="48" rx="3" ry="5" fill="#44403c" transform="rotate(-15, 80, 48)"/>
+        `;
+  } else if (instrument === 'water_canister') {
+    shapes = `
+            <!-- Heavy flat bottom shadow -->
+            <ellipse cx="50" cy="82" rx="32" ry="9" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Plastic jug body (Aquamarine/Teal) -->
+            <path d="M 24 35 Q 24 24, 40 24 L 60 24 Q 76 24, 76 35 L 76 74 Q 76 80, 50 80 Q 24 80, 24 74 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.3))"/>
+            
+            <!-- Plastic ribs / structural lines -->
+            <path d="M 28 42 L 72 42 M 28 52 L 72 52 M 28 62 L 72 62" fill="none" stroke="#0284c7" stroke-width="2" opacity="0.6"/>
+            
+            <!-- Water level internal wave (semi-transparent) -->
+            <path d="M 25 56 Q 38 52, 50 56 T 75 56 L 75 78 Q 50 80, 25 78 Z" fill="#38bdf8" opacity="0.45"/>
+            
+            <!-- Sturdy jug handle at the top-left -->
+            <path d="M 40 24 L 40 14 Q 50 8, 60 14 L 60 24" fill="none" stroke="#0269a1" stroke-width="3.5" stroke-linecap="round"/>
+            <rect x="42" y="10" width="16" height="4" rx="1" fill="#bae6fd"/>
+            
+            <!-- Screw threads/cap -->
+            <rect x="45" y="20" width="10" height="4" fill="#0284c7" stroke="#0369a1" stroke-width="0.8"/>
+            <rect x="42" y="17" width="16" height="3" fill="#f43f5e" stroke="#9f1239" stroke-width="0.5"/>
+        `;
+  } else if (instrument === 'vintage_cash_register') {
+    shapes = `
+            <!-- Ground shadow -->
+            <rect x="18" y="74" width="64" height="12" rx="5" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
+            
+            <!-- Brass Main Housing -->
+            <path d="M 22 76 L 22 42 Q 22 24, 38 24 L 62 24 Q 78 24, 78 42 L 78 76 Z" fill="#ca8a04" stroke="#713f12" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.4))"/>
+            
+            <!-- Glass display top price box -->
+            <rect x="34" y="12" width="32" height="12" rx="1" fill="#1e293b" stroke="#713f12" stroke-width="1.5"/>
+            <text x="50" y="21" font-family="monospace" font-size="7" fill="#22c55e" font-weight="900" text-anchor="middle" letter-spacing="1">$3.50</text>
+            
+            <!-- Keys rows -->
+            <circle cx="32" cy="46" r="3" fill="#ef4444" stroke="#450a0a" stroke-width="0.8"/>
+            <circle cx="44" cy="46" r="3" fill="#f59e0b" stroke="#78350f" stroke-width="0.8"/>
+            <circle cx="56" cy="46" r="3" fill="#3b82f6" stroke="#1e3a8a" stroke-width="0.8"/>
+            <circle cx="68" cy="46" r="3" fill="#22c55e" stroke="#14532d" stroke-width="0.8"/>
+            
+            <circle cx="32" cy="56" r="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+            <circle cx="44" cy="56" r="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+            <circle cx="56" cy="56" r="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+            <circle cx="68" cy="56" r="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+            
+            <!-- Side Crank Lever -->
+            <path d="M 78 48 Q 88 48, 88 56 L 88 64" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="88" cy="64" r="3.5" fill="#b45309" stroke="#451a03" stroke-width="0.8"/>
+            
+            <!-- Red/Green Drawer Bottom plate -->
+            <rect x="20" y="68" width="60" height="8" rx="1.5" fill="#78350f" stroke="#451a03" stroke-width="1"/>
+            <line x1="24" y1="72" x2="76" y2="72" stroke="#f59e0b" stroke-width="1"/>
+        `;
+  } else if (instrument === 'geiger_counter') {
+    shapes = `
+            <!-- Heavy bottom shadow -->
+            <rect x="18" y="74" width="64" height="12" rx="4" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Industrial Slate/Yellow Housing -->
+            <rect x="20" y="18" width="60" height="58" rx="6" fill="#eab308" stroke="#854d0e" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+            <rect x="23" y="21" width="54" height="52" rx="4" fill="#475569" opacity="0.15"/>
+            
+            <!-- Center Dial display meter (Beige circular window) -->
+            <circle cx="50" cy="38" r="16" fill="#f5f5f4" stroke="#334155" stroke-width="1.8"/>
+            <!-- Meter scale arches -->
+            <path d="M 38 42 A 12 12 0 0 1 62 42" fill="none" stroke="#64748b" stroke-width="1.2" stroke-dasharray="1, 1.5"/>
+            <path d="M 54 38 A 4 4 0 0 1 62 42" fill="none" stroke="#ef4444" stroke-width="1.2"/>
+            <!-- Indicator Needle -->
+            <line x1="50" y1="46" x2="58" y2="30" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" filter="drop-shadow(0.5px 0.5px 1px rgba(0,0,0,0.4))"/>
+            <circle cx="50" cy="46" r="2.2" fill="#1e293b"/>
+            
+            <!-- Geiger mesh/sensor holes at base -->
+            <rect x="28" y="60" width="18" height="10" rx="1.5" fill="#1e293b"/>
+            <circle cx="32" cy="65" r="0.8" fill="#e2e8f0"/>
+            <circle cx="37" cy="65" r="0.8" fill="#e2e8f0"/>
+            <circle cx="42" cy="65" r="0.8" fill="#e2e8f0"/>
+            
+            <!-- Hardware adjustment knob -->
+            <circle cx="64" cy="64" r="5.5" fill="#334155" stroke="#1e293b" stroke-width="1"/>
+            <line x1="64" y1="59" x2="64" y2="69" stroke="#f1f5f9" stroke-width="1.2"/>
+            
+            <!-- Radioactivity Warning Sign (Tiny icon) -->
+            <circle cx="50" cy="12" r="4.5" fill="#eab308" stroke="#854d0e" stroke-width="1"/>
+            <circle cx="50" cy="12" r="1" fill="#000000"/>
+            <path d="M 48 9 L 52 9 L 50 12 Z M 46 13 L 48 11 L 51 13 Z" fill="#000000"/>
+        `;
+  } else if (instrument === 'centrifugal_bullroarer') {
+    shapes = `
+            <!-- Swirling shadow trail -->
+            <path d="M 10 50 Q 30 15, 50 50 T 90 50" fill="none" stroke="#020617" stroke-width="8" opacity="0.45" stroke-linecap="round" filter="blur(4px)"/>
+            
+            <!-- Twisting cord -->
+            <path d="M 10 50 Q 25 35, 40 45 T 70 50 L 78 50" fill="none" stroke="#d6d3d1" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 10 50 Q 25 35, 40 45 T 70 50 L 78 50" fill="none" stroke="#78716c" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2, 2"/>
+            
+            <!-- Wooden slat (Aero blade) rotating -->
+            <g transform="translate(68, 50) rotate(-25, 10, 0)">
+                <path d="M 0 -8 L 30 -5 C 34 -4, 34 4, 30 5 L 0 8 C -4 4, -4 -4, 0 -8 Z" fill="#d97706" stroke="#78350f" stroke-width="1.5" filter="drop-shadow(2px 3px 4px rgba(0,0,0,0.4))"/>
+                <!-- Tribal/Indigenous grain designs -->
+                <path d="M 6 -4 Q 15 -2, 24 -4" fill="none" stroke="#78350f" stroke-width="1" opacity="0.6"/>
+                <path d="M 6 4 Q 15 2, 24 4" fill="none" stroke="#78350f" stroke-width="1" opacity="0.6"/>
+                <circle cx="4" cy="0" r="1.5" fill="#fef08a" stroke="#78350f" stroke-width="0.8"/>
+            </g>
+        `;
+  } else if (instrument === 'newtons_cradle') {
+    shapes = `
+            <!-- Shadow for spheres -->
+            <ellipse cx="50" cy="80" rx="36" ry="6" fill="#020617" opacity="0.65" filter="blur(3px)"/>
+            
+            <!-- Support Frame (Chrome arcs) -->
+            <path d="M 22 72 L 22 28 Q 22 18, 50 18 Q 78 18, 78 28 L 78 72" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"/>
+            <path d="M 22 28 L 78 28" fill="none" stroke="#cbd5e1" stroke-width="1.5" opacity="0.5"/>
+            
+            <!-- Suspension strings -->
+            <line x1="34" y1="28" x2="34" y2="60" stroke="#64748b" stroke-width="0.6"/>
+            <line x1="42" y1="28" x2="42" y2="60" stroke="#64748b" stroke-width="0.6"/>
+            <line x1="50" y1="28" x2="50" y2="60" stroke="#64748b" stroke-width="0.6"/>
+            <line x1="58" y1="28" x2="58" y2="60" stroke="#64748b" stroke-width="0.6"/>
+            
+            <!-- Stationary spheres 2, 3, 4 -->
+            <circle cx="42" cy="60" r="4" fill="url(#chrome-${id})" stroke="#475569" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
+            <circle cx="50" cy="60" r="4" fill="url(#chrome-${id})" stroke="#475569" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
+            <circle cx="58" cy="60" r="4" fill="url(#chrome-${id})" stroke="#475569" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
+            
+            <!-- Left swinging sphere (in motion) -->
+            <g transform="rotate(30, 34, 28)">
+                <line x1="34" y1="28" x2="34" y2="60" stroke="#475569" stroke-width="0.8"/>
+                <circle cx="34" cy="60" r="4" fill="url(#chrome-${id})" stroke="#334155" stroke-width="0.6" filter="drop-shadow(-2px 2px 2px rgba(0,0,0,0.4))"/>
+                <circle cx="32" cy="58" r="1.2" fill="#ffffff" opacity="0.6"/>
+            </g>
+            
+            <!-- Right swinging sphere (recoiling) -->
+            <g transform="rotate(-15, 66, 28)">
+                <line x1="66" y1="28" x2="66" y2="60" stroke="#475569" stroke-width="0.8"/>
+                <circle cx="66" cy="60" r="4" fill="url(#chrome-${id})" stroke="#334155" stroke-width="0.6" filter="drop-shadow(2px 2px 2px rgba(0,0,0,0.4))"/>
+                <circle cx="64" cy="58" r="1.2" fill="#ffffff" opacity="0.6"/>
+            </g>
+            
+            <!-- Heavy bottom steel plates -->
+            <rect x="14" y="68" width="72" height="6" rx="1.5" fill="#334155" stroke="#1e293b" stroke-width="1"/>
+            <rect x="16" y="69" width="68" height="2" fill="#64748b" opacity="0.4"/>
+        `;
+  } else if (instrument === 'slime_plop_box') {
+    shapes = `
+            <!-- Drip pool shadow -->
+            <ellipse cx="50" cy="82" rx="30" ry="10" fill="#020617" opacity="0.6" filter="blur(3px)"/>
+            
+            <!-- Transparent Jar -->
+            <rect x="24" y="24" width="52" height="54" rx="12" fill="none" stroke="#94a3b8" stroke-width="2" filter="drop-shadow(0 3px 5px rgba(0,0,0,0.25))"/>
+            <rect x="25" y="25" width="50" height="52" rx="11" fill="#e2e8f0" opacity="0.15"/>
+            
+            <!-- Translucent Teal Slime layers -->
+            <path d="M 25 45 C 32 40, 42 50, 50 45 C 58 40, 68 48, 75 42 L 75 75 Q 50 81, 25 75 Z" fill="#14b8a6" opacity="0.65"/>
+            
+            <!-- Overflowing drip on the side -->
+            <path d="M 24 38 Q 18 42, 18 50 Q 18 56, 22 56 Q 26 56, 26 48 Z" fill="#0d9488" opacity="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
+            
+            <!-- Hanging slime drops inside -->
+            <path d="M 46 48 Q 50 62, 50 66 Q 50 70, 53 70 Q 56 70, 56 66 Z" fill="#0f766e" opacity="0.8"/>
+            <circle cx="53" cy="67" r="1.8" fill="#5eead4" opacity="0.6"/>
+            
+            <!-- Gaseous bubbles inside the matrix -->
+            <circle cx="34" cy="58" r="1.5" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.4" opacity="0.7"/>
+            <circle cx="62" cy="52" r="2.2" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.4" opacity="0.7"/>
+            <circle cx="42" cy="68" r="1.0" fill="#ccfbf1" opacity="0.8"/>
+            
+            <!-- Colored jar cap -->
+            <rect x="28" y="16" width="44" height="8" rx="2" fill="#0d9488" stroke="#115e59" stroke-width="1.2"/>
+            <rect x="32" y="14" width="36" height="2" fill="#5eead4" opacity="0.6"/>
+        `;
+  } else if (instrument === 'talk_box') {
+    shapes = `
+            <!-- Floor shadow -->
+            <ellipse cx="50" cy="80" rx="34" ry="11" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>
+            
+            <!-- Retro Box Body (Bright Orange) -->
+            <rect x="22" y="24" width="56" height="52" rx="10" fill="#f97316" stroke="#c2410c" stroke-width="2.2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.35))"/>
+            
+            <!-- Stylisized Retro Sunburst Decal -->
+            <circle cx="50" cy="50" r="18" fill="#fde047" stroke="#ca8a04" stroke-width="0.8"/>
+            
+            <!-- Phonograph/Speaker radial grilles -->
+            <circle cx="50" cy="50" r="13" fill="#1e293b"/>
+            <line x1="50" y1="37" x2="50" y2="63" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="1 2"/>
+            <line x1="37" y1="50" x2="63" y2="50" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="1 2"/>
+            <line x1="41" y1="41" x2="59" y2="59" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="1 2"/>
+            <line x1="41" y1="59" x2="59" y2="41" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="1 2"/>
+            <circle cx="50" cy="50" r="3.5" fill="#e2e8f0"/>
+            
+            <!-- Red Plastic Handle loop at the top -->
+            <path d="M 32 24 L 32 14 Q 50 4, 68 14 L 68 24" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+            
+            <!-- Mechanical Pull-String chord loop -->
+            <path d="M 78 54 Q 88 56, 90 64" fill="none" stroke="#cbd5e1" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Pull ring -->
+            <circle cx="91" cy="65" r="4.5" fill="#ef4444" stroke="#b91c1c" stroke-width="1" filter="drop-shadow(1px 1px 2px rgba(0,0,0,0.4))"/>
+        `;
+  } else if (instrument === 'mouth_tube_synth') {
+    shapes = `
+            <!-- Heavy bottom shadow -->
+            <rect x="18" y="74" width="64" height="12" rx="4" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
+            
+            <!-- Glowing Electronic Synth Chassis -->
+            <rect x="20" y="24" width="60" height="52" rx="8" fill="#1e1b4b" stroke="#312e81" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.4))"/>
+            <rect x="22" y="26" width="56" height="48" rx="6" fill="none" stroke="#38bdf8" stroke-width="0.8" opacity="0.5"/>
+            
+            <!-- Glowing Neon LEDs -->
+            <circle cx="28" cy="34" r="2.2" fill="#f43f5e" filter="drop-shadow(0 0 4px #f43f5e)"/>
+            <circle cx="36" cy="34" r="2.2" fill="#10b981" filter="drop-shadow(0 0 4px #10b981)"/>
+            
+            <!-- Graphic Equalizer glowing lines -->
+            <rect x="44" y="30" width="3" height="10" fill="#38bdf8" filter="drop-shadow(0 0 2px #38bdf8)"/>
+            <rect x="49" y="28" width="3" height="12" fill="#38bdf8" filter="drop-shadow(0 0 2px #38bdf8)"/>
+            <rect x="54" y="32" width="3" height="8" fill="#38bdf8" filter="drop-shadow(0 0 2px #38bdf8)"/>
+            <rect x="59" y="26" width="3" height="14" fill="#38bdf8" filter="drop-shadow(0 0 2px #38bdf8)"/>
+            
+            <!-- Coiled Plastic Synth Mouth Hose exiting to the right -->
+            <path d="M 68 56 Q 80 50, 82 40 T 78 28" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 2px 4px rgba(45,212,191,0.5))"/>
+            <path d="M 68 56 Q 80 50, 82 40 T 78 28" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="77" cy="27" r="2" fill="#14b8a6"/>
+            
+            <!-- Connection Port/Jack -->
+            <rect x="64" y="52" width="6" height="8" rx="1" fill="#94a3b8" stroke="#475569" stroke-width="0.8"/>
+            <circle cx="67" cy="56" r="1.5" fill="#334155"/>
+        `;
   } else {
     shapes = `
             <!-- Heavy bottom shadow -->

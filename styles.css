@@ -222,24 +222,18 @@ header p {
 
 /* Active Ring Glowing State */
 .drum-wrapper.left-active .drum-body {
-  box-shadow: var(--left-active-glow);
-  border-color: rgba(249, 115, 22, 0.5);
+  filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.8));
 }
 
 .drum-wrapper.right-active .drum-body {
-  box-shadow: var(--right-active-glow);
-  border-color: rgba(59, 130, 246, 0.5);
+  filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.8));
 }
 
 .drum-body {
-  border-radius: 50%;
   position: relative;
   background: transparent;
   cursor: pointer;
-  border: 4px solid rgba(0, 0, 0, 0.4);
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.4),
-    0 20px 40px rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
   transition:
     box-shadow 0.25s ease,
     border-color 0.25s ease,
@@ -2479,4 +2473,19 @@ header p {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.streaming-pill.icon-only {
+  padding: 6px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.streaming-pill.icon-only svg {
+  width: 16px;
+  height: 16px;
+  margin: 0;
 }

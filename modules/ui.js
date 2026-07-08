@@ -1,6 +1,8 @@
 import { setupEducationalDialog, showDrumInfo, showPatternInfo } from './ui-dialogs.js';
 import { setupXYPad } from './ui-xypad.js';
 import { generateDrumheadSVG } from './ui-svg.js';
+import { buildDrumWrapper } from './drumHandler.js';
+import { compareStrings } from './utils.js';
 // UI Rendering, Animations, SVG Drums, XY Pad and Controls Module
 import { state } from './state.js';
 import {
@@ -35,8 +37,8 @@ import { startPattern, stopPattern } from './sequencer.js';
 import { instrumentPatterns } from './patterns.js';
 import { drumInfo, patternInfo, drumTags } from './drumInfo.js';
 
-let selectedRegion = 'All';
-let selectedType = 'All';
+let selectedRegion = localStorage.getItem('selectedRegion') || 'All';
+let selectedType = localStorage.getItem('selectedType') || 'All';
 
 // Custom Pattern Creator state
 export let currentEditingPattern = { name: '', stepCount: 16, steps: {} };
@@ -331,12 +333,28 @@ export function setupTagFilters() {
     'Sacred',
     'Multiple Sizes',
     'Two-Headed',
-    'Not Really a Drum'
+    'Not Really a Drum',
+    'Toy'
   ];
 
   const renderFilterRow = (title, items, isRegion) => {
+    const friendlyNames = {
+      Caribbean: 'Carib',
+      'West Africa': 'W. Africa',
+      'South America': 'S. America',
+      'Middle East': 'M. East',
+      'North America': 'N. America',
+      'Southeast Asia': 'SE Asia',
+      Mesoamerica: 'Mesoamer',
+      'Multiple Sizes': 'Multi-Size',
+      'Two-Headed': 'Dual-Head',
+      'Not Really a Drum': 'Non-Drum',
+      Effects: 'FX',
+      Shaker: 'Shaker'
+    };
+
     return `
-      <div>
+      <div style="margin-bottom: 6px;">
         <div class="pills-title" style="margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
           <span>${title}</span>
         </div>
@@ -344,7 +362,6 @@ export function setupTagFilters() {
           ${items
             .map((item) => {
               const activeVal = isRegion ? selectedRegion : selectedType;
-              const activeClass = activeVal === item ? 'active-tag-filter' : '';
               const isSelected = activeVal === item;
 
               let hasMatch = true;
@@ -360,10 +377,11 @@ export function setupTagFilters() {
               const fontSize = hasMatch ? '0.75rem' : '0.62rem';
               const padding = hasMatch ? '3px 8px' : '1.5px 5px';
               const opacity = hasMatch ? '1' : '0.35';
+              const displayName = friendlyNames[item] || item;
 
               return `
               <button 
-                class="tag-filter-btn ${activeClass}" 
+                class="tag-filter-btn ${isSelected ? 'active-tag-filter' : ''}" 
                 data-is-region="${isRegion}" 
                 data-value="${item}"
                 style="background: ${isSelected ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.03)'}; 
@@ -377,7 +395,7 @@ export function setupTagFilters() {
                        transition: all 0.2s ease; 
                        opacity: ${opacity};
                        outline: none;"
-              >${item}</button>
+              >${displayName}</button>
             `;
             })
             .join('')}
@@ -387,8 +405,8 @@ export function setupTagFilters() {
   };
 
   container.innerHTML = `
-    ${renderFilterRow('🌍 Region', regions, true)}
-    ${renderFilterRow('🥁 Style / Material', types, false)}
+    ${renderFilterRow('🌍 Origin', regions, true)}
+    ${renderFilterRow('🥁 Style', types, false)}
   `;
 
   // Bind click events
@@ -400,14 +418,29 @@ export function setupTagFilters() {
 
       if (isRegion) {
         selectedRegion = val;
+        localStorage.setItem('selectedRegion', selectedRegion);
       } else {
         selectedType = val;
+        localStorage.setItem('selectedType', selectedType);
       }
 
       setupTagFilters();
       applyFilters();
     });
   });
+}
+
+export function setTagFilters(region, type) {
+  if (region !== undefined) {
+    selectedRegion = region;
+    localStorage.setItem('selectedRegion', selectedRegion);
+  }
+  if (type !== undefined) {
+    selectedType = type;
+    localStorage.setItem('selectedType', selectedType);
+  }
+  setupTagFilters();
+  applyFilters();
 }
 
 export function applyFilters() {
@@ -430,16 +463,12 @@ export function applyFilters() {
     }
   });
 
-  matchingDrums.sort((a, b) => {
-    const cleanA = a.name.replace(/^[\s\p{Emoji}\u200d]+/u, '').trim();
-    const cleanB = b.name.replace(/^[\s\p{Emoji}\u200d]+/u, '').trim();
-    return cleanA.localeCompare(cleanB, undefined, { numeric: true, sensitivity: 'base' });
-  });
+  matchingDrums.sort((a, b) => compareStrings(a.name, b.name));
 
   matchingDrums.forEach((d) => {
     const opt = document.createElement('option');
     opt.value = d.key;
-    opt.textContent = d.name;
+    opt.textContent = d.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
     if (d.key === currentVal) {
       opt.selected = true;
     }
@@ -581,7 +610,8 @@ export function applyFilters() {
   // Update filter active button styling
   const filterBtn = document.getElementById('settings-toggle-btn');
   if (filterBtn) {
-    if (selectedRegion !== 'All' || selectedType !== 'All') {
+    const hasActiveFilters = selectedRegion !== 'All' || selectedType !== 'All';
+    if (hasActiveFilters) {
       filterBtn.classList.add('filter-selected');
     } else {
       filterBtn.classList.remove('filter-selected');
@@ -734,12 +764,11 @@ export function populateDrumSelectionOptions() {
   const isSeparable = drums.length > 1 && !inseparableInstruments.includes(inst);
 
   const singleDrumModeContainer = document.getElementById('single-drum-mode-container');
-  const pickDrumsGroup = document.getElementById('pick-drums-group');
 
   if (isSeparable) {
     container.style.display = 'flex';
+    container.innerHTML = '<span class="footer-control-label" style="width: 100%;">🎯 PICK DRUMS:</span>';
     if (singleDrumModeContainer) singleDrumModeContainer.style.display = 'flex';
-    if (pickDrumsGroup) pickDrumsGroup.style.display = 'flex';
 
     const wrapper = document.createElement('div');
     wrapper.className = 'drum-checkboxes-group';
@@ -805,7 +834,6 @@ export function populateDrumSelectionOptions() {
   } else {
     container.style.display = 'none';
     if (singleDrumModeContainer) singleDrumModeContainer.style.display = 'none';
-    if (pickDrumsGroup) pickDrumsGroup.style.display = 'none';
   }
 }
 
@@ -824,11 +852,40 @@ export function populateTryEffectsPills() {
   const inst = state.currentInstrument;
   const touches = instrumentTouches[inst] || instrumentTouches.conga;
 
+  const playBtn = document.createElement('button');
+  playBtn.className = 'try-btn play-pattern-btn';
+  playBtn.innerText = state.isPatternPlaying ? '⏹️ STOP' : '▶️ PLAY PATTERN';
+  playBtn.style.background = state.isPatternPlaying ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
+  playBtn.style.borderColor = state.isPatternPlaying ? '#ef4444' : '#10b981';
+  playBtn.style.color = state.isPatternPlaying ? '#fca5a5' : '#6ee7b7';
+
+  playBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    initAudio();
+    if (state.isPatternPlaying) {
+      stopPattern();
+      playBtn.innerText = '▶️ PLAY PATTERN';
+      playBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+      playBtn.style.borderColor = '#10b981';
+      playBtn.style.color = '#6ee7b7';
+    } else {
+      startPattern(false); // play pattern
+      playBtn.innerText = '⏹️ STOP';
+      playBtn.style.background = 'rgba(239, 68, 68, 0.2)';
+      playBtn.style.borderColor = '#ef4444';
+      playBtn.style.color = '#fca5a5';
+    }
+  });
+  container.appendChild(playBtn);
+
   touches.forEach((touch) => {
     const btn = document.createElement('button');
     btn.className = 'try-btn';
     btn.dataset.sound = touch.id;
-    btn.innerText = touch.label;
+    btn.innerText = touch.label.replace(/\s*\(.*?\)/g, '').trim();
+    if (touch.description) {
+      btn.title = touch.description.replace(/\s*\(.*?\)/g, '').trim();
+    }
 
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -884,210 +941,7 @@ export function renderDrums() {
   }
 
   visible.forEach((d) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'drum-wrapper';
-    wrapper.dataset.id = d.id;
-    wrapper.id = `drum-${d.id}`;
-
-    // Create an array of bodies to render. Default is 1, Bata is 2.
-    const bodies = [];
-    if (state.currentInstrument === 'bata') {
-      const bigSize = d.sizeValue || 20;
-      const smallSize = bigSize * 0.65;
-
-      bodies.push({
-        type: 'enu',
-        className: 'drum-body drum-bata-big',
-        width: `calc(${bigSize} * var(--drum-unit))`,
-        height: `calc(${bigSize} * var(--drum-unit))`,
-        svg: generateDrumheadSVG(d.id + '_big', d.color, state.currentInstrument),
-        borderRadius: '50%',
-        boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
-      });
-
-      bodies.push({
-        type: 'chacha',
-        className: 'drum-body drum-bata-small',
-        width: `calc(${smallSize} * var(--drum-unit))`,
-        height: `calc(${smallSize} * var(--drum-unit))`,
-        svg: generateDrumheadSVG(d.id + '_small', d.color, state.currentInstrument),
-        borderRadius: '50%',
-        boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
-      });
-
-      wrapper.style.display = 'flex';
-      wrapper.style.flexDirection = 'column';
-      wrapper.style.gap = '2vh';
-    } else {
-      const sizeVal = d.sizeValue || 20;
-      let borderRadius = '50%';
-      let boxStyle = '';
-      if (state.currentInstrument === 'cajon') {
-        borderRadius = '8%';
-        boxStyle =
-          'border: 4px solid #8b5a2b; box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.5);';
-      } else if (state.currentInstrument === 'timbales') {
-        boxStyle =
-          'border: 6px solid #d4af37; box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.4);';
-      } else if (['darbuka', 'doumbek'].includes(state.currentInstrument)) {
-        boxStyle =
-          'border: 8px solid #a9a9a9; box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 10px 25px rgba(0,0,0,0.4);';
-      } else if (['djembe', 'congas', 'bongos', 'bata'].includes(state.currentInstrument)) {
-        boxStyle =
-          'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);';
-      } else if (state.currentInstrument === 'frame' || state.currentInstrument === 'tar') {
-        boxStyle = 'border: 2px solid #deb887; box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.3);';
-      }
-
-      bodies.push({
-        type: 'default',
-        className: 'drum-body',
-        width: `calc(${sizeVal} * var(--drum-unit))`,
-        height: `calc(${sizeVal} * var(--drum-unit))`,
-        svg: generateDrumheadSVG(d.id, d.color, state.currentInstrument),
-        borderRadius,
-        boxStyle
-      });
-    }
-
-    bodies.forEach((b) => {
-      const body = document.createElement('div');
-      body.className = b.className;
-      if (b.borderRadius) body.style.borderRadius = b.borderRadius;
-      if (b.boxStyle) body.style.cssText += b.boxStyle;
-      body.style.width = b.width;
-      body.style.height = b.height;
-      body.innerHTML = b.svg;
-
-      if (b.type !== 'default') {
-        body.dataset.headType = b.type;
-      }
-
-      const sectorOverlay = document.createElement('div');
-      sectorOverlay.className = 'sector-overlay';
-
-      const sectors = [
-        { class: 'bass', dir: 'up', fallback: 'bass', dirLong: 'upLong' },
-        { class: 'slap', dir: 'down', fallback: 'slap', dirLong: 'downLong' },
-        { class: 'heeltoe', dir: 'left', fallback: 'heeltoe', dirLong: 'leftLong' },
-        { class: 'open', dir: 'right', fallback: 'open', dirLong: 'rightLong' }
-      ];
-
-      sectors.forEach((secDef) => {
-        const secEl = document.createElement('div');
-        secEl.className = `sector sector-${secDef.class}`;
-
-        // Custom tap handlers with tap & hold detection
-        let pressTimer = null;
-        let pressStart = 0;
-        let isHolding = false;
-
-        const getTouchSound = (isLong = false) => {
-          const inst = state.currentInstrument;
-          const mapping = instrumentMappings[inst];
-          if (mapping) {
-            let sideMap = mapping.left; // Default left
-            if (inst === 'bata') {
-              sideMap = b.type === 'enu' ? mapping.right : mapping.left;
-            }
-            if (
-              isLong &&
-              secDef.dirLong &&
-              sideMap[secDef.dirLong] &&
-              sideMap[secDef.dirLong] !== sideMap[secDef.dir]
-            ) {
-              return sideMap[secDef.dirLong];
-            }
-            return sideMap[secDef.dir] || secDef.fallback;
-          }
-          return secDef.fallback;
-        };
-
-        const hasLongPress = () => {
-          const inst = state.currentInstrument;
-          const mapping = instrumentMappings[inst];
-          if (!mapping) return false;
-          let sideMap = mapping.left;
-          if (inst === 'bata') {
-            sideMap = b.type === 'enu' ? mapping.right : mapping.left;
-          }
-          return secDef.dirLong && sideMap[secDef.dirLong] && sideMap[secDef.dirLong] !== sideMap[secDef.dir];
-        };
-
-        const triggerPlay = (soundType) => {
-          const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
-          let actualSound = soundType;
-
-          if (instDef.sounds[actualSound]) {
-            instDef.sounds[actualSound](d);
-          }
-        };
-
-        const handlePressStart = (e) => {
-          e.preventDefault();
-          initAudio();
-          pressStart = Date.now();
-          isHolding = true;
-
-          if (hasLongPress()) {
-            // Start timer for long press trigger
-            pressTimer = setTimeout(() => {
-              if (isHolding) {
-                const sound = getTouchSound(true);
-                triggerPlay(sound);
-                triggerHitEffect(d.id, sound);
-                isHolding = false; // Mark fired
-              }
-            }, 180);
-          } else {
-            const sound = getTouchSound(false);
-            triggerPlay(sound);
-            triggerHitEffect(d.id, sound);
-          }
-        };
-
-        const handlePressEnd = (e) => {
-          e.preventDefault();
-          if (hasLongPress()) {
-            clearTimeout(pressTimer);
-            if (isHolding) {
-              // If released before 180ms, play standard hit!
-              const sound = getTouchSound(false);
-              triggerPlay(sound);
-              triggerHitEffect(d.id, sound);
-            }
-          }
-          isHolding = false;
-        };
-
-        secEl.addEventListener('mousedown', handlePressStart);
-        secEl.addEventListener('touchstart', handlePressStart, { passive: false });
-        secEl.addEventListener('mouseup', handlePressEnd);
-        secEl.addEventListener('touchend', handlePressEnd, { passive: false });
-        secEl.addEventListener('mouseleave', () => {
-          clearTimeout(pressTimer);
-          isHolding = false;
-        });
-
-        sectorOverlay.appendChild(secEl);
-      });
-
-      body.appendChild(sectorOverlay);
-      wrapper.appendChild(body);
-    });
-
-    // Name & Button Indicator Labels under the conga
-    const labelContainer = document.createElement('div');
-    labelContainer.className = 'drum-label-container';
-
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 'drum-name';
-    nameSpan.innerText = d.label;
-
-    labelContainer.appendChild(nameSpan);
-
-    wrapper.appendChild(labelContainer);
-
+    const wrapper = buildDrumWrapper(d);
     stage.appendChild(wrapper);
   });
 
@@ -1179,6 +1033,7 @@ export function updateActiveDrumsForVisible() {
 }
 
 export function handleInstrumentChange(newInst) {
+  initAudio();
   state.currentInstrument = newInst;
   localStorage.setItem('currentInstrument', state.currentInstrument);
 
@@ -1231,11 +1086,7 @@ export function populatePatternSelectOptions() {
 
   const inst = state.currentInstrument;
   const instPatterns = instrumentPatterns[inst] || {};
-  const sortedEntries = Object.entries(instPatterns).sort((a, b) => {
-    const cleanA = a[1].name.replace(/^[\s\p{Emoji}\u200d]+/u, '').trim();
-    const cleanB = b[1].name.replace(/^[\s\p{Emoji}\u200d]+/u, '').trim();
-    return cleanA.localeCompare(cleanB, undefined, { numeric: true, sensitivity: 'base' });
-  });
+  const sortedEntries = Object.entries(instPatterns).sort((a, b) => compareStrings(a[1].name, b[1].name));
   sortedEntries.forEach(([patternId, pattern]) => {
     const opt = document.createElement('option');
     opt.value = patternId;
@@ -1249,9 +1100,7 @@ export function populatePatternSelectOptions() {
     try {
       const customPatterns = JSON.parse(customPatternsRaw);
       const instCustom = customPatterns[inst] || {};
-      const sortedCustom = Object.entries(instCustom).sort((a, b) => {
-        return a[1].name.localeCompare(b[1].name, undefined, { numeric: true, sensitivity: 'base' });
-      });
+      const sortedCustom = Object.entries(instCustom).sort((a, b) => compareStrings(a[1].name, b[1].name));
 
       if (sortedCustom.length > 0) {
         const headerOpt = document.createElement('option');
@@ -1269,6 +1118,14 @@ export function populatePatternSelectOptions() {
     } catch (err) {
       console.error('Error parsing custom patterns:', err);
     }
+  }
+
+  // Restore saved pattern for this instrument
+  const savedPattern = localStorage.getItem(`selectedPattern_${inst}`) || localStorage.getItem('selectedPattern');
+  if (savedPattern && select.querySelector(`option[value="${savedPattern}"]`)) {
+    select.value = savedPattern;
+  } else {
+    select.value = 'none';
   }
 
   updatePatternInfoBtnVisibility();
@@ -1291,7 +1148,10 @@ export function updateControllerCheatSheet() {
   const getDirectionLabel = (mapping, direction, tList) => {
     const touchId = mapping[direction];
     const touch = tList.find((t) => t.id === touchId);
-    return touch ? touch.label : (touchId || '').replace(/_/g, ' ').toUpperCase();
+    if (touch) {
+      return touch.label.replace(/\s*\(.*?\)/g, '').trim();
+    }
+    return (touchId || '').replace(/_/g, ' ').toUpperCase();
   };
 
   const getHandText = (mapping) => {
@@ -1300,7 +1160,7 @@ export function updateControllerCheatSheet() {
       const longKey = dir + 'Long';
       if (mapping[longKey] && mapping[longKey] !== mapping[dir]) {
         const longStr = getDirectionLabel(mapping, longKey, touches);
-        return `${normal} (Hold ${longStr})`;
+        return `${normal} [ Hold : ${longStr} ]`;
       }
       return normal;
     };

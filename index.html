@@ -52,6 +52,7 @@
                 <button
                   id="save-preset-btn"
                   class="save-preset-btn"
+                  title="Save Current Settings as Preset"
                   title="Save Current FX Settings"
                   style="margin-left: 4px"
                 >
@@ -77,8 +78,17 @@
                   "
                   placeholder="Preset Name..."
                 />
-                <button id="confirm-save-btn" class="save-preset-btn" style="padding: 4px 8px">✔</button>
-                <button id="cancel-save-btn" class="preset-nav-btn" style="padding: 4px 8px">✖</button>
+                <button
+                  id="confirm-save-btn"
+                  class="save-preset-btn"
+                  style="padding: 4px 8px"
+                  title="Confirm Save Preset"
+                >
+                  ✔
+                </button>
+                <button id="cancel-save-btn" class="preset-nav-btn" style="padding: 4px 8px" title="Cancel Save">
+                  ✖
+                </button>
               </div>
             </div>
 
@@ -92,9 +102,9 @@
                 </div>
                 <input type="range" id="reverb-slider" min="0" max="100" value="0" class="fx-slider" />
                 <div class="reverb-presets-row">
-                  <button class="reverb-p-btn" data-preset="bedroom">Bedroom</button>
-                  <button class="reverb-p-btn" data-preset="concert">Concert</button>
-                  <button class="reverb-p-btn" data-preset="space">Space</button>
+                  <button class="reverb-p-btn" data-preset="bedroom" title="Bedroom Reverb">Bedroom</button>
+                  <button class="reverb-p-btn" data-preset="concert" title="Concert Hall Reverb">Concert</button>
+                  <button class="reverb-p-btn" data-preset="space" title="Deep Space Reverb">Space</button>
                 </div>
               </div>
 
@@ -495,6 +505,7 @@
               <button
                 id="pattern-preview-btn"
                 class="footer-btn"
+                title="Listen to the pattern you are creating"
                 style="
                   background: rgba(59, 130, 246, 0.15);
                   border-color: rgba(59, 130, 246, 0.4);
@@ -509,6 +520,7 @@
               <button
                 id="pattern-clear-btn"
                 class="footer-btn"
+                title="Clear the current pattern grid"
                 style="
                   background: rgba(239, 68, 68, 0.1);
                   border-color: rgba(239, 68, 68, 0.3);
@@ -522,6 +534,7 @@
               <button
                 id="pattern-save-btn"
                 class="footer-btn"
+                title="Save the pattern for future playback"
                 style="
                   background: rgba(16, 185, 129, 0.2);
                   border-color: #10b981;
@@ -599,63 +612,7 @@
         </div>
 
         <!-- Pick Drums Block -->
-        <div
-          class="footer-control-group pick-drums-group"
-          id="pick-drums-group"
-          style="
-            display: none;
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 8px !important;
-            width: 100%;
-          "
-        >
-          <span class="footer-control-label">🎯 PICK DRUMS:</span>
-          <div
-            class="footer-group-controls"
-            style="
-              display: flex !important;
-              flex-direction: column !important;
-              align-items: flex-start !important;
-              gap: 8px !important;
-              width: 100% !important;
-              flex-wrap: wrap !important;
-            "
-          >
-            <div
-              id="drum-selection-container"
-              style="
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: wrap !important;
-                align-items: center !important;
-                gap: 8px !important;
-                width: 100% !important;
-                min-width: 0;
-              "
-            >
-              <!-- Dynamically populated checkboxes -->
-            </div>
-            <div
-              id="single-drum-mode-container"
-              style="
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-                flex-shrink: 0;
-                margin-top: 4px;
-              "
-            >
-              <label style="font-size: 0.65rem; color: #94a3b8; font-weight: 600; white-space: nowrap; margin: 0"
-                >SINGLE DRUM MODE</label
-              >
-              <label class="switch-container" style="transform: scale(0.7); transform-origin: left center; margin: 0">
-                <input type="checkbox" id="single-drum-mode-checkbox" />
-                <span class="switch-slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <div id="drum-selection-container" style="display: none; width: 100%; flex-wrap: wrap; gap: 8px"></div>
 
         <!-- Play-along / Pattern Selection Mode -->
         <div
@@ -795,32 +752,10 @@
           width: 100%;
         "
       >
-        <span class="cheat-item" id="cheat-left-hand"
-          ><b>LEFT</b> ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
-        >
+        <span class="cheat-item" id="cheat-left-hand"><b>LEFT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
         <span class="cheat-divider" id="cheat-divider-hands">|</span>
-        <span class="cheat-item" id="cheat-right-hand"
-          ><b>RIGHT</b> ↑Bass | ↓Slap (Hold Muffled) | ←Heel/Toe | →Open</span
-        >
-        <button
-          id="footer-taps-info-btn"
-          class="footer-icon-btn"
-          title="View Tap Details"
-          style="
-            margin: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            color: #34d399;
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-            transition: all 0.2s ease;
-          "
-        >
+        <span class="cheat-item" id="cheat-right-hand"><b>RIGHT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
+        <button id="footer-taps-info-btn" class="footer-icon-btn" title="View Tap Details" style="margin: 0">
           <svg
             viewBox="0 0 24 24"
             fill="none"

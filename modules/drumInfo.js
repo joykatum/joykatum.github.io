@@ -842,7 +842,7 @@ export const drumInfo =
       name: 'Dunun',
       origin: 'West Africa',
       description:
-        'Dunun drums (Dununba, Sangban, and Kenkeni) are double-headed cylinder drums played with mallets, providing the deep melodic bass foundation for djembe ensembles in West Africa, often paired with a bell.',
+        'Dunun drums, comprising the Dununba, Sangban, and Kenkeni, are a family of double-headed cylindrical bass drums from West Africa. Played with heavy wooden mallets and often integrated with hand-struck iron bells, they provide the deep, polyrhythmic, melodic foundation for traditional djembe drum ensembles. The conversational interlocking of these three distinct drum voices drives the energy and pulse of West African social and ritual dances.',
       performers: [{ name: 'Famoudou Konaté', spotify: 'true', apple: 'true' }],
       songs: [{ name: 'Dunun Ensemble', artist: 'Famoudou Konaté', spotify: 'true', apple: 'true' }],
       effectsSongs: [
@@ -2217,6 +2217,172 @@ export const patternInfo = {
         apple: 'true'
       }
     ]
+  },
+  mechanical_keyboard: {
+    name: '⌨️ Mechanical Keyboard',
+    origin: 'Global / Digital Workplace',
+    description:
+      'A high-performance mechanical typing keyboard, characterized by physical tactile switches beneath each key. In modern cyberpunk, lofi, and ambient electronic music, the acoustic signatures of specific switches (like tactile clicky blues or linear reds) are captured, sampled, and sequenced as highly precise, organic high-frequency percussion elements.',
+    performers: [
+      { name: 'Lofi Girl', spotify: 'true', apple: 'true' },
+      { name: 'Keychron Symphony', spotify: 'true', apple: 'true' }
+    ],
+    songs: [{ name: 'Code Rain', artist: 'Hacker FM', spotify: 'true', apple: 'true' }]
+  },
+  synsonics_drums: {
+    name: '🎛️ Synsonics Drums',
+    origin: 'United States (Mattel, 1981)',
+    description:
+      'An iconic 1981 retro toy drum synthesizer designed by Mattel. It allowed users to play electronic drum sounds (kick, snare, low/high toms, and cymbal) using sticks or internal trigger buttons. Renowned in early synth-pop, post-punk, and lo-fi garage rock for its gritty, charming 8-bit analog modeling and vintage synthetic punch.',
+    performers: [{ name: 'Mattel Retro Ensemble', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Toybox Pop', artist: 'The Synsonics', spotify: 'true', apple: 'true' }]
+  },
+  hydraulic_piston: {
+    name: '⚙️ Hydraulic Piston',
+    origin: 'Industrial Revolution / Modern Factories',
+    description:
+      'An industrial pneumatic machine cylinder driven by liquid or air pressure. In industrial techno, noise music, and cyberpunk film soundtracks, the heavy metallic stomps, lock gear clicks, and pressurized steam exhaust hisses are processed and sequenced into repetitive, mechanical percussive grooves.',
+    performers: [{ name: 'Einstürzende Neubauten', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Industrial Devolution', artist: 'Heavy Machinery', spotify: 'true', apple: 'true' }]
+  },
+  bop_it: {
+    name: '🔴 Bop It!',
+    origin: 'United States (Hasbro, 1996)',
+    description:
+      'An iconic handheld audio game introduced by Hasbro in 1996. The toy instructs players to perform physical actions ("Bop It", "Twist It", "Pull It", "Shout It") in increasingly rapid successions. Its whimsical, spring-loaded mechanical sound effects have been sampled by progressive house, glitch-hop, and toy-pop producers as playful micro-percussion hooks.',
+    performers: [{ name: 'Hasbro Sound Design Team', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Bop It Beats', artist: 'Rhythm Toy Collective', spotify: 'true', apple: 'true' }]
+  },
+  moo_box: {
+    name: '🐮 Moo Box',
+    origin: 'Germany / France (Late 19th Century)',
+    description:
+      'A classic mechanical toy tin, also known as a cow-sound can (boîte à meuh). When inverted, a gravity-driven weighted bellows slides across a metallic reed inside a perforated cylinder, releasing a charming, pitch-bending bovine cry. In avant-garde and toy-pop music, it is used for quirky, acoustic sound design accents.',
+    performers: [{ name: 'Toy Symphony Pioneers', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Bovine Blues', artist: 'Tin Can Orchestra', spotify: 'true', apple: 'true' }]
+  },
+  pakhavaj: {
+    name: '🥁 Pakhavaj',
+    origin: 'North India',
+    description:
+      "A double-headed, barrel-shaped wooden drum from North India. The primary percussion instrument for Dhrupad, India's oldest surviving classical vocal tradition, it is the ancestor of the mridangam and tabla. Its left bass head is coated in temporary wheat dough to produce deep, pitch-bendable open bass resonances, while the right treble head yields highly clear, piercing rim slaps.",
+    performers: [
+      { name: 'Pandit Gopal Das', spotify: 'true', apple: 'true' },
+      { name: 'Bhavani Shankar', spotify: 'true', apple: 'true' }
+    ],
+    songs: [{ name: 'Dhrupad Tala Jugalbandi', artist: 'Bhavani Shankar', spotify: 'true', apple: 'true' }]
+  },
+  binzasara: {
+    name: '🎋 Binzasara',
+    origin: 'Japan (Heian Period)',
+    description:
+      'A traditional Japanese percussion instrument made from dozens of small, rectangular wooden plates strung together with a cord. By gripping the handles at each end and rippling the slats in a wave-like snapping motion, players create a domino-like rolling friction cascade. Historically used in kabuki theater, Shinto rituals, and Dengaku folk festival music.',
+    performers: [{ name: 'Japanese Traditional Folk Ensemble', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Dengaku Festival Processional', artist: 'Shinto Ritual Players', spotify: 'true', apple: 'true' }]
+  },
+  caxixi: {
+    name: '🌾 Caxixi',
+    origin: 'West Africa / Brazil',
+    description:
+      'A flat-bottomed woven wicker shaker filled with seeds, small pebbles, or beads. Handcrafted with a calabash gourd bottom, it produces two highly contrasting tones: a soft, dry wicker rattle when shaken horizontally, and a sharp, metallic gourd crack when shaken vertically. It is traditionally played alongside the berimbau in Afro-Brazilian Capoeira music.',
+    performers: [{ name: 'Naná Vasconcelos', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Capoeira Bahia Groove', artist: 'Grupo Capoeira Brasil', spotify: 'true', apple: 'true' }]
+  },
+  slap_tubes: {
+    name: '🌬️ Slap Tubes',
+    origin: 'Modern / North America',
+    description:
+      'Slap Tubes (or PVC pipe instruments) are pitched melodic percussion instruments constructed from varying lengths of hollow plastic plumbing pipes. Sound is produced by striking the open end of a pipe with a flat paddle or hand, compressing the internal air column to trigger a deep, punchy fundamental frequency with minimal decay. Popularized by alternative performance groups in the late 20th century, they represent a fusion of industrial materials, acoustic physics, and high-energy mallet performance.',
+    performers: [{ name: 'Blue Man Group', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'PVC Instrument Jam', artist: 'Blue Man Group', spotify: 'true', apple: 'true' }]
+  },
+  whistle_drum: {
+    name: '🦆 Whistle-Drum',
+    origin: 'Ancient Mesoamerica / Clay Folk Art',
+    description:
+      'The Whistle-Drum (or clay whistling pot) combines clay vessel resonance with integrated whistle ports. Water inside the chamber shifts as the instrument is tipped or struck, pushing air through the whistle edge to create eerie, bird-like sliding glissandos and whistling chirps. Originating in Pre-Columbian cultures of Central and South America, these clay vessels were used for ceremonial communication, ritual signaling, and animal mimicry.',
+    performers: [{ name: 'Esteban Valdivia', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Pre-Columbian Clay Echoes', artist: 'Ceremonial Wind Ensemble', spotify: 'true', apple: 'true' }]
+  },
+  singing_bowl: {
+    name: '🥣 Singing Bowl',
+    origin: 'Tibet / Nepal / Himalayas',
+    description:
+      'A Singing Bowl is an inverted metal bell played by striking or rubbing its rim with a wood, leather, or suede-wrapped mallet. This friction excites the bell wall, producing a rich, enveloping fundamental tone accompanied by multiple harmonious overtones that swirl in a slow, hypnotic phase-cancellation decay. Traditionally used across the Himalayan region for meditation, Zen Buddhist rituals, and sound therapy, they create a peaceful, spatial acoustic environment.',
+    performers: [{ name: 'Karma Moffett', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Himalayan Sound Healing', artist: 'Karma Moffett', spotify: 'true', apple: 'true' }]
+  },
+  quijada: {
+    name: '💀 Quijada',
+    origin: 'Peru / Afro-Peruvian Folk Roots',
+    description:
+      'The Quijada de Burro is a unique percussion instrument made from the dried, cured jawbone of a donkey, mule, or horse. The teeth are left loose within their dry sockets; when the side of the jawbone is struck with a fist, the teeth rattle in their sockets to produce a sharp, buzzing wood-like splash with a hollow rattle. Originating from African slaves in coastal Peru, it is a foundational pillar of Landó, Festejo, and Afro-Peruvian folk music.',
+    performers: [{ name: 'Lalo Izquierdo', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Toro Mata', artist: 'Peru Negro', spotify: 'true', apple: 'true' }]
+  },
+  water_canister: {
+    name: '💧 Water Canister',
+    origin: 'Modern / Universal',
+    description:
+      'The Water Canister is an improvised street-percussion favorite made from thick, semi-flexible plastic water jugs or containers. By striking different regions of the hollow container, performers elicit deep, punchy low-end slaps. Shifting the water level internally or squeezing the sides dynamically compresses the interior air pocket, shifting the acoustic column pitch to create liquid-like glissandos and bubbly, wet-sounding gurgles.',
+    performers: [{ name: 'Street Drum Corps', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Canister Beats', artist: 'Industrial Slap Collective', spotify: 'true', apple: 'true' }]
+  },
+  vintage_cash_register: {
+    name: '💵 Cash Register',
+    origin: 'United States (Late 19th Century)',
+    description:
+      'The Vintage Cash Register is a heavy mechanical brass and iron business machine from the late 1800s and early 1900s. Operating the machine involves plunging heavy bronze price keys, cranking side levers, and triggering spring-loaded coin drawers. Its hallmark sound is a high-pitched, crystal-clear internal brass bell ring that sounds on every transaction. Famously used by progressive rock and pop producers to symbolize commerce and consumerism.',
+    performers: [{ name: 'Pink Floyd Sound Design', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Money', artist: 'Pink Floyd', spotify: 'true', apple: 'true' }]
+  },
+  geiger_counter: {
+    name: '☢️ Geiger Counter',
+    origin: 'Germany (Early 20th Century)',
+    description:
+      'A Geiger Counter is an electronic instrument used for detecting and measuring ionizing radiation. It produces a sharp, transient acoustic "click" every time a radioactive particle passes through its internal gas-filled tube. At higher radiation levels, these clicks coalesce into a dense, chaotic, white-noise-like swarm of stochastic crackles. It has been adopted by experimental, ambient, and industrial electronic musicians to provide gritty, microscopic textures.',
+    performers: [{ name: 'Kraftwerk', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Radioactivity', artist: 'Kraftwerk', spotify: 'true', apple: 'true' }]
+  },
+  centrifugal_bullroarer: {
+    name: '🌀 Bullroarer',
+    origin: 'Ancient Australia / Global Indigenous',
+    description:
+      'The Bullroarer is an ancient ritual wind instrument consisting of a flat, aerodynamically carved wooden slat attached to a long braided cord. By swinging the wooden slat in a large circle through the air, the slat rotates rapidly along its longitudinal axis, shearing the air to produce a deep, ghostly, pulsating roar that resembles wind or thunder. Used globally in sacred initiations, rain rituals, and long-distance acoustic signaling.',
+    performers: [{ name: 'Aboriginal Didgeridoo Artists', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Voices of the Ancestors', artist: 'Holographic Aero Ensemble', spotify: 'true', apple: 'true' }]
+  },
+  newtons_cradle: {
+    name: '🖲️ Newton Cradle',
+    origin: 'Western Europe (17th Century Physics)',
+    description:
+      "Newton's Cradle is a classic tabletop physics demonstration device consisting of a series of identically sized, highly polished steel spheres suspended by light wires from a metal frame. Striking one end sphere initiates a sequence of elastic momentum transfers through the resting central spheres, throwing the opposite sphere out. Acoustically, it yields ultra-fast, perfectly synchronized metal-on-metal microsecond clacks and decaying skitters.",
+    performers: [{ name: 'Mechanical Noise Pioneers', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Kinetic Waves', artist: 'Physics Sound Laboratory', spotify: 'true', apple: 'true' }]
+  },
+  slime_plop_box: {
+    name: '🧪 Slime Plop Box',
+    origin: 'Modern / Internet Culture',
+    description:
+      'The Slime Plop Box is an organic sound design generator leveraging highly viscous, gelatinous polymers. Manipulating slime inside an enclosed chamber generates unique suction-based sounds: deep suction plops, air-pocket pops, wet surface slaps, and stringy stretch textures. Heavily utilized in ASMR recordings, Foley sound design for films, and avant-garde microtonal electronic production to add squishy, visceral, organic accents.',
+    performers: [{ name: 'ASMR Foley Artists', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Viscous Textures', artist: 'Polymer Foley Collective', spotify: 'true', apple: 'true' }]
+  },
+  talk_box: {
+    name: '🗣️ Talk Box Toy',
+    origin: 'United States (Mid-20th Century)',
+    description:
+      'The Talk Box Toy (such as the vintage Speak & Say or pull-string phonograph toys) utilizes a physical, hand-pulled string to wind a spring-governor mechanism. As the string retracts, an internal needle reads a grooved plastic disc, releasing a scratchy, lo-fi, highly mechanical analog voice or animal noise. It is celebrated by electro, toy-pop, and industrial artists for its nostalgic, glitchy, mechanical texture.',
+    performers: [{ name: 'Daft Punk', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'Technologic', artist: 'Daft Punk', spotify: 'true', apple: 'true' }]
+  },
+  mouth_tube_synth: {
+    name: '🖲️ Mouth Synth',
+    origin: 'Modern / Experimental Synth',
+    description:
+      "The Mouth-Tube Synth (or Talk Box synthesizer) channels a high-frequency synthesizer carrier wave through a flexible plastic hose inserted into the performer's mouth cavity. By silently shaping their lips, tongue, and throat as if speaking, the performer filters the synthesizer's frequency spectrum using their own vocal tract. This introduces organic formant peaks, vowel glides (wah, ooh, ee), and human speech-like filters to raw electronic tones.",
+    performers: [{ name: 'Roger Troutman', spotify: 'true', apple: 'true' }],
+    songs: [{ name: 'More Bounce to the Ounce', artist: 'Zapp', spotify: 'true', apple: 'true' }]
   }
 };
 
@@ -2303,5 +2469,25 @@ export const drumTags = {
   kotsuzumi: { region: 'Asia', type: 'Hand', features: ['Sacred', 'Wood'] },
   dhol: { region: 'Asia', type: 'Stick', features: ['Wood', 'Folk'] },
   agogo: { region: 'South America', type: 'Stick', features: ['Metal', 'Folk'] },
-  claves: { region: 'Caribbean', type: 'Hand', features: ['Wood', 'Folk'] }
+  claves: { region: 'Caribbean', type: 'Hand', features: ['Wood', 'Folk'] },
+  mechanical_keyboard: { region: 'Modern', type: 'Hand', features: ['Effects'] },
+  synsonics_drums: { region: 'Modern', type: 'Stick', features: ['Effects', 'Toy'] },
+  hydraulic_piston: { region: 'Modern', type: 'Hand', features: ['Metal', 'Effects'] },
+  bop_it: { region: 'Modern', type: 'Hand', features: ['Effects', 'Toy'] },
+  moo_box: { region: 'Europe', type: 'Hand', features: ['Effects', 'Toy'] },
+  pakhavaj: { region: 'Asia', type: 'Hand', features: ['Tuned', 'Folk'] },
+  binzasara: { region: 'Asia', type: 'Hand', features: ['Wood', 'Effects'] },
+  caxixi: { region: 'South America', type: 'Hand', features: ['Shaker', 'Folk'] },
+  slap_tubes: { region: 'North America', type: 'Stick', features: ['Tuned', 'Effects'] },
+  whistle_drum: { region: 'Mesoamerica', type: 'Hand', features: ['Clay', 'Effects'] },
+  singing_bowl: { region: 'Asia', type: 'Hand', features: ['Metal', 'Effects'] },
+  quijada: { region: 'South America', type: 'Hand', features: ['Folk', 'Effects'] },
+  water_canister: { region: 'Modern', type: 'Hand', features: ['Effects'] },
+  vintage_cash_register: { region: 'Modern', type: 'Hand', features: ['Metal', 'Effects'] },
+  geiger_counter: { region: 'Modern', type: 'Hand', features: ['Effects'] },
+  centrifugal_bullroarer: { region: 'Oceania', type: 'Hand', features: ['Wood', 'Effects'] },
+  newtons_cradle: { region: 'Modern', type: 'Hand', features: ['Metal', 'Effects'] },
+  slime_plop_box: { region: 'Modern', type: 'Hand', features: ['Effects'] },
+  talk_box: { region: 'Modern', type: 'Hand', features: ['Effects', 'Toy'] },
+  mouth_tube_synth: { region: 'Modern', type: 'Hand', features: ['Effects'] }
 };

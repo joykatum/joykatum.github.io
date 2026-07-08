@@ -1,6 +1,6 @@
 // Drum Specifications and Instruments Configuration Module
 import { state } from './state.js';
-import { playMembrane, playNoise, playTablaSlideUp } from './audio.js';
+import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from './audio.js';
 export const drumTypes = {
   conga: {
     name: 'Congas',
@@ -44,13 +44,16 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      bajo: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.5, false),
-      abierto: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.5, false),
-      seco: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.5, false),
-      tapado: (d) => playMembrane(120 * d.pitchMult, 0.15, 1.0, false),
-      toque_tapado: (d) => playMembrane(120 * d.pitchMult, 0.15, 1.0, false),
-      manoteo: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.5, false),
-      golpe_de_casco: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.5, false)
+      bajo: (d) => playMembrane(55 * d.pitchMult, 0.9, 1.3, false),
+      abierto: (d) => playMembrane(110 * d.pitchMult, 0.6, 1.0, false),
+      seco: (d) => playMembrane(180 * d.pitchMult, 0.15, 1.1, true),
+      tapado: (d) => {
+        playMembrane(180 * d.pitchMult, 0.08, 1.0, true);
+        playNoise(0.02, 1800, state.currentTiltVolume * 0.4);
+      },
+      toque_tapado: (d) => playMembrane(130 * d.pitchMult, 0.05, 1.0, false),
+      manoteo: (d) => playMembrane(90 * d.pitchMult, 0.1, 1.0, false),
+      golpe_de_casco: (d) => playMembrane(400 * d.pitchMult, 0.05, 1.0, false)
     },
     defaultLeft: 3,
     // Tumba
@@ -68,16 +71,21 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      bass: (d) => playMembrane(55 * d.pitchMult, 0.8, 1.4, false),
-      tone: (d) => playMembrane(290 * d.pitchMult, 0.45, 1.0, false),
+      bass: (d) => playMembrane(45 * d.pitchMult, 0.9, 1.6, false),
+      tone: (d) => playMembrane(260 * d.pitchMult, 0.5, 1.0, false),
       slap: (d) => {
-        playMembrane(420 * d.pitchMult, 0.12, 1.1, true);
-        playNoise(0.08, 1600, state.currentTiltVolume * 1.1); // Crisp high slap
+        playMembrane(480 * d.pitchMult, 0.1, 1.2, true);
+        playNoise(0.05, 2000, state.currentTiltVolume * 1.5);
       },
-      flam_roll: (d) => playMembrane(280 * d.pitchMult, 0.1, 1.0, false),
+      flam_roll: (d) => {
+        playMembrane(260 * d.pitchMult, 0.1, 1.0, true);
+        setTimeout(() => {
+          playMembrane(260 * d.pitchMult, 0.12, 1.0, false);
+        }, 50);
+      },
       rim_click: (d) => {
-        playMembrane(420 * d.pitchMult, 0.12, 1.1, true);
-        playNoise(0.08, 1600, state.currentTiltVolume * 1.1);
+        playMembrane(800 * d.pitchMult, 0.05, 1.0, true);
+        playNoise(0.02, 3500, state.currentTiltVolume);
       }
     },
     defaultLeft: 0,
@@ -102,15 +110,15 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      martillo: (d) => playMembrane((d.id === 0 ? 300 : 150) * d.pitchMult, 0.1, 1.0, false),
-      open_tone: (d) => playMembrane((d.id === 0 ? 380 : 180) * d.pitchMult, 0.3, 1.0, false),
+      martillo: (d) => playMembrane((d.id === 0 ? 320 : 160) * d.pitchMult, 0.1, 1.0, false),
+      open_tone: (d) => playMembrane((d.id === 0 ? 400 : 200) * d.pitchMult, 0.4, 1.0, false),
       slap: (d) => {
-        const f = (d.id === 0 ? 460 : 260) * d.pitchMult;
-        playMembrane(f, 0.1, 1.05, true);
-        playNoise(0.05, d.id === 0 ? 2500 : 1500, state.currentTiltVolume * 0.8);
+        const f = (d.id === 0 ? 550 : 350) * d.pitchMult;
+        playMembrane(f, 0.08, 1.1, true);
+        playNoise(0.04, d.id === 0 ? 3000 : 2000, state.currentTiltVolume * 1.2);
       },
-      mute_tap: (d) => playMembrane((d.id === 0 ? 300 : 150) * d.pitchMult, 0.1, 1.0, false),
-      glissando_de_dedo: (d) => playMembrane((d.id === 0 ? 300 : 150) * d.pitchMult, 0.1, 1.0, false)
+      mute_tap: (d) => playMembrane((d.id === 0 ? 350 : 180) * d.pitchMult, 0.05, 1.0, false),
+      glissando_de_dedo: (d) => playMembrane((d.id === 0 ? 600 : 300) * d.pitchMult, 0.2, 0.8, false)
     },
     defaultLeft: 0,
     // Macho
@@ -145,25 +153,25 @@ export const drumTypes = {
       abierto: (d) => {
         const baseId = parseInt(d.id);
         const f = baseId === 0 ? 220 : baseId === 1 ? 140 : 110;
-        playMembrane(f * d.pitchMult, 0.1, 1.0, false);
+        playMembrane(f * d.pitchMult, 0.4, 1.0, false);
       },
       tapado: (d) => {
         const baseId = parseInt(d.id);
-        const f = baseId === 0 ? 220 : baseId === 1 ? 140 : 110;
+        const f = baseId === 0 ? 260 : baseId === 1 ? 170 : 130;
         playMembrane(f * d.pitchMult, 0.1, 1.0, false);
       },
       chach_snap: (d) => {
         const baseId = parseInt(d.id);
         const f = baseId === 0 ? 180 : baseId === 1 ? 110 : 60;
-        playMembrane(f * d.pitchMult, 0.5, 1.3, false);
+        playMembrane(f * d.pitchMult, 0.15, 1.1, true);
         if (baseId === 2 || d.label.includes('Iyá')) {
           playNoise(0.18, 2200, state.currentTiltVolume * 0.6);
         }
       },
       cuerpo_knock: (d) => {
         const baseId = parseInt(d.id);
-        const f = baseId === 0 ? 220 : baseId === 1 ? 140 : 110;
-        playMembrane(f * d.pitchMult, 0.1, 1.0, false);
+        const f = baseId === 0 ? 440 : baseId === 1 ? 280 : 220;
+        playMembrane(f * d.pitchMult, 0.05, 1.0, false);
       }
     },
     defaultLeft: 1,
@@ -231,8 +239,8 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      abierto: (d) => playMembrane((d.id === 0 ? 95 : 75) * d.pitchMult, 0.65, 1.4, false),
-      seco: (d) => playMembrane((d.id === 0 ? 95 : 75) * d.pitchMult, 0.65, 1.4, false),
+      abierto: (d) => playMembrane((d.id === 0 ? 110 : 85) * d.pitchMult, 0.65, 1.1, false),
+      seco: (d) => playMembrane((d.id === 0 ? 160 : 120) * d.pitchMult, 0.15, 1.1, true),
       cu: (d) => playMembrane((d.id === 0 ? 160 : 110) * d.pitchMult, 0.5, 1.0, false),
       choking_hand: (d) => playMembrane((d.id === 0 ? 180 : 130) * d.pitchMult, 0.08, 1.0, false)
     },
@@ -256,8 +264,7 @@ export const drumTypes = {
         playMembrane(750 * d.pitchMult, 0.08, 1.0, false);
         playNoise(0.04, 3000, state.currentTiltVolume * 0.5);
       },
-      golpe_de_aro: (d) => playMembrane(850 * d.pitchMult, 0.05, 1.0, false),
-      side_shell_mallet_drag: (d) => playMembrane(850 * d.pitchMult, 0.05, 1.0, false)
+      golpe_de_aro: (d) => playMembrane(850 * d.pitchMult, 0.05, 1.0, false)
     },
     defaultLeft: 0,
     // Bombo
@@ -283,19 +290,19 @@ export const drumTypes = {
     ],
     sounds: {
       dayan_na_ta: (d) => {
-        playMembrane(220 * d.pitchMult, 0.5, 1.0, false);
+        playMembrane(350 * d.pitchMult, 0.3, 1.1, true); // Sharp, ringing edge stroke
       },
       dayan_tin: (d) => {
-        playMembrane(320 * d.pitchMult, 0.08, 1.0, true);
+        playMembrane(400 * d.pitchMult, 0.1, 1.1, true);
       },
       dayan_tun: (d) => {
-        playMembrane(293.66 * d.pitchMult, 0.55, 1.0, false);
+        playMembrane(280 * d.pitchMult, 0.5, 1.5, false); // Resonant center stroke
       },
       bayan_ga_ghe: (d) => {
-        playTablaSlideUp(75 * d.pitchMult, 150 * d.pitchMult, 0.55);
+        playTablaSlideUp(65 * d.pitchMult, 120 * d.pitchMult, 0.7); // Deep sliding bass
       },
       bayan_ka_ke: (d) => {
-        playMembrane(293.66 * d.pitchMult, 0.55, 1.0, false);
+        playMembrane(150 * d.pitchMult, 0.1, 1.0, false); // Flat non-resonant bass slap
       }
     },
     defaultLeft: 0,
@@ -314,12 +321,29 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      dum: (d) => drumTypes.darbuka.sounds.doum(d),
-      tek: (d) => drumTypes.darbuka.sounds.doum(d),
-      ka: (d) => drumTypes.darbuka.sounds.doum(d),
-      slap: (d) => drumTypes.darbuka.sounds.sak(d),
-      finger_roll: (d) => drumTypes.darbuka.sounds.ka(d),
-      under_rim_snap: (d) => drumTypes.darbuka.sounds.tak(d)
+      dum: (d) => playMembrane(75 * d.pitchMult, 0.45, 1.4, false),
+      tek: (d) => {
+        playMembrane(320 * d.pitchMult, 0.12, 1.0, true);
+        playNoise(0.04, 3000, state.currentTiltVolume * 1.1);
+      },
+      ka: (d) => {
+        playMembrane(340 * d.pitchMult, 0.1, 1.0, true);
+        playNoise(0.03, 3200, state.currentTiltVolume * 0.9);
+      },
+      slap: (d) => {
+        playMembrane(220 * d.pitchMult, 0.08, 1.1, true);
+        playNoise(0.06, 2000, state.currentTiltVolume * 1.5);
+      },
+      finger_roll: (d) => {
+        playMembrane(330 * d.pitchMult, 0.08, 1.0, true);
+        setTimeout(() => {
+          playMembrane(340 * d.pitchMult, 0.08, 1.0, true);
+        }, 60);
+      },
+      under_rim_snap: (d) => {
+        playMembrane(550 * d.pitchMult, 0.05, 1.0, true);
+        playNoise(0.02, 4500, state.currentTiltVolume * 0.8);
+      }
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -1114,7 +1138,6 @@ export const drumTypes = {
     sounds: {
       dum: (d) => playMembrane(130 * d.pitchMult, 0.4, 1.1, false),
       tak: (d) => playMembrane(360 * d.pitchMult, 0.12, 0.9, true),
-      jingle_shake_wrist_roll: (d) => playMembrane(130 * d.pitchMult, 0.4, 1.1, false),
       jingle_damp_split: (d) => playNoise(0.18, 4500, state.currentTiltVolume * 0.75)
     },
     defaultLeft: 0,
@@ -2228,10 +2251,21 @@ export const drumTypes = {
       }
     ],
     sounds: {
-      high_strike: (d) => playMembrane(440 * d.pitchMult, 0.45, 1.0, false),
-      low_strike: (d) => playMembrane(440 * d.pitchMult, 0.45, 1.0, false),
+      high_strike: (d) => playMembrane(480 * d.pitchMult, 0.4, 1.0, false),
+      low_strike: (d) => playMembrane(380 * d.pitchMult, 0.55, 1.0, false),
       clap: (d) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true),
-      stick_drag: (d) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true)
+      stick_drag: (d) => {
+        playMembrane(600 * d.pitchMult, 0.03, 1.0, true);
+        playNoise(0.04, 2500, state.currentTiltVolume * 0.7);
+        setTimeout(() => {
+          playMembrane(650 * d.pitchMult, 0.03, 1.0, true);
+          playNoise(0.03, 2800, state.currentTiltVolume * 0.6);
+        }, 50);
+        setTimeout(() => {
+          playMembrane(700 * d.pitchMult, 0.04, 1.0, true);
+          playNoise(0.03, 3000, state.currentTiltVolume * 0.5);
+        }, 100);
+      }
     },
     defaultLeft: 0,
     defaultRight: 1
@@ -2249,7 +2283,808 @@ export const drumTypes = {
     ],
     sounds: {
       strike: (d) => playMembrane(1300 * d.pitchMult, 0.04, 1.0),
-      end_tap: (d) => playMembrane(1300 * d.pitchMult, 0.04, 1.0)
+      end_tap: (d) => {
+        playMembrane(1650 * d.pitchMult, 0.02, 1.0, true);
+        playNoise(0.01, 5000, state.currentTiltVolume * 0.4);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  mechanical_keyboard: {
+    name: '⌨️ Mechanical Keyboard',
+    drums: [
+      {
+        id: 0,
+        label: 'Cyber Keyboard',
+        pitchMult: 1.0,
+        color: 'darker',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      key_click: (d) => {
+        playAttackClick(0.02, 3000, 0.8 * state.currentTiltVolume);
+        playMembrane(350 * d.pitchMult, 0.03, 1.05);
+      },
+      spacebar: (d) => {
+        playMembrane(100 * d.pitchMult, 0.08, 1.02);
+        playNoise(0.06, 600, 0.4 * state.currentTiltVolume);
+      },
+      enter_key: (d) => {
+        playMembrane(180 * d.pitchMult, 0.12, 1.05);
+        playAttackClick(0.04, 2000, 1.0 * state.currentTiltVolume);
+        playNoise(0.08, 1000, 0.3 * state.currentTiltVolume);
+      },
+      shift_hold: (d) => {
+        playMembrane(120 * d.pitchMult, 0.05, 1.0);
+        playNoise(0.02, 1500, 0.15 * state.currentTiltVolume);
+      },
+      backspace: (d) => {
+        playAttackClick(0.015, 3200, 0.6 * state.currentTiltVolume);
+        setTimeout(() => {
+          playAttackClick(0.015, 3000, 0.5 * state.currentTiltVolume);
+        }, 70);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  synsonics_drums: {
+    name: '🎛️ Synsonics Drums',
+    drums: [
+      {
+        id: 0,
+        label: 'Synsonics Pad',
+        pitchMult: 1.0,
+        color: 'dark',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      retro_kick: (d) => playMembrane(55 * d.pitchMult, 0.3, 4.5),
+      noise_snare: (d) => {
+        playMembrane(180 * d.pitchMult, 0.08, 1.0, true);
+        playNoise(0.18, 900, 0.9 * state.currentTiltVolume);
+      },
+      tom_low: (d) => playMembrane(120 * d.pitchMult, 0.4, 4.0),
+      tom_high: (d) => playMembrane(220 * d.pitchMult, 0.3, 4.0),
+      lofi_cymbal: (d) => playNoise(0.35, 4000, 0.6 * state.currentTiltVolume)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  hydraulic_piston: {
+    name: '⚙️ Hydraulic Piston',
+    drums: [
+      {
+        id: 0,
+        label: 'Piston Chamber',
+        pitchMult: 1.0,
+        color: 'silver',
+        sizeValue: 22
+      }
+    ],
+    sounds: {
+      steam_hiss: (d) => playNoise(0.6, 5000, 0.8 * state.currentTiltVolume),
+      iron_stomp: (d) => {
+        playMembrane(40 * d.pitchMult, 0.45, 1.5);
+        playAttackClick(0.08, 1200, 0.7 * state.currentTiltVolume);
+      },
+      gear_lock: (d) => {
+        playAttackClick(0.015, 3000, 0.8 * state.currentTiltVolume);
+        playMembrane(400 * d.pitchMult, 0.02, 1.0);
+      },
+      exhaust_clunk: (d) => playMembrane(80 * d.pitchMult, 0.18, 1.1)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  bop_it: {
+    name: '🔴 Bop It!',
+    drums: [
+      {
+        id: 0,
+        label: 'Bop It Toy',
+        pitchMult: 1.0,
+        color: 'purple',
+        sizeValue: 18
+      }
+    ],
+    sounds: {
+      bop_it: (d) => {
+        playMembrane(190 * d.pitchMult, 0.06, 1.05);
+        playAttackClick(0.01, 2200, 0.5 * state.currentTiltVolume);
+        speakPhrase('Bop it!', 1.2, 1.3, 1.0);
+      },
+      twist_it: (d) => {
+        playAttackClick(0.01, 3500, 0.7 * state.currentTiltVolume);
+        setTimeout(() => {
+          playAttackClick(0.01, 3200, 0.6 * state.currentTiltVolume);
+        }, 50);
+        setTimeout(() => {
+          playAttackClick(0.01, 2900, 0.5 * state.currentTiltVolume);
+        }, 100);
+        speakPhrase('Twist it!', 1.1, 1.3, 1.0);
+      },
+      pull_it: (d) => {
+        playTablaSlideUp(180 * d.pitchMult, 380 * d.pitchMult, 0.15);
+        speakPhrase('Pull it!', 1.0, 1.3, 1.0);
+      },
+      shout_it: (d) => {
+        playTablaSlideUp(1200 * d.pitchMult, 1500 * d.pitchMult, 0.1);
+        playNoise(0.08, 3000, 0.3 * state.currentTiltVolume);
+        speakPhrase('Shout it!', 1.3, 1.3, 1.0);
+      },
+      fail_buzz: (d) => {
+        playTablaSlideUp(180 * d.pitchMult, 90 * d.pitchMult, 0.6);
+        playNoise(0.4, 250, 0.4 * state.currentTiltVolume);
+        speakPhrase('Wah wah wah!', 0.8, 1.0, 1.0);
+      },
+      victory_chime: (d) => {
+        playMembrane(261.63 * d.pitchMult, 0.12, 1.0);
+        setTimeout(() => playMembrane(329.63 * d.pitchMult, 0.12, 1.0), 60);
+        setTimeout(() => playMembrane(392.0 * d.pitchMult, 0.12, 1.0), 120);
+        setTimeout(() => playMembrane(523.25 * d.pitchMult, 0.2, 1.0), 180);
+        speakPhrase('You win!', 1.25, 1.1, 1.0);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  moo_box: {
+    name: '🐮 Moo Box',
+    drums: [
+      {
+        id: 0,
+        label: 'Tin Oid',
+        pitchMult: 1.0,
+        color: 'silver',
+        sizeValue: 15
+      }
+    ],
+    sounds: {
+      grand_moo: (d) => {
+        playTablaSlideUp(130 * d.pitchMult, 95 * d.pitchMult, 1.0);
+        playNoise(0.8, 400, 0.2 * state.currentTiltVolume);
+        speakPhrase('Mooooooo!', 0.5, 0.55, 1.0);
+      },
+      calf_moo: (d) => {
+        playTablaSlideUp(300 * d.pitchMult, 220 * d.pitchMult, 0.5);
+        playNoise(0.4, 600, 0.15 * state.currentTiltVolume);
+        speakPhrase('Moo!', 1.25, 0.95, 0.9);
+      },
+      stuck_reed: (d) => {
+        playMembrane(120 * d.pitchMult, 0.2, 1.1, true);
+        playNoise(0.2, 280, 0.6 * state.currentTiltVolume);
+        speakPhrase('M-moo-zz!', 0.7, 1.2, 0.9);
+      },
+      tin_shake: (d) => {
+        playNoise(0.1, 4500, 0.5 * state.currentTiltVolume);
+        playAttackClick(0.04, 3800, 0.7 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  pakhavaj: {
+    name: '🥁 Pakhavaj',
+    drums: [
+      {
+        id: 0,
+        label: 'Left Bass Head (Bayan)',
+        pitchMult: 1.0,
+        color: 'terracotta',
+        sizeValue: 22
+      },
+      {
+        id: 1,
+        label: 'Right Treble Head (Dayan)',
+        pitchMult: 1.0,
+        color: 'caramel',
+        sizeValue: 16
+      }
+    ],
+    sounds: {
+      tha: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.02),
+      dhin: (d) => playMembrane(80 * d.pitchMult, 1.1, 1.0),
+      ta: (d) => {
+        playMembrane(380 * d.pitchMult, 0.12, 1.04, true);
+        playNoise(0.04, 2500, 0.3 * state.currentTiltVolume);
+      },
+      ki: (d) => playMembrane(190 * d.pitchMult, 0.04, 1.0, true),
+      na: (d) => playMembrane(280 * d.pitchMult, 0.5, 1.0),
+      tete: (d) => {
+        playMembrane(310 * d.pitchMult, 0.03, 1.0);
+        setTimeout(() => playMembrane(290 * d.pitchMult, 0.03, 1.0), 60);
+      },
+      ghe: (d) => playTablaSlideUp(65 * d.pitchMult, 105 * d.pitchMult, 0.65)
+    },
+    defaultLeft: 0,
+    defaultRight: 1
+  },
+  binzasara: {
+    name: '🎋 Binzasara',
+    drums: [
+      {
+        id: 0,
+        label: 'Wooden Slats',
+        pitchMult: 1.0,
+        color: 'wood',
+        sizeValue: 18
+      }
+    ],
+    sounds: {
+      furu: (d) => {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            playAttackClick(0.02, 1800 - i * 150, 0.5 * state.currentTiltVolume);
+            playMembrane((350 - i * 20) * d.pitchMult, 0.02, 1.0);
+          }, i * 40);
+        }
+      },
+      clap: (d) => {
+        playMembrane(450 * d.pitchMult, 0.07, 1.15, true);
+        playNoise(0.06, 1500, 0.7 * state.currentTiltVolume);
+      },
+      rattle: (d) => {
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            playAttackClick(0.015, 2500 + (i % 2) * 500, 0.4 * state.currentTiltVolume);
+          }, i * 25);
+        }
+      },
+      snap: (d) => {
+        playMembrane(550 * d.pitchMult, 0.03, 1.05, true);
+        playAttackClick(0.01, 3000, 0.8 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  caxixi: {
+    name: '🌾 Caxixi',
+    drums: [
+      {
+        id: 0,
+        label: 'Straw Basket',
+        pitchMult: 1.0,
+        color: 'caramel-light',
+        sizeValue: 16
+      }
+    ],
+    sounds: {
+      straw_wall: (d) => {
+        playNoise(0.09, 4500, 0.45 * state.currentTiltVolume);
+      },
+      gourd_bottom: (d) => {
+        playAttackClick(0.025, 3600, 0.9 * state.currentTiltVolume);
+        playMembrane(850 * d.pitchMult, 0.03, 1.0);
+      },
+      flick_accent: (d) => {
+        playNoise(0.04, 5000, 0.6 * state.currentTiltVolume);
+        setTimeout(() => {
+          playNoise(0.04, 4800, 0.5 * state.currentTiltVolume);
+        }, 40);
+      },
+      muted_swoosh: (d) => {
+        playNoise(0.16, 1800, 0.3 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  slap_tubes: {
+    name: '🌬️ Slap Tubes',
+    drums: [
+      {
+        id: 0,
+        label: 'PVC Slap Tube',
+        pitchMult: 1.0,
+        color: 'teal',
+        sizeValue: 22
+      }
+    ],
+    sounds: {
+      bass_boom: (d) => playMembrane(98 * d.pitchMult, 0.35, 1.2),
+      low_pop: (d) => playMembrane(130 * d.pitchMult, 0.25, 1.1),
+      mid_bounce: (d) => playMembrane(165 * d.pitchMult, 0.2, 1.0),
+      high_snap: (d) => playMembrane(196 * d.pitchMult, 0.15, 1.0, true),
+      paddle_slap: (d) => {
+        playMembrane(220 * d.pitchMult, 0.08, 1.0, true);
+        playNoise(0.05, 1500, 0.4 * state.currentTiltVolume);
+      },
+      pipe_rim_click: (d) => {
+        playAttackClick(0.02, 2800, 0.7 * state.currentTiltVolume);
+        playMembrane(600 * d.pitchMult, 0.02, 1.0);
+      },
+      muted_thud: (d) => playMembrane(85 * d.pitchMult, 0.08, 1.0),
+      slide_slur: (d) => playTablaSlideUp(165 * d.pitchMult, 110 * d.pitchMult, 0.3)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  whistle_drum: {
+    name: '🦆 Whistle-Drum',
+    drums: [
+      {
+        id: 0,
+        label: 'Clay Whistle Pot',
+        pitchMult: 1.0,
+        color: 'terracotta',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      clay_bass: (d) => playMembrane(82 * d.pitchMult, 0.4, 1.1),
+      sharp_chirp: (d) => {
+        playMembrane(900 * d.pitchMult, 0.12, 0.8, true);
+        playNoise(0.05, 3000, 0.2 * state.currentTiltVolume);
+      },
+      bending_gliss: (d) => playTablaSlideUp(600 * d.pitchMult, 900 * d.pitchMult, 0.25),
+      rim_tap: (d) => {
+        playMembrane(400 * d.pitchMult, 0.06, 1.0);
+        playAttackClick(0.015, 2000, 0.4 * state.currentTiltVolume);
+      },
+      slosh_splash: (d) => {
+        playNoise(0.35, 1200, 0.6 * state.currentTiltVolume);
+        playMembrane(120 * d.pitchMult, 0.2, 1.0);
+      },
+      muted_pip: (d) => playMembrane(300 * d.pitchMult, 0.04, 1.0),
+      double_chirp: (d) => {
+        playMembrane(800 * d.pitchMult, 0.06, 1.0, true);
+        setTimeout(() => {
+          playMembrane(900 * d.pitchMult, 0.08, 1.0, true);
+        }, 60);
+      },
+      breath_echo: (d) => {
+        playNoise(0.6, 800, 0.35 * state.currentTiltVolume);
+        playMembrane(90 * d.pitchMult, 0.5, 1.0);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  singing_bowl: {
+    name: '🥣 Singing Bowl',
+    drums: [
+      {
+        id: 0,
+        label: 'Sacred Bowl',
+        pitchMult: 1.0,
+        color: 'wood',
+        sizeValue: 21
+      }
+    ],
+    sounds: {
+      deep_rim_gong: (d) => playMembrane(220 * d.pitchMult, 1.8, 1.0),
+      suede_hum: (d) => {
+        playMembrane(220 * d.pitchMult, 1.2, 1.0);
+        playNoise(1.0, 440 * d.pitchMult, 0.3 * state.currentTiltVolume, 'bandpass', 12.0);
+      },
+      wood_click: (d) => {
+        playAttackClick(0.03, 1500, 0.8 * state.currentTiltVolume);
+        playMembrane(800 * d.pitchMult, 0.04, 1.0);
+      },
+      palm_damped: (d) => playMembrane(330 * d.pitchMult, 0.12, 1.0, true),
+      harmonic_ping: (d) => playMembrane(660 * d.pitchMult, 1.2, 1.0),
+      water_ripple: (d) => {
+        playMembrane(220 * d.pitchMult, 1.4, 1.0);
+        playNoise(0.5, 1200, 0.25 * state.currentTiltVolume, 'bandpass', 3.5);
+      },
+      swirling_decay: (d) => playMembrane(220 * d.pitchMult, 1.8, 1.0),
+      double_strike: (d) => {
+        playMembrane(220 * d.pitchMult, 1.6, 1.0);
+        setTimeout(() => {
+          playMembrane(330 * d.pitchMult, 1.4, 1.0);
+        }, 40);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  quijada: {
+    name: '💀 Quijada',
+    drums: [
+      {
+        id: 0,
+        label: 'Jawbone',
+        pitchMult: 1.0,
+        color: 'blonde-light',
+        sizeValue: 18
+      }
+    ],
+    sounds: {
+      fist_slam_rattles: (d) => {
+        playNoise(0.65, 1600, 0.9 * state.currentTiltVolume, 'bandpass', 3.5);
+        playMembrane(120 * d.pitchMult, 0.15, 1.0);
+      },
+      teeth_rasp_scrape: (d) => playNoise(0.45, 2200, 0.7 * state.currentTiltVolume, 'bandpass', 4.5),
+      chin_bone_tap: (d) => {
+        playAttackClick(0.02, 1200, 0.6 * state.currentTiltVolume);
+        playMembrane(350 * d.pitchMult, 0.05, 1.0);
+      },
+      micro_flick: (d) => {
+        playNoise(0.12, 1800, 0.4 * state.currentTiltVolume, 'bandpass', 3.0);
+        playMembrane(250 * d.pitchMult, 0.03, 1.0);
+      },
+      reverse_scrape: (d) => playNoise(0.22, 2400, 0.6 * state.currentTiltVolume, 'bandpass', 3.5),
+      choked_jaw_pinch: (d) => {
+        playNoise(0.08, 1500, 0.7 * state.currentTiltVolume, 'bandpass', 5.0);
+        playMembrane(125 * d.pitchMult, 0.06, 1.0);
+      },
+      double_tap: (d) => {
+        playNoise(0.15, 1600, 0.8 * state.currentTiltVolume, 'bandpass', 3.5);
+        playMembrane(120 * d.pitchMult, 0.08, 1.0);
+        setTimeout(() => {
+          playNoise(0.15, 1600, 0.6 * state.currentTiltVolume, 'bandpass', 3.5);
+          playMembrane(120 * d.pitchMult, 0.08, 1.0);
+        }, 70);
+      },
+      hollow_socket_pop: (d) => {
+        playMembrane(180 * d.pitchMult, 0.12, 1.0);
+        playAttackClick(0.03, 900, 0.5 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  water_canister: {
+    name: '💧 Water Canister',
+    drums: [
+      {
+        id: 0,
+        label: 'Hydro Canister',
+        pitchMult: 1.0,
+        color: 'aquamarine',
+        sizeValue: 22
+      }
+    ],
+    sounds: {
+      slap_gliss: (d) => playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.28),
+      neck_pop: (d) => {
+        playMembrane(240 * d.pitchMult, 0.08, 1.2, true);
+        playNoise(0.04, 1800, 0.3 * state.currentTiltVolume, 'bandpass', 2.0);
+      },
+      outer_plastic_thud: (d) => playMembrane(90 * d.pitchMult, 0.18, 1.0),
+      liquid_slap: (d) => {
+        playMembrane(100 * d.pitchMult, 0.2, 1.0);
+        playNoise(0.28, 1100, 0.5 * state.currentTiltVolume, 'bandpass', 2.5);
+      },
+      bubble_gurgle: (d) => {
+        playNoise(0.08, 1400, 0.4 * state.currentTiltVolume, 'bandpass', 3.0);
+        setTimeout(() => {
+          playNoise(0.08, 1600, 0.3 * state.currentTiltVolume, 'bandpass', 3.0);
+        }, 60);
+        setTimeout(() => {
+          playNoise(0.08, 1800, 0.2 * state.currentTiltVolume, 'bandpass', 3.0);
+        }, 120);
+      },
+      damped_plonk: (d) => playMembrane(75 * d.pitchMult, 0.08, 1.0),
+      finger_tap_rim: (d) => playAttackClick(0.015, 3200, 0.5 * state.currentTiltVolume),
+      heavy_splash_drop: (d) => {
+        playMembrane(60 * d.pitchMult, 0.4, 1.0);
+        playNoise(0.4, 800, 0.7 * state.currentTiltVolume, 'bandpass', 1.5);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  vintage_cash_register: {
+    name: '💵 Cash Register',
+    drums: [
+      {
+        id: 0,
+        label: 'Brass Register',
+        pitchMult: 1.0,
+        color: 'silver',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      key_plunge: (d) => {
+        playMembrane(280 * d.pitchMult, 0.08, 1.0);
+        playAttackClick(0.03, 1500, 0.8 * state.currentTiltVolume);
+      },
+      bell_ring: (d) => {
+        playMembrane(1200 * d.pitchMult, 1.5, 1.0);
+        playAttackClick(0.01, 4000, 0.9 * state.currentTiltVolume);
+      },
+      drawer_spring_crunch: (d) => {
+        playNoise(0.35, 1200, 0.7 * state.currentTiltVolume);
+        playMembrane(95 * d.pitchMult, 0.15, 1.0);
+      },
+      drawer_slam: (d) => {
+        playMembrane(65 * d.pitchMult, 0.25, 1.0);
+        playNoise(0.12, 600, 0.6 * state.currentTiltVolume);
+      },
+      coin_jingle: (d) => playNoise(0.48, 4800, 0.6 * state.currentTiltVolume),
+      lever_crank: (d) => {
+        playAttackClick(0.015, 2500, 0.5 * state.currentTiltVolume);
+        setTimeout(() => {
+          playAttackClick(0.015, 2300, 0.5 * state.currentTiltVolume);
+        }, 50);
+        setTimeout(() => {
+          playAttackClick(0.015, 2100, 0.5 * state.currentTiltVolume);
+        }, 100);
+      },
+      no_sale_click: (d) => playAttackClick(0.01, 3500, 0.4 * state.currentTiltVolume),
+      paper_receipt_rip: (d) => playNoise(0.2, 3500, 0.4 * state.currentTiltVolume)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  geiger_counter: {
+    name: '☢️ Geiger Counter',
+    drums: [
+      {
+        id: 0,
+        label: 'Geiger Grid',
+        pitchMult: 1.0,
+        color: 'dark',
+        sizeValue: 18
+      }
+    ],
+    sounds: {
+      isolated_click: (d) => playAttackClick(0.005, 4500, 0.85 * state.currentTiltVolume),
+      double_static_burst: (d) => {
+        playAttackClick(0.005, 4500, 0.85 * state.currentTiltVolume);
+        setTimeout(() => {
+          playAttackClick(0.005, 4200, 0.7 * state.currentTiltVolume);
+        }, 25);
+      },
+      rad_swarm: (d) => {
+        playNoise(0.35, 4000, 0.8 * state.currentTiltVolume);
+        for (let i = 0; i < 4; i++) {
+          setTimeout(
+            () => {
+              playAttackClick(0.005, 4500 - i * 300, 0.6);
+            },
+            i * 40 + Math.random() * 20
+          );
+        }
+      },
+      warning_beep: (d) => playMembrane(2000 * d.pitchMult, 0.08, 1.0, true),
+      chassis_dial_click: (d) => {
+        playAttackClick(0.02, 1800, 0.75 * state.currentTiltVolume);
+        playMembrane(180 * d.pitchMult, 0.03, 1.0);
+      },
+      static_discharge_thump: (d) => playMembrane(45 * d.pitchMult, 0.15, 1.3),
+      meltdown_buzz: (d) => {
+        playMembrane(380 * d.pitchMult, 0.4, 1.0);
+        playNoise(0.4, 2800, 0.6 * state.currentTiltVolume);
+      },
+      battery_test_chirp: (d) => playTablaSlideUp(1500 * d.pitchMult, 1800 * d.pitchMult, 0.12)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  centrifugal_bullroarer: {
+    name: '🌀 Bullroarer',
+    drums: [
+      {
+        id: 0,
+        label: 'Aero Ribbon',
+        pitchMult: 1.0,
+        color: 'wood',
+        sizeValue: 22
+      }
+    ],
+    sounds: {
+      low_wind_whine: (d) => {
+        playMembrane(65 * d.pitchMult, 0.6, 1.0);
+        playNoise(0.6, 600, 0.45 * state.currentTiltVolume);
+      },
+      high_speed_scream: (d) => {
+        playMembrane(480 * d.pitchMult, 0.5, 0.9, true);
+        playNoise(0.4, 1800, 0.3 * state.currentTiltVolume);
+      },
+      string_snap: (d) => {
+        playAttackClick(0.04, 1100, 0.8 * state.currentTiltVolume);
+        playMembrane(140 * d.pitchMult, 0.08, 1.1);
+      },
+      ground_slap: (d) => {
+        playMembrane(180 * d.pitchMult, 0.12, 1.0);
+        playNoise(0.12, 2200, 0.6 * state.currentTiltVolume);
+      },
+      air_rip_flutter: (d) => {
+        playMembrane(90 * d.pitchMult, 0.3, 1.0);
+        playNoise(0.35, 800, 0.5 * state.currentTiltVolume);
+      },
+      wood_spine_tap: (d) => {
+        playMembrane(350 * d.pitchMult, 0.05, 1.0);
+        playAttackClick(0.015, 1800, 0.5 * state.currentTiltVolume);
+      },
+      cord_friction_rub: (d) => playNoise(0.25, 500, 0.45 * state.currentTiltVolume),
+      descending_whimper: (d) => playTablaSlideUp(300 * d.pitchMult, 90 * d.pitchMult, 0.55)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  newtons_cradle: {
+    name: '🖲️ Newton Cradle',
+    drums: [
+      {
+        id: 0,
+        label: 'Newton Cradle',
+        pitchMult: 1.0,
+        color: 'silver',
+        sizeValue: 19
+      }
+    ],
+    sounds: {
+      single_ball_clack: (d) => {
+        playAttackClick(0.01, 3500, 0.9 * state.currentTiltVolume);
+        playMembrane(1100 * d.pitchMult, 0.02, 1.0);
+      },
+      continuous_ripple: (d) => {
+        playAttackClick(0.008, 3500, 0.85);
+        setTimeout(() => {
+          playAttackClick(0.008, 3300, 0.7);
+        }, 30);
+        setTimeout(() => {
+          playAttackClick(0.008, 3100, 0.55);
+        }, 60);
+        setTimeout(() => {
+          playAttackClick(0.008, 2900, 0.4);
+        }, 90);
+      },
+      double_side_strike: (d) => {
+        playAttackClick(0.012, 3200, 1.0 * state.currentTiltVolume);
+        playMembrane(900 * d.pitchMult, 0.03, 1.0);
+      },
+      damped_metal_thud: (d) => playMembrane(600 * d.pitchMult, 0.04, 1.0, true),
+      string_tangle_snag: (d) => playNoise(0.12, 2800, 0.45 * state.currentTiltVolume),
+      chassis_frame_tap: (d) => {
+        playMembrane(800 * d.pitchMult, 0.06, 1.0);
+        playAttackClick(0.02, 2500, 0.5 * state.currentTiltVolume);
+      },
+      decaying_skitter: (d) => {
+        for (let i = 0; i < 6; i++) {
+          setTimeout(
+            () => {
+              playAttackClick(0.005, 3500 - i * 150, 0.6 - i * 0.09);
+            },
+            i * 25 + Math.random() * 15
+          );
+        }
+      },
+      scrape_drag: (d) => playNoise(0.35, 3000, 0.4 * state.currentTiltVolume)
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  slime_plop_box: {
+    name: '🧪 Slime Plop Box',
+    drums: [
+      {
+        id: 0,
+        label: 'Slime Jar',
+        pitchMult: 1.0,
+        color: 'teal',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      deep_suction_plop: (d) => playTablaSlideUp(75 * d.pitchMult, 140 * d.pitchMult, 0.22),
+      wet_surface_slap: (d) => {
+        playMembrane(110 * d.pitchMult, 0.12, 1.0, true);
+        playNoise(0.1, 900, 0.6 * state.currentTiltVolume, 'bandpass', 1.5);
+      },
+      air_pocket_pop: (d) => {
+        playMembrane(280 * d.pitchMult, 0.05, 1.3, true);
+        playNoise(0.05, 1400, 0.5 * state.currentTiltVolume, 'bandpass', 3.0);
+      },
+      squelch_stretch: (d) => {
+        playTablaSlideUp(120 * d.pitchMult, 50 * d.pitchMult, 0.35);
+        playNoise(0.3, 700, 0.4 * state.currentTiltVolume, 'bandpass', 2.0);
+      },
+      container_wall_squish: (d) => {
+        playNoise(0.22, 1000, 0.45 * state.currentTiltVolume, 'bandpass', 1.8);
+        playMembrane(80 * d.pitchMult, 0.15, 1.0);
+      },
+      dripping_goblet_drop: (d) => playMembrane(400 * d.pitchMult, 0.08, 1.1, true),
+      rapid_squelch_roll: (d) => {
+        playNoise(0.08, 900, 0.6, 'bandpass', 2.0);
+        setTimeout(() => {
+          playNoise(0.08, 800, 0.5, 'bandpass', 2.0);
+        }, 45);
+        setTimeout(() => {
+          playNoise(0.08, 700, 0.4, 'bandpass', 2.0);
+        }, 90);
+      },
+      damped_lid_snap: (d) => {
+        playMembrane(140 * d.pitchMult, 0.06, 1.0, true);
+        playAttackClick(0.02, 1500, 0.5 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  talk_box: {
+    name: '🗣️ Talk Box Toy',
+    drums: [
+      {
+        id: 0,
+        label: 'Retro Pull-Toy',
+        pitchMult: 1.0,
+        color: 'caramel',
+        sizeValue: 20
+      }
+    ],
+    sounds: {
+      pull_whine: (d) => {
+        playTablaSlideUp(180 * d.pitchMult, 440 * d.pitchMult, 0.3);
+        playNoise(0.25, 1500, 0.3 * state.currentTiltVolume);
+      },
+      cow_says_intro: (d) => {
+        playNoise(0.18, 2200, 0.5 * state.currentTiltVolume);
+        playMembrane(380 * d.pitchMult, 0.05, 1.0);
+        speakPhrase('The cow says...', 0.9, 0.85, 1.0);
+      },
+      analog_cow_moo: (d) => {
+        playTablaSlideUp(196 * d.pitchMult, 147 * d.pitchMult, 0.42);
+        playNoise(0.35, 1200, 0.2 * state.currentTiltVolume);
+        speakPhrase('Moo!', 0.6, 0.65, 1.0);
+      },
+      spring_snaps_shut: (d) => {
+        playAttackClick(0.03, 1100, 0.85 * state.currentTiltVolume);
+        playMembrane(150 * d.pitchMult, 0.08, 1.0, true);
+      },
+      needle_scratch_skip: (d) => {
+        playAttackClick(0.015, 2000, 0.7 * state.currentTiltVolume);
+        playNoise(0.05, 1800, 0.6 * state.currentTiltVolume);
+      },
+      low_battery_slur: (d) => {
+        playTablaSlideUp(130 * d.pitchMult, 55 * d.pitchMult, 0.6);
+        playNoise(0.4, 900, 0.3 * state.currentTiltVolume);
+        speakPhrase('Moooooo', 0.3, 0.4, 0.9);
+      },
+      gear_governor_whir: (d) => playNoise(0.32, 1600, 0.4 * state.currentTiltVolume),
+      chassis_slap: (d) => {
+        playMembrane(110 * d.pitchMult, 0.16, 1.1);
+        playNoise(0.08, 1000, 0.3 * state.currentTiltVolume);
+      }
+    },
+    defaultLeft: 0,
+    defaultRight: 0
+  },
+  mouth_tube_synth: {
+    name: '🖲️ Mouth Synth',
+    drums: [
+      {
+        id: 0,
+        label: 'Mouth Synth',
+        pitchMult: 1.0,
+        color: 'teal',
+        sizeValue: 19
+      }
+    ],
+    sounds: {
+      wah_vocal: (d) => {
+        playTablaSlideUp(120 * d.pitchMult, 180 * d.pitchMult, 0.22);
+        playNoise(0.1, 1500, 0.25 * state.currentTiltVolume);
+        speakPhrase('wah', 0.7, 1.2, 0.85);
+      },
+      ooh_vocal: (d) => {
+        playMembrane(110 * d.pitchMult, 0.32, 1.0);
+        speakPhrase('ooh', 0.6, 1.0, 0.85);
+      },
+      ee_vocal: (d) => {
+        playMembrane(330 * d.pitchMult, 0.28, 1.0, true);
+        speakPhrase('ee', 1.2, 1.2, 0.85);
+      },
+      plastic_hose_spit_pop: (d) => playAttackClick(0.012, 3800, 0.75 * state.currentTiltVolume),
+      synth_carrier_buzz: (d) => {
+        playMembrane(220 * d.pitchMult, 0.12, 1.0);
+        playNoise(0.06, 2500, 0.4 * state.currentTiltVolume);
+      },
+      vocalized_fry: (d) => {
+        playNoise(0.18, 600, 0.6 * state.currentTiltVolume);
+        playMembrane(55 * d.pitchMult, 0.1, 1.1);
+      },
+      throat_choke_stop: (d) => playMembrane(180 * d.pitchMult, 0.03, 1.0, true),
+      formant_glide: (d) => playTablaSlideUp(110 * d.pitchMult, 330 * d.pitchMult, 0.38)
     },
     defaultLeft: 0,
     defaultRight: 0
@@ -2483,13 +3318,6 @@ export const instrumentTouches = {
       shortName: 'Golpe de Aro',
       description:
         'Striking the thick wooden tuning rim of the drum body to create a sharp, hollow, wood-block counter-rhythm'
-    },
-    {
-      id: 'side_shell_mallet_drag',
-      label: 'Side-Shell Mallet Drag',
-      shortName: 'Side-Shell M...',
-      description:
-        'Dragging the soft head of the mallet across the raw, un-shaved wood/leather shell to create a low, rumbling friction whisper'
     }
   ],
   tabla: [
@@ -2590,7 +3418,7 @@ export const instrumentTouches = {
       label: 'Paila',
       shortName: 'Paila',
       description:
-        'A sharp, rapid strike with slightly cupped fingertips near the rim of the Timbales to produce an explosive, high-pitched cracking sound.'
+        'Beating the metal shells or sides of the timbales directly with the stick to create a dry, metallic "click" rhythmic pattern.'
     },
     {
       id: 'timbales_muff',
@@ -2603,8 +3431,7 @@ export const instrumentTouches = {
       id: 'bell',
       label: 'Bell',
       shortName: 'Bell',
-      description:
-        'Striking near the edge or rim of the Timbales and allowing the head or body to rebound freely for a clear, resonant open tone.'
+      description: 'Striking the cowbell or block mounted on the stand for a bright, high-pitched metallic clank.'
     }
   ],
   cajon: [
@@ -3292,13 +4119,6 @@ export const instrumentTouches = {
       shortName: 'Tak',
       description:
         'Hitting the heavy brass jingles directly with the ring finger to create a sharp, cutting metallic chime'
-    },
-    {
-      id: 'jingle_shake_wrist_roll',
-      label: 'Jingle shake / Wrist roll',
-      shortName: 'Jingle shake...',
-      description:
-        'Rapidly shaking the wrist back and forth to create a dense, continuous shimmer from the heavy brass pairs'
     },
     {
       id: 'jingle_damp_split',
@@ -4420,6 +5240,889 @@ export const instrumentTouches = {
       description:
         'Striking the absolute tip of the active clave against the tip of the resting clave to create a higher, thinner, laser-focused wood click'
     }
+  ],
+  mechanical_keyboard: [
+    {
+      id: 'key_click',
+      label: 'Key Click',
+      shortName: 'Click',
+      description:
+        'Striking a single custom mechanical key with high precision, engaging a sharp, snappy, high-frequency Cherry MX Blue click.'
+    },
+    {
+      id: 'spacebar',
+      label: 'Spacebar Thump',
+      shortName: 'Spacebar',
+      description:
+        'Striking the heavy plastic spacebar with a relaxed thumb, producing a hollow, deep, and spacious resonant thump.'
+    },
+    {
+      id: 'enter_key',
+      label: 'Enter Key Snap',
+      shortName: 'Enter',
+      description:
+        'Forcefully bottoming out the heavy enter key, creating an extremely satisfying, high-volume tactile clack.'
+    },
+    {
+      id: 'shift_hold',
+      label: 'Shift Hold',
+      shortName: 'Shift',
+      description: 'Gently depressing the spring-loaded shift key to create a soft, muted sliding friction click.'
+    },
+    {
+      id: 'backspace',
+      label: 'Backspace Tap',
+      shortName: 'Backspace',
+      description: 'Executing a rapid double-press deletion tap, producing two distinct, high-speed micro-clicks.'
+    }
+  ],
+  synsonics_drums: [
+    {
+      id: 'retro_kick',
+      label: 'Retro Bass Kick',
+      shortName: 'Kick',
+      description:
+        'Striking the bass segment of the 1981 retro toy pad, releasing a warm, analog-synthesized low frequency boom with rapid pitch decay.'
+    },
+    {
+      id: 'noise_snare',
+      label: '8-Bit Snare Snap',
+      shortName: 'Snare',
+      description:
+        'Hitting the snare pad sector to trigger an analogue-filtered white noise snap with a gritty retro texture.'
+    },
+    {
+      id: 'tom_low',
+      label: 'Low Pew Tom',
+      shortName: 'Low Tom',
+      description:
+        'Hitting the low-tom zone to produce a classic pitch-dropping "pew" synthesizer sound modeled on early electronic drum kits.'
+    },
+    {
+      id: 'tom_high',
+      label: 'High Pew Tom',
+      shortName: 'High Tom',
+      description:
+        'Hitting the high-tom zone to generate a sharp, high-pitched electronic accent tom sound with a dramatic downward pitch sweep.'
+    },
+    {
+      id: 'lofi_cymbal',
+      label: 'Chippy Crash Cymbal',
+      shortName: 'Cymbal',
+      description:
+        'Striking the crash segment to release a truncated, lo-fi burst of high-pass white noise mimicking early drum machine cymbal samples.'
+    }
+  ],
+  hydraulic_piston: [
+    {
+      id: 'steam_hiss',
+      label: 'Pneumatic Steam Hiss',
+      shortName: 'Steam Hiss',
+      description:
+        'Opening the high-pressure release valve to purge compressed air, creating a rich, sustained, steam-like white noise hiss.'
+    },
+    {
+      id: 'iron_stomp',
+      label: 'Iron Anvil Stomp',
+      shortName: 'Anvil Stomp',
+      description:
+        'Releasing the primary mechanical weight to strike the anvil plate, yielding a massive, echoing metal-on-metal drop impact.'
+    },
+    {
+      id: 'gear_lock',
+      label: 'Ratchet Gear Lock',
+      shortName: 'Gear Lock',
+      description:
+        'Engaging the industrial spring-loaded ratchet gear, creating a sharp, high-tension spring lock click.'
+    },
+    {
+      id: 'exhaust_clunk',
+      label: 'Chamber Exhaust Clunk',
+      shortName: 'Exhaust',
+      description:
+        'Cycling the internal exhaust combustion chambers to create a deep, heavy, low-frequency mechanical thud.'
+    }
+  ],
+  bop_it: [
+    {
+      id: 'bop_it',
+      label: 'Bop It Punch',
+      shortName: 'Bop It',
+      description:
+        'Firmly smacking the central rubberized pressure plate of the classic electronic toy, triggering its signature high-mid plastic snap.'
+    },
+    {
+      id: 'twist_it',
+      label: 'Twist It Ratchet',
+      shortName: 'Twist It',
+      description:
+        'Grasping and rotating the ribbed yellow dial to cycle through multiple mechanical gear-teeth clicks.'
+    },
+    {
+      id: 'pull_it',
+      label: 'Pull It Spring',
+      shortName: 'Pull It',
+      description:
+        'Tugging the blue cylindrical knob outward, releasing a rubbery, springy tension pop as the slider returns.'
+    },
+    {
+      id: 'shout_it',
+      label: 'Shout It Screech',
+      shortName: 'Shout It',
+      description:
+        'Yelling directly into the dynamic microphone to trigger a playful, high-pitched vocal resonance screech.'
+    },
+    {
+      id: 'fail_buzz',
+      label: 'Comedic Fail Buzz',
+      shortName: 'Fail Buzz',
+      description: 'Triggers a comedic, descending synthesizer buzz that mimics the classic "game over" warning horn.'
+    },
+    {
+      id: 'victory_chime',
+      label: 'Ascending Fanfare Chime',
+      shortName: 'Victory',
+      description: 'Plays a rapid, digital ascending major-triad chime representing a successful round completion.'
+    }
+  ],
+  moo_box: [
+    {
+      id: 'grand_moo',
+      label: 'Grand Cattle Moo',
+      shortName: 'Grand Moo',
+      description:
+        'Fully inverting the traditional cylindrical tin to allow the weighted internal bellows to slide, releasing a deep, iconic cattle drone.'
+    },
+    {
+      id: 'calf_moo',
+      label: 'Calf Tilt Whine',
+      shortName: 'Calf Moo',
+      description: 'Swiftly tilting the box to trigger a shorter, higher-pitched, and hurried baby cow crying sound.'
+    },
+    {
+      id: 'stuck_reed',
+      label: 'Glitched Stuck Reed',
+      shortName: 'Stuck Reed',
+      description:
+        'Obstructing or shaking the box during inversion to glitch the metallic reed, creating a raspy, buzzing, and choking half-drone.'
+    },
+    {
+      id: 'tin_shake',
+      label: 'Internal Weight Rattle',
+      shortName: 'Tin Shake',
+      description:
+        'Vigorously shaking the tin shaker side-to-side, causing the internal lead balancing weight to chatter against the tin frame.'
+    }
+  ],
+  pakhavaj: [
+    {
+      id: 'tha',
+      label: 'Tha Bass',
+      shortName: 'Tha',
+      description:
+        'Striking the center of the wet wheat-paste Bayan (bass head) with a flat palm, letting the deep booming bass resonate fully.'
+    },
+    {
+      id: 'dhin',
+      label: 'Dhin Ringing Bass',
+      shortName: 'Dhin',
+      description:
+        'An open bass stroke on the left head using the fingers while letting the hand bounce, producing a warm ringing fundamental tone.'
+    },
+    {
+      id: 'ta',
+      label: 'Ta Treble Rim Slap',
+      shortName: 'Ta',
+      description:
+        'Striking the outer rim of the Dayan (treble head) with the finger joints, generating a sharp, piercing, metallic slap.'
+    },
+    {
+      id: 'ki',
+      label: 'Ki Left Dampen',
+      shortName: 'Ki',
+      description:
+        'Pressing the heel of the left hand firmly on the Bayan while hitting with fingers to produce a dry, completely muted slap.'
+    },
+    {
+      id: 'na',
+      label: 'Na Treble Edge Ring',
+      shortName: 'Na',
+      description:
+        'Striking the absolute outer edge of the Dayan with a single finger, letting the treble skin ring out with brilliant harmonics.'
+    },
+    {
+      id: 'tete',
+      label: 'Tete Double Tap',
+      shortName: 'Tete',
+      description:
+        'Alternating index and middle fingers in high-speed succession near the center of the Dayan to lay down dense rhythmic rolls.'
+    },
+    {
+      id: 'ghe',
+      label: 'Ghe Sliding Bass',
+      shortName: 'Ghe',
+      description:
+        'Striking the Bayan bass head and sliding the heel of the hand across the wet wheat-paste to dynamically bend the pitch upward.'
+    }
+  ],
+  binzasara: [
+    {
+      id: 'furu',
+      label: 'Furu Cascading Wave',
+      shortName: 'Furu',
+      description:
+        'Rippling the wooden slats in a wave-like snapping motion, releasing a domino-like rolling chatter cascade.'
+    },
+    {
+      id: 'clap',
+      label: 'Clap Block Smash',
+      shortName: 'Clap',
+      description:
+        'Forcefully pushing both handles together to clash all wooden plates simultaneously, producing a solid, dry wooden strike.'
+    },
+    {
+      id: 'rattle',
+      label: 'Continuous Wood Rattle',
+      shortName: 'Rattle',
+      description:
+        'Rapidly shaking the binzasara back and forth, keeping the slats in continuous, frantic wooden friction chatter.'
+    },
+    {
+      id: 'snap',
+      label: 'Single Wood Snap',
+      shortName: 'Snap',
+      description: 'Giving a single, snappy twist of the wrists to trigger a singular, laser-focused wood-plate pop.'
+    }
+  ],
+  caxixi: [
+    {
+      id: 'straw_wall',
+      label: 'Straw Wall Rattle',
+      shortName: 'Straw',
+      description:
+        'Flicking the shaker horizontally to strike the seeds against the woven wicker wall, creating a soft, warm, organic splash.'
+    },
+    {
+      id: 'gourd_bottom',
+      label: 'Gourd Bottom Crack',
+      shortName: 'Gourd',
+      description:
+        'Striking the seeds vertically against the hard calabash gourd base, releasing a sharp, loud, high-pitched crack.'
+    },
+    {
+      id: 'flick_accent',
+      label: 'Double Flick Accent',
+      shortName: 'Flick',
+      description:
+        'Shaking the caxixi in a swift down-and-up whipping motion, producing a rapid, crisp double shake rattle.'
+    },
+    {
+      id: 'muted_swoosh',
+      label: 'Muted Swoosh',
+      shortName: 'Swoosh',
+      description:
+        'Slowing moving the caxixi in an arc, sliding the seeds smoothly across the wicker interior for a soft, muffled air swoosh.'
+    }
+  ],
+  slap_tubes: [
+    {
+      id: 'bass_boom',
+      label: 'Bass Boom',
+      shortName: 'Bass Boom',
+      description: 'Deep, compressed low-end fundamental of the long PVC tube'
+    },
+    {
+      id: 'low_pop',
+      label: 'Low Pop',
+      shortName: 'Low Pop',
+      description: 'Resonant mid-low air column note'
+    },
+    {
+      id: 'mid_bounce',
+      label: 'Mid Bounce',
+      shortName: 'Mid Bounce',
+      description: 'Bright mid-range pitch bouncing'
+    },
+    {
+      id: 'high_snap',
+      label: 'High Snap',
+      shortName: 'High Snap',
+      description: 'Sharp, punchy upper harmonic snap'
+    },
+    {
+      id: 'paddle_slap',
+      label: 'Paddle Slap',
+      shortName: 'Paddle',
+      description: 'Dry, raw impact of rubber mallet on bare plastic edge'
+    },
+    {
+      id: 'pipe_rim_click',
+      label: 'Pipe Rim Click',
+      shortName: 'Rim Click',
+      description: 'Hard plastic stick click on the side shell'
+    },
+    {
+      id: 'muted_thud',
+      label: 'Muted Thud',
+      shortName: 'Muted Thud',
+      description: 'Striking while covering the opposite hole'
+    },
+    {
+      id: 'slide_slur',
+      label: 'Slide Slur',
+      shortName: 'Slide Slur',
+      description: 'Hitting while changing the length of a telescoping tube'
+    }
+  ],
+  whistle_drum: [
+    {
+      id: 'clay_bass',
+      label: 'Clay Bass',
+      shortName: 'Clay Bass',
+      description: 'Earthy, hollow center thump of the pot body'
+    },
+    {
+      id: 'sharp_chirp',
+      label: 'Sharp Chirp',
+      shortName: 'Chirp',
+      description: 'Edge strike forcing an instant, high air whistle'
+    },
+    {
+      id: 'bending_gliss',
+      label: 'Bending Gliss',
+      shortName: 'Gliss',
+      description: 'Center hit while pressing the head to shift the whistle pitch'
+    },
+    {
+      id: 'rim_tap',
+      label: 'Rim Tap',
+      shortName: 'Rim Tap',
+      description: 'Crisp finger strike on the unglazed clay edge'
+    },
+    {
+      id: 'slosh_splash',
+      label: 'Slosh Splash',
+      shortName: 'Splash',
+      description: 'Rocking the pot to throw internal water against the whistle port'
+    },
+    {
+      id: 'muted_pip',
+      label: 'Muted Pip',
+      shortName: 'Muted Pip',
+      description: 'Extremely short, choked air pop'
+    },
+    {
+      id: 'double_chirp',
+      label: 'Double Chirp',
+      shortName: 'Trill',
+      description: 'A rapid-fire two-finger grace note burst'
+    },
+    {
+      id: 'breath_echo',
+      label: 'Breath Echo',
+      shortName: 'Echo',
+      description: 'Soft hand strike that lets the air chamber hiss down'
+    }
+  ],
+  singing_bowl: [
+    {
+      id: 'deep_rim_gong',
+      label: 'Deep Rim Gong',
+      shortName: 'Gong',
+      description: 'A pure, ringing, heavy mallet blow on the outer lip'
+    },
+    {
+      id: 'suede_hum',
+      label: 'Suede Hum',
+      shortName: 'Hum',
+      description: 'The continuous, swelling friction buzz of a mallet circling the edge'
+    },
+    {
+      id: 'wood_click',
+      label: 'Wood Click',
+      shortName: 'Click',
+      description: 'The sharp click of the bare mallet handle on the metal wall'
+    },
+    {
+      id: 'palm_damped',
+      label: 'Palm Damped',
+      shortName: 'Damped',
+      description: 'A flat, short, metallic chime done while hand-choking the bowl'
+    },
+    {
+      id: 'harmonic_ping',
+      label: 'Harmonic Ping',
+      shortName: 'Ping',
+      description: 'Striking the upper third of the bowl with a hard stick tip'
+    },
+    {
+      id: 'water_ripple',
+      label: 'Water Ripple',
+      shortName: 'Ripple',
+      description: 'Striking the bowl sitting in shallow water to create a warble'
+    },
+    {
+      id: 'swirling_decay',
+      label: 'Swirling Decay',
+      shortName: 'Decay',
+      description: 'Letting the ringing tone decay while rotating the bowl'
+    },
+    {
+      id: 'double_strike',
+      label: 'Double Strike',
+      shortName: 'Double',
+      description: 'Flams struck on two opposite sides simultaneously'
+    }
+  ],
+  quijada: [
+    {
+      id: 'fist_slam_rattles',
+      label: 'Fist Slam Rattles',
+      shortName: 'Slam',
+      description: 'Heavy punch to the side, causing a prolonged loose tooth buzz'
+    },
+    {
+      id: 'teeth_rasp_scrape',
+      label: 'Teeth Rasp Scrape',
+      shortName: 'Scrape',
+      description: 'Running a wooden stick quickly down the serrated tooth line'
+    },
+    {
+      id: 'chin_bone_tap',
+      label: 'Chin Bone Tap',
+      shortName: 'Tap',
+      description: 'A dry, hollow, skeletal click on the frontal bone chin'
+    },
+    {
+      id: 'micro_flick',
+      label: 'Micro-Flick',
+      shortName: 'Flick',
+      description: 'A light fingertip tap for a localized, highly controlled buzz'
+    },
+    {
+      id: 'reverse_scrape',
+      label: 'Reverse Scrape',
+      shortName: 'Rev Scrape',
+      description: 'An upward stick rub creating a tighter, shorter scrape'
+    },
+    {
+      id: 'choked_jaw_pinch',
+      label: 'Choked Jaw Pinch',
+      shortName: 'Pinch',
+      description: 'Slamming the side while squeezing the teeth to stop the ring'
+    },
+    {
+      id: 'double_tap',
+      label: 'Double Tap',
+      shortName: 'Double Tap',
+      description: 'Two quick, rattling bone slaps'
+    },
+    {
+      id: 'hollow_socket_pop',
+      label: 'Hollow Socket Pop',
+      shortName: 'Socket Pop',
+      description: 'Striking the empty joint hinge for a deeper, enclosed tone'
+    }
+  ],
+  water_canister: [
+    {
+      id: 'slap_gliss',
+      label: 'Slap Gliss',
+      shortName: 'Gliss',
+      description: 'Striking the container while sloshing water to compress air'
+    },
+    {
+      id: 'neck_pop',
+      label: 'Neck Pop',
+      shortName: 'Neck Pop',
+      description: 'Slapping the small top opening for a tight, hollow vacuum pop'
+    },
+    {
+      id: 'outer_plastic_thud',
+      label: 'Outer Plastic Thud',
+      shortName: 'Thud',
+      description: 'A flat hand hit on the dry side wall'
+    },
+    {
+      id: 'liquid_slap',
+      label: 'Liquid Slap',
+      shortName: 'Splash',
+      description: 'Slapping the side hard enough to hear the internal splash'
+    },
+    {
+      id: 'bubble_gurgle',
+      label: 'Bubble Gurgle',
+      shortName: 'Gurgle',
+      description: 'A self-contained rhythmic burst of air bubbles escaping'
+    },
+    {
+      id: 'damped_plonk',
+      label: 'Damped Plonk',
+      shortName: 'Plonk',
+      description: 'Hitting the canister base resting on a soft surface'
+    },
+    {
+      id: 'finger_tap_rim',
+      label: 'Finger Tap Rim',
+      shortName: 'Tap Rim',
+      description: 'Light, rhythmic clicking on the hard screw-threads'
+    },
+    {
+      id: 'heavy_splash_drop',
+      label: 'Heavy Splash Drop',
+      shortName: 'Drop Splash',
+      description: 'Lifting and slamming the container down for a heavy internal wave'
+    }
+  ],
+  vintage_cash_register: [
+    {
+      id: 'key_plunge',
+      label: 'Key Plunge',
+      shortName: 'Key Plunge',
+      description: 'The heavy mechanical clack of a vintage price button dropping'
+    },
+    {
+      id: 'bell_ring',
+      label: 'The Bell Ring',
+      shortName: 'Bell',
+      description: 'The legendary, crystal-clear brass internal register chime'
+    },
+    {
+      id: 'drawer_spring_crunch',
+      label: 'Drawer Spring Crunch',
+      shortName: 'Spring',
+      description: 'The chaotic, heavy mechanical lurch of the drawer sliding open'
+    },
+    {
+      id: 'drawer_slam',
+      label: 'Drawer Slam',
+      shortName: 'Slam',
+      description: 'The heavy, dull metal-on-wood structural bang of closing the register'
+    },
+    {
+      id: 'coin_jingle',
+      label: 'Coin Jingle',
+      shortName: 'Coins',
+      description: 'The bright, scattered scatter-wash of metallic currency rattling'
+    },
+    {
+      id: 'lever_crank',
+      label: 'Lever Crank',
+      shortName: 'Crank',
+      description: 'The mechanical, ratcheting side-handle wind'
+    },
+    {
+      id: 'no_sale_click',
+      label: 'No Sale Click',
+      shortName: 'Click',
+      description: 'A small, dry, plastic internal component latch sound'
+    },
+    {
+      id: 'paper_receipt_rip',
+      label: 'Paper Receipt Rip',
+      shortName: 'Rip',
+      description: 'The sharp, paper friction tear across a jagged metal edge'
+    }
+  ],
+  geiger_counter: [
+    {
+      id: 'isolated_click',
+      label: 'Isolated Click',
+      shortName: 'Click',
+      description: 'A single, ultra-sharp, lo-fi diagnostic static pop'
+    },
+    {
+      id: 'double_static_burst',
+      label: 'Double Static Burst',
+      shortName: 'Burst',
+      description: 'Two erratic, microsecond pops grouped tightly together'
+    },
+    {
+      id: 'rad_swarm',
+      label: 'Rad Swarm',
+      shortName: 'Swarm',
+      description: 'A dense, white-noise-adjacent cascade of stochastic crackling'
+    },
+    {
+      id: 'warning_beep',
+      label: 'Warning Beep',
+      shortName: 'Beep',
+      description: 'The flat, piercing 2kHz internal warning alarm piezo pulse'
+    },
+    {
+      id: 'chassis_dial_click',
+      label: 'Chassis Dial Click',
+      shortName: 'Dial',
+      description: 'The heavy, physical plastic rotate click of the range knob'
+    },
+    {
+      id: 'static_discharge_thump',
+      label: 'Static Discharge Thump',
+      shortName: 'Thump',
+      description: 'A low-frequency electronic pop from a grounding short'
+    },
+    {
+      id: 'meltdown_buzz',
+      label: 'Meltdown Buzz',
+      shortName: 'Buzz',
+      description: 'A continuous, overloaded hardware signal scream'
+    },
+    {
+      id: 'battery_test_chirp',
+      label: 'Battery Test Chirp',
+      shortName: 'Chirp',
+      description: 'A tiny, clean, ascending digital status notification tone'
+    }
+  ],
+  centrifugal_bullroarer: [
+    {
+      id: 'low_wind_whine',
+      label: 'Low Wind Whine',
+      shortName: 'Whine',
+      description: 'The deep, ghostly, rhythmic air-shearing roar of a slow rotation'
+    },
+    {
+      id: 'high_speed_scream',
+      label: 'High Speed Scream',
+      shortName: 'Scream',
+      description: 'The piercing, high-velocity aerodynamic friction whistle'
+    },
+    {
+      id: 'string_snap',
+      label: 'String Snap',
+      shortName: 'Snap',
+      description: 'The violent, structural tension pop of the cord changing rotation'
+    },
+    {
+      id: 'ground_slap',
+      label: 'Ground Slap',
+      shortName: 'Slap',
+      description: 'The accidental, wooden clatter of the slat clipping the floor'
+    },
+    {
+      id: 'air_rip_flutter',
+      label: 'Air Rip Flutter',
+      shortName: 'Flutter',
+      description: 'A sudden jerk causing a rapid, stuttering wind buffeting texture'
+    },
+    {
+      id: 'wood_spine_tap',
+      label: 'Wood Spine Tap',
+      shortName: 'Tap Slat',
+      description: 'Tapping the flat of the wooden slat directly with a finger'
+    },
+    {
+      id: 'cord_friction_rub',
+      label: 'Cord Friction Rub',
+      shortName: 'Creak',
+      description: 'The deep, dry creaking sound of the braided string twisting'
+    },
+    {
+      id: 'descending_whimper',
+      label: 'Descending Whimper',
+      shortName: 'Whimper',
+      description: 'The slowing, downward pitch drop as the spin loses momentum'
+    }
+  ],
+  newtons_cradle: [
+    {
+      id: 'single_ball_clack',
+      label: 'Single Ball Clack',
+      shortName: 'Clack',
+      description: 'The crisp, instantaneous, singular metal-on-metal click'
+    },
+    {
+      id: 'continuous_ripple',
+      label: 'Continuous Ripple',
+      shortName: 'Ripple',
+      description: 'The rhythmic, rapid-fire clack-clack-clack of all balls in motion'
+    },
+    {
+      id: 'double_side_strike',
+      label: 'Double Side Strike',
+      shortName: 'Double',
+      description: 'Two balls dropping from opposite sides simultaneously'
+    },
+    {
+      id: 'damped_metal_thud',
+      label: 'Damped Metal Thud',
+      shortName: 'Muted',
+      description: 'Grabbing the balls mid-swing to create a choked, metallic thud'
+    },
+    {
+      id: 'string_tangle_snag',
+      label: 'String Tangle Snag',
+      shortName: 'Snag',
+      description: 'The dry, plastic friction of the suspension wires twisting'
+    },
+    {
+      id: 'chassis_frame_tap',
+      label: 'Chassis Frame Tap',
+      shortName: 'Frame Tap',
+      description: 'Striking the hollow metal support frame with a fingernail'
+    },
+    {
+      id: 'decaying_skitter',
+      label: 'Decaying Skitter',
+      shortName: 'Skitter',
+      description: 'The natural, erratic losing-momentum micro-clicking as it stops'
+    },
+    {
+      id: 'scrape_drag',
+      label: 'Scrape Drag',
+      shortName: 'Drag',
+      description: 'Pulling a ball along the row rather than dropping it'
+    }
+  ],
+  slime_plop_box: [
+    {
+      id: 'deep_suction_plop',
+      label: 'Deep Suction Plop',
+      shortName: 'Plop',
+      description: 'The heavy, wet, vacuum-release sound of pulling an object'
+    },
+    {
+      id: 'wet_surface_slap',
+      label: 'Wet Surface Slap',
+      shortName: 'Slap',
+      description: 'A fast, flat hand strike on top of the gelatinous mass'
+    },
+    {
+      id: 'air_pocket_pop',
+      label: 'Air Pocket Pop',
+      shortName: 'Pop',
+      description: 'A sharp, gaseous squish-pop from a trapped air bubble bursting'
+    },
+    {
+      id: 'squelch_stretch',
+      label: 'Squelch Stretch',
+      shortName: 'Stretch',
+      description: 'The low-frequency tearing sound of pulling the viscous material'
+    },
+    {
+      id: 'container_wall_squish',
+      label: 'Container Wall Squish',
+      shortName: 'Squish',
+      description: 'The muffled, sliding sound of slime shifting against plastic'
+    },
+    {
+      id: 'dripping_goblet_drop',
+      label: 'Dripping Goblet Drop',
+      shortName: 'Drop',
+      description: 'A distinct, heavy, self-contained liquid drop impact'
+    },
+    {
+      id: 'rapid_squelch_roll',
+      label: 'Rapid Squelch Roll',
+      shortName: 'Roll',
+      description: 'A fast, stuttering multi-finger mud-like typing texture'
+    },
+    {
+      id: 'damped_lid_snap',
+      label: 'Damped Lid Snap',
+      shortName: 'Snap Lid',
+      description: 'Snapping the plastic lid onto the container while full'
+    }
+  ],
+  talk_box: [
+    {
+      id: 'pull_whine',
+      label: 'The Pull-Whine',
+      shortName: 'Whine',
+      description: 'The mechanical, winding rev-up spin sound of pulling the string'
+    },
+    {
+      id: 'cow_says_intro',
+      label: '"The Cow Says..."',
+      shortName: 'Intro',
+      description: 'The grainy, lo-fi, plastic-groove internal phonograph voice'
+    },
+    {
+      id: 'analog_cow_moo',
+      label: 'Analog Cow Moo',
+      shortName: 'Moo',
+      description: 'The scratchy, record-needle version of an animal sound'
+    },
+    {
+      id: 'spring_snaps_shut',
+      label: 'Spring Snaps Shut',
+      shortName: 'Snap',
+      description: 'The violent, plastic clack as the pull-string snaps back'
+    },
+    {
+      id: 'needle_scratch_skip',
+      label: 'Needle Scratch Skip',
+      shortName: 'Skip',
+      description: 'The harsh, rhythmic skip of the plastic internal needle'
+    },
+    {
+      id: 'low_battery_slur',
+      label: 'Low Battery Slur',
+      shortName: 'Slur',
+      description: 'The pitch-dropping, slowed-down demonic variation of the toy'
+    },
+    {
+      id: 'gear_governor_whir',
+      label: 'Gear Governor Whir',
+      shortName: 'Whir',
+      description: 'The spinning fly-wheel friction sound that regulates playback'
+    },
+    {
+      id: 'chassis_slap',
+      label: 'Chassis Slap',
+      shortName: 'Slap Casing',
+      description: 'Hitting the hollow, bright orange plastic toy casing with a palm'
+    }
+  ],
+  mouth_tube_synth: [
+    {
+      id: 'wah_vocal',
+      label: '"Wah"',
+      shortName: 'Wah',
+      description: 'The raw, expressive, throat-like open-vowel sub-bass thud'
+    },
+    {
+      id: 'ooh_vocal',
+      label: '"Ooh"',
+      shortName: 'Ooh',
+      description: 'The dark, enclosed, resonant low-frequency tube tone'
+    },
+    {
+      id: 'ee_vocal',
+      label: '"Ee"',
+      shortName: 'Ee',
+      description: 'The bright, nasal, high-harmonic electronic filter peak'
+    },
+    {
+      id: 'plastic_hose_spit_pop',
+      label: 'Spit-Pop',
+      shortName: 'Pop',
+      description: 'The dry, clicky pop of air pocket condensation in the tube'
+    },
+    {
+      id: 'synth_carrier_buzz',
+      label: 'Carrier Buzz',
+      shortName: 'Buzz',
+      description: 'A short, raw burst of the un-modulated synthesizer carrier'
+    },
+    {
+      id: 'vocalized_fry',
+      label: 'Vocalized Fry',
+      shortName: 'Fry',
+      description: 'A crackling, low-register guttural glitch sound'
+    },
+    {
+      id: 'throat_choke_stop',
+      label: 'Throat Choke Stop',
+      shortName: 'Choke',
+      description: 'Suddenly pinching the tube shut to cut the synth signal dead'
+    },
+    {
+      id: 'formant_glide',
+      label: 'Formant Glide',
+      shortName: 'Glide',
+      description: 'A rapid, sweeping vocal filter run from "Ooh" to "Ee"'
+    }
   ]
 };
 export const instrumentMappings = {
@@ -4427,23 +6130,23 @@ export const instrumentMappings = {
     left: {
       up: 'bajo',
       down: 'abierto',
-      left: 'seco',
+      left: 'manoteo',
       right: 'tapado',
-      upLong: 'toque_tapado',
-      downLong: 'manoteo',
+      upLong: '',
+      downLong: 'seco',
       leftLong: 'golpe_de_casco',
-      rightLong: '',
+      rightLong: 'toque_tapado',
       trigger: 'bajo'
     },
     right: {
       up: 'bajo',
       down: 'abierto',
-      left: 'seco',
+      left: 'manoteo',
       right: 'tapado',
-      upLong: 'toque_tapado',
-      downLong: 'manoteo',
+      upLong: '',
+      downLong: 'seco',
       leftLong: 'golpe_de_casco',
-      rightLong: '',
+      rightLong: 'toque_tapado',
       trigger: 'abierto'
     }
   },
@@ -4571,7 +6274,7 @@ export const instrumentMappings = {
     left: {
       up: 'golpe_de_parche',
       down: 'golpe_de_aro',
-      left: 'side_shell_mallet_drag',
+      left: 'golpe_de_aro',
       right: '',
       upLong: '',
       downLong: '',
@@ -4582,7 +6285,7 @@ export const instrumentMappings = {
     right: {
       up: 'golpe_de_parche',
       down: 'golpe_de_aro',
-      left: 'side_shell_mallet_drag',
+      left: 'golpe_de_aro',
       right: '',
       upLong: '',
       downLong: '',
@@ -4597,10 +6300,10 @@ export const instrumentMappings = {
       down: 'dayan_tin',
       left: 'dayan_tun',
       right: 'bayan_ga_ghe',
-      upLong: 'bayan_ka_ke',
+      upLong: '',
       downLong: '',
       leftLong: '',
-      rightLong: '',
+      rightLong: 'bayan_ka_ke',
       trigger: 'dayan_na_ta'
     },
     right: {
@@ -4608,10 +6311,10 @@ export const instrumentMappings = {
       down: 'dayan_tin',
       left: 'dayan_tun',
       right: 'bayan_ga_ghe',
-      upLong: 'bayan_ka_ke',
+      upLong: '',
       downLong: '',
       leftLong: '',
-      rightLong: '',
+      rightLong: 'bayan_ka_ke',
       trigger: 'dayan_tin'
     }
   },
@@ -5267,7 +6970,7 @@ export const instrumentMappings = {
     left: {
       up: 'dum',
       down: 'tak',
-      left: 'jingle_shake_wrist_roll',
+      left: 'dum',
       right: 'jingle_damp_split',
       upLong: '',
       downLong: '',
@@ -5278,7 +6981,7 @@ export const instrumentMappings = {
     right: {
       up: 'dum',
       down: 'tak',
-      left: 'jingle_shake_wrist_roll',
+      left: 'dum',
       right: 'jingle_damp_split',
       upLong: '',
       downLong: '',
@@ -6413,6 +8116,486 @@ export const instrumentMappings = {
       leftLong: '',
       rightLong: '',
       trigger: 'end_tap'
+    }
+  },
+  mechanical_keyboard: {
+    left: {
+      up: 'key_click',
+      down: 'spacebar',
+      left: 'backspace',
+      right: 'enter_key',
+      upLong: 'shift_hold',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'key_click'
+    },
+    right: {
+      up: 'key_click',
+      down: 'spacebar',
+      left: 'backspace',
+      right: 'enter_key',
+      upLong: 'shift_hold',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'enter_key'
+    }
+  },
+  synsonics_drums: {
+    left: {
+      up: 'retro_kick',
+      down: 'noise_snare',
+      left: 'tom_low',
+      right: 'tom_high',
+      upLong: 'lofi_cymbal',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'retro_kick'
+    },
+    right: {
+      up: 'retro_kick',
+      down: 'noise_snare',
+      left: 'tom_low',
+      right: 'tom_high',
+      upLong: 'lofi_cymbal',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'noise_snare'
+    }
+  },
+  hydraulic_piston: {
+    left: {
+      up: 'steam_hiss',
+      down: 'iron_stomp',
+      left: 'gear_lock',
+      right: 'exhaust_clunk',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'iron_stomp'
+    },
+    right: {
+      up: 'steam_hiss',
+      down: 'iron_stomp',
+      left: 'gear_lock',
+      right: 'exhaust_clunk',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'steam_hiss'
+    }
+  },
+  bop_it: {
+    left: {
+      up: 'bop_it',
+      down: 'twist_it',
+      left: 'pull_it',
+      right: 'shout_it',
+      upLong: 'victory_chime',
+      downLong: 'fail_buzz',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'bop_it'
+    },
+    right: {
+      up: 'bop_it',
+      down: 'twist_it',
+      left: 'pull_it',
+      right: 'shout_it',
+      upLong: 'victory_chime',
+      downLong: 'fail_buzz',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'bop_it'
+    }
+  },
+  moo_box: {
+    left: {
+      up: 'grand_moo',
+      down: 'calf_moo',
+      left: 'stuck_reed',
+      right: 'tin_shake',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'grand_moo'
+    },
+    right: {
+      up: 'grand_moo',
+      down: 'calf_moo',
+      left: 'stuck_reed',
+      right: 'tin_shake',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'calf_moo'
+    }
+  },
+  pakhavaj: {
+    left: {
+      up: 'ta',
+      down: 'tha',
+      left: 'ki',
+      right: 'na',
+      upLong: 'dhin',
+      downLong: 'tete',
+      leftLong: 'ghe',
+      rightLong: '',
+      trigger: 'tha'
+    },
+    right: {
+      up: 'ta',
+      down: 'tha',
+      left: 'ki',
+      right: 'na',
+      upLong: 'dhin',
+      downLong: 'tete',
+      leftLong: 'ghe',
+      rightLong: '',
+      trigger: 'ta'
+    }
+  },
+  binzasara: {
+    left: {
+      up: 'furu',
+      down: 'clap',
+      left: 'rattle',
+      right: 'snap',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'furu'
+    },
+    right: {
+      up: 'furu',
+      down: 'clap',
+      left: 'rattle',
+      right: 'snap',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'clap'
+    }
+  },
+  caxixi: {
+    left: {
+      up: 'straw_wall',
+      down: 'gourd_bottom',
+      left: 'flick_accent',
+      right: 'muted_swoosh',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'straw_wall'
+    },
+    right: {
+      up: 'straw_wall',
+      down: 'gourd_bottom',
+      left: 'flick_accent',
+      right: 'muted_swoosh',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: 'gourd_bottom'
+    }
+  },
+  slap_tubes: {
+    left: {
+      up: 'bass_boom',
+      down: 'low_pop',
+      left: 'mid_bounce',
+      right: 'high_snap',
+      upLong: 'paddle_slap',
+      downLong: 'pipe_rim_click',
+      leftLong: 'muted_thud',
+      rightLong: 'slide_slur',
+      trigger: 'bass_boom'
+    },
+    right: {
+      up: 'bass_boom',
+      down: 'low_pop',
+      left: 'mid_bounce',
+      right: 'high_snap',
+      upLong: 'paddle_slap',
+      downLong: 'pipe_rim_click',
+      leftLong: 'muted_thud',
+      rightLong: 'slide_slur',
+      trigger: 'low_pop'
+    }
+  },
+  whistle_drum: {
+    left: {
+      up: 'clay_bass',
+      down: 'sharp_chirp',
+      left: 'bending_gliss',
+      right: 'rim_tap',
+      upLong: 'slosh_splash',
+      downLong: 'muted_pip',
+      leftLong: 'double_chirp',
+      rightLong: 'breath_echo',
+      trigger: 'clay_bass'
+    },
+    right: {
+      up: 'clay_bass',
+      down: 'sharp_chirp',
+      left: 'bending_gliss',
+      right: 'rim_tap',
+      upLong: 'slosh_splash',
+      downLong: 'muted_pip',
+      leftLong: 'double_chirp',
+      rightLong: 'breath_echo',
+      trigger: 'sharp_chirp'
+    }
+  },
+  singing_bowl: {
+    left: {
+      up: 'deep_rim_gong',
+      down: 'suede_hum',
+      left: 'wood_click',
+      right: 'palm_damped',
+      upLong: 'harmonic_ping',
+      downLong: 'water_ripple',
+      leftLong: 'swirling_decay',
+      rightLong: 'double_strike',
+      trigger: 'deep_rim_gong'
+    },
+    right: {
+      up: 'deep_rim_gong',
+      down: 'suede_hum',
+      left: 'wood_click',
+      right: 'palm_damped',
+      upLong: 'harmonic_ping',
+      downLong: 'water_ripple',
+      leftLong: 'swirling_decay',
+      rightLong: 'double_strike',
+      trigger: 'suede_hum'
+    }
+  },
+  quijada: {
+    left: {
+      up: 'fist_slam_rattles',
+      down: 'teeth_rasp_scrape',
+      left: 'chin_bone_tap',
+      right: 'micro_flick',
+      upLong: 'reverse_scrape',
+      downLong: 'choked_jaw_pinch',
+      leftLong: 'double_tap',
+      rightLong: 'hollow_socket_pop',
+      trigger: 'fist_slam_rattles'
+    },
+    right: {
+      up: 'fist_slam_rattles',
+      down: 'teeth_rasp_scrape',
+      left: 'chin_bone_tap',
+      right: 'micro_flick',
+      upLong: 'reverse_scrape',
+      downLong: 'choked_jaw_pinch',
+      leftLong: 'double_tap',
+      rightLong: 'hollow_socket_pop',
+      trigger: 'teeth_rasp_scrape'
+    }
+  },
+  water_canister: {
+    left: {
+      up: 'slap_gliss',
+      down: 'neck_pop',
+      left: 'outer_plastic_thud',
+      right: 'liquid_slap',
+      upLong: 'bubble_gurgle',
+      downLong: 'damped_plonk',
+      leftLong: 'finger_tap_rim',
+      rightLong: 'heavy_splash_drop',
+      trigger: 'slap_gliss'
+    },
+    right: {
+      up: 'slap_gliss',
+      down: 'neck_pop',
+      left: 'outer_plastic_thud',
+      right: 'liquid_slap',
+      upLong: 'bubble_gurgle',
+      downLong: 'damped_plonk',
+      leftLong: 'finger_tap_rim',
+      rightLong: 'heavy_splash_drop',
+      trigger: 'neck_pop'
+    }
+  },
+  vintage_cash_register: {
+    left: {
+      up: 'key_plunge',
+      down: 'bell_ring',
+      left: 'drawer_spring_crunch',
+      right: 'drawer_slam',
+      upLong: 'coin_jingle',
+      downLong: 'lever_crank',
+      leftLong: 'no_sale_click',
+      rightLong: 'paper_receipt_rip',
+      trigger: 'key_plunge'
+    },
+    right: {
+      up: 'key_plunge',
+      down: 'bell_ring',
+      left: 'drawer_spring_crunch',
+      right: 'drawer_slam',
+      upLong: 'coin_jingle',
+      downLong: 'lever_crank',
+      leftLong: 'no_sale_click',
+      rightLong: 'paper_receipt_rip',
+      trigger: 'bell_ring'
+    }
+  },
+  geiger_counter: {
+    left: {
+      up: 'isolated_click',
+      down: 'double_static_burst',
+      left: 'rad_swarm',
+      right: 'warning_beep',
+      upLong: 'chassis_dial_click',
+      downLong: 'static_discharge_thump',
+      leftLong: 'meltdown_buzz',
+      rightLong: 'battery_test_chirp',
+      trigger: 'isolated_click'
+    },
+    right: {
+      up: 'isolated_click',
+      down: 'double_static_burst',
+      left: 'rad_swarm',
+      right: 'warning_beep',
+      upLong: 'chassis_dial_click',
+      downLong: 'static_discharge_thump',
+      leftLong: 'meltdown_buzz',
+      rightLong: 'battery_test_chirp',
+      trigger: 'double_static_burst'
+    }
+  },
+  centrifugal_bullroarer: {
+    left: {
+      up: 'low_wind_whine',
+      down: 'high_speed_scream',
+      left: 'string_snap',
+      right: 'ground_slap',
+      upLong: 'air_rip_flutter',
+      downLong: 'wood_spine_tap',
+      leftLong: 'cord_friction_rub',
+      rightLong: 'descending_whimper',
+      trigger: 'low_wind_whine'
+    },
+    right: {
+      up: 'low_wind_whine',
+      down: 'high_speed_scream',
+      left: 'string_snap',
+      right: 'ground_slap',
+      upLong: 'air_rip_flutter',
+      downLong: 'wood_spine_tap',
+      leftLong: 'cord_friction_rub',
+      rightLong: 'descending_whimper',
+      trigger: 'high_speed_scream'
+    }
+  },
+  newtons_cradle: {
+    left: {
+      up: 'single_ball_clack',
+      down: 'continuous_ripple',
+      left: 'double_side_strike',
+      right: 'damped_metal_thud',
+      upLong: 'string_tangle_snag',
+      downLong: 'chassis_frame_tap',
+      leftLong: 'decaying_skitter',
+      rightLong: 'scrape_drag',
+      trigger: 'single_ball_clack'
+    },
+    right: {
+      up: 'single_ball_clack',
+      down: 'continuous_ripple',
+      left: 'double_side_strike',
+      right: 'damped_metal_thud',
+      upLong: 'string_tangle_snag',
+      downLong: 'chassis_frame_tap',
+      leftLong: 'decaying_skitter',
+      rightLong: 'scrape_drag',
+      trigger: 'continuous_ripple'
+    }
+  },
+  slime_plop_box: {
+    left: {
+      up: 'deep_suction_plop',
+      down: 'wet_surface_slap',
+      left: 'air_pocket_pop',
+      right: 'squelch_stretch',
+      upLong: 'container_wall_squish',
+      downLong: 'dripping_goblet_drop',
+      leftLong: 'rapid_squelch_roll',
+      rightLong: 'damped_lid_snap',
+      trigger: 'deep_suction_plop'
+    },
+    right: {
+      up: 'deep_suction_plop',
+      down: 'wet_surface_slap',
+      left: 'air_pocket_pop',
+      right: 'squelch_stretch',
+      upLong: 'container_wall_squish',
+      downLong: 'dripping_goblet_drop',
+      leftLong: 'rapid_squelch_roll',
+      rightLong: 'damped_lid_snap',
+      trigger: 'wet_surface_slap'
+    }
+  },
+  talk_box: {
+    left: {
+      up: 'pull_whine',
+      down: 'cow_says_intro',
+      left: 'analog_cow_moo',
+      right: 'spring_snaps_shut',
+      upLong: 'needle_scratch_skip',
+      downLong: 'low_battery_slur',
+      leftLong: 'gear_governor_whir',
+      rightLong: 'chassis_slap',
+      trigger: 'pull_whine'
+    },
+    right: {
+      up: 'pull_whine',
+      down: 'cow_says_intro',
+      left: 'analog_cow_moo',
+      right: 'spring_snaps_shut',
+      upLong: 'needle_scratch_skip',
+      downLong: 'low_battery_slur',
+      leftLong: 'gear_governor_whir',
+      rightLong: 'chassis_slap',
+      trigger: 'cow_says_intro'
+    }
+  },
+  mouth_tube_synth: {
+    left: {
+      up: 'wah_vocal',
+      down: 'ooh_vocal',
+      left: 'ee_vocal',
+      right: 'plastic_hose_spit_pop',
+      upLong: 'synth_carrier_buzz',
+      downLong: 'vocalized_fry',
+      leftLong: 'throat_choke_stop',
+      rightLong: 'formant_glide',
+      trigger: 'wah_vocal'
+    },
+    right: {
+      up: 'wah_vocal',
+      down: 'ooh_vocal',
+      left: 'ee_vocal',
+      right: 'plastic_hose_spit_pop',
+      upLong: 'synth_carrier_buzz',
+      downLong: 'vocalized_fry',
+      leftLong: 'throat_choke_stop',
+      rightLong: 'formant_glide',
+      trigger: 'ooh_vocal'
     }
   }
 };

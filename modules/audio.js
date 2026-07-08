@@ -7,6 +7,7 @@ export const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 
 export let effectsInputNode = null;
 export let effectsOutputNode = null;
+export let masterOutputNode = null;
 
 // Individual effects nodes
 export let reverbNode = null;
@@ -68,6 +69,9 @@ export let streamDestination = null;
 
 // Initialize audio context on first user interaction
 export const initAudio = () => {
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
   if (!state.audioInitialized) {
     initEffectsChain();
     audioCtx.resume().then(() => {
@@ -271,12 +275,16 @@ export function initEffectsChain() {
   // AutoPan -> effectsOutputNode
   autoPanNode.connect(effectsOutputNode);
 
+  // Create master output node
+  masterOutputNode = audioCtx.createGain();
+  masterOutputNode.connect(audioCtx.destination);
+
   // Initialize recording destination
   streamDestination = audioCtx.createMediaStreamDestination();
-  effectsOutputNode.connect(streamDestination);
+  masterOutputNode.connect(streamDestination);
 
-  // Finally connect effects output to physical audio destination
-  effectsOutputNode.connect(audioCtx.destination);
+  // Finally connect effects output to master output
+  effectsOutputNode.connect(masterOutputNode);
 
   // Set initial values
   updateSpatialPan();
@@ -497,10 +505,13 @@ export function updateSpectralFreeze() {
 
 // Get final destination for drum hits depending on effects toggle
 export function getAudioDestination() {
+  if (state.formantVowel === 'sweep') {
+    updateFormant();
+  }
   if (state.effectsEnabled && effectsInputNode) {
     return effectsInputNode;
   }
-  return audioCtx.destination;
+  return masterOutputNode || audioCtx.destination;
 }
 
 export function stopAllSounds() {
@@ -512,12 +523,87 @@ export function stopAllSounds() {
         node.gain.setValueAtTime(node.gain.value, now);
         node.gain.linearRampToValueAtTime(0, now + 0.02);
       }
-      if (node.source) {
+      if (node.sources) {
+        node.sources.forEach((src) => {
+          try {
+            src.stop(now + 0.02);
+          } catch (e) {}
+        });
+      } else if (node.source) {
         node.source.stop(now + 0.02);
       }
     } catch (e) {}
   });
   state.currentNodes = [];
+}
+
+// Global cached white noise buffer to prevent memory thrashing and dynamic garbage collection
+let sharedNoiseBuffer = null;
+export function getSharedNoiseBuffer() {
+  if (!sharedNoiseBuffer) {
+    const sampleRate = audioCtx.sampleRate;
+    const bufferSize = sampleRate * 2; // 2 seconds of noise is plenty
+    sharedNoiseBuffer = audioCtx.createBuffer(1, bufferSize, sampleRate);
+    const data = sharedNoiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+  }
+  return sharedNoiseBuffer;
+}
+
+// Global cached soft-clipping saturation curves
+let softClipCurve = null;
+function getSoftClipCurve() {
+  if (!softClipCurve) {
+    const n = 1024;
+    softClipCurve = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / (n - 1) - 1;
+      // Smooth hyperbolic tangent analog-style saturation
+      softClipCurve[i] = Math.tanh(x * 1.25) / Math.tanh(1.25);
+    }
+  }
+  return softClipCurve;
+}
+
+// Register voice helper for polyphonic voice-robbing/limiting and automatic cleanup
+export function registerVoice(voice, decay) {
+  state.currentNodes.push(voice);
+
+  // Auto-prune state.currentNodes to keep voice count within bounds (voice robbing)
+  const maxVoices = 24; // Generous polyphonic ceiling for natural overlaps
+  while (state.currentNodes.length > maxVoices) {
+    const oldest = state.currentNodes.shift();
+    if (oldest) {
+      const now = audioCtx.currentTime;
+      try {
+        if (oldest.gain) {
+          oldest.gain.cancelScheduledValues(now);
+          oldest.gain.setValueAtTime(oldest.gain.value, now);
+          oldest.gain.linearRampToValueAtTime(0.0001, now + 0.04); // Fast, click-free fade
+        }
+        if (oldest.sources) {
+          oldest.sources.forEach((src) => {
+            try {
+              src.stop(now + 0.04);
+            } catch (err) {}
+          });
+        }
+      } catch (e) {}
+    }
+  }
+
+  // Schedule logical removal of voice after its envelope decay is finished
+  setTimeout(
+    () => {
+      const idx = state.currentNodes.indexOf(voice);
+      if (idx !== -1) {
+        state.currentNodes.splice(idx, 1);
+      }
+    },
+    decay * 1000 + 150
+  );
 }
 
 // Helper to adjust decay based on Transient Designer's Sustain setting
@@ -530,20 +616,17 @@ export function adjustDecayForSustain(baseDecay) {
   return baseDecay;
 }
 
-// Helper to play a short high-frequency attack crackle
+// Helper to play a short high-frequency attack crackle using the shared noise buffer
 export function playAttackClick(decay, filterFreq = 2500, vol = 0.5) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
-  const bufferSize = audioCtx.sampleRate * decay;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    data[i] = Math.random() * 2 - 1;
-  }
+
   const noise = audioCtx.createBufferSource();
-  noise.buffer = buffer;
+  noise.buffer = getSharedNoiseBuffer();
+
   const filter = audioCtx.createBiquadFilter();
   filter.type = 'highpass';
-  filter.frequency.value = filterFreq;
+  filter.frequency.setValueAtTime(filterFreq, audioCtx.currentTime);
+
   const gain = audioCtx.createGain();
   gain.gain.setValueAtTime(vol, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
@@ -552,19 +635,17 @@ export function playAttackClick(decay, filterFreq = 2500, vol = 0.5) {
   filter.connect(gain);
   gain.connect(getAudioDestination());
 
-  noise.start();
-  state.currentNodes.push({ source: noise, gain: gain });
+  const maxStartOffset = 2.0 - decay - 0.05;
+  const startOffset = Math.max(0, Math.random() * maxStartOffset);
+  noise.start(0, startOffset);
+
+  const voice = { sources: [noise], gain: gain };
+  registerVoice(voice, decay);
 }
 
 // Sound Synthesis Functions
 export function playMembrane(freq, decay, pitchDrop, isSlap = false) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
-
-  stopAllSounds();
-
-  if (state.formantVowel === 'sweep') {
-    updateFormant();
-  }
 
   // Apply Transient Designer Sustain
   decay = adjustDecayForSustain(decay);
@@ -590,6 +671,10 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false) {
   const gain3 = audioCtx.createGain();
   const masterGain = audioCtx.createGain();
 
+  // Subtle natural detuning to create rich, organic acoustic bloom and beating
+  osc2.detune.setValueAtTime(3.5, audioCtx.currentTime);
+  osc3.detune.setValueAtTime(-5.0, audioCtx.currentTime);
+
   osc.connect(gain);
   osc2.connect(gain2);
   osc3.connect(gain3);
@@ -597,20 +682,41 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false) {
   gain.connect(masterGain);
   gain2.connect(masterGain);
   gain3.connect(masterGain);
-  masterGain.connect(getAudioDestination());
+
+  // Route through master saturator for warm physical shell and skin emulation
+  const saturator = audioCtx.createWaveShaper();
+  saturator.curve = getSoftClipCurve();
+  masterGain.connect(saturator);
+
+  // Apply a dynamic low-shelf EQ boost for authentic low-end warmth on deep drums (<150Hz)
+  if (freq < 150) {
+    const bassEQ = audioCtx.createBiquadFilter();
+    bassEQ.type = 'lowshelf';
+    bassEQ.frequency.setValueAtTime(120, audioCtx.currentTime);
+    const dbBoost = Math.max(1, 4.5 - ((freq - 50) / 100) * 3.5); // Warm +1dB to +4.5dB boost
+    bassEQ.gain.setValueAtTime(dbBoost, audioCtx.currentTime);
+    saturator.connect(bassEQ);
+    bassEQ.connect(getAudioDestination());
+  } else {
+    saturator.connect(getAudioDestination());
+  }
 
   osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-  osc2.frequency.setValueAtTime(freq * 1.6, audioCtx.currentTime);
-  osc3.frequency.setValueAtTime(freq * 2.3, audioCtx.currentTime);
+
+  // Real drum-head vibrational ratios
+  const ratio2 = 1.587 + (Math.random() * 0.008 - 0.004);
+  const ratio3 = 2.242 + (Math.random() * 0.016 - 0.008);
+  osc2.frequency.setValueAtTime(freq * ratio2, audioCtx.currentTime);
+  osc3.frequency.setValueAtTime(freq * ratio3, audioCtx.currentTime);
 
   if (pitchDrop > 0) {
     osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq / pitchDrop), audioCtx.currentTime + decay);
     osc2.frequency.exponentialRampToValueAtTime(
-      Math.max(20, (freq * 1.6) / pitchDrop),
+      Math.max(20, (freq * ratio2) / pitchDrop),
       audioCtx.currentTime + decay * 0.8
     );
     osc3.frequency.exponentialRampToValueAtTime(
-      Math.max(20, (freq * 2.3) / pitchDrop),
+      Math.max(20, (freq * ratio3) / pitchDrop),
       audioCtx.currentTime + decay * 0.6
     );
   }
@@ -652,9 +758,8 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false) {
   osc2.stop(audioCtx.currentTime + decay);
   osc3.stop(audioCtx.currentTime + decay);
 
-  state.currentNodes.push({ source: osc, gain: masterGain });
-  state.currentNodes.push({ source: osc2, gain: masterGain });
-  state.currentNodes.push({ source: osc3, gain: masterGain });
+  const voice = { sources: [osc, osc2, osc3], gain: masterGain };
+  registerVoice(voice, decay);
 
   if (isSlap) {
     playNoise(0.12, 1000, state.currentTiltVolume);
@@ -664,26 +769,18 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false) {
   }
 }
 
-export function playNoise(decay, filterFreq = 800, vol = 1.0) {
+export function playNoise(decay, filterFreq = 800, vol = 1.0, filterType = 'highpass', qValue = 1.0) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
-
-  if (state.formantVowel === 'sweep') {
-    updateFormant();
-  }
 
   decay = adjustDecayForSustain(decay);
 
-  const bufferSize = audioCtx.sampleRate * decay;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    data[i] = Math.random() * 2 - 1;
-  }
   const noise = audioCtx.createBufferSource();
-  noise.buffer = buffer;
+  noise.buffer = getSharedNoiseBuffer();
+
   const filter = audioCtx.createBiquadFilter();
-  filter.type = 'highpass';
-  filter.frequency.value = filterFreq;
+  filter.type = filterType;
+  filter.frequency.setValueAtTime(filterFreq, audioCtx.currentTime);
+  filter.Q.setValueAtTime(qValue, audioCtx.currentTime);
   const gain = audioCtx.createGain();
 
   if (state.transientAttack < 0) {
@@ -705,18 +802,22 @@ export function playNoise(decay, filterFreq = 800, vol = 1.0) {
   filter.connect(gain);
   gain.connect(getAudioDestination());
 
-  noise.start();
-  state.currentNodes.push({ source: noise, gain: gain });
+  if (decay > 2.0) {
+    noise.loop = true;
+    noise.start(0);
+  } else {
+    const maxStartOffset = 2.0 - decay - 0.05;
+    const startOffset = Math.max(0, Math.random() * maxStartOffset);
+    noise.start(0, startOffset);
+  }
+
+  const voice = { sources: [noise], gain: gain };
+  registerVoice(voice, decay);
 }
 
 // Custom sliding pitch synthesis for Indian Tabla Bayan bass drum
 export function playTablaSlideUp(startFreq, endFreq, decay) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
-  stopAllSounds();
-
-  if (state.formantVowel === 'sweep') {
-    updateFormant();
-  }
 
   decay = adjustDecayForSustain(decay);
 
@@ -727,21 +828,43 @@ export function playTablaSlideUp(startFreq, endFreq, decay) {
   const osc = audioCtx.createOscillator();
   osc.type = 'sine';
 
+  const osc2 = audioCtx.createOscillator();
+  osc2.type = 'triangle';
+  osc2.detune.setValueAtTime(6, audioCtx.currentTime); // Subtle chorus beating
+
   const gain = audioCtx.createGain();
+  const gain2 = audioCtx.createGain();
+  const masterGain = audioCtx.createGain();
+
   osc.connect(gain);
-  gain.connect(getAudioDestination());
+  osc2.connect(gain2);
+  gain.connect(masterGain);
+  gain2.connect(masterGain);
+
+  // Route through master saturator for warm physical body emulation
+  const saturator = audioCtx.createWaveShaper();
+  saturator.curve = getSoftClipCurve();
+  masterGain.connect(saturator);
+  saturator.connect(getAudioDestination());
 
   osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + decay * 0.85);
 
+  osc2.frequency.setValueAtTime(startFreq * 1.5, audioCtx.currentTime);
+  osc2.frequency.exponentialRampToValueAtTime(endFreq * 1.5, audioCtx.currentTime + decay * 0.75);
+
+  gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
+  gain2.gain.setValueAtTime(0.18, audioCtx.currentTime);
+  gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay * 0.4);
+
   if (state.transientAttack < 0) {
     const fadeTime = (-state.transientAttack / 100) * 0.04;
-    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(state.currentTiltVolume, audioCtx.currentTime + fadeTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
+    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(state.currentTiltVolume, audioCtx.currentTime + fadeTime);
+    masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
   } else {
-    gain.gain.setValueAtTime(state.currentTiltVolume, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
+    masterGain.gain.setValueAtTime(state.currentTiltVolume, audioCtx.currentTime);
+    masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
 
     if (state.transientAttack > 0) {
       const clickVol = (state.transientAttack / 100) * 0.4 * state.currentTiltVolume;
@@ -750,9 +873,38 @@ export function playTablaSlideUp(startFreq, endFreq, decay) {
   }
 
   osc.start();
+  osc2.start();
   osc.stop(audioCtx.currentTime + decay);
+  osc2.stop(audioCtx.currentTime + decay);
 
-  state.currentNodes.push({ source: osc, gain: gain });
+  const voice = { sources: [osc, osc2], gain: masterGain };
+  registerVoice(voice, decay);
+}
+
+// Speech Synthesis for toy, fx, and authentic voice instruments
+export function speakPhrase(text, pitch = 1.0, rate = 1.0, volume = 0.8) {
+  if (typeof window !== 'undefined' && window.speechSynthesis) {
+    try {
+      // Cancel any current speech for snappy, instant drum trigger responsiveness
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.pitch = pitch;
+      utterance.rate = rate;
+      utterance.volume = volume * (state.currentTiltVolume !== undefined ? state.currentTiltVolume : 1.0);
+
+      // Select a nice English voice if possible
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find((v) => v.lang.includes('en'));
+      if (voice) {
+        utterance.voice = voice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    } catch (err) {
+      console.warn('SpeechSynthesis failed:', err);
+    }
+  }
 }
 
 // Listeners to initialize context on click/touch

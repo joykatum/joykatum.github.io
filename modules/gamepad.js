@@ -2,8 +2,7 @@
 import { state } from './state.js';
 import { drumTypes, getVisibleDrums, instrumentMappings } from './drumTypes.js';
 import { triggerHitEffect, updateActiveDrumUI, handleInstrumentChange } from './ui.js';
-
-const DEADZONE = 0.4;
+import { CONFIG } from './config.js';
 
 export function checkInput(inputDefs, gp) {
   if (!inputDefs || !gp) return false;
@@ -12,7 +11,10 @@ export function checkInput(inputDefs, gp) {
       if (gp.buttons[inputDef.index]?.pressed) return true;
     } else if (inputDef.type === 'axis') {
       const val = gp.axes[inputDef.index];
-      if (val !== undefined && ((inputDef.dir > 0 && val > DEADZONE) || (inputDef.dir < 0 && val < -DEADZONE))) {
+      if (
+        val !== undefined &&
+        ((inputDef.dir > 0 && val > CONFIG.GAMEPAD.DEADZONE) || (inputDef.dir < 0 && val < -CONFIG.GAMEPAD.DEADZONE))
+      ) {
         return true;
       }
     }
@@ -158,7 +160,7 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
       else state.lastRightHit = shortSound;
     }
   } else if (isPressed && press.pressed) {
-    if (longSound && !press.firedLong && now - press.startTime > 180) {
+    if (longSound && !press.firedLong && now - press.startTime > CONFIG.GAMEPAD.LONG_PRESS_THRESHOLD) {
       press.firedLong = true;
       const activeDrum = hand === 'l' ? state.leftActiveDrumId : state.rightActiveDrumId;
       const visibleDrums = getVisibleDrums();

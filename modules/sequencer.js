@@ -3,6 +3,7 @@ import { instrumentPatterns } from './patterns.js';
 import { state } from './state.js';
 import { drumTypes, getVisibleDrums } from './drumTypes.js';
 import { initAudio } from './audio.js';
+import { CONFIG } from './config.js';
 
 let onStepTriggeredCallback = null;
 
@@ -33,8 +34,18 @@ export function startPattern(isPreview = false) {
     }
   }
 
+  const effectsPlayBtn = document.querySelector('.play-pattern-btn');
+  if (effectsPlayBtn) {
+    effectsPlayBtn.innerText = '⏹️ STOP';
+    effectsPlayBtn.style.background = 'rgba(239, 68, 68, 0.2)';
+    effectsPlayBtn.style.borderColor = '#ef4444';
+    effectsPlayBtn.style.color = '#fca5a5';
+  }
+
   state.currentPatternStep = 0;
-  const tickTime = (60 / state.patternBpm / 4) * 1000; // 16th note step in ms
+  const tickTime =
+    (CONFIG.SEQUENCER.SECONDS_PER_MINUTE / state.patternBpm / CONFIG.SEQUENCER.SUBDIVISION) *
+    CONFIG.SEQUENCER.MS_PER_SECOND; // 16th note step in ms
 
   state.patternIntervalId = setInterval(() => {
     playPatternStep();
@@ -62,6 +73,14 @@ export function stopPattern() {
     previewBtn.innerText = '🎧 LISTEN';
     previewBtn.style.background = '';
     previewBtn.style.borderColor = '';
+  }
+
+  const effectsPlayBtn = document.querySelector('.play-pattern-btn');
+  if (effectsPlayBtn) {
+    effectsPlayBtn.innerText = '▶️ PLAY PATTERN';
+    effectsPlayBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+    effectsPlayBtn.style.borderColor = '#10b981';
+    effectsPlayBtn.style.color = '#6ee7b7';
   }
 
   state.isPreviewPlaying = false;

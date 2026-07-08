@@ -1,5 +1,24 @@
 export const instrumentPatterns = {
   conga: {
+    songo: {
+      name: '🥁 Songo',
+      stepCount: 16,
+      steps: {
+        0: [
+          { drum: 1, sound: 'abierto' },
+          { drum: 2, sound: 'bajo' }
+        ],
+        2: [{ drum: 1, sound: 'manoteo' }],
+        3: [{ drum: 1, sound: 'abierto' }],
+        4: [{ drum: 1, sound: 'tapado' }],
+        6: [{ drum: 2, sound: 'abierto' }],
+        8: [{ drum: 1, sound: 'abierto' }],
+        10: [{ drum: 1, sound: 'manoteo' }],
+        11: [{ drum: 2, sound: 'abierto' }],
+        12: [{ drum: 1, sound: 'seco' }],
+        14: [{ drum: 1, sound: 'abierto' }]
+      }
+    },
     tumbao: {
       name: '🥁 Tumbao (Classic 2-Drum)',
       stepCount: 16,
@@ -976,6 +995,20 @@ export const instrumentPatterns = {
     }
   },
   bongo: {
+    caballo: {
+      name: '🥁 Caballo Rhythm',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'slap' }],
+        3: [{ drum: 0, sound: 'open_tone' }],
+        4: [{ drum: 0, sound: 'slap' }],
+        7: [{ drum: 0, sound: 'open_tone' }],
+        8: [{ drum: 0, sound: 'slap' }],
+        11: [{ drum: 0, sound: 'open_tone' }],
+        12: [{ drum: 1, sound: 'open_tone' }],
+        15: [{ drum: 0, sound: 'open_tone' }]
+      }
+    },
     martillo: {
       name: '🥁 Martillo (Standard)',
       stepCount: 16,
@@ -4742,6 +4775,24 @@ export const instrumentPatterns = {
     }
   },
   cajon: {
+    rumba_flamenca: {
+      name: '🥁 Rumba Flamenca',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_tone' }],
+        2: [{ drum: 0, sound: 'high_finger_snap' }],
+        3: [{ drum: 0, sound: 'corner_slap' }],
+        4: [{ drum: 0, sound: 'tapado' }],
+        6: [{ drum: 0, sound: 'high_finger_snap' }],
+        7: [{ drum: 0, sound: 'corner_slap' }],
+        8: [{ drum: 0, sound: 'bass_tone' }],
+        10: [{ drum: 0, sound: 'high_finger_snap' }],
+        11: [{ drum: 0, sound: 'corner_slap' }],
+        12: [{ drum: 0, sound: 'tapado' }],
+        14: [{ drum: 0, sound: 'high_finger_snap' }],
+        15: [{ drum: 0, sound: 'bass_tone' }]
+      }
+    },
     flamenco: {
       name: '🥁 Flamenco Rumba',
       stepCount: 16,
@@ -19963,7 +20014,7 @@ export const instrumentPatterns = {
   },
   alfaia: {
     alfaia_1: {
-      name: '🥁 Alfaia Traditional Groove',
+      name: '🥁 Maracatu Nação Pulse',
       stepCount: 16,
       steps: {
         0: [
@@ -20337,7 +20388,7 @@ export const instrumentPatterns = {
   },
   angklung: {
     angklung_1: {
-      name: '🥁 Angklung Traditional Groove',
+      name: '🎋 Bamboo Forest Shake',
       stepCount: 16,
       steps: {
         0: [
@@ -20711,7 +20762,7 @@ export const instrumentPatterns = {
   },
   bell_tree: {
     bell_tree_1: {
-      name: '🥁 Bell tree Traditional Groove',
+      name: '✨ Cascading Starlight',
       stepCount: 16,
       steps: {
         0: [
@@ -21085,7 +21136,7 @@ export const instrumentPatterns = {
   },
   boomwhackers: {
     boomwhackers_1: {
-      name: '🥁 Boomwhackers Traditional Groove',
+      name: '🔴 Neon Tube Bounce',
       stepCount: 16,
       steps: {
         0: [
@@ -21459,7 +21510,7 @@ export const instrumentPatterns = {
   },
   cabasa: {
     cabasa_1: {
-      name: '🥁 Cabasa Traditional Groove',
+      name: '🪇 Snake Rattle Roll',
       stepCount: 16,
       steps: {
         0: [
@@ -21833,7 +21884,7 @@ export const instrumentPatterns = {
   },
   chocalho: {
     chocalho_1: {
-      name: '🥁 Chocalho Traditional Groove',
+      name: '🪇 Rio Carnival Jingle',
       stepCount: 16,
       steps: {
         0: [
@@ -22207,7 +22258,7 @@ export const instrumentPatterns = {
   },
   framed_rumbla: {
     framed_rumbla_1: {
-      name: '🥁 Framed rumbla Traditional Groove',
+      name: '🥁 Deep Resonant Frame',
       stepCount: 16,
       steps: {
         0: [
@@ -22581,7 +22632,7 @@ export const instrumentPatterns = {
   },
   friction_drum: {
     friction_drum_1: {
-      name: '🥁 Friction drum Traditional Groove',
+      name: "🦁 Lion's Roar Groan",
       stepCount: 16,
       steps: {
         0: [
@@ -22955,7 +23006,7 @@ export const instrumentPatterns = {
   },
   frog_rasp: {
     frog_rasp_1: {
-      name: '🥁 Frog rasp Traditional Groove',
+      name: '🐸 Croaking Wood Frog',
       stepCount: 16,
       steps: {
         0: [
@@ -23329,7 +23380,7 @@ export const instrumentPatterns = {
   },
   gome: {
     gome_1: {
-      name: '🥁 Gome Traditional Groove',
+      name: '🥁 Ga People Square Drum',
       stepCount: 16,
       steps: {
         0: [
@@ -23703,7 +23754,7 @@ export const instrumentPatterns = {
   },
   gran_cassa: {
     gran_cassa_1: {
-      name: '🥁 Gran cassa Traditional Groove',
+      name: '💥 Orchestral Thunder Strike',
       stepCount: 16,
       steps: {
         0: [
@@ -24077,7 +24128,7 @@ export const instrumentPatterns = {
   },
   gubguba: {
     gubguba_1: {
-      name: '🥁 Gubguba Traditional Groove',
+      name: '🎵 String Pluck Bounce',
       stepCount: 16,
       steps: {
         0: [
@@ -24451,7 +24502,7 @@ export const instrumentPatterns = {
   },
   guiro: {
     guiro_1: {
-      name: '🥁 Guiro Traditional Groove',
+      name: '🪇 Cha-Cha Scrape',
       stepCount: 16,
       steps: {
         0: [
@@ -24825,7 +24876,7 @@ export const instrumentPatterns = {
   },
   jaw_harp: {
     jaw_harp_1: {
-      name: '🥁 Jaw harp Traditional Groove',
+      name: '〽️ Boingy Jaw Twang',
       stepCount: 16,
       steps: {
         0: [
@@ -25199,7 +25250,7 @@ export const instrumentPatterns = {
   },
   kanjira: {
     kanjira_1: {
-      name: '🥁 Kanjira Traditional Groove',
+      name: '🥁 South Indian Lizard Skin',
       stepCount: 16,
       steps: {
         0: [
@@ -25573,7 +25624,7 @@ export const instrumentPatterns = {
   },
   kokiriko: {
     kokiriko_1: {
-      name: '🥁 Kokiriko Traditional Groove',
+      name: '🎋 Wooden Domino Ripple',
       stepCount: 16,
       steps: {
         0: [
@@ -25947,7 +25998,7 @@ export const instrumentPatterns = {
   },
   kundu: {
     kundu_1: {
-      name: '🥁 Kundu Traditional Groove',
+      name: '🥁 Papua Guinea Hourglass',
       stepCount: 16,
       steps: {
         0: [
@@ -26321,7 +26372,7 @@ export const instrumentPatterns = {
   },
   lions_roar: {
     lions_roar_1: {
-      name: '🥁 Lions roar Traditional Groove',
+      name: '🦁 Terrifying Beast Groan',
       stepCount: 16,
       steps: {
         0: [
@@ -26695,7 +26746,7 @@ export const instrumentPatterns = {
   },
   log_drum: {
     log_drum_1: {
-      name: '🥁 Log drum Traditional Groove',
+      name: '🪵 Hollow Wood Tock',
       stepCount: 16,
       steps: {
         0: [
@@ -27069,7 +27120,7 @@ export const instrumentPatterns = {
   },
   mark_tree: {
     mark_tree_1: {
-      name: '🥁 Mark tree Traditional Groove',
+      name: '✨ Shimmering Wind Chime',
       stepCount: 16,
       steps: {
         0: [
@@ -27443,7 +27494,7 @@ export const instrumentPatterns = {
   },
   rainstick: {
     rainstick_1: {
-      name: '🥁 Rainstick Traditional Groove',
+      name: '🌧️ Desert Cactus Rain',
       stepCount: 16,
       steps: {
         0: [
@@ -27817,7 +27868,7 @@ export const instrumentPatterns = {
   },
   ratchet: {
     ratchet_1: {
-      name: '🥁 Ratchet Traditional Groove',
+      name: '⚙️ Orchestral Cogwheel',
       stepCount: 16,
       steps: {
         0: [
@@ -28191,7 +28242,7 @@ export const instrumentPatterns = {
   },
   slide_whistle: {
     slide_whistle_1: {
-      name: '🥁 Slide whistle Traditional Groove',
+      name: '🎺 Comical Upward Swoop',
       stepCount: 16,
       steps: {
         0: [
@@ -28565,7 +28616,7 @@ export const instrumentPatterns = {
   },
   spoons_bones: {
     spoons_bones_1: {
-      name: '🥁 Spoons bones Traditional Groove',
+      name: '🥄 Appalachian Spoon Click',
       stepCount: 16,
       steps: {
         0: [
@@ -28939,7 +28990,7 @@ export const instrumentPatterns = {
   },
   spring_drum: {
     spring_drum_1: {
-      name: '🥁 Spring drum Traditional Groove',
+      name: '⚡ Thunderous Spring Shake',
       stepCount: 16,
       steps: {
         0: [
@@ -29313,7 +29364,7 @@ export const instrumentPatterns = {
   },
   tammorra: {
     tammorra_1: {
-      name: '🥁 Tammorra Traditional Groove',
+      name: '🥁 Neapolitan Tarantella',
       stepCount: 16,
       steps: {
         0: [
@@ -29687,7 +29738,7 @@ export const instrumentPatterns = {
   },
   tank_drum: {
     tank_drum_1: {
-      name: '🥁 Tank drum Traditional Groove',
+      name: '🛸 Resonant Steel Tongue',
       stepCount: 16,
       steps: {
         0: [
@@ -30061,7 +30112,7 @@ export const instrumentPatterns = {
   },
   tar_drum: {
     tar_drum_1: {
-      name: '🥁 Tar drum Traditional Groove',
+      name: '🥁 Arabic Frame Drum',
       stepCount: 16,
       steps: {
         0: [
@@ -30435,7 +30486,7 @@ export const instrumentPatterns = {
   },
   temple_blocks: {
     temple_blocks_1: {
-      name: '🥁 Temple blocks Traditional Groove',
+      name: '🧱 Pentatonic Wood Pop',
       stepCount: 16,
       steps: {
         0: [
@@ -30809,7 +30860,7 @@ export const instrumentPatterns = {
   },
   thongophone: {
     thongophone_1: {
-      name: '🥁 Thongophone Traditional Groove',
+      name: '🎵 PVC Pipe Plonk',
       stepCount: 16,
       steps: {
         0: [
@@ -31183,7 +31234,7 @@ export const instrumentPatterns = {
   },
   washboard: {
     washboard_1: {
-      name: '🥁 Washboard Traditional Groove',
+      name: '🧺 Zydeco Thimble Scrape',
       stepCount: 16,
       steps: {
         0: [
@@ -33398,6 +33449,1998 @@ export const instrumentPatterns = {
             sound: 'end_tap'
           }
         ]
+      }
+    }
+  },
+  slap_tubes: {
+    pattern_1: {
+      name: '🌬️ Industrial Boom',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        4: [{ drum: 0, sound: 'mid_bounce' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        12: [{ drum: 0, sound: 'high_snap' }]
+      }
+    },
+    pattern_2: {
+      name: '🌬️ Pipe Trill',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        3: [{ drum: 0, sound: 'paddle_slap' }],
+        6: [{ drum: 0, sound: 'mid_bounce' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        11: [{ drum: 0, sound: 'pipe_rim_click' }],
+        14: [{ drum: 0, sound: 'high_snap' }]
+      }
+    },
+    pattern_3: {
+      name: '🌬️ PVC Techno Syncopation',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        2: [{ drum: 0, sound: 'pipe_rim_click' }],
+        4: [{ drum: 0, sound: 'high_snap' }],
+        7: [{ drum: 0, sound: 'mid_bounce' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        10: [{ drum: 0, sound: 'high_snap' }],
+        12: [{ drum: 0, sound: 'mid_bounce' }],
+        14: [{ drum: 0, sound: 'slide_slur' }]
+      }
+    },
+    pattern_4: {
+      name: '🌬️ Slap-Back Delay',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        4: [{ drum: 0, sound: 'paddle_slap' }],
+        5: [{ drum: 0, sound: 'muted_thud' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        12: [{ drum: 0, sound: 'paddle_slap' }],
+        13: [{ drum: 0, sound: 'muted_thud' }]
+      }
+    },
+    pattern_5: {
+      name: '🌬️ Mallet Bounce Groove',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        2: [{ drum: 0, sound: 'low_pop' }],
+        4: [{ drum: 0, sound: 'mid_bounce' }],
+        6: [{ drum: 0, sound: 'high_snap' }],
+        8: [{ drum: 0, sound: 'high_snap' }],
+        10: [{ drum: 0, sound: 'mid_bounce' }],
+        12: [{ drum: 0, sound: 'low_pop' }],
+        14: [{ drum: 0, sound: 'bass_boom' }]
+      }
+    },
+    pattern_6: {
+      name: '🌬️ Tubing Roll',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        2: [{ drum: 0, sound: 'paddle_slap' }],
+        4: [{ drum: 0, sound: 'low_pop' }],
+        6: [{ drum: 0, sound: 'paddle_slap' }],
+        8: [{ drum: 0, sound: 'mid_bounce' }],
+        10: [{ drum: 0, sound: 'paddle_slap' }],
+        12: [{ drum: 0, sound: 'high_snap' }],
+        14: [{ drum: 0, sound: 'pipe_rim_click' }]
+      }
+    },
+    pattern_7: {
+      name: '🌬️ Resonant Air Cascade',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        4: [{ drum: 0, sound: 'high_snap' }],
+        6: [{ drum: 0, sound: 'mid_bounce' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        10: [{ drum: 0, sound: 'mid_bounce' }],
+        12: [{ drum: 0, sound: 'high_snap' }]
+      }
+    },
+    pattern_8: {
+      name: '🌬️ Telescoping Slide',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'slide_slur' }],
+        4: [{ drum: 0, sound: 'high_snap' }],
+        8: [{ drum: 0, sound: 'slide_slur' }],
+        12: [{ drum: 0, sound: 'low_pop' }]
+      }
+    },
+    pattern_9: {
+      name: '🌬️ Tribal PVC Dance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bass_boom' }],
+        3: [{ drum: 0, sound: 'high_snap' }],
+        6: [{ drum: 0, sound: 'mid_bounce' }],
+        8: [{ drum: 0, sound: 'low_pop' }],
+        11: [{ drum: 0, sound: 'high_snap' }],
+        14: [{ drum: 0, sound: 'mid_bounce' }]
+      }
+    },
+    pattern_10: {
+      name: '🌬️ Ambient Pipe Haze',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'muted_thud' }],
+        4: [{ drum: 0, sound: 'low_pop' }],
+        8: [{ drum: 0, sound: 'muted_thud' }],
+        12: [{ drum: 0, sound: 'high_snap' }]
+      }
+    }
+  },
+  whistle_drum: {
+    pattern_1: {
+      name: '🦆 Clay Echoes',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        4: [{ drum: 0, sound: 'sharp_chirp' }],
+        8: [{ drum: 0, sound: 'rim_tap' }],
+        12: [{ drum: 0, sound: 'bending_gliss' }]
+      }
+    },
+    pattern_2: {
+      name: '🦆 Forest Trill',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        3: [{ drum: 0, sound: 'double_chirp' }],
+        6: [{ drum: 0, sound: 'rim_tap' }],
+        8: [{ drum: 0, sound: 'clay_bass' }],
+        11: [{ drum: 0, sound: 'double_chirp' }],
+        14: [{ drum: 0, sound: 'breath_echo' }]
+      }
+    },
+    pattern_3: {
+      name: '🦆 Aquatic Dance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        4: [{ drum: 0, sound: 'slosh_splash' }],
+        8: [{ drum: 0, sound: 'rim_tap' }],
+        12: [{ drum: 0, sound: 'slosh_splash' }]
+      }
+    },
+    pattern_4: {
+      name: '🦆 Whistling Rain',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'breath_echo' }],
+        4: [{ drum: 0, sound: 'sharp_chirp' }],
+        8: [{ drum: 0, sound: 'muted_pip' }],
+        12: [{ drum: 0, sound: 'bending_gliss' }]
+      }
+    },
+    pattern_5: {
+      name: '🦆 Ancient Mesoamerican Hop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        2: [{ drum: 0, sound: 'rim_tap' }],
+        4: [{ drum: 0, sound: 'double_chirp' }],
+        7: [{ drum: 0, sound: 'clay_bass' }],
+        8: [{ drum: 0, sound: 'rim_tap' }],
+        10: [{ drum: 0, sound: 'bending_gliss' }],
+        12: [{ drum: 0, sound: 'sharp_chirp' }],
+        14: [{ drum: 0, sound: 'muted_pip' }]
+      }
+    },
+    pattern_6: {
+      name: '🦆 Clay Gurgle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'slosh_splash' }],
+        4: [{ drum: 0, sound: 'rim_tap' }],
+        8: [{ drum: 0, sound: 'slosh_splash' }],
+        12: [{ drum: 0, sound: 'double_chirp' }]
+      }
+    },
+    pattern_7: {
+      name: '🦆 Spirit Whistle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        4: [{ drum: 0, sound: 'bending_gliss' }],
+        8: [{ drum: 0, sound: 'breath_echo' }],
+        12: [{ drum: 0, sound: 'bending_gliss' }]
+      }
+    },
+    pattern_8: {
+      name: '🦆 Flute-Drum Rhythm',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        3: [{ drum: 0, sound: 'sharp_chirp' }],
+        6: [{ drum: 0, sound: 'rim_tap' }],
+        8: [{ drum: 0, sound: 'clay_bass' }],
+        12: [{ drum: 0, sound: 'double_chirp' }]
+      }
+    },
+    pattern_9: {
+      name: '🦆 Shamanic Flight',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        5: [{ drum: 0, sound: 'bending_gliss' }],
+        10: [{ drum: 0, sound: 'sharp_chirp' }],
+        15: [{ drum: 0, sound: 'breath_echo' }]
+      }
+    },
+    pattern_10: {
+      name: '🦆 Earth Sleep',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clay_bass' }],
+        8: [{ drum: 0, sound: 'breath_echo' }]
+      }
+    }
+  },
+  singing_bowl: {
+    pattern_1: {
+      name: '🥣 Himalayan Meditation',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        4: [{ drum: 0, sound: 'suede_hum' }],
+        8: [{ drum: 0, sound: 'harmonic_ping' }],
+        12: [{ drum: 0, sound: 'swirling_decay' }]
+      }
+    },
+    pattern_2: {
+      name: '🥣 Temple Bells',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        3: [{ drum: 0, sound: 'wood_click' }],
+        6: [{ drum: 0, sound: 'harmonic_ping' }],
+        8: [{ drum: 0, sound: 'deep_rim_gong' }],
+        11: [{ drum: 0, sound: 'wood_click' }],
+        14: [{ drum: 0, sound: 'palm_damped' }]
+      }
+    },
+    pattern_3: {
+      name: '🥣 Zen Resonance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        4: [{ drum: 0, sound: 'water_ripple' }],
+        8: [{ drum: 0, sound: 'deep_rim_gong' }],
+        12: [{ drum: 0, sound: 'swirling_decay' }]
+      }
+    },
+    pattern_4: {
+      name: '🥣 Cosmic Vibrations',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'suede_hum' }],
+        4: [{ drum: 0, sound: 'harmonic_ping' }],
+        8: [{ drum: 0, sound: 'swirling_decay' }],
+        12: [{ drum: 0, sound: 'double_strike' }]
+      }
+    },
+    pattern_5: {
+      name: '🥣 Shamanic Healing Bell',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        2: [{ drum: 0, sound: 'wood_click' }],
+        4: [{ drum: 0, sound: 'harmonic_ping' }],
+        6: [{ drum: 0, sound: 'palm_damped' }],
+        8: [{ drum: 0, sound: 'double_strike' }],
+        10: [{ drum: 0, sound: 'wood_click' }],
+        12: [{ drum: 0, sound: 'water_ripple' }],
+        14: [{ drum: 0, sound: 'swirling_decay' }]
+      }
+    },
+    pattern_6: {
+      name: '🥣 Liquid Bowl',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'water_ripple' }],
+        8: [{ drum: 0, sound: 'water_ripple' }]
+      }
+    },
+    pattern_7: {
+      name: '🥣 Golden Phase',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        5: [{ drum: 0, sound: 'harmonic_ping' }],
+        10: [{ drum: 0, sound: 'swirling_decay' }]
+      }
+    },
+    pattern_8: {
+      name: '🥣 Sacred Overtones',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'double_strike' }],
+        8: [{ drum: 0, sound: 'suede_hum' }]
+      }
+    },
+    pattern_9: {
+      name: '🥣 Pure Mind',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_rim_gong' }],
+        8: [{ drum: 0, sound: 'deep_rim_gong' }]
+      }
+    },
+    pattern_10: {
+      name: '🥣 Nirvana Gate',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'swirling_decay' }]
+      }
+    }
+  },
+  quijada: {
+    pattern_1: {
+      name: '💀 Landó Bone Rattles',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chin_bone_tap' }],
+        4: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        8: [{ drum: 0, sound: 'teeth_rasp_scrape' }],
+        12: [{ drum: 0, sound: 'fist_slam_rattles' }]
+      }
+    },
+    pattern_2: {
+      name: '💀 Festejo Drive',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chin_bone_tap' }],
+        3: [{ drum: 0, sound: 'teeth_rasp_scrape' }],
+        6: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        8: [{ drum: 0, sound: 'chin_bone_tap' }],
+        11: [{ drum: 0, sound: 'reverse_scrape' }],
+        14: [{ drum: 0, sound: 'double_tap' }]
+      }
+    },
+    pattern_3: {
+      name: '💀 Skeletal Syncopation',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chin_bone_tap' }],
+        4: [{ drum: 0, sound: 'hollow_socket_pop' }],
+        8: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        12: [{ drum: 0, sound: 'choked_jaw_pinch' }]
+      }
+    },
+    pattern_4: {
+      name: '💀 Dry Scrape Groove',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'teeth_rasp_scrape' }],
+        4: [{ drum: 0, sound: 'reverse_scrape' }],
+        8: [{ drum: 0, sound: 'teeth_rasp_scrape' }],
+        12: [{ drum: 0, sound: 'fist_slam_rattles' }]
+      }
+    },
+    pattern_5: {
+      name: '💀 Rattling Jawbones',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chin_bone_tap' }],
+        2: [{ drum: 0, sound: 'micro_flick' }],
+        4: [{ drum: 0, sound: 'double_tap' }],
+        7: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        8: [{ drum: 0, sound: 'chin_bone_tap' }],
+        10: [{ drum: 0, sound: 'hollow_socket_pop' }],
+        12: [{ drum: 0, sound: 'teeth_rasp_scrape' }],
+        14: [{ drum: 0, sound: 'choked_jaw_pinch' }]
+      }
+    },
+    pattern_6: {
+      name: '💀 Ancient Afro-Peruvian Echo',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        8: [{ drum: 0, sound: 'fist_slam_rattles' }]
+      }
+    },
+    pattern_7: {
+      name: '💀 Tooth Buzz',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'micro_flick' }],
+        4: [{ drum: 0, sound: 'micro_flick' }],
+        8: [{ drum: 0, sound: 'micro_flick' }],
+        12: [{ drum: 0, sound: 'micro_flick' }]
+      }
+    },
+    pattern_8: {
+      name: '💀 Shamanic Bones',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chin_bone_tap' }],
+        6: [{ drum: 0, sound: 'fist_slam_rattles' }],
+        12: [{ drum: 0, sound: 'teeth_rasp_scrape' }]
+      }
+    },
+    pattern_9: {
+      name: '💀 Dead Joint Pop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'hollow_socket_pop' }],
+        8: [{ drum: 0, sound: 'hollow_socket_pop' }]
+      }
+    },
+    pattern_10: {
+      name: '💀 Eternal Rattles',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'fist_slam_rattles' }]
+      }
+    }
+  },
+  water_canister: {
+    pattern_1: {
+      name: '💧 Sloshing Canister',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'outer_plastic_thud' }],
+        4: [{ drum: 0, sound: 'liquid_slap' }],
+        8: [{ drum: 0, sound: 'neck_pop' }],
+        12: [{ drum: 0, sound: 'slap_gliss' }]
+      }
+    },
+    pattern_2: {
+      name: '💧 Bubble Gurgles',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'outer_plastic_thud' }],
+        3: [{ drum: 0, sound: 'bubble_gurgle' }],
+        6: [{ drum: 0, sound: 'finger_tap_rim' }],
+        8: [{ drum: 0, sound: 'liquid_slap' }],
+        11: [{ drum: 0, sound: 'bubble_gurgle' }],
+        14: [{ drum: 0, sound: 'heavy_splash_drop' }]
+      }
+    },
+    pattern_3: {
+      name: '💧 Wet Bass Drop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'heavy_splash_drop' }],
+        4: [{ drum: 0, sound: 'outer_plastic_thud' }],
+        8: [{ drum: 0, sound: 'heavy_splash_drop' }],
+        12: [{ drum: 0, sound: 'slap_gliss' }]
+      }
+    },
+    pattern_4: {
+      name: '💧 Ocean Canister',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'liquid_slap' }],
+        4: [{ drum: 0, sound: 'damped_plonk' }],
+        8: [{ drum: 0, sound: 'liquid_slap' }],
+        12: [{ drum: 0, sound: 'bubble_gurgle' }]
+      }
+    },
+    pattern_5: {
+      name: '💧 Hydro Drum',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'outer_plastic_thud' }],
+        2: [{ drum: 0, sound: 'finger_tap_rim' }],
+        4: [{ drum: 0, sound: 'neck_pop' }],
+        7: [{ drum: 0, sound: 'liquid_slap' }],
+        8: [{ drum: 0, sound: 'damped_plonk' }],
+        10: [{ drum: 0, sound: 'bubble_gurgle' }],
+        12: [{ drum: 0, sound: 'slap_gliss' }],
+        14: [{ drum: 0, sound: 'heavy_splash_drop' }]
+      }
+    },
+    pattern_6: {
+      name: '💧 Gurgling Fountain',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bubble_gurgle' }],
+        8: [{ drum: 0, sound: 'bubble_gurgle' }]
+      }
+    },
+    pattern_7: {
+      name: '💧 Hollow Cap Tap',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'finger_tap_rim' }],
+        4: [{ drum: 0, sound: 'finger_tap_rim' }],
+        8: [{ drum: 0, sound: 'neck_pop' }],
+        12: [{ drum: 0, sound: 'finger_tap_rim' }]
+      }
+    },
+    pattern_8: {
+      name: '💧 Heavy Floods',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'heavy_splash_drop' }],
+        8: [{ drum: 0, sound: 'liquid_slap' }]
+      }
+    },
+    pattern_9: {
+      name: '💧 Pure Droplet',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'neck_pop' }],
+        8: [{ drum: 0, sound: 'neck_pop' }]
+      }
+    },
+    pattern_10: {
+      name: '💧 Submerged Beat',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'damped_plonk' }]
+      }
+    }
+  },
+  vintage_cash_register: {
+    pattern_1: {
+      name: '💵 The Cha-Ching',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_plunge' }],
+        4: [{ drum: 0, sound: 'bell_ring' }],
+        8: [{ drum: 0, sound: 'drawer_spring_crunch' }],
+        12: [{ drum: 0, sound: 'drawer_slam' }]
+      }
+    },
+    pattern_2: {
+      name: '💵 Modern Commerce',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_plunge' }],
+        3: [{ drum: 0, sound: 'coin_jingle' }],
+        6: [{ drum: 0, sound: 'lever_crank' }],
+        8: [{ drum: 0, sound: 'bell_ring' }],
+        11: [{ drum: 0, sound: 'paper_receipt_rip' }],
+        14: [{ drum: 0, sound: 'drawer_slam' }]
+      }
+    },
+    pattern_3: {
+      name: '💵 Money Train',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_plunge' }],
+        4: [{ drum: 0, sound: 'coin_jingle' }],
+        8: [{ drum: 0, sound: 'key_plunge' }],
+        12: [{ drum: 0, sound: 'bell_ring' }]
+      }
+    },
+    pattern_4: {
+      name: '💵 Cash Counter',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'no_sale_click' }],
+        4: [{ drum: 0, sound: 'paper_receipt_rip' }],
+        8: [{ drum: 0, sound: 'no_sale_click' }],
+        12: [{ drum: 0, sound: 'coin_jingle' }]
+      }
+    },
+    pattern_5: {
+      name: '💵 Retail Rush hour',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_plunge' }],
+        2: [{ drum: 0, sound: 'no_sale_click' }],
+        4: [{ drum: 0, sound: 'bell_ring' }],
+        7: [{ drum: 0, sound: 'lever_crank' }],
+        8: [{ drum: 0, sound: 'drawer_spring_crunch' }],
+        10: [{ drum: 0, sound: 'coin_jingle' }],
+        12: [{ drum: 0, sound: 'paper_receipt_rip' }],
+        14: [{ drum: 0, sound: 'drawer_slam' }]
+      }
+    },
+    pattern_6: {
+      name: '💵 Steady Inflow',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bell_ring' }],
+        8: [{ drum: 0, sound: 'bell_ring' }]
+      }
+    },
+    pattern_7: {
+      name: '💵 Mechanical Cranks',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'lever_crank' }],
+        4: [{ drum: 0, sound: 'lever_crank' }],
+        8: [{ drum: 0, sound: 'no_sale_click' }],
+        12: [{ drum: 0, sound: 'key_plunge' }]
+      }
+    },
+    pattern_8: {
+      name: '💵 Paper Shredder',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'paper_receipt_rip' }],
+        8: [{ drum: 0, sound: 'paper_receipt_rip' }]
+      }
+    },
+    pattern_9: {
+      name: '💵 Heavy Vault',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'drawer_slam' }],
+        8: [{ drum: 0, sound: 'drawer_slam' }]
+      }
+    },
+    pattern_10: {
+      name: '💵 Gold Rush',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'coin_jingle' }]
+      }
+    }
+  },
+  geiger_counter: {
+    pattern_1: {
+      name: '☢️ Diagnostic Sweep',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'isolated_click' }],
+        4: [{ drum: 0, sound: 'double_static_burst' }],
+        8: [{ drum: 0, sound: 'rad_swarm' }],
+        12: [{ drum: 0, sound: 'warning_beep' }]
+      }
+    },
+    pattern_2: {
+      name: '☢️ Chernobyl Echoes',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'isolated_click' }],
+        3: [{ drum: 0, sound: 'rad_swarm' }],
+        6: [{ drum: 0, sound: 'chassis_dial_click' }],
+        8: [{ drum: 0, sound: 'double_static_burst' }],
+        11: [{ drum: 0, sound: 'warning_beep' }],
+        14: [{ drum: 0, sound: 'meltdown_buzz' }]
+      }
+    },
+    pattern_3: {
+      name: '☢️ Static Waves',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'double_static_burst' }],
+        4: [{ drum: 0, sound: 'static_discharge_thump' }],
+        8: [{ drum: 0, sound: 'double_static_burst' }],
+        12: [{ drum: 0, sound: 'rad_swarm' }]
+      }
+    },
+    pattern_4: {
+      name: '☢️ Radioactive Pulse',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'warning_beep' }],
+        4: [{ drum: 0, sound: 'warning_beep' }],
+        8: [{ drum: 0, sound: 'warning_beep' }],
+        12: [{ drum: 0, sound: 'meltdown_buzz' }]
+      }
+    },
+    pattern_5: {
+      name: '☢️ Meltdown Warning',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'isolated_click' }],
+        2: [{ drum: 0, sound: 'double_static_burst' }],
+        4: [{ drum: 0, sound: 'rad_swarm' }],
+        7: [{ drum: 0, sound: 'warning_beep' }],
+        8: [{ drum: 0, sound: 'static_discharge_thump' }],
+        10: [{ drum: 0, sound: 'chassis_dial_click' }],
+        12: [{ drum: 0, sound: 'meltdown_buzz' }],
+        14: [{ drum: 0, sound: 'battery_test_chirp' }]
+      }
+    },
+    pattern_6: {
+      name: '☢️ Background Crackle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'rad_swarm' }],
+        8: [{ drum: 0, sound: 'rad_swarm' }]
+      }
+    },
+    pattern_7: {
+      name: '☢️ Status Beacon',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'battery_test_chirp' }],
+        4: [{ drum: 0, sound: 'battery_test_chirp' }],
+        8: [{ drum: 0, sound: 'battery_test_chirp' }],
+        12: [{ drum: 0, sound: 'battery_test_chirp' }]
+      }
+    },
+    pattern_8: {
+      name: '☢️ Electro Shock',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'static_discharge_thump' }],
+        8: [{ drum: 0, sound: 'static_discharge_thump' }]
+      }
+    },
+    pattern_9: {
+      name: '☢️ Dial Rotations',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chassis_dial_click' }],
+        8: [{ drum: 0, sound: 'chassis_dial_click' }]
+      }
+    },
+    pattern_10: {
+      name: '☢️ Critical Mass',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'meltdown_buzz' }]
+      }
+    }
+  },
+  centrifugal_bullroarer: {
+    pattern_1: {
+      name: '🌀 Whirling Wind',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'low_wind_whine' }],
+        4: [{ drum: 0, sound: 'high_speed_scream' }],
+        8: [{ drum: 0, sound: 'air_rip_flutter' }],
+        12: [{ drum: 0, sound: 'descending_whimper' }]
+      }
+    },
+    pattern_2: {
+      name: '🌀 Thunder Storm',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'low_wind_whine' }],
+        3: [{ drum: 0, sound: 'string_snap' }],
+        6: [{ drum: 0, sound: 'air_rip_flutter' }],
+        8: [{ drum: 0, sound: 'high_speed_scream' }],
+        11: [{ drum: 0, sound: 'ground_slap' }],
+        14: [{ drum: 0, sound: 'descending_whimper' }]
+      }
+    },
+    pattern_3: {
+      name: '🌀 Sacred Aero Dance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'low_wind_whine' }],
+        4: [{ drum: 0, sound: 'wood_spine_tap' }],
+        8: [{ drum: 0, sound: 'low_wind_whine' }],
+        12: [{ drum: 0, sound: 'cord_friction_rub' }]
+      }
+    },
+    pattern_4: {
+      name: '🌀 Cord Twists',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'cord_friction_rub' }],
+        4: [{ drum: 0, sound: 'string_snap' }],
+        8: [{ drum: 0, sound: 'cord_friction_rub' }],
+        12: [{ drum: 0, sound: 'wood_spine_tap' }]
+      }
+    },
+    pattern_5: {
+      name: '🌀 Swirling Cyclone',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'low_wind_whine' }],
+        2: [{ drum: 0, sound: 'wood_spine_tap' }],
+        4: [{ drum: 0, sound: 'high_speed_scream' }],
+        7: [{ drum: 0, sound: 'string_snap' }],
+        8: [{ drum: 0, sound: 'air_rip_flutter' }],
+        10: [{ drum: 0, sound: 'cord_friction_rub' }],
+        12: [{ drum: 0, sound: 'descending_whimper' }],
+        14: [{ drum: 0, sound: 'ground_slap' }]
+      }
+    },
+    pattern_6: {
+      name: '🌀 Slat Rattles',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'wood_spine_tap' }],
+        8: [{ drum: 0, sound: 'wood_spine_tap' }]
+      }
+    },
+    pattern_7: {
+      name: '🌀 Gusty Screams',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'high_speed_scream' }],
+        8: [{ drum: 0, sound: 'high_speed_scream' }]
+      }
+    },
+    pattern_8: {
+      name: '🌀 Flutter Waves',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'air_rip_flutter' }],
+        8: [{ drum: 0, sound: 'air_rip_flutter' }]
+      }
+    },
+    pattern_9: {
+      name: '🌀 Rope Creaks',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'cord_friction_rub' }],
+        8: [{ drum: 0, sound: 'cord_friction_rub' }]
+      }
+    },
+    pattern_10: {
+      name: '🌀 Dying Breath',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'descending_whimper' }]
+      }
+    }
+  },
+  newtons_cradle: {
+    pattern_1: {
+      name: '🖲️ Steady Elastic Clacks',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'single_ball_clack' }],
+        4: [{ drum: 0, sound: 'continuous_ripple' }],
+        8: [{ drum: 0, sound: 'double_side_strike' }],
+        12: [{ drum: 0, sound: 'decaying_skitter' }]
+      }
+    },
+    pattern_2: {
+      name: '🖲️ Kinetic Chaos',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'single_ball_clack' }],
+        3: [{ drum: 0, sound: 'decaying_skitter' }],
+        6: [{ drum: 0, sound: 'chassis_frame_tap' }],
+        8: [{ drum: 0, sound: 'double_side_strike' }],
+        11: [{ drum: 0, sound: 'continuous_ripple' }],
+        14: [{ drum: 0, sound: 'damped_metal_thud' }]
+      }
+    },
+    pattern_3: {
+      name: '🖲️ Cradle Pendulum',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'single_ball_clack' }],
+        4: [{ drum: 0, sound: 'scrape_drag' }],
+        8: [{ drum: 0, sound: 'single_ball_clack' }],
+        12: [{ drum: 0, sound: 'string_tangle_snag' }]
+      }
+    },
+    pattern_4: {
+      name: '🖲️ Steel Skitters',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'decaying_skitter' }],
+        4: [{ drum: 0, sound: 'decaying_skitter' }],
+        8: [{ drum: 0, sound: 'decaying_skitter' }],
+        12: [{ drum: 0, sound: 'damped_metal_thud' }]
+      }
+    },
+    pattern_5: {
+      name: '🖲️ Newton Cradle Rush',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'single_ball_clack' }],
+        2: [{ drum: 0, sound: 'string_tangle_snag' }],
+        4: [{ drum: 0, sound: 'double_side_strike' }],
+        7: [{ drum: 0, sound: 'chassis_frame_tap' }],
+        8: [{ drum: 0, sound: 'continuous_ripple' }],
+        10: [{ drum: 0, sound: 'decaying_skitter' }],
+        12: [{ drum: 0, sound: 'scrape_drag' }],
+        14: [{ drum: 0, sound: 'damped_metal_thud' }]
+      }
+    },
+    pattern_6: {
+      name: '🖲️ Steel Ripples',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'continuous_ripple' }],
+        8: [{ drum: 0, sound: 'continuous_ripple' }]
+      }
+    },
+    pattern_7: {
+      name: '🖲️ Frame Resonance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chassis_frame_tap' }],
+        4: [{ drum: 0, sound: 'chassis_frame_tap' }],
+        8: [{ drum: 0, sound: 'chassis_frame_tap' }],
+        12: [{ drum: 0, sound: 'chassis_frame_tap' }]
+      }
+    },
+    pattern_8: {
+      name: '🖲️ Wire Friction',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'string_tangle_snag' }],
+        8: [{ drum: 0, sound: 'string_tangle_snag' }]
+      }
+    },
+    pattern_9: {
+      name: '🖲️ Slow Sliders',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'scrape_drag' }],
+        8: [{ drum: 0, sound: 'scrape_drag' }]
+      }
+    },
+    pattern_10: {
+      name: '🖲️ Closed Loops',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'damped_metal_thud' }]
+      }
+    }
+  },
+  slime_plop_box: {
+    pattern_1: {
+      name: '🧪 Squishy Plops',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_suction_plop' }],
+        4: [{ drum: 0, sound: 'wet_surface_slap' }],
+        8: [{ drum: 0, sound: 'air_pocket_pop' }],
+        12: [{ drum: 0, sound: 'squelch_stretch' }]
+      }
+    },
+    pattern_2: {
+      name: '🧪 Viscous Meltdown',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_suction_plop' }],
+        3: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        6: [{ drum: 0, sound: 'container_wall_squish' }],
+        8: [{ drum: 0, sound: 'air_pocket_pop' }],
+        11: [{ drum: 0, sound: 'rapid_squelch_roll' }],
+        14: [{ drum: 0, sound: 'damped_lid_snap' }]
+      }
+    },
+    pattern_3: {
+      name: '🧪 Slime Bubbles',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'air_pocket_pop' }],
+        4: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        8: [{ drum: 0, sound: 'air_pocket_pop' }],
+        12: [{ drum: 0, sound: 'rapid_squelch_roll' }]
+      }
+    },
+    pattern_4: {
+      name: '🧪 Translucent Stretch',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'squelch_stretch' }],
+        4: [{ drum: 0, sound: 'container_wall_squish' }],
+        8: [{ drum: 0, sound: 'squelch_stretch' }],
+        12: [{ drum: 0, sound: 'deep_suction_plop' }]
+      }
+    },
+    pattern_5: {
+      name: '🧪 Viscous Typist',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_suction_plop' }],
+        2: [{ drum: 0, sound: 'container_wall_squish' }],
+        4: [{ drum: 0, sound: 'wet_surface_slap' }],
+        7: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        8: [{ drum: 0, sound: 'rapid_squelch_roll' }],
+        10: [{ drum: 0, sound: 'air_pocket_pop' }],
+        12: [{ drum: 0, sound: 'squelch_stretch' }],
+        14: [{ drum: 0, sound: 'damped_lid_snap' }]
+      }
+    },
+    pattern_6: {
+      name: '🧪 Viscous Swarm',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'rapid_squelch_roll' }],
+        8: [{ drum: 0, sound: 'rapid_squelch_roll' }]
+      }
+    },
+    pattern_7: {
+      name: '🧪 Goblet Drops',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        4: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        8: [{ drum: 0, sound: 'dripping_goblet_drop' }],
+        12: [{ drum: 0, sound: 'dripping_goblet_drop' }]
+      }
+    },
+    pattern_8: {
+      name: '🧪 Slide Shimmers',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'container_wall_squish' }],
+        8: [{ drum: 0, sound: 'container_wall_squish' }]
+      }
+    },
+    pattern_9: {
+      name: '🧪 Heavy Plops',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'deep_suction_plop' }],
+        8: [{ drum: 0, sound: 'deep_suction_plop' }]
+      }
+    },
+    pattern_10: {
+      name: '🧪 Airtight Seal',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'damped_lid_snap' }]
+      }
+    }
+  },
+  talk_box: {
+    pattern_1: {
+      name: '🗣️ Grainy Voice',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'pull_whine' }],
+        4: [{ drum: 0, sound: 'cow_says_intro' }],
+        8: [{ drum: 0, sound: 'analog_cow_moo' }],
+        12: [{ drum: 0, sound: 'spring_snaps_shut' }]
+      }
+    },
+    pattern_2: {
+      name: '🗣️ Circuit Glitch',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'pull_whine' }],
+        3: [{ drum: 0, sound: 'needle_scratch_skip' }],
+        6: [{ drum: 0, sound: 'gear_governor_whir' }],
+        8: [{ drum: 0, sound: 'analog_cow_moo' }],
+        11: [{ drum: 0, sound: 'low_battery_slur' }],
+        14: [{ drum: 0, sound: 'spring_snaps_shut' }]
+      }
+    },
+    pattern_3: {
+      name: '🗣️ Speaking Toy',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'pull_whine' }],
+        4: [{ drum: 0, sound: 'cow_says_intro' }],
+        8: [{ drum: 0, sound: 'pull_whine' }],
+        12: [{ drum: 0, sound: 'analog_cow_moo' }]
+      }
+    },
+    pattern_4: {
+      name: '🗣️ Needle skips',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'needle_scratch_skip' }],
+        4: [{ drum: 0, sound: 'needle_scratch_skip' }],
+        8: [{ drum: 0, sound: 'needle_scratch_skip' }],
+        12: [{ drum: 0, sound: 'chassis_slap' }]
+      }
+    },
+    pattern_5: {
+      name: '🗣️ Speaker Rush Hour',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'pull_whine' }],
+        2: [{ drum: 0, sound: 'gear_governor_whir' }],
+        4: [{ drum: 0, sound: 'cow_says_intro' }],
+        7: [{ drum: 0, sound: 'needle_scratch_skip' }],
+        8: [{ drum: 0, sound: 'analog_cow_moo' }],
+        10: [{ drum: 0, sound: 'low_battery_slur' }],
+        12: [{ drum: 0, sound: 'chassis_slap' }],
+        14: [{ drum: 0, sound: 'spring_snaps_shut' }]
+      }
+    },
+    pattern_6: {
+      name: '🗣️ Winding Gears',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'gear_governor_whir' }],
+        8: [{ drum: 0, sound: 'gear_governor_whir' }]
+      }
+    },
+    pattern_7: {
+      name: '🗣️ Casing Slaps',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'chassis_slap' }],
+        4: [{ drum: 0, sound: 'chassis_slap' }],
+        8: [{ drum: 0, sound: 'chassis_slap' }],
+        12: [{ drum: 0, sound: 'chassis_slap' }]
+      }
+    },
+    pattern_8: {
+      name: '🗣️ Low Voltages',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'low_battery_slur' }],
+        8: [{ drum: 0, sound: 'low_battery_slur' }]
+      }
+    },
+    pattern_9: {
+      name: '🗣️ Spring Releases',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'spring_snaps_shut' }],
+        8: [{ drum: 0, sound: 'spring_snaps_shut' }]
+      }
+    },
+    pattern_10: {
+      name: '🗣️ Cosmic Cow',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'analog_cow_moo' }]
+      }
+    }
+  },
+  mouth_tube_synth: {
+    pattern_1: {
+      name: '🗣️ Vocal Formant Run',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'wah_vocal' }],
+        4: [{ drum: 0, sound: 'ooh_vocal' }],
+        8: [{ drum: 0, sound: 'ee_vocal' }],
+        12: [{ drum: 0, sound: 'formant_glide' }]
+      }
+    },
+    pattern_2: {
+      name: '🗣️ G-Funk Talkbox',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'wah_vocal' }],
+        3: [{ drum: 0, sound: 'plastic_hose_spit_pop' }],
+        6: [{ drum: 0, sound: 'synth_carrier_buzz' }],
+        8: [{ drum: 0, sound: 'ee_vocal' }],
+        11: [{ drum: 0, sound: 'vocalized_fry' }],
+        14: [{ drum: 0, sound: 'throat_choke_stop' }]
+      }
+    },
+    pattern_3: {
+      name: '🗣️ Electro Vowels',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'wah_vocal' }],
+        4: [{ drum: 0, sound: 'ee_vocal' }],
+        8: [{ drum: 0, sound: 'wah_vocal' }],
+        12: [{ drum: 0, sound: 'ooh_vocal' }]
+      }
+    },
+    pattern_4: {
+      name: '🗣️ Carrier Buzzes',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'synth_carrier_buzz' }],
+        4: [{ drum: 0, sound: 'synth_carrier_buzz' }],
+        8: [{ drum: 0, sound: 'synth_carrier_buzz' }],
+        12: [{ drum: 0, sound: 'throat_choke_stop' }]
+      }
+    },
+    pattern_5: {
+      name: '🗣️ Mouth-Tube Madness',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'wah_vocal' }],
+        2: [{ drum: 0, sound: 'plastic_hose_spit_pop' }],
+        4: [{ drum: 0, sound: 'ooh_vocal' }],
+        7: [{ drum: 0, sound: 'vocalized_fry' }],
+        8: [{ drum: 0, sound: 'ee_vocal' }],
+        10: [{ drum: 0, sound: 'synth_carrier_buzz' }],
+        12: [{ drum: 0, sound: 'formant_glide' }],
+        14: [{ drum: 0, sound: 'throat_choke_stop' }]
+      }
+    },
+    pattern_6: {
+      name: '🗣️ Formant Sweeper',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'formant_glide' }],
+        8: [{ drum: 0, sound: 'formant_glide' }]
+      }
+    },
+    pattern_7: {
+      name: '🗣️ Throat Fry',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'vocalized_fry' }],
+        4: [{ drum: 0, sound: 'vocalized_fry' }],
+        8: [{ drum: 0, sound: 'vocalized_fry' }],
+        12: [{ drum: 0, sound: 'vocalized_fry' }]
+      }
+    },
+    pattern_8: {
+      name: '🗣️ Spit Pops',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'plastic_hose_spit_pop' }],
+        8: [{ drum: 0, sound: 'plastic_hose_spit_pop' }]
+      }
+    },
+    pattern_9: {
+      name: '🗣️ Deep Vocals',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'ooh_vocal' }],
+        8: [{ drum: 0, sound: 'ooh_vocal' }]
+      }
+    },
+    pattern_10: {
+      name: '🗣️ Choked Signal',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'throat_choke_stop' }]
+      }
+    }
+  },
+  mechanical_keyboard: {
+    pattern_1: {
+      name: '⌨️ Code Commencing',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'enter_key' }],
+        4: [{ drum: 0, sound: 'key_click' }],
+        8: [{ drum: 0, sound: 'spacebar' }],
+        12: [{ drum: 0, sound: 'key_click' }]
+      }
+    },
+    pattern_2: {
+      name: '⌨️ Rapid Typist',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_click' }],
+        2: [{ drum: 0, sound: 'key_click' }],
+        4: [{ drum: 0, sound: 'key_click' }],
+        6: [{ drum: 0, sound: 'spacebar' }],
+        8: [{ drum: 0, sound: 'key_click' }],
+        10: [{ drum: 0, sound: 'key_click' }],
+        12: [{ drum: 0, sound: 'enter_key' }]
+      }
+    },
+    pattern_3: {
+      name: '⌨️ Git Commit',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_click' }],
+        4: [{ drum: 0, sound: 'enter_key' }],
+        8: [{ drum: 0, sound: 'backspace' }],
+        12: [{ drum: 0, sound: 'spacebar' }]
+      }
+    },
+    pattern_4: {
+      name: '⌨️ Backspace Blues',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'backspace' }],
+        4: [{ drum: 0, sound: 'backspace' }],
+        8: [{ drum: 0, sound: 'backspace' }],
+        12: [{ drum: 0, sound: 'enter_key' }]
+      }
+    },
+    pattern_5: {
+      name: '⌨️ Shift and Roll',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'shift_hold' }],
+        4: [{ drum: 0, sound: 'key_click' }],
+        8: [{ drum: 0, sound: 'spacebar' }],
+        12: [{ drum: 0, sound: 'key_click' }]
+      }
+    },
+    pattern_6: {
+      name: '⌨️ Hackathon Sprint',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_click' }],
+        1: [{ drum: 0, sound: 'key_click' }],
+        2: [{ drum: 0, sound: 'key_click' }],
+        3: [{ drum: 0, sound: 'key_click' }],
+        4: [{ drum: 0, sound: 'spacebar' }],
+        8: [{ drum: 0, sound: 'key_click' }],
+        12: [{ drum: 0, sound: 'enter_key' }]
+      }
+    },
+    pattern_7: {
+      name: '⌨️ Refactoring Session',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_click' }],
+        4: [{ drum: 0, sound: 'backspace' }],
+        8: [{ drum: 0, sound: 'key_click' }],
+        12: [{ drum: 0, sound: 'spacebar' }]
+      }
+    },
+    pattern_8: {
+      name: '⌨️ Space Hopper',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'spacebar' }],
+        4: [{ drum: 0, sound: 'spacebar' }],
+        8: [{ drum: 0, sound: 'spacebar' }],
+        12: [{ drum: 0, sound: 'spacebar' }]
+      }
+    },
+    pattern_9: {
+      name: '⌨️ Final Compile',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'enter_key' }],
+        8: [{ drum: 0, sound: 'enter_key' }]
+      }
+    },
+    pattern_10: {
+      name: '⌨️ Idle Standby',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'key_click' }]
+      }
+    }
+  },
+  synsonics_drums: {
+    pattern_1: {
+      name: '👾 Toy Synth Rock',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        4: [{ drum: 0, sound: 'noise_snare' }],
+        8: [{ drum: 0, sound: 'retro_kick' }],
+        12: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    },
+    pattern_2: {
+      name: '👾 Cymbal Wash',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        2: [{ drum: 0, sound: 'lofi_cymbal' }],
+        4: [{ drum: 0, sound: 'noise_snare' }],
+        8: [{ drum: 0, sound: 'retro_kick' }],
+        10: [{ drum: 0, sound: 'lofi_cymbal' }],
+        12: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    },
+    pattern_3: {
+      name: '👾 Retro Tom Fill',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        4: [{ drum: 0, sound: 'noise_snare' }],
+        8: [{ drum: 0, sound: 'tom_high' }],
+        10: [{ drum: 0, sound: 'tom_low' }],
+        12: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    },
+    pattern_4: {
+      name: '👾 Toy Techno',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        4: [{ drum: 0, sound: 'retro_kick' }],
+        8: [{ drum: 0, sound: 'retro_kick' }],
+        12: [{ drum: 0, sound: 'retro_kick' }]
+      }
+    },
+    pattern_5: {
+      name: '👾 High Tom Roller',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tom_high' }],
+        4: [{ drum: 0, sound: 'tom_high' }],
+        8: [{ drum: 0, sound: 'tom_high' }],
+        12: [{ drum: 0, sound: 'tom_high' }]
+      }
+    },
+    pattern_6: {
+      name: '👾 Snare Crackle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'noise_snare' }],
+        8: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    },
+    pattern_7: {
+      name: '👾 Full Kit Beat',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        2: [{ drum: 0, sound: 'tom_high' }],
+        4: [{ drum: 0, sound: 'noise_snare' }],
+        6: [{ drum: 0, sound: 'tom_low' }],
+        8: [{ drum: 0, sound: 'retro_kick' }],
+        10: [{ drum: 0, sound: 'lofi_cymbal' }],
+        12: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    },
+    pattern_8: {
+      name: '👾 Electro Pulse',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        8: [{ drum: 0, sound: 'retro_kick' }]
+      }
+    },
+    pattern_9: {
+      name: '👾 Noise Burst',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'lofi_cymbal' }],
+        8: [{ drum: 0, sound: 'lofi_cymbal' }]
+      }
+    },
+    pattern_10: {
+      name: '👾 Toy Kit Basic',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'retro_kick' }],
+        8: [{ drum: 0, sound: 'noise_snare' }]
+      }
+    }
+  },
+  hydraulic_piston: {
+    pattern_1: {
+      name: '⚙️ Industrial Stomp',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'iron_stomp' }],
+        4: [{ drum: 0, sound: 'steam_hiss' }],
+        8: [{ drum: 0, sound: 'iron_stomp' }],
+        12: [{ drum: 0, sound: 'steam_hiss' }]
+      }
+    },
+    pattern_2: {
+      name: '⚙️ Gear Locking Loop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'iron_stomp' }],
+        3: [{ drum: 0, sound: 'gear_lock' }],
+        6: [{ drum: 0, sound: 'exhaust_clunk' }],
+        8: [{ drum: 0, sound: 'iron_stomp' }],
+        11: [{ drum: 0, sound: 'gear_lock' }],
+        14: [{ drum: 0, sound: 'steam_hiss' }]
+      }
+    },
+    pattern_3: {
+      name: '⚙️ Factory Clockwork',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'gear_lock' }],
+        4: [{ drum: 0, sound: 'exhaust_clunk' }],
+        8: [{ drum: 0, sound: 'gear_lock' }],
+        12: [{ drum: 0, sound: 'steam_hiss' }]
+      }
+    },
+    pattern_4: {
+      name: '⚙️ Heavy Press',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'iron_stomp' }],
+        8: [{ drum: 0, sound: 'iron_stomp' }]
+      }
+    },
+    pattern_5: {
+      name: '⚙️ Valve Release',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'steam_hiss' }],
+        8: [{ drum: 0, sound: 'steam_hiss' }]
+      }
+    },
+    pattern_6: {
+      name: '⚙️ Clunk and Release',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'exhaust_clunk' }],
+        4: [{ drum: 0, sound: 'steam_hiss' }],
+        8: [{ drum: 0, sound: 'exhaust_clunk' }],
+        12: [{ drum: 0, sound: 'gear_lock' }]
+      }
+    },
+    pattern_7: {
+      name: '⚙️ Iron Beat',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'iron_stomp' }],
+        4: [{ drum: 0, sound: 'gear_lock' }],
+        8: [{ drum: 0, sound: 'iron_stomp' }],
+        12: [{ drum: 0, sound: 'exhaust_clunk' }]
+      }
+    },
+    pattern_8: {
+      name: '⚙️ Steam Engine Roller',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'steam_hiss' }],
+        2: [{ drum: 0, sound: 'gear_lock' }],
+        4: [{ drum: 0, sound: 'steam_hiss' }],
+        8: [{ drum: 0, sound: 'steam_hiss' }],
+        10: [{ drum: 0, sound: 'exhaust_clunk' }],
+        12: [{ drum: 0, sound: 'iron_stomp' }]
+      }
+    },
+    pattern_9: {
+      name: '⚙️ Gear Mash',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'gear_lock' }],
+        8: [{ drum: 0, sound: 'gear_lock' }]
+      }
+    },
+    pattern_10: {
+      name: '⚙️ Idle Pressure',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'exhaust_clunk' }]
+      }
+    }
+  },
+  bop_it: {
+    pattern_1: {
+      name: '🕹️ Bop-It Classic',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        4: [{ drum: 0, sound: 'twist_it' }],
+        8: [{ drum: 0, sound: 'pull_it' }],
+        12: [{ drum: 0, sound: 'shout_it' }]
+      }
+    },
+    pattern_2: {
+      name: '🕹️ High Score Run',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        2: [{ drum: 0, sound: 'pull_it' }],
+        4: [{ drum: 0, sound: 'twist_it' }],
+        6: [{ drum: 0, sound: 'shout_it' }],
+        8: [{ drum: 0, sound: 'bop_it' }],
+        10: [{ drum: 0, sound: 'victory_chime' }]
+      }
+    },
+    pattern_3: {
+      name: '🕹️ Tension Builder',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        4: [{ drum: 0, sound: 'bop_it' }],
+        8: [{ drum: 0, sound: 'twist_it' }],
+        12: [{ drum: 0, sound: 'fail_buzz' }]
+      }
+    },
+    pattern_4: {
+      name: '🕹️ Shout Loop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'shout_it' }],
+        8: [{ drum: 0, sound: 'shout_it' }]
+      }
+    },
+    pattern_5: {
+      name: '🕹️ Pull and Twist',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'pull_it' }],
+        4: [{ drum: 0, sound: 'twist_it' }],
+        8: [{ drum: 0, sound: 'pull_it' }],
+        12: [{ drum: 0, sound: 'victory_chime' }]
+      }
+    },
+    pattern_6: {
+      name: '🕹️ Victory Dance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'victory_chime' }],
+        8: [{ drum: 0, sound: 'victory_chime' }]
+      }
+    },
+    pattern_7: {
+      name: '🕹️ Ultimate Combo',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        3: [{ drum: 0, sound: 'twist_it' }],
+        6: [{ drum: 0, sound: 'pull_it' }],
+        9: [{ drum: 0, sound: 'shout_it' }],
+        12: [{ drum: 0, sound: 'victory_chime' }]
+      }
+    },
+    pattern_8: {
+      name: '🕹️ Fail State Groove',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'fail_buzz' }],
+        8: [{ drum: 0, sound: 'fail_buzz' }]
+      }
+    },
+    pattern_9: {
+      name: '🕹️ Rapid Bop',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        4: [{ drum: 0, sound: 'bop_it' }],
+        8: [{ drum: 0, sound: 'bop_it' }],
+        12: [{ drum: 0, sound: 'bop_it' }]
+      }
+    },
+    pattern_10: {
+      name: '🕹️ Toy Game Session',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'bop_it' }],
+        8: [{ drum: 0, sound: 'fail_buzz' }]
+      }
+    }
+  },
+  moo_box: {
+    pattern_1: {
+      name: '🐄 Meadow Chorus',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'grand_moo' }],
+        8: [{ drum: 0, sound: 'calf_moo' }]
+      }
+    },
+    pattern_2: {
+      name: '🐄 Tin Shake Rhythm',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tin_shake' }],
+        4: [{ drum: 0, sound: 'tin_shake' }],
+        8: [{ drum: 0, sound: 'tin_shake' }],
+        12: [{ drum: 0, sound: 'tin_shake' }]
+      }
+    },
+    pattern_3: {
+      name: '🐄 Stuck Reed Whine',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'stuck_reed' }],
+        8: [{ drum: 0, sound: 'stuck_reed' }]
+      }
+    },
+    pattern_4: {
+      name: '🐄 Cattle Call',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'grand_moo' }],
+        4: [{ drum: 0, sound: 'tin_shake' }],
+        8: [{ drum: 0, sound: 'calf_moo' }],
+        12: [{ drum: 0, sound: 'tin_shake' }]
+      }
+    },
+    pattern_5: {
+      name: '🐄 Heavy Moo',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'grand_moo' }],
+        8: [{ drum: 0, sound: 'grand_moo' }]
+      }
+    },
+    pattern_6: {
+      name: '🐄 Tin Shake Roll',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tin_shake' }],
+        2: [{ drum: 0, sound: 'tin_shake' }],
+        4: [{ drum: 0, sound: 'tin_shake' }],
+        6: [{ drum: 0, sound: 'tin_shake' }],
+        8: [{ drum: 0, sound: 'tin_shake' }]
+      }
+    },
+    pattern_7: {
+      name: '🐄 Calf Melancholy',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'calf_moo' }],
+        8: [{ drum: 0, sound: 'stuck_reed' }]
+      }
+    },
+    pattern_8: {
+      name: '🐄 Barnyard Syncopation',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'grand_moo' }],
+        4: [{ drum: 0, sound: 'stuck_reed' }],
+        8: [{ drum: 0, sound: 'tin_shake' }],
+        12: [{ drum: 0, sound: 'calf_moo' }]
+      }
+    },
+    pattern_9: {
+      name: '🐄 Grazing Time',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tin_shake' }],
+        8: [{ drum: 0, sound: 'grand_moo' }]
+      }
+    },
+    pattern_10: {
+      name: '🐄 Sleepy Barn',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'stuck_reed' }]
+      }
+    }
+  },
+  pakhavaj: {
+    pattern_1: {
+      name: '📿 Classic Chhand',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tha' }],
+        4: [{ drum: 0, sound: 'dhin' }],
+        8: [{ drum: 0, sound: 'ta' }],
+        12: [{ drum: 0, sound: 'ki' }]
+      }
+    },
+    pattern_2: {
+      name: '📿 Double Dhin',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'dhin' }],
+        4: [{ drum: 0, sound: 'dhin' }],
+        8: [{ drum: 0, sound: 'ta' }],
+        12: [{ drum: 0, sound: 'na' }]
+      }
+    },
+    pattern_3: {
+      name: '📿 Rapid Tete Rolls',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tete' }],
+        4: [{ drum: 0, sound: 'tete' }],
+        8: [{ drum: 0, sound: 'tete' }],
+        12: [{ drum: 0, sound: 'tha' }]
+      }
+    },
+    pattern_4: {
+      name: '📿 Sliding Ghe Groove',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'ghe' }],
+        4: [{ drum: 0, sound: 'ta' }],
+        8: [{ drum: 0, sound: 'dhin' }],
+        12: [{ drum: 0, sound: 'ki' }]
+      }
+    },
+    pattern_5: {
+      name: '📿 Temple Dhrupad',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tha' }],
+        3: [{ drum: 0, sound: 'ta' }],
+        6: [{ drum: 0, sound: 'dhin' }],
+        8: [{ drum: 0, sound: 'na' }],
+        12: [{ drum: 0, sound: 'ki' }]
+      }
+    },
+    pattern_6: {
+      name: '📿 Sacred Cycle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tha' }],
+        8: [{ drum: 0, sound: 'dhin' }]
+      }
+    },
+    pattern_7: {
+      name: '📿 High Speed Bol',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tete' }],
+        2: [{ drum: 0, sound: 'tete' }],
+        4: [{ drum: 0, sound: 'ta' }],
+        6: [{ drum: 0, sound: 'na' }],
+        8: [{ drum: 0, sound: 'dhin' }],
+        12: [{ drum: 0, sound: 'tha' }]
+      }
+    },
+    pattern_8: {
+      name: '📿 Quiet Meditation',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'ki' }],
+        8: [{ drum: 0, sound: 'ki' }]
+      }
+    },
+    pattern_9: {
+      name: '📿 Sooltaal Cycle',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tha' }],
+        4: [{ drum: 0, sound: 'ta' }],
+        8: [{ drum: 0, sound: 'dhin' }],
+        12: [{ drum: 0, sound: 'ki' }]
+      }
+    },
+    pattern_10: {
+      name: '📿 Chautaal Base',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'tha' }],
+        12: [{ drum: 0, sound: 'dhin' }]
+      }
+    }
+  },
+  binzasara: {
+    pattern_1: {
+      name: '🪵 Cascading Waves',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'furu' }],
+        8: [{ drum: 0, sound: 'clap' }]
+      }
+    },
+    pattern_2: {
+      name: '🪵 Wood Chatter',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'rattle' }],
+        8: [{ drum: 0, sound: 'snap' }]
+      }
+    },
+    pattern_3: {
+      name: '🪵 Triple Clap',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clap' }],
+        4: [{ drum: 0, sound: 'clap' }],
+        8: [{ drum: 0, sound: 'clap' }],
+        12: [{ drum: 0, sound: 'furu' }]
+      }
+    },
+    pattern_4: {
+      name: '🪵 Single Snaps',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'snap' }],
+        4: [{ drum: 0, sound: 'snap' }],
+        8: [{ drum: 0, sound: 'snap' }],
+        12: [{ drum: 0, sound: 'snap' }]
+      }
+    },
+    pattern_5: {
+      name: '🪵 Folk Procession',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'furu' }],
+        4: [{ drum: 0, sound: 'snap' }],
+        8: [{ drum: 0, sound: 'rattle' }],
+        12: [{ drum: 0, sound: 'clap' }]
+      }
+    },
+    pattern_6: {
+      name: '🪵 Shinto Dance',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'rattle' }],
+        8: [{ drum: 0, sound: 'rattle' }]
+      }
+    },
+    pattern_7: {
+      name: '🪵 Double Snap Beats',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'snap' }],
+        2: [{ drum: 0, sound: 'snap' }],
+        8: [{ drum: 0, sound: 'clap' }]
+      }
+    },
+    pattern_8: {
+      name: '🪵 Rapid Dominoes',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'furu' }],
+        4: [{ drum: 0, sound: 'furu' }],
+        8: [{ drum: 0, sound: 'furu' }],
+        12: [{ drum: 0, sound: 'clap' }]
+      }
+    },
+    pattern_9: {
+      name: '🪵 Forest Rhythms',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'snap' }],
+        8: [{ drum: 0, sound: 'rattle' }]
+      }
+    },
+    pattern_10: {
+      name: '🪵 Pure Clack',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'clap' }]
+      }
+    }
+  },
+  caxixi: {
+    pattern_1: {
+      name: '🌾 Straw Shake',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }],
+        4: [{ drum: 0, sound: 'gourd_bottom' }],
+        8: [{ drum: 0, sound: 'straw_wall' }],
+        12: [{ drum: 0, sound: 'gourd_bottom' }]
+      }
+    },
+    pattern_2: {
+      name: '🌾 Flick & Pulse',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }],
+        2: [{ drum: 0, sound: 'flick_accent' }],
+        4: [{ drum: 0, sound: 'gourd_bottom' }],
+        8: [{ drum: 0, sound: 'straw_wall' }],
+        10: [{ drum: 0, sound: 'muted_swoosh' }],
+        12: [{ drum: 0, sound: 'flick_accent' }]
+      }
+    },
+    pattern_3: {
+      name: '🌾 Samba Shaker',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }],
+        4: [{ drum: 0, sound: 'flick_accent' }],
+        8: [{ drum: 0, sound: 'straw_wall' }],
+        12: [{ drum: 0, sound: 'flick_accent' }]
+      }
+    },
+    pattern_4: {
+      name: '🌾 Gourd Crack',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'gourd_bottom' }],
+        8: [{ drum: 0, sound: 'gourd_bottom' }]
+      }
+    },
+    pattern_5: {
+      name: '🌾 Organic Sweep',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'muted_swoosh' }],
+        8: [{ drum: 0, sound: 'muted_swoosh' }]
+      }
+    },
+    pattern_6: {
+      name: '🌾 Double Flick Accent',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'flick_accent' }],
+        8: [{ drum: 0, sound: 'flick_accent' }]
+      }
+    },
+    pattern_7: {
+      name: '🌾 High-Low Mix',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }],
+        4: [{ drum: 0, sound: 'gourd_bottom' }],
+        8: [{ drum: 0, sound: 'flick_accent' }],
+        12: [{ drum: 0, sound: 'muted_swoosh' }]
+      }
+    },
+    pattern_8: {
+      name: '🌾 Slow Swell',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'muted_swoosh' }],
+        4: [{ drum: 0, sound: 'straw_wall' }],
+        8: [{ drum: 0, sound: 'muted_swoosh' }],
+        12: [{ drum: 0, sound: 'flick_accent' }]
+      }
+    },
+    pattern_9: {
+      name: '🌾 Brazilian Carnival Shaker',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }],
+        2: [{ drum: 0, sound: 'gourd_bottom' }],
+        4: [{ drum: 0, sound: 'straw_wall' }],
+        6: [{ drum: 0, sound: 'flick_accent' }],
+        8: [{ drum: 0, sound: 'straw_wall' }],
+        10: [{ drum: 0, sound: 'gourd_bottom' }],
+        12: [{ drum: 0, sound: 'straw_wall' }],
+        14: [{ drum: 0, sound: 'muted_swoosh' }]
+      }
+    },
+    pattern_10: {
+      name: '🌾 Quiet Straw',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 0, sound: 'straw_wall' }]
       }
     }
   }
