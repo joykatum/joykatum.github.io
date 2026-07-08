@@ -1,7 +1,7 @@
 // Main App Orchestration and Bootstrapper Entry Point Module
 import { state } from './state.js';
 import { handleGamepadInputLoop } from './gamepad.js';
-import { drumTypes } from './drumTypes.js';
+import { drumTypes, ensureInstrumentLoaded } from './drumTypes.js';
 import { CONFIG } from './config.js';
 import {
   renderDrums,
@@ -51,8 +51,9 @@ class Orchestrator {
     this.currentInstrument = null;
   }
 
-  init() {
+  async init() {
     // Resolve initial instrument
+    await ensureInstrumentLoaded(state.currentInstrument);
     this.updateInstrument(state.currentInstrument);
 
     // Set up step triggers for sequencer

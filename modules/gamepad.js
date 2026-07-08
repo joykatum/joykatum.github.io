@@ -145,6 +145,16 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
           id: hand === 'l' ? 0 : 1,
           pitchMult: hand === 'l' ? 1.4 : 0.9
         });
+      } else if (state.currentInstrument === 'mridangam') {
+        virtualDrum = Object.assign({}, drumDef, {
+          id: hand === 'l' ? 0 : 1, // 0 = Thoppi, 1 = Valanthalai
+          pitchMult: hand === 'l' ? 0.8 : 1.4
+        });
+      } else if (state.currentInstrument === 'dhol') {
+        virtualDrum = Object.assign({}, drumDef, {
+          id: hand === 'l' ? 0 : 1, // 0 = Dagga, 1 = Tilli
+          pitchMult: hand === 'l' ? 0.8 : 1.25
+        });
       } else if (state.currentInstrument === 'agogo') {
         virtualDrum = Object.assign({}, drumDef, {
           id: hand === 'l' ? 1 : 0,
@@ -163,6 +173,10 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
     let finalDrumId = drumDef.id;
     if (state.currentInstrument === 'bongo') {
       finalDrumId = `${drumDef.id}_${hand === 'l' ? 'macho' : 'hembra'}`;
+    } else if (state.currentInstrument === 'mridangam') {
+      finalDrumId = `${drumDef.id}_${hand === 'l' ? 'thoppi' : 'valanthalai'}`;
+    } else if (state.currentInstrument === 'dhol') {
+      finalDrumId = `${drumDef.id}_${hand === 'l' ? 'dagga' : 'tilli'}`;
     } else if (state.currentInstrument === 'agogo') {
       finalDrumId = `${drumDef.id}_${hand === 'l' ? 'high' : 'low'}`;
     }
@@ -175,13 +189,15 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
     press.firedLong = false;
 
     if (!longSound) {
-      const { drumDef, finalDrumId } = getTargetDrumDetails();
-      triggerPlay(drumDef, shortSound);
-      triggerHitEffect(finalDrumId, shortSound);
-      triggerGamepadVibration(gp, shortSound);
+      if (shortSound) {
+        const { drumDef, finalDrumId } = getTargetDrumDetails();
+        triggerPlay(drumDef, shortSound);
+        triggerHitEffect(finalDrumId, shortSound);
+        triggerGamepadVibration(gp, shortSound);
 
-      if (hand === 'l') state.lastLeftHit = shortSound;
-      else state.lastRightHit = shortSound;
+        if (hand === 'l') state.lastLeftHit = shortSound;
+        else state.lastRightHit = shortSound;
+      }
     }
   } else if (isPressed && press.pressed) {
     if (longSound && !press.firedLong && now - press.startTime > CONFIG.GAMEPAD.LONG_PRESS_THRESHOLD) {
@@ -196,13 +212,15 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
     }
   } else if (!isPressed && press.pressed) {
     if (longSound && !press.firedLong) {
-      const { drumDef, finalDrumId } = getTargetDrumDetails();
-      triggerPlay(drumDef, shortSound);
-      triggerHitEffect(finalDrumId, shortSound);
-      triggerGamepadVibration(gp, shortSound);
+      if (shortSound) {
+        const { drumDef, finalDrumId } = getTargetDrumDetails();
+        triggerPlay(drumDef, shortSound);
+        triggerHitEffect(finalDrumId, shortSound);
+        triggerGamepadVibration(gp, shortSound);
 
-      if (hand === 'l') state.lastLeftHit = shortSound;
-      else state.lastRightHit = shortSound;
+        if (hand === 'l') state.lastLeftHit = shortSound;
+        else state.lastRightHit = shortSound;
+      }
     }
     press.pressed = false;
   }
@@ -304,9 +322,9 @@ export function handleGamepadInputLoop() {
 
     // Process keyboard hits even if no physical gamepad is connected
     const inst = state.currentInstrument;
-    const mappingObj = instrumentMappings[inst] || instrumentMappings.conga;
-    const leftMap = mappingObj.left;
-    const rightMap = mappingObj.right;
+    const mappingObj = instrumentMappings[inst] || instrumentMappings.conga || { left: {}, right: {} };
+    const leftMap = mappingObj.left || {};
+    const rightMap = mappingObj.right || {};
 
     processGamepadHit('up_l', null, 'l', leftMap.up, leftMap.upLong);
     processGamepadHit('down_l', null, 'l', leftMap.down, leftMap.downLong);
@@ -343,9 +361,9 @@ export function handleGamepadInputLoop() {
 
   // Resolve traditional sound touches based on selected instrument mapping
   const inst = state.currentInstrument;
-  const mappingObj = instrumentMappings[inst] || instrumentMappings.conga;
-  const leftMap = mappingObj.left;
-  const rightMap = mappingObj.right;
+  const mappingObj = instrumentMappings[inst] || instrumentMappings.conga || { left: {}, right: {} };
+  const leftMap = mappingObj.left || {};
+  const rightMap = mappingObj.right || {};
 
   // Left hand hits: Up, Down (with Tap & Hold/Long press), Left, Right
   processGamepadHit('up_l', gp, 'l', leftMap.up, leftMap.upLong);

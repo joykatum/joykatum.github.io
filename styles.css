@@ -149,6 +149,23 @@ header p {
   .drums-grid.count-5 {
     --drum-unit: min(2.8vh, 0.8vw);
   }
+
+  /* Specific sizes for horizontal layout of Two-Sided drums */
+  .drums-grid.two-sided-drum.count-1 {
+    --drum-unit: min(3vh, 1.6vw);
+  }
+  .drums-grid.two-sided-drum.count-2 {
+    --drum-unit: min(2vh, 0.8vw);
+  }
+  .drums-grid.two-sided-drum.count-3 {
+    --drum-unit: min(1.5vh, 0.5vw);
+  }
+  .drums-grid.two-sided-drum.count-4 {
+    --drum-unit: min(1.2vh, 0.4vw);
+  }
+  .drums-grid.two-sided-drum.count-5 {
+    --drum-unit: min(1vh, 0.3vw);
+  }
 }
 
 /* Portrait Mode Sizing (max-aspect-ratio: 1.0) */
@@ -163,10 +180,48 @@ header p {
     height: 100%;
   }
 
-  .drums-grid.two-sided-drum {
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     gap: 2vh;
+  }
+
+  .drums-grid.two-sided-drum:not(.two-sided-bongo).count-1 {
+    --drum-unit: min(1.2vh, 2vw);
+  }
+  .drums-grid.two-sided-drum:not(.two-sided-bongo).count-2 {
+    --drum-unit: min(0.6vh, 1.5vw);
+  }
+  .drums-grid.two-sided-drum:not(.two-sided-bongo).count-3 {
+    --drum-unit: min(0.4vh, 1.2vw);
+  }
+  .drums-grid.two-sided-drum:not(.two-sided-bongo).count-4 {
+    --drum-unit: min(0.3vh, 1vw);
+  }
+  .drums-grid.two-sided-drum:not(.two-sided-bongo).count-5 {
+    --drum-unit: min(0.24vh, 0.8vw);
+  }
+
+  /* Specific horizontal layout and scaling for bongo in portrait mode */
+  .drums-grid.two-sided-bongo {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, minmax(auto, 1fr));
+    gap: 4vh;
+  }
+  .drums-grid.two-sided-bongo.count-1 {
+    --drum-unit: min(2.5vh, 1.4vw);
+  }
+  .drums-grid.two-sided-bongo.count-2 {
+    --drum-unit: min(2vh, 1.1vw);
+  }
+  .drums-grid.two-sided-bongo.count-3 {
+    --drum-unit: min(1.6vh, 0.9vw);
+  }
+  .drums-grid.two-sided-bongo.count-4 {
+    --drum-unit: min(1.3vh, 0.7vw);
+  }
+  .drums-grid.two-sided-bongo.count-5 {
+    --drum-unit: min(1.1vh, 0.6vw);
   }
 
   /* Force Conga and Tumba to be next to each other in 2-column grid */
@@ -221,12 +276,45 @@ header p {
 /* Sizes are now applied dynamically via inline calc style from JS */
 
 /* Active Ring Glowing State */
+.drum-wrapper.left-active,
+.drum-wrapper.right-active {
+  z-index: 10;
+}
+
 .drum-wrapper.left-active .drum-body {
-  filter: drop-shadow(0 0 25px rgba(249, 115, 22, 0.8));
+  filter: none;
+  box-shadow:
+    0 0 25px rgba(249, 115, 22, 0.85),
+    inset 0 0 15px rgba(249, 115, 22, 0.4);
 }
 
 .drum-wrapper.right-active .drum-body {
-  filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.8));
+  filter: none;
+  box-shadow:
+    0 0 25px rgba(59, 130, 246, 0.85),
+    inset 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Special override for invisible hit areas (Bata heads over background) */
+.drum-body.invisible-hit-area {
+  z-index: 1;
+  filter: none; /* Disable standard drop-shadow */
+}
+
+.drum-wrapper.left-active .drum-body.invisible-hit-area {
+  filter: none;
+  box-shadow:
+    inset 0 0 35px rgba(249, 115, 22, 0.6),
+    0 0 35px rgba(249, 115, 22, 0.8);
+  background: rgba(249, 115, 22, 0.15);
+}
+
+.drum-wrapper.right-active .drum-body.invisible-hit-area {
+  filter: none;
+  box-shadow:
+    inset 0 0 35px rgba(59, 130, 246, 0.6),
+    0 0 35px rgba(59, 130, 246, 0.8);
+  background: rgba(59, 130, 246, 0.15);
 }
 
 .drum-body {
@@ -234,29 +322,26 @@ header p {
   background: transparent;
   cursor: pointer;
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+  will-change: transform;
+  outline: none !important;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent !important;
   transition:
     box-shadow 0.25s ease,
     border-color 0.25s ease,
-    transform 0.1s ease;
+    transform 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.drum-body::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  box-shadow:
-    inset 0 0 20px rgba(0, 0, 0, 0.5),
-    inset 0 0 40px rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-  z-index: 6;
+.drum-body:focus,
+.drum-body:focus-visible,
+.drum-body:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.drum-body:active {
-  transform: scale(0.96);
+.drum-body:active,
+.drum-body.hit-flash {
+  transform: scale(0.98);
 }
 
 /* SVG fills and shapes inside drumhead */
@@ -1171,26 +1256,25 @@ header p {
 /* Floating Collapse/Expand Button */
 .footer-toggle-btn {
   position: absolute;
-  top: -12px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(15, 23, 42, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: 2px 14px;
-  font-size: 0.6rem;
-  font-weight: 800;
-  color: #10b981;
-  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #10b981;
+  cursor: pointer;
   z-index: 1010;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 .footer-toggle-btn:hover {
@@ -1201,7 +1285,7 @@ header p {
 }
 
 .cheat-sheet-footer.collapsed .footer-toggle-btn {
-  top: -12px; /* Stable position floats over top center in collapsed state as well */
+  top: -16px; /* Stable position floats over top center in collapsed state as well */
   background: rgba(16, 185, 129, 0.15);
   border-color: rgba(16, 185, 129, 0.4);
   color: #34d399;
@@ -2488,4 +2572,62 @@ header p {
   width: 16px;
   height: 16px;
   margin: 0;
+}
+
+.cheat-sheet-footer.collapsed #author-footer {
+  display: none !important;
+}
+
+/* Two-Sided Drums Base Sizing */
+.drums-grid.two-sided-drum .drum-wrapper {
+  width: calc(var(--drum-size-val) * 2.8 * var(--drum-unit));
+  height: calc(var(--drum-size-val) * 1.2 * var(--drum-unit));
+  margin: 0 auto;
+}
+
+.two-sided-label {
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-aspect-ratio: 1) {
+  /* Portrait Vertical Rendering for Two Sided Drums */
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) .drum-wrapper {
+    width: calc(var(--drum-size-val) * 1.5 * var(--drum-unit));
+    height: calc(var(--drum-size-val) * 3.5 * var(--drum-unit));
+  }
+
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) .drum-graphics-container {
+    width: calc(var(--drum-size-val) * 3.5 * var(--drum-unit)) !important;
+    height: calc(var(--drum-size-val) * 1.5 * var(--drum-unit)) !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) rotate(90deg) !important;
+  }
+
+  /* Counter-rotate the interactive hit bodies so that touch sectors (up/down/left/right) stay aligned with the viewport */
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) .drum-body {
+    transform: translate(-50%, -50%) rotate(-90deg) !important;
+  }
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) .drum-body:active,
+  .drums-grid.two-sided-drum:not(.two-sided-bongo) .drum-body.hit-flash {
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0.98) !important;
+  }
+}
+
+/* Eliminate unappealing tap/focus highlights or square bounding box outlines from interactive drum regions */
+.drum-body,
+.invisible-hit-area,
+.sector-overlay,
+.sector,
+.drum-wrapper,
+.drum-graphics-container,
+.drum-body svg,
+.drum-body svg * {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
 }

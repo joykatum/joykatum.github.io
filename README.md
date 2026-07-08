@@ -1,6 +1,6 @@
-## Joykatum
+# Joykatum: World Percussion Explorer
 
-A simple app to help simulate drums using game controller or an external Hori drum kit. Should also work on mobile devices.
+Joykatum is an interactive audio playground lets you explore and play percussion instruments from all over the world.
 
 ## Connecting to a Hori drum kit
 
@@ -16,3 +16,26 @@ The page should now be able to work on your stick.
 
 This should run as is, but sometimes just double clicking on index.html won’t work due to file restrictions so you have to do `npx run` and then navigate to the server
 
+## 🥁 How to Add a New Instrument / Drum
+
+If you want the AI to generate a brand-new drum for the app, here is a casual guide and some rules to follow:
+
+1. **Do some Visual Research first**
+   - Tell the AI to look at real-world reference images of the instrument online. This helps it create beautiful, stylish, and highly realistic SVG graphics with realistic gradients, lighting, and textures, rather than plain flat shapes.
+
+2. **Define the Sound & Code Sections**
+   - Create the instrument's sound synthesis module under `/modules/instruments/[your_instrument].js`.
+   - Add it to the main registry files under `/modules/drumTypes.js` and `/modules/drumInfo.js`.
+
+3. **Craft a Deep Description**
+   - Make sure to write a detailed description of the instrument in `/modules/drumInfo.js`.
+   - **Crucial Rule**: Include at least one fascinating detail or curiosity about the instrument's history, spiritual role, manufacturing process, or unique physical acoustics.
+   - Include authentic **Apple Music and Spotify links** under the songs list so users can hear real artists playing the instrument in professional recordings (no fake/mock URLs!).
+
+4. **Add at Least 10 Interestingly Named Patterns**
+   - Create at least **10 customized rhythm patterns** in the preset file (`/modules/patterns.js`).
+   - Do not name them boring things like "Pattern 1" or "Beat 2". Give them cool, authentic names based on traditional rhythms, genres, or moods (e.g., *Guaguancó Tumbao*, *Shamanic Ritual Pulse*, or *Retro Arcade Speedrun*).
+
+## Issues 
+
+I'm using Google's AI Studio to mostly vibe code this so unfortaunately won't take a lot of code changes and pull requests. But am always happy to get issues reported against the app to improve it. 

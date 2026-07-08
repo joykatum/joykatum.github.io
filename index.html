@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>JoykaTum</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="manifest" href="manifest.json" />
   </head>
   <body>
     <div class="app-container" id="app-container">
@@ -560,7 +563,6 @@
     <div class="cheat-sheet-footer" id="cheat-sheet-footer">
       <!-- Floating Collapse/Expand Toggle Button -->
       <button id="footer-toggle-btn" class="footer-toggle-btn" title="Toggle Footer Panel">
-        <span id="footer-toggle-text">JoyKaTum | COLLAPSE CONTROLS</span>
         <span id="footer-toggle-icon" class="toggle-icon">▼</span>
       </button>
 
@@ -769,6 +771,34 @@
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
         </button>
+      </div>
+
+      <div
+        id="author-footer"
+        style="
+          text-align: center;
+          font-size: 0.65rem;
+          color: #64748b;
+          margin-top: 12px;
+          padding-top: 8px;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          gap: 8px;
+        "
+      >
+        <span>JoyKaTum</span>
+        <span>|</span>
+        <span>Made with ❤️ from Salem OR</span>
+        <span>|</span>
+        <a
+          href="https://github.com/joykatum/joykatum.github.io"
+          target="_blank"
+          style="color: #10b981; text-decoration: none"
+          >Source</a
+        >
       </div>
     </div>
     <script type="module" src="modules/main.js"></script>

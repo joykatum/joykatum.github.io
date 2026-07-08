@@ -1,7 +1,14 @@
 import { state } from './state.js';
 import { drumTypes, instrumentMappings } from './drumTypes.js';
 import { initAudio } from './audio.js';
-import { generateDrumheadSVG } from './ui-svg.js';
+import {
+  generateDrumheadSVG,
+  generateBataSVG,
+  generateBongoSVG,
+  generateMridangamSVG,
+  generateDholSVG,
+  generateAgogoSVG
+} from './ui-svg.js';
 import { triggerHitEffect } from './ui.js';
 import { CONFIG } from './config.js';
 
@@ -42,13 +49,17 @@ export function createSectorOverlays(body, drum, headType = 'default') {
           sideMap = headType === 'macho' ? mapping.left : mapping.right;
         } else if (inst === 'agogo') {
           sideMap = headType === 'high' ? mapping.left : mapping.right;
+        } else if (inst === 'mridangam') {
+          sideMap = headType === 'thoppi' ? mapping.left : mapping.right;
+        } else if (inst === 'dhol') {
+          sideMap = headType === 'dagga' ? mapping.left : mapping.right;
         }
         if (isLong && secDef.dirLong && sideMap[secDef.dirLong] && sideMap[secDef.dirLong] !== sideMap[secDef.dir]) {
           return sideMap[secDef.dirLong];
         }
-        return sideMap[secDef.dir] || secDef.fallback;
+        return sideMap[secDef.dir] || '';
       }
-      return secDef.fallback;
+      return '';
     };
 
     const hasLongPress = () => {
@@ -62,6 +73,10 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         sideMap = headType === 'macho' ? mapping.left : mapping.right;
       } else if (inst === 'agogo') {
         sideMap = headType === 'high' ? mapping.left : mapping.right;
+      } else if (inst === 'mridangam') {
+        sideMap = headType === 'thoppi' ? mapping.left : mapping.right;
+      } else if (inst === 'dhol') {
+        sideMap = headType === 'dagga' ? mapping.left : mapping.right;
       }
       return secDef.dirLong && sideMap[secDef.dirLong] && sideMap[secDef.dirLong] !== sideMap[secDef.dir];
     };
@@ -73,7 +88,22 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         if (state.currentInstrument === 'bongo') {
           virtualDrum = Object.assign({}, drum, {
             id: headType === 'macho' ? 0 : 1,
-            pitchMult: headType === 'macho' ? 1.4 : 0.9
+            pitchMult: headType === 'macho' ? 1.0 : 0.7
+          });
+        } else if (state.currentInstrument === 'bata') {
+          virtualDrum = Object.assign({}, drum, {
+            id: headType === 'chacha' ? 1 : 0,
+            pitchMult: headType === 'chacha' ? 1.4 : 0.9
+          });
+        } else if (state.currentInstrument === 'mridangam') {
+          virtualDrum = Object.assign({}, drum, {
+            id: headType === 'thoppi' ? 0 : 1,
+            pitchMult: headType === 'thoppi' ? 0.8 : 1.4
+          });
+        } else if (state.currentInstrument === 'dhol') {
+          virtualDrum = Object.assign({}, drum, {
+            id: headType === 'dagga' ? 0 : 1,
+            pitchMult: headType === 'dagga' ? 0.8 : 1.25
           });
         } else if (state.currentInstrument === 'agogo') {
           virtualDrum = Object.assign({}, drum, {
@@ -102,15 +132,19 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         pressTimer = setTimeout(() => {
           if (isHolding) {
             const sound = getTouchSound(true);
-            triggerPlay(sound);
-            triggerHitEffect(getHitEffectId(), sound);
+            if (sound) {
+              triggerPlay(sound);
+              triggerHitEffect(getHitEffectId(), sound);
+            }
             isHolding = false;
           }
         }, CONFIG.GAMEPAD.LONG_PRESS_THRESHOLD);
       } else {
         const sound = getTouchSound(false);
-        triggerPlay(sound);
-        triggerHitEffect(getHitEffectId(), sound);
+        if (sound) {
+          triggerPlay(sound);
+          triggerHitEffect(getHitEffectId(), sound);
+        }
       }
     };
 
@@ -120,8 +154,10 @@ export function createSectorOverlays(body, drum, headType = 'default') {
         clearTimeout(pressTimer);
         if (isHolding) {
           const sound = getTouchSound(false);
-          triggerPlay(sound);
-          triggerHitEffect(getHitEffectId(), sound);
+          if (sound) {
+            triggerPlay(sound);
+            triggerHitEffect(getHitEffectId(), sound);
+          }
         }
       }
       isHolding = false;
@@ -152,11 +188,11 @@ export function createDrumBody(drum, bodyConfig) {
   const body = document.createElement('div');
   body.className = bodyConfig.className;
 
+  if (bodyConfig.boxStyle) {
+    body.style.cssText = bodyConfig.boxStyle;
+  }
   if (bodyConfig.borderRadius) {
     body.style.borderRadius = bodyConfig.borderRadius;
-  }
-  if (bodyConfig.boxStyle) {
-    body.style.cssText += bodyConfig.boxStyle;
   }
 
   body.style.width = bodyConfig.width;
@@ -186,70 +222,83 @@ export function getBodyConfigs(d, instrument) {
     const bigSize = d.sizeValue || 20;
     const smallSize = bigSize * 0.65;
 
+    // Enu (large head) on the left
     configs.push({
       type: 'enu',
-      className: 'drum-body drum-bata-big',
+      className: 'drum-body drum-bata-big invisible-hit-area',
       width: `calc(${bigSize} * var(--drum-unit))`,
       height: `calc(${bigSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_big', d.color, instrument),
+      svg: '', // Handled by background SVG
       borderRadius: '50%',
-      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
+      boxStyle: 'position: absolute; left: 20%; top: 50%; transform: translate(-50%, -50%);'
     });
 
+    // Chacha (small head) on the right
     configs.push({
       type: 'chacha',
-      className: 'drum-body drum-bata-small',
+      className: 'drum-body drum-bata-small invisible-hit-area',
       width: `calc(${smallSize} * var(--drum-unit))`,
       height: `calc(${smallSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_small', d.color, instrument),
+      svg: '', // Handled by background SVG
       borderRadius: '50%',
-      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
+      boxStyle: 'position: absolute; left: 80%; top: 50%; transform: translate(-50%, -50%);'
     });
-  } else if (instrument === 'bongo') {
-    const bigSize = d.sizeValue || 24;
-    const smallSize = bigSize * 0.75;
+  } else if (['bongo', 'mridangam', 'dhol', 'agogo'].includes(instrument)) {
+    const isMridangam = instrument === 'mridangam';
+    const isDhol = instrument === 'dhol';
+    const isAgogo = instrument === 'agogo';
+
+    let bigSize = d.sizeValue || 24;
+    let smallSize = bigSize * 0.75;
+    if (isMridangam) {
+      bigSize = 24;
+      smallSize = 20;
+    }
+    if (isDhol) {
+      bigSize = 24;
+      smallSize = 21;
+    }
+    if (isAgogo) {
+      bigSize = 22;
+      smallSize = 22 * 0.78;
+    }
+
+    let leftPosLeft = '25%';
+    let leftPosRight = '75%';
+    if (instrument === 'bongo') {
+      leftPosLeft = '25%';
+      leftPosRight = '72.5%';
+    } else if (instrument === 'mridangam') {
+      leftPosLeft = '20%';
+      leftPosRight = '80%';
+    } else if (instrument === 'dhol') {
+      leftPosLeft = '22.5%';
+      leftPosRight = '77.5%';
+    }
+
+    let leftType = isMridangam ? 'thoppi' : isDhol ? 'dagga' : isAgogo ? 'high' : 'macho';
+    let rightType = isMridangam ? 'valanthalai' : isDhol ? 'tilli' : isAgogo ? 'low' : 'hembra';
+    let leftSize = isAgogo ? smallSize : isMridangam || isDhol ? bigSize : smallSize;
+    let rightSize = isAgogo ? bigSize : isMridangam || isDhol ? smallSize : bigSize;
 
     configs.push({
-      type: 'macho',
-      className: 'drum-body drum-bongo-macho',
-      width: `calc(${smallSize} * var(--drum-unit))`,
-      height: `calc(${smallSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_macho', 'blonde-light', 'bongo_macho'),
-      borderRadius: '50%',
-      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
+      type: leftType,
+      className: 'drum-body drum-' + instrument + '-' + leftType + ' invisible-hit-area',
+      width: `calc(${leftSize} * var(--drum-unit))`,
+      height: `calc(${leftSize} * var(--drum-unit))`,
+      svg: '',
+      borderRadius: isAgogo ? '30%' : '50%',
+      boxStyle: `position: absolute; left: ${leftPosLeft}; top: 50%; transform: translate(-50%, -50%);`
     });
 
     configs.push({
-      type: 'hembra',
-      className: 'drum-body drum-bongo-hembra',
-      width: `calc(${bigSize} * var(--drum-unit))`,
-      height: `calc(${bigSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_hembra', 'blonde', 'bongo_hembra'),
-      borderRadius: '50%',
-      boxStyle: 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);'
-    });
-  } else if (instrument === 'agogo') {
-    const bigSize = d.sizeValue || 22;
-    const smallSize = bigSize * 0.78;
-
-    configs.push({
-      type: 'high',
-      className: 'drum-body drum-agogo-high',
-      width: `calc(${smallSize} * var(--drum-unit))`,
-      height: `calc(${smallSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_high', 'silver', 'agogo_high'),
-      borderRadius: '30%',
-      boxStyle: 'box-shadow: 0 10px 25px rgba(0,0,0,0.45);'
-    });
-
-    configs.push({
-      type: 'low',
-      className: 'drum-body drum-agogo-low',
-      width: `calc(${bigSize} * var(--drum-unit))`,
-      height: `calc(${bigSize} * var(--drum-unit))`,
-      svg: generateDrumheadSVG(d.id + '_low', 'wood', 'agogo_low'),
-      borderRadius: '30%',
-      boxStyle: 'box-shadow: 0 10px 25px rgba(0,0,0,0.45);'
+      type: rightType,
+      className: 'drum-body drum-' + instrument + '-' + rightType + ' invisible-hit-area',
+      width: `calc(${rightSize} * var(--drum-unit))`,
+      height: `calc(${rightSize} * var(--drum-unit))`,
+      svg: '',
+      borderRadius: isAgogo ? '30%' : '50%',
+      boxStyle: `position: absolute; left: ${leftPosRight}; top: 50%; transform: translate(-50%, -50%);`
     });
   } else {
     const sizeVal = d.sizeValue || 20;
@@ -258,15 +307,6 @@ export function getBodyConfigs(d, instrument) {
 
     if (instrument === 'cajon') {
       borderRadius = '8%';
-      boxStyle = 'border: 4px solid #8b5a2b; box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.5);';
-    } else if (instrument === 'timbales') {
-      boxStyle = 'border: 6px solid #d4af37; box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.4);';
-    } else if (['darbuka', 'doumbek'].includes(instrument)) {
-      boxStyle = 'border: 8px solid #a9a9a9; box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 10px 25px rgba(0,0,0,0.4);';
-    } else if (['djembe', 'congas', 'bongos', 'bata'].includes(instrument)) {
-      boxStyle = 'border: 6px solid #5c4033; box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);';
-    } else if (instrument === 'frame' || instrument === 'tar') {
-      boxStyle = 'border: 2px solid #deb887; box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.3);';
     }
 
     configs.push({
@@ -296,53 +336,64 @@ export function buildDrumWrapper(d) {
 
   const instrument = state.currentInstrument;
 
-  if (instrument === 'bata') {
-    wrapper.style.display = 'flex';
-    wrapper.style.flexDirection = 'column';
-    wrapper.style.gap = '2vh';
-  } else if (instrument === 'bongo') {
-    wrapper.style.display = 'flex';
-    wrapper.style.flexDirection = 'row';
-    wrapper.style.alignItems = 'center';
-    wrapper.style.justifyContent = 'center';
-    wrapper.style.gap = '2vw';
-    wrapper.classList.add('conjoined-bongo-set');
-  } else if (instrument === 'agogo') {
-    wrapper.style.display = 'flex';
-    wrapper.style.flexDirection = 'row';
-    wrapper.style.alignItems = 'flex-end';
-    wrapper.style.justifyContent = 'center';
-    wrapper.style.gap = '2vw';
-    wrapper.classList.add('conjoined-agogo-set');
+  if (['bata', 'bongo', 'mridangam', 'dhol', 'agogo'].includes(instrument)) {
+    wrapper.style.display = 'block';
+    wrapper.style.position = 'relative';
+    const bigSize = d.sizeValue || 20;
+
+    // Set custom property for CSS to use
+    wrapper.style.setProperty('--drum-size-val', bigSize);
+
+    // Add graphics container so we can rotate it without rotating labels
+    const graphicsContainer = document.createElement('div');
+    graphicsContainer.className = 'drum-graphics-container';
+    graphicsContainer.style.position = 'absolute';
+    graphicsContainer.style.top = '0';
+    graphicsContainer.style.left = '0';
+    graphicsContainer.style.width = '100%';
+    graphicsContainer.style.height = '100%';
+
+    // Add the full SVG as a background layer
+    const bgSvg = document.createElement('div');
+    bgSvg.className = instrument + '-full-bg';
+    bgSvg.style.position = 'absolute';
+    bgSvg.style.top = '0';
+    bgSvg.style.left = '0';
+    bgSvg.style.width = '100%';
+    bgSvg.style.height = '100%';
+    bgSvg.style.zIndex = '0';
+
+    if (instrument === 'bata') bgSvg.innerHTML = generateBataSVG(d.id, d.color);
+    else if (instrument === 'bongo') bgSvg.innerHTML = generateBongoSVG(d.id, d.color);
+    else if (instrument === 'mridangam') bgSvg.innerHTML = generateMridangamSVG(d.id, d.color);
+    else if (instrument === 'dhol') bgSvg.innerHTML = generateDholSVG(d.id, d.color);
+    else if (instrument === 'agogo') bgSvg.innerHTML = generateAgogoSVG(d.id, d.color);
+
+    graphicsContainer.appendChild(bgSvg);
+
+    const configs = getBodyConfigs(d, instrument);
+    configs.forEach((cfg) => {
+      const bodyEl = createDrumBody(d, cfg);
+      graphicsContainer.appendChild(bodyEl);
+    });
+
+    wrapper.appendChild(graphicsContainer);
+  } else {
+    const configs = getBodyConfigs(d, instrument);
+    configs.forEach((cfg) => {
+      const bodyEl = createDrumBody(d, cfg);
+      wrapper.appendChild(bodyEl);
+    });
   }
 
-  // Get body configs and build each body element
-  const configs = getBodyConfigs(d, instrument);
-  configs.forEach((cfg, idx) => {
-    const bodyEl = createDrumBody(d, cfg);
-    wrapper.appendChild(bodyEl);
-
-    // Insert connecting bridge/handle visual decorations between the sub-bodies
-    if (idx === 0) {
-      if (instrument === 'bongo') {
-        const bridge = document.createElement('div');
-        bridge.className = 'bongo-bridge';
-        wrapper.appendChild(bridge);
-      } else if (instrument === 'agogo') {
-        const handle = document.createElement('div');
-        handle.className = 'agogo-handle';
-        wrapper.appendChild(handle);
-      } else if (instrument === 'bata') {
-        const bodyPart = document.createElement('div');
-        bodyPart.className = 'bata-hourglass-body';
-        wrapper.appendChild(bodyPart);
-      }
-    }
-  });
-
-  // Name & Button Indicator Labels under the conga
+  // Name & Button Indicator Labels under the drum
   const labelContainer = document.createElement('div');
   labelContainer.className = 'drum-label-container';
+  if (['bata', 'bongo', 'mridangam', 'dhol', 'agogo'].includes(instrument)) {
+    labelContainer.style.position = 'absolute';
+    // Position handled by CSS now for easier media queries
+    labelContainer.classList.add('two-sided-label');
+  }
 
   const nameSpan = document.createElement('span');
   nameSpan.className = 'drum-name';

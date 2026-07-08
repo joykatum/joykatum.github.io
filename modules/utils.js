@@ -35,3 +35,31 @@ export function compareStrings(a, b) {
 export function compareByProperty(propName) {
   return (a, b) => compareStrings(a[propName], b[propName]);
 }
+
+/**
+ * Converts a string to Title Case, capitalizing the first letter of each word
+ * including parts separated by hyphens or slashes.
+ * @param {string} str - The source string.
+ * @returns {string} The Title Cased string.
+ */
+export function toTitleCase(str) {
+  if (!str) return '';
+  return str
+    .split(' ')
+    .map((word) => {
+      if (!word) return '';
+      return word
+        .split('/')
+        .map((subword) => {
+          return subword
+            .split('-')
+            .map((w) => {
+              if (!w) return '';
+              return w.charAt(0).toUpperCase() + w.slice(1);
+            })
+            .join('-');
+        })
+        .join('/');
+    })
+    .join(' ');
+}

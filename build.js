@@ -33,6 +33,9 @@ try {
   console.log('Copying static assets from root to /dist...');
   fs.copyFileSync(path.join(__dirname, 'index.html'), path.join(destDir, 'index.html'));
   fs.copyFileSync(path.join(__dirname, 'styles.css'), path.join(destDir, 'styles.css'));
+  fs.copyFileSync(path.join(__dirname, 'icon.png'), path.join(destDir, 'icon.png'));
+  fs.copyFileSync(path.join(__dirname, 'favicon.png'), path.join(destDir, 'favicon.png'));
+  fs.copyFileSync(path.join(__dirname, 'manifest.json'), path.join(destDir, 'manifest.json'));
   copyRecursive(path.join(__dirname, 'modules'), path.join(destDir, 'modules'));
   console.log('Static build succeeded! All files copied to /dist');
 } catch (err) {

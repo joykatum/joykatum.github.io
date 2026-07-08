@@ -1,8 +1,8 @@
 import { setupEducationalDialog, showDrumInfo, showPatternInfo } from './ui-dialogs.js';
 import { setupXYPad } from './ui-xypad.js';
-import { generateDrumheadSVG } from './ui-svg.js';
+import { generateDrumheadSVG, ensureInstrumentLoaded } from './ui-svg.js';
 import { buildDrumWrapper } from './drumHandler.js';
-import { compareStrings } from './utils.js';
+import { compareStrings, toTitleCase } from './utils.js';
 // UI Rendering, Animations, SVG Drums, XY Pad and Controls Module
 import { state } from './state.js';
 import {
@@ -37,8 +37,21 @@ import { startPattern, stopPattern } from './sequencer.js';
 import { instrumentPatterns } from './patterns.js';
 import { drumInfo, patternInfo, drumTags } from './drumInfo.js';
 
-let selectedRegion = localStorage.getItem('selectedRegion') || 'All';
-let selectedType = localStorage.getItem('selectedType') || 'All';
+function getStoredFilter(key) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error(`Error loading ${key}`, e);
+  }
+  return ['All'];
+}
+
+let selectedRegions = getStoredFilter('selectedRegions');
+let selectedPlayStyles = getStoredFilter('selectedPlayStyles');
+let selectedMaterials = getStoredFilter('selectedMaterials');
+let selectedAttributes = getStoredFilter('selectedAttributes');
+let selectedCategories = getStoredFilter('selectedCategories');
 
 // Custom Pattern Creator state
 export let currentEditingPattern = { name: '', stepCount: 16, steps: {} };
@@ -309,35 +322,66 @@ export function setupTagFilters() {
 
   const regions = [
     'All',
-    'Caribbean',
-    'West Africa',
-    'South America',
-    'Middle East',
     'Asia',
+    'Caribbean',
     'Europe',
+    'Middle East',
+    'Modern',
     'North America',
-    'Modern'
+    'South America',
+    'West Africa'
   ];
-  const types = [
-    'All',
-    'Hand',
-    'Stick',
-    'Frame',
-    'Tuned',
-    'Clay',
-    'Metal',
-    'Wood',
-    'Shaker',
-    'Folk',
-    'Effects',
-    'Sacred',
-    'Multiple Sizes',
-    'Two-Headed',
-    'Not Really a Drum',
-    'Toy'
-  ];
+  const playStyles = ['All', 'Hand', 'Stick', 'Frame', 'Shaker'];
+  const materials = ['All', 'Clay', 'Metal', 'Wood'];
+  const attributes = ['All', 'Tuned', 'Two-Headed', 'Multiple Sizes'];
+  const categories = ['All', 'Folk', 'Sacred', 'Effects', 'Toy', 'Not Really a Drum'];
 
-  const renderFilterRow = (title, items, isRegion) => {
+  const checkHasMatch = (rowId, item) => {
+    if (item === 'All') return true;
+
+    return Object.keys(drumTypes).some((key) => {
+      const tags = drumTags[key] || { region: 'Modern', type: 'Hand', features: [] };
+
+      // Check match for this item in this row first
+      let itemMatches = false;
+      if (rowId === 'region') {
+        itemMatches = tags.region === item;
+      } else {
+        itemMatches = checkTypeMatch(key, item, tags);
+      }
+      if (!itemMatches) return false;
+
+      // Now check if it matches all OTHER rows' selections (excluding the current rowId filter)
+      if (rowId !== 'region') {
+        const matchesRegion = selectedRegions.includes('All') || selectedRegions.includes(tags.region);
+        if (!matchesRegion) return false;
+      }
+      if (rowId !== 'playStyle') {
+        const matchesPlayStyle =
+          selectedPlayStyles.includes('All') || selectedPlayStyles.some((val) => checkTypeMatch(key, val, tags));
+        if (!matchesPlayStyle) return false;
+      }
+      if (rowId !== 'material') {
+        const matchesMaterial =
+          selectedMaterials.includes('All') || selectedMaterials.some((val) => checkTypeMatch(key, val, tags));
+        if (!matchesMaterial) return false;
+      }
+      if (rowId !== 'attribute') {
+        const matchesAttribute =
+          selectedAttributes.includes('All') || selectedAttributes.some((val) => checkTypeMatch(key, val, tags));
+        if (!matchesAttribute) return false;
+      }
+      if (rowId !== 'category') {
+        const matchesCategory =
+          selectedCategories.includes('All') || selectedCategories.some((val) => checkTypeMatch(key, val, tags));
+        if (!matchesCategory) return false;
+      }
+
+      return true;
+    });
+  };
+
+  const renderFilterRow = (title, items, rowId, activeVals) => {
     const friendlyNames = {
       Caribbean: 'Carib',
       'West Africa': 'W. Africa',
@@ -361,18 +405,8 @@ export function setupTagFilters() {
         <div class="tag-scroll-row" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; align-items: center;">
           ${items
             .map((item) => {
-              const activeVal = isRegion ? selectedRegion : selectedType;
-              const isSelected = activeVal === item;
-
-              let hasMatch = true;
-              if (!isRegion && item !== 'All') {
-                hasMatch = Object.keys(drumTypes).some((key) => {
-                  const tags = drumTags[key] || { region: 'Modern', type: 'Hand', features: [] };
-                  const matchesRegion = selectedRegion === 'All' || tags.region === selectedRegion;
-                  const matchesType = checkTypeMatch(key, item, tags);
-                  return matchesRegion && matchesType;
-                });
-              }
+              const isSelected = activeVals.includes(item);
+              const hasMatch = checkHasMatch(rowId, item);
 
               const fontSize = hasMatch ? '0.75rem' : '0.62rem';
               const padding = hasMatch ? '3px 8px' : '1.5px 5px';
@@ -382,7 +416,7 @@ export function setupTagFilters() {
               return `
               <button 
                 class="tag-filter-btn ${isSelected ? 'active-tag-filter' : ''}" 
-                data-is-region="${isRegion}" 
+                data-row-id="${rowId}" 
                 data-value="${item}"
                 style="background: ${isSelected ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.03)'}; 
                        border: 1px solid ${isSelected ? '#10b981' : 'rgba(255, 255, 255, 0.08)'}; 
@@ -405,24 +439,64 @@ export function setupTagFilters() {
   };
 
   container.innerHTML = `
-    ${renderFilterRow('🌍 Origin', regions, true)}
-    ${renderFilterRow('🥁 Style', types, false)}
+    ${renderFilterRow('🌍 Origin', regions, 'region', selectedRegions)}
+    ${renderFilterRow('🥁 Play Style', playStyles, 'playStyle', selectedPlayStyles)}
+    ${renderFilterRow('🧱 Material', materials, 'material', selectedMaterials)}
+    ${renderFilterRow('🏷️ Attributes', attributes, 'attribute', selectedAttributes)}
+    ${renderFilterRow('🎭 Category', categories, 'category', selectedCategories)}
   `;
 
   // Bind click events
   container.querySelectorAll('.tag-filter-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       initAudio();
-      const isRegion = btn.dataset.isRegion === 'true';
+      const rowId = btn.dataset.rowId;
       const val = btn.dataset.value;
 
-      if (isRegion) {
-        selectedRegion = val;
-        localStorage.setItem('selectedRegion', selectedRegion);
-      } else {
-        selectedType = val;
-        localStorage.setItem('selectedType', selectedType);
+      let selectedArr;
+      let storageKey;
+      if (rowId === 'region') {
+        selectedArr = selectedRegions;
+        storageKey = 'selectedRegions';
+      } else if (rowId === 'playStyle') {
+        selectedArr = selectedPlayStyles;
+        storageKey = 'selectedPlayStyles';
+      } else if (rowId === 'material') {
+        selectedArr = selectedMaterials;
+        storageKey = 'selectedMaterials';
+      } else if (rowId === 'attribute') {
+        selectedArr = selectedAttributes;
+        storageKey = 'selectedAttributes';
+      } else if (rowId === 'category') {
+        selectedArr = selectedCategories;
+        storageKey = 'selectedCategories';
       }
+
+      if (val === 'All') {
+        selectedArr = ['All'];
+      } else {
+        selectedArr = selectedArr.filter((r) => r !== 'All');
+        if (selectedArr.includes(val)) {
+          selectedArr = selectedArr.filter((r) => r !== val);
+        } else {
+          selectedArr.push(val);
+        }
+        if (selectedArr.length === 0) selectedArr = ['All'];
+      }
+
+      if (rowId === 'region') {
+        selectedRegions = selectedArr;
+      } else if (rowId === 'playStyle') {
+        selectedPlayStyles = selectedArr;
+      } else if (rowId === 'material') {
+        selectedMaterials = selectedArr;
+      } else if (rowId === 'attribute') {
+        selectedAttributes = selectedArr;
+      } else if (rowId === 'category') {
+        selectedCategories = selectedArr;
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(selectedArr));
 
       setupTagFilters();
       applyFilters();
@@ -432,12 +506,31 @@ export function setupTagFilters() {
 
 export function setTagFilters(region, type) {
   if (region !== undefined) {
-    selectedRegion = region;
-    localStorage.setItem('selectedRegion', selectedRegion);
+    selectedRegions = [region];
+    localStorage.setItem('selectedRegions', JSON.stringify(selectedRegions));
   }
   if (type !== undefined) {
-    selectedType = type;
-    localStorage.setItem('selectedType', selectedType);
+    const playStyles = ['Hand', 'Stick', 'Frame', 'Shaker'];
+    const materials = ['Clay', 'Metal', 'Wood'];
+    const attributes = ['Tuned', 'Two-Headed', 'Multiple Sizes'];
+    const categories = ['Folk', 'Sacred', 'Effects', 'Toy', 'Not Really a Drum'];
+
+    if (playStyles.includes(type)) {
+      selectedPlayStyles = [type];
+      localStorage.setItem('selectedPlayStyles', JSON.stringify(selectedPlayStyles));
+    } else if (materials.includes(type)) {
+      selectedMaterials = [type];
+      localStorage.setItem('selectedMaterials', JSON.stringify(selectedMaterials));
+    } else if (attributes.includes(type)) {
+      selectedAttributes = [type];
+      localStorage.setItem('selectedAttributes', JSON.stringify(selectedAttributes));
+    } else if (categories.includes(type)) {
+      selectedCategories = [type];
+      localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
+    } else {
+      selectedPlayStyles = [type];
+      localStorage.setItem('selectedPlayStyles', JSON.stringify(selectedPlayStyles));
+    }
   }
   setupTagFilters();
   applyFilters();
@@ -455,10 +548,17 @@ export function applyFilters() {
     const drum = drumTypes[key];
     const tags = drumTags[key] || { region: 'Modern', type: 'Hand', features: [] };
 
-    const matchesRegion = selectedRegion === 'All' || tags.region === selectedRegion;
-    const matchesType = selectedType === 'All' || checkTypeMatch(key, selectedType, tags);
+    const matchesRegion = selectedRegions.includes('All') || selectedRegions.includes(tags.region);
+    const matchesPlayStyle =
+      selectedPlayStyles.includes('All') || selectedPlayStyles.some((val) => checkTypeMatch(key, val, tags));
+    const matchesMaterial =
+      selectedMaterials.includes('All') || selectedMaterials.some((val) => checkTypeMatch(key, val, tags));
+    const matchesAttribute =
+      selectedAttributes.includes('All') || selectedAttributes.some((val) => checkTypeMatch(key, val, tags));
+    const matchesCategory =
+      selectedCategories.includes('All') || selectedCategories.some((val) => checkTypeMatch(key, val, tags));
 
-    if (matchesRegion && matchesType) {
+    if (matchesRegion && matchesPlayStyle && matchesMaterial && matchesAttribute && matchesCategory) {
       matchingDrums.push({ key, name: drum.name });
     }
   });
@@ -610,7 +710,12 @@ export function applyFilters() {
   // Update filter active button styling
   const filterBtn = document.getElementById('settings-toggle-btn');
   if (filterBtn) {
-    const hasActiveFilters = selectedRegion !== 'All' || selectedType !== 'All';
+    const hasActiveFilters =
+      !selectedRegions.includes('All') ||
+      !selectedPlayStyles.includes('All') ||
+      !selectedMaterials.includes('All') ||
+      !selectedAttributes.includes('All') ||
+      !selectedCategories.includes('All');
     if (hasActiveFilters) {
       filterBtn.classList.add('filter-selected');
     } else {
@@ -625,7 +730,14 @@ export function triggerHitEffect(drumId, hitType) {
   let suffix = '';
   if (
     typeof drumId === 'string' &&
-    (drumId.includes('_macho') || drumId.includes('_hembra') || drumId.includes('_high') || drumId.includes('_low'))
+    (drumId.includes('_macho') ||
+      drumId.includes('_hembra') ||
+      drumId.includes('_high') ||
+      drumId.includes('_low') ||
+      drumId.includes('_thoppi') ||
+      drumId.includes('_valanthalai') ||
+      drumId.includes('_dagga') ||
+      drumId.includes('_tilli'))
   ) {
     const parts = drumId.split('_');
     finalId = parts[0];
@@ -641,7 +753,7 @@ export function triggerHitEffect(drumId, hitType) {
 
   // Resolve custom shortName from instrumentTouches or format hitType nicely (no underscores, friendly heel/toe)
   const inst = state.currentInstrument;
-  const touches = instrumentTouches[inst] || instrumentTouches.conga;
+  const touches = instrumentTouches[inst] || instrumentTouches.conga || [];
   const touch = touches.find((t) => t.id === hitType);
   let displayText = touch ? touch.shortName : hitType;
   displayText = displayText.replace(/_/g, ' ').replace('heeltoe', 'heel/toe').toUpperCase();
@@ -669,21 +781,21 @@ export function triggerHitEffect(drumId, hitType) {
       body = wrapper.querySelector('.drum-bata-small');
     }
   } else if (state.currentInstrument === 'bongo') {
-    if (suffix === 'macho') {
-      body = wrapper.querySelector('.drum-bongo-macho');
-    } else if (suffix === 'hembra') {
-      body = wrapper.querySelector('.drum-bongo-hembra');
-    } else {
-      body = wrapper.querySelector('.drum-bongo-macho');
-    }
+    if (suffix === 'macho') body = wrapper.querySelector('.drum-bongo-macho');
+    else if (suffix === 'hembra') body = wrapper.querySelector('.drum-bongo-hembra');
+    else body = wrapper.querySelector('.drum-bongo-macho');
   } else if (state.currentInstrument === 'agogo') {
-    if (suffix === 'high') {
-      body = wrapper.querySelector('.drum-agogo-high');
-    } else if (suffix === 'low') {
-      body = wrapper.querySelector('.drum-agogo-low');
-    } else {
-      body = wrapper.querySelector('.drum-agogo-high');
-    }
+    if (suffix === 'high') body = wrapper.querySelector('.drum-agogo-high');
+    else if (suffix === 'low') body = wrapper.querySelector('.drum-agogo-low');
+    else body = wrapper.querySelector('.drum-agogo-high');
+  } else if (state.currentInstrument === 'mridangam') {
+    if (suffix === 'thoppi') body = wrapper.querySelector('.drum-mridangam-thoppi');
+    else if (suffix === 'valanthalai') body = wrapper.querySelector('.drum-mridangam-valanthalai');
+    else body = wrapper.querySelector('.drum-mridangam-thoppi');
+  } else if (state.currentInstrument === 'dhol') {
+    if (suffix === 'dagga') body = wrapper.querySelector('.drum-dhol-dagga');
+    else if (suffix === 'tilli') body = wrapper.querySelector('.drum-dhol-tilli');
+    else body = wrapper.querySelector('.drum-dhol-dagga');
   }
 
   if (body) {
@@ -877,7 +989,7 @@ export function populateTryEffectsPills() {
   container.appendChild(titleSpan);
 
   const inst = state.currentInstrument;
-  const touches = instrumentTouches[inst] || instrumentTouches.conga;
+  const touches = instrumentTouches[inst] || instrumentTouches.conga || [];
 
   const playBtn = document.createElement('button');
   playBtn.className = 'try-btn play-pattern-btn';
@@ -909,7 +1021,10 @@ export function populateTryEffectsPills() {
     const btn = document.createElement('button');
     btn.className = 'try-btn';
     btn.dataset.sound = touch.id;
-    btn.innerText = touch.label.replace(/\s*\(.*?\)/g, '').trim();
+    btn.innerText = touch.label
+      .replace(/\s*\(.*?\)/g, '')
+      .trim()
+      .toUpperCase();
     if (touch.description) {
       btn.title = touch.description.replace(/\s*\(.*?\)/g, '').trim();
     }
@@ -943,9 +1058,25 @@ export function populateTryEffectsPills() {
 }
 
 // Render drums dynamically inside grid
-export function renderDrums() {
+export async function renderDrums() {
   const stage = document.getElementById('drums-stage');
   if (!stage) return;
+
+  // Show a beautifully polished, clean loading pulse while the instrument's module is dynamically fetched
+  const hasContent = stage.children.length > 0;
+  if (!hasContent) {
+    stage.className = 'flex items-center justify-center min-h-[250px]';
+    stage.innerHTML = `
+      <div class="flex flex-col items-center gap-3 py-12">
+        <div class="w-10 h-10 rounded-full border-2 border-amber-500/80 border-t-transparent animate-spin"></div>
+        <span class="text-xs font-mono text-zinc-400 uppercase tracking-widest animate-pulse">Loading Instrument...</span>
+      </div>
+    `;
+  }
+
+  // Pre-load the selected active instrument's custom SVG module dynamically
+  await ensureInstrumentLoaded(state.currentInstrument);
+
   stage.innerHTML = '';
 
   const visible = getVisibleDrums();
@@ -958,7 +1089,9 @@ export function renderDrums() {
 
   // Set dynamic count class for responsive sizing/scaling
   let extraClass = '';
-  if (state.currentInstrument === 'bata') extraClass = ' two-sided-drum';
+  if (['bata', 'bongo', 'mridangam', 'dhol', 'agogo'].includes(state.currentInstrument)) {
+    extraClass = ` two-sided-drum two-sided-${state.currentInstrument}`;
+  }
   stage.className = `drums-grid count-${visible.length}${extraClass}`;
 
   // Update the sub-drum dropdown selection if it's currently showing different options
@@ -1059,8 +1192,10 @@ export function updateActiveDrumsForVisible() {
   }
 }
 
-export function handleInstrumentChange(newInst) {
+export async function handleInstrumentChange(newInst) {
   initAudio();
+  // Dynamically load the active instrument spec, sounds, touches, and mappings
+  await ensureInstrumentLoaded(newInst);
   state.currentInstrument = newInst;
   localStorage.setItem('currentInstrument', state.currentInstrument);
 
@@ -1169,14 +1304,17 @@ export function updateControllerCheatSheet() {
   if (!leftEl || !rightEl) return;
 
   const inst = state.currentInstrument;
-  const mappingObj = instrumentMappings[inst] || instrumentMappings.conga;
-  const touches = instrumentTouches[inst] || instrumentTouches.conga;
+  const mappingObj = instrumentMappings[inst] || instrumentMappings.conga || { left: {}, right: {} };
+  const touches = instrumentTouches[inst] || instrumentTouches.conga || [];
 
   const getDirectionLabel = (mapping, direction, tList) => {
     const touchId = mapping[direction];
     const touch = tList.find((t) => t.id === touchId);
     if (touch) {
-      return touch.label.replace(/\s*\(.*?\)/g, '').trim();
+      return touch.label
+        .replace(/\s*\(.*?\)/g, '')
+        .trim()
+        .toUpperCase();
     }
     return (touchId || '').replace(/_/g, ' ').toUpperCase();
   };
@@ -1648,11 +1786,9 @@ if (footerEl && footerToggleBtn) {
   const applyFooterCollapsedState = () => {
     if (isFooterCollapsed) {
       footerEl.classList.add('collapsed');
-      if (footerToggleText) footerToggleText.textContent = 'JoyKaTum | SHOW CONTROLS';
       if (footerToggleIcon) footerToggleIcon.textContent = '▲';
     } else {
       footerEl.classList.remove('collapsed');
-      if (footerToggleText) footerToggleText.textContent = 'JoyKaTum | COLLAPSE CONTROLS';
       if (footerToggleIcon) footerToggleIcon.textContent = '▼';
     }
   };

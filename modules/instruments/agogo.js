@@ -1,0 +1,97 @@
+import { playMembrane, playNoise } from '../audio.js';
+import { state } from '../state.js';
+
+export const agogo = {
+  name: 'Agogô',
+  defaultLeft: 0,
+  defaultRight: 0,
+  drums: [
+    {
+      id: 0,
+      label: 'Agogô Bells',
+      pitchMult: 1.0,
+      color: 'silver',
+      sizeValue: 22
+    }
+  ],
+  sounds: {
+    high_strike: (d) => playMembrane(480 * d.pitchMult, 0.4, 1.0, false),
+    low_strike: (d) => playMembrane(380 * d.pitchMult, 0.55, 1.0, false),
+    clap: (d) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true),
+    stick_drag: (d) => {
+      playMembrane(600 * d.pitchMult, 0.03, 1.0, true);
+      playNoise(0.04, 2500, state.currentTiltVolume * 0.7);
+      setTimeout(() => {
+        playMembrane(650 * d.pitchMult, 0.03, 1.0, true);
+        playNoise(0.03, 2800, state.currentTiltVolume * 0.6);
+      }, 50);
+      setTimeout(() => {
+        playMembrane(700 * d.pitchMult, 0.04, 1.0, true);
+        playNoise(0.03, 3000, state.currentTiltVolume * 0.5);
+      }, 100);
+    }
+  },
+  generateSVG: (id, colorType) => {
+    let bellGradient = `<radialGradient id="bell-${id}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#fff9db"/><stop offset="30%" stop-color="#f59e0b"/><stop offset="65%" stop-color="#b45309"/><stop offset="90%" stop-color="#451a03"/><stop offset="100%" stop-color="#1c0a00"/></radialGradient>`;
+    let handleGradient = `<linearGradient id="handle-${id}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#451a03"/><stop offset="35%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#fff9db"/><stop offset="65%" stop-color="#b45309"/><stop offset="100%" stop-color="#451a03"/></linearGradient>`;
+
+    if (colorType === 'chrome') {
+      bellGradient = `<radialGradient id="bell-${id}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#e2e8f0"/><stop offset="65%" stop-color="#94a3b8"/><stop offset="90%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></radialGradient>`;
+      handleGradient = `<linearGradient id="handle-${id}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1e293b"/><stop offset="35%" stop-color="#e2e8f0"/><stop offset="50%" stop-color="#ffffff"/><stop offset="65%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>`;
+    }
+
+    return `
+      <svg viewBox="0 0 400 160" style="width:100%; height:100%; pointer-events:none;" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          ${bellGradient}
+          ${handleGradient}
+          
+          <filter id="shadow-${id}" x="-15%" y="-15%" width="130%" height="130%">
+              <feDropShadow dx="3" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.7"/>
+          </filter>
+          
+          <radialGradient id="opening-${id}" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#020408"/>
+              <stop offset="85%" stop-color="#1e293b"/>
+              <stop offset="100%" stop-color="#090d16"/>
+          </radialGradient>
+        </defs>
+          
+        <!-- Drop shadows -->
+        <path d="M 40 145 L 150 145 L 140 156 L 50 156 Z" fill="#010204" opacity="0.75" filter="blur(5px)"/>
+        <path d="M 250 145 L 360 145 L 350 156 L 260 156 Z" fill="#010204" opacity="0.75" filter="blur(5px)"/>
+          
+        <!-- Elegant 3D U-shape Handle connecting the two bells -->
+        <path d="M 140 80 C 180 135 220 135 260 80" fill="none" stroke="url(#handle-${id})" stroke-width="14" stroke-linecap="round" filter="url(#shadow-${id})"/>
+        <path d="M 140 80 C 180 135 220 135 260 80" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.4" filter="blur(1px)"/>
+          
+        <!-- High Bell (Left) - Smaller cone, 25% center, cx=100 -->
+        <g filter="url(#shadow-${id})">
+          <!-- Bell Body (Cone shape going inward) -->
+          <path d="M 100 20 L 145 68 L 145 92 L 100 140 C 65 140 55 80 100 20 Z" fill="url(#bell-${id})"/>
+          <!-- Soft golden 3D metallic highlights -->
+          <path d="M 100 20 L 145 68 L 145 92 L 100 140 C 65 140 55 80 100 20 Z" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.25"/>
+          
+          <!-- Bell opening rim & hollow dark inside -->
+          <ellipse cx="100" cy="80" rx="43" ry="58" fill="url(#opening-${id})" stroke="url(#bell-${id})" stroke-width="5.5"/>
+          <ellipse cx="100" cy="80" rx="43" ry="58" fill="none" stroke="#000000" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="100" cy="80" rx="40" ry="55" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.18"/>
+        </g>
+          
+        <!-- Low Bell (Right) - Larger cone, 75% center, cx=300 -->
+        <g filter="url(#shadow-${id})">
+          <!-- Bell Body (Cone shape going inward) -->
+          <path d="M 300 6 L 255 62 L 255 98 L 300 154 C 255 154 245 80 300 6 Z" fill="url(#bell-${id})"/>
+          <!-- Soft golden 3D metallic highlights -->
+          <path d="M 300 6 L 255 62 L 255 98 L 300 154 C 255 154 245 80 300 6 Z" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.25"/>
+          
+          <!-- Bell opening rim & hollow dark inside -->
+          <ellipse cx="290" cy="80" rx="78.5" ry="78.5" fill="none" stroke="none"/>
+          <ellipse cx="290" cy="80" rx="58" ry="73.5" fill="url(#opening-${id})" stroke="url(#bell-${id})" stroke-width="6"/>
+          <ellipse cx="290" cy="80" rx="58" ry="73.5" fill="none" stroke="#000000" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="290" cy="80" rx="54" ry="69.5" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.18"/>
+        </g>
+      </svg>
+    `;
+  }
+};

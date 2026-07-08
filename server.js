@@ -20,7 +20,7 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon'
 };
 
-const ALLOWED_STATIC_FILES = ['/index.html', '/styles.css'];
+const ALLOWED_STATIC_FILES = ['/index.html', '/styles.css', '/icon.jpg', '/favicon.ico', '/manifest.json'];
 
 const server = http.createServer((req, res) => {
   // Sanitize request path and default to index.html

@@ -3,6 +3,7 @@ import { state } from './state.js';
 import { initAudio } from './audio.js';
 import { drumTypes, instrumentTouches } from './drumTypes.js';
 import { setTagFilters } from './ui.js';
+import { toTitleCase } from './utils.js';
 
 export function setupEducationalDialog() {
   const drumBtn = document.getElementById('drum-info-btn');
@@ -297,7 +298,7 @@ export function showTapsInfo(instrumentId) {
       html += `
         <div class="info-list-item" style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
           <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-weight: 800; color: #10b981; font-size: 0.95rem;">${touch.label}</span>
+            <span style="font-weight: 800; color: #10b981; font-size: 0.95rem;">${touch.label.toUpperCase()}</span>
           </div>
           <div style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.4; margin-top: 2px;">
             ${touch.description || ''}
