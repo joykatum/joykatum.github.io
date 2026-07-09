@@ -1,13 +1,13 @@
 :root {
-  --bg: #090a14;
-  --bg-gradient: radial-gradient(circle at center, #1b173a 0%, #090a14 100%);
-  --bg-panel: rgba(17, 18, 36, 0.85);
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #e2e8f0;
-  --text-muted: #64748b;
+  --bg: #eedfca; /* Warm cream/beige background from the image */
+  --bg-gradient: none;
+  --bg-panel: #77a195; /* Muted teal/green board background from the image */
+  --border: #302217; /* Robust dark-brown outlines/borders */
+  --text: #302217; /* Dark-brown high-contrast text */
+  --text-muted: rgba(48, 34, 23, 0.7);
 
-  --left-active-glow: 0 0 25px rgba(249, 115, 22, 0.8), inset 0 0 15px rgba(249, 115, 22, 0.4);
-  --right-active-glow: 0 0 25px rgba(59, 130, 246, 0.8), inset 0 0 15px rgba(59, 130, 246, 0.4);
+  --left-active-glow: none;
+  --right-active-glow: none;
 
   --scale: 1;
 }
@@ -21,10 +21,10 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
-  background-image: var(--bg-gradient);
+  background: var(--bg) !important;
   color: var(--text);
   font-family:
+    'Space Grotesk',
     'Inter',
     -apple-system,
     BlinkMacSystemFont,
@@ -93,7 +93,6 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 24px 110px 24px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -105,6 +104,8 @@ header p {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  container-type: size;
+  padding: 60px 24px 75px 24px;
 }
 
 /* Drums Layout Grid */
@@ -114,7 +115,7 @@ header p {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  gap: 3vw;
+  gap: 3cqw;
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -130,41 +131,41 @@ header p {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: 1.5vw;
+    gap: 1.5cqw;
   }
 
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
-    --drum-unit: min(3.5vh, 3vw);
+    --drum-unit: min(3.5cqh, 3cqw);
   }
   .drums-grid.count-2 {
-    --drum-unit: min(3.5vh, 2vw);
+    --drum-unit: min(3.5cqh, 2cqw);
   }
   .drums-grid.count-3 {
-    --drum-unit: min(3.5vh, 1.3vw);
+    --drum-unit: min(3.5cqh, 1.3cqw);
   }
   .drums-grid.count-4 {
-    --drum-unit: min(3vh, 1vw);
+    --drum-unit: min(3cqh, 1cqw);
   }
   .drums-grid.count-5 {
-    --drum-unit: min(2.8vh, 0.8vw);
+    --drum-unit: min(2.8cqh, 0.8cqw);
   }
 
   /* Specific sizes for horizontal layout of Two-Sided drums */
   .drums-grid.two-sided-drum.count-1 {
-    --drum-unit: min(3vh, 1.6vw);
+    --drum-unit: min(3cqh, 1.6cqw);
   }
   .drums-grid.two-sided-drum.count-2 {
-    --drum-unit: min(2vh, 0.8vw);
+    --drum-unit: min(2cqh, 0.8cqw);
   }
   .drums-grid.two-sided-drum.count-3 {
-    --drum-unit: min(1.5vh, 0.5vw);
+    --drum-unit: min(1.5cqh, 0.5cqw);
   }
   .drums-grid.two-sided-drum.count-4 {
-    --drum-unit: min(1.2vh, 0.4vw);
+    --drum-unit: min(1.2cqh, 0.4cqw);
   }
   .drums-grid.two-sided-drum.count-5 {
-    --drum-unit: min(1vh, 0.3vw);
+    --drum-unit: min(1cqh, 0.3cqw);
   }
 }
 
@@ -173,7 +174,7 @@ header p {
   .drums-grid {
     display: grid;
     grid-template-columns: repeat(2, auto);
-    gap: 1.5vh 1.5vw;
+    gap: 2.5cqh 1.5cqw;
     justify-content: center;
     align-content: center;
     width: 100%;
@@ -183,45 +184,45 @@ header p {
   .drums-grid.two-sided-drum:not(.two-sided-bongo) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    gap: 2vh;
+    gap: 3cqh;
   }
 
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-1 {
-    --drum-unit: min(1.2vh, 2vw);
+    --drum-unit: min(1.3cqh, 2cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-2 {
-    --drum-unit: min(0.6vh, 1.5vw);
+    --drum-unit: min(0.7cqh, 1.5cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-3 {
-    --drum-unit: min(0.4vh, 1.2vw);
+    --drum-unit: min(0.5cqh, 1.2cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-4 {
-    --drum-unit: min(0.3vh, 1vw);
+    --drum-unit: min(0.35cqh, 1cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-5 {
-    --drum-unit: min(0.24vh, 0.8vw);
+    --drum-unit: min(0.3cqh, 0.8cqw);
   }
 
   /* Specific horizontal layout and scaling for bongo in portrait mode */
   .drums-grid.two-sided-bongo {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(auto-fill, minmax(auto, 1fr));
-    gap: 4vh;
+    gap: 4cqh;
   }
   .drums-grid.two-sided-bongo.count-1 {
-    --drum-unit: min(2.5vh, 1.4vw);
+    --drum-unit: min(2.5cqh, 1.4cqw);
   }
   .drums-grid.two-sided-bongo.count-2 {
-    --drum-unit: min(2vh, 1.1vw);
+    --drum-unit: min(2cqh, 1.1cqw);
   }
   .drums-grid.two-sided-bongo.count-3 {
-    --drum-unit: min(1.6vh, 0.9vw);
+    --drum-unit: min(1.6cqh, 0.9cqw);
   }
   .drums-grid.two-sided-bongo.count-4 {
-    --drum-unit: min(1.3vh, 0.7vw);
+    --drum-unit: min(1.3cqh, 0.7cqw);
   }
   .drums-grid.two-sided-bongo.count-5 {
-    --drum-unit: min(1.1vh, 0.6vw);
+    --drum-unit: min(1.1cqh, 0.6cqw);
   }
 
   /* Force Conga and Tumba to be next to each other in 2-column grid */
@@ -245,23 +246,23 @@ header p {
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
     grid-template-columns: repeat(1, auto);
-    --drum-unit: min(3.5vh, 4.5vw);
+    --drum-unit: min(3.8cqh, 4.5cqw);
   }
   .drums-grid.count-2 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(2.5vh, 2.2vw);
+    --drum-unit: min(2.5cqh, 2.2cqw);
   }
   .drums-grid.count-3 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(1.8vh, 2vw);
+    --drum-unit: min(2cqh, 2.1cqw);
   }
   .drums-grid.count-4 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(1.5vh, 1.8vw);
+    --drum-unit: min(1.7cqh, 1.8cqw);
   }
   .drums-grid.count-5 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(1.2vh, 1.5vw);
+    --drum-unit: min(1.4cqh, 1.5cqw);
   }
 }
 
@@ -275,24 +276,22 @@ header p {
 
 /* Sizes are now applied dynamically via inline calc style from JS */
 
-/* Active Ring Glowing State */
+/* Active Ring Glowing State (Now styled with robust flat comic drop-shadows) */
 .drum-wrapper.left-active,
 .drum-wrapper.right-active {
   z-index: 10;
 }
 
 .drum-wrapper.left-active .drum-body {
-  filter: none;
-  box-shadow:
-    0 0 25px rgba(249, 115, 22, 0.85),
-    inset 0 0 15px rgba(249, 115, 22, 0.4);
+  filter: none !important;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: none !important;
 }
 
 .drum-wrapper.right-active .drum-body {
-  filter: none;
-  box-shadow:
-    0 0 25px rgba(59, 130, 246, 0.85),
-    inset 0 0 15px rgba(59, 130, 246, 0.4);
+  filter: none !important;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: none !important;
 }
 
 /* Special override for invisible hit areas (Bata heads over background) */
@@ -303,33 +302,28 @@ header p {
 
 .drum-wrapper.left-active .drum-body.invisible-hit-area {
   filter: none;
-  box-shadow:
-    inset 0 0 35px rgba(249, 115, 22, 0.6),
-    0 0 35px rgba(249, 115, 22, 0.8);
-  background: rgba(249, 115, 22, 0.15);
+  box-shadow: none !important;
+  background: rgba(222, 107, 72, 0.25);
+  border: 2px solid #302217;
 }
 
 .drum-wrapper.right-active .drum-body.invisible-hit-area {
   filter: none;
-  box-shadow:
-    inset 0 0 35px rgba(59, 130, 246, 0.6),
-    0 0 35px rgba(59, 130, 246, 0.8);
-  background: rgba(59, 130, 246, 0.15);
+  box-shadow: none !important;
+  background: rgba(59, 130, 246, 0.25);
+  border: 2px solid #302217;
 }
 
 .drum-body {
   position: relative;
   background: transparent;
   cursor: pointer;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+  filter: none !important;
   will-change: transform;
   outline: none !important;
   box-shadow: none;
   -webkit-tap-highlight-color: transparent !important;
-  transition:
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .drum-body:focus,
@@ -412,8 +406,11 @@ header p {
 /* Labels & Mappings next to drum name */
 .drum-label-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
   margin-top: 12px;
 }
 
@@ -426,13 +423,23 @@ header p {
 }
 
 .drum-mapping {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1px 5px;
-  border-radius: 3px;
-  font-family: monospace;
+  font-size: 0.65rem !important; /* Smaller size to fit neatly under the label */
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  background: #de6b48 !important; /* Beautiful orange match */
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  text-transform: uppercase !important;
+  border: 1.5px solid #302217 !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* Floating HUD status badge (screenshot lookalike) */
@@ -512,14 +519,19 @@ header p {
 .floating-hit-text {
   position: absolute;
   pointer-events: none;
-  font-weight: 800;
-  font-size: 0.85rem;
-  text-transform: uppercase;
+  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 1.45rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
   text-shadow:
-    0 0 8px rgba(0, 0, 0, 0.9),
-    0 0 15px currentColor;
+    2px 2px 0px #302217,
+    -2px -2px 0px #302217,
+    2px -2px 0px #302217,
+    -2px 2px 0px #302217,
+    3px 3px 0px #302217 !important;
   animation: floatUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  z-index: 100;
+  z-index: 1000 !important;
   white-space: nowrap;
 }
 
@@ -568,8 +580,11 @@ header p {
     flex: 1;
     width: auto;
     height: 100%;
-    padding: 24px;
-    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .stage-container {
+    padding: 24px 24px 75px 24px !important;
   }
 
   .bottom-bar {
@@ -589,12 +604,12 @@ header p {
     box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
     border-left: none;
     transition:
-      margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
       opacity 0.4s;
   }
 
   .app-container.settings-collapsed .bottom-bar {
-    margin-left: -460px;
+    transform: translateX(460px) !important;
     opacity: 0;
     pointer-events: none;
   }
@@ -605,43 +620,7 @@ header p {
     min-width: 100%;
   }
 
-  /* Audio Lab Sidebar */
-  .effects-dialog-backdrop {
-    position: relative;
-    width: 0;
-    height: 100%;
-    background: transparent;
-    backdrop-filter: none;
-    display: block;
-    opacity: 1;
-    pointer-events: none;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .effects-dialog-backdrop.show {
-    width: 520px;
-    pointer-events: auto;
-  }
-
-  .effects-dialog {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 520px;
-    height: 100%;
-    max-height: 100%;
-    border-radius: 20px 0 0 20px;
-    margin: 0;
-    border: none !important;
-    border-left: 1px solid var(--border) !important;
-    transform: translateX(100%);
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .effects-dialog-backdrop.show .effects-dialog {
-    transform: translateX(0);
-  }
+  /* Audio Lab Sidebar removed to let it be a centered maximized modal */
 }
 .bottom-bar::-webkit-scrollbar {
   width: 6px;
@@ -775,173 +754,91 @@ header p {
 }
 
 /* Standalone Audio Effects Dialog & Backdrop (Modal) */
-.effects-dialog-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(20px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.effects-dialog-backdrop.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.effects-dialog {
-  background: rgba(18, 18, 26, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 20px;
-  width: 520px; /* Fixed width on desktop and tablet */
-  max-width: 92vw; /* Scaled on narrow screens */
-  max-height: 88vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-sizing: border-box;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.8),
-    0 0 30px rgba(16, 185, 129, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transform: scale(0.95) translateY(15px);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-}
-
-.effects-dialog-backdrop.show .effects-dialog {
-  transform: scale(1) translateY(0);
-}
-
-/* Standalone Drum & Control Dialog & Backdrop (Modal) */
-.drum-dialog-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(20px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.drum-dialog-backdrop.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.drum-dialog {
-  background: rgba(18, 18, 26, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  width: 580px; /* Roomy for step grid */
-  max-width: 94vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  box-sizing: border-box;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.8),
-    0 0 30px rgba(16, 185, 129, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transform: scale(0.95) translateY(15px);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-}
-
-.drum-dialog-backdrop.show .drum-dialog {
-  transform: scale(1) translateY(0);
-}
-
-/* Beautiful styling for BACK button inside the dialogs */
-.dialog-back-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 10;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.dialog-back-btn:hover {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: #10b981;
-  color: #34d399;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.25);
-}
-
-/* Standalone Educational Info Dialog Backdrop (Modal Popup) */
+/* Standalone Dialog Backdrop & Dialog Boxes (Consolidated Retro Style) */
+.effects-dialog-backdrop,
+.drum-dialog-backdrop,
 .info-dialog-backdrop {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background: rgba(8, 8, 12, 0.85) !important;
-  backdrop-filter: blur(15px) !important;
-  z-index: 9999 !important; /* Always on top of any other UI / footers */
+  background: rgba(48, 34, 23, 0.45) !important; /* Consistent warm brown overlay */
+  backdrop-filter: blur(8px) !important;
+  z-index: 2100 !important; /* Always on top of other content */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: opacity 0.25s ease-out !important;
 }
 
+.effects-dialog-backdrop.show,
+.drum-dialog-backdrop.show,
 .info-dialog-backdrop.show {
   opacity: 1 !important;
   pointer-events: auto !important;
 }
 
+.effects-dialog,
+.drum-dialog,
 .info-dialog {
-  background: rgba(18, 18, 26, 0.98) !important;
-  border: 1px solid rgba(16, 185, 129, 0.25) !important;
-  border-radius: 20px !important;
+  position: relative !important;
+  background: #fdfbf7 !important; /* Cream background */
+  border: 3px solid #302217 !important; /* Thick robust dark brown outline */
+  border-radius: 16px !important;
   padding: 24px !important;
-  width: 540px !important;
+  width: 540px !important; /* Unified size */
   max-width: 92vw !important;
   max-height: 85vh !important;
+  box-shadow: 6px 6px 0px #302217 !important; /* Solid flat shadow */
+  color: #302217 !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.95),
-    0 0 35px rgba(16, 185, 129, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-  transform: scale(0.95) translateY(15px) !important;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  position: relative !important;
+  transform: scale(0.95) translateY(10px) !important;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
+/* Specific larger layout for Effects Dialog */
+.effects-dialog {
+  width: 820px !important;
+  max-width: 94vw !important;
+  max-height: 90vh !important;
+}
+
+.effects-dialog-backdrop.show .effects-dialog,
+.drum-dialog-backdrop.show .drum-dialog,
 .info-dialog-backdrop.show .info-dialog {
   transform: scale(1) translateY(0) !important;
+}
+
+/* Beautiful styling for BACK button inside the dialogs */
+.dialog-back-btn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  background: #de6b48 !important; /* Retro orange */
+  color: #fdfbf7 !important; /* Cream text */
+  border: 2px solid #302217 !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important; /* Unified 8px radius */
+  cursor: pointer !important;
+  transition: all 0.1s ease !important;
+  z-index: 100 !important; /* Always on top of header */
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+}
+
+.dialog-back-btn:hover {
+  background: #d45f3a !important; /* Match hover retro orange */
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #302217 !important;
 }
 
 .effects-dialog::-webkit-scrollbar {
@@ -956,34 +853,6 @@ header p {
 }
 .effects-dialog::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
-}
-
-.effects-close-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  line-height: 1;
-  outline: none;
-  z-index: 10;
-}
-
-.effects-close-btn:hover {
-  color: white;
-  background: rgba(239, 68, 68, 0.25);
-  border-color: rgba(239, 68, 68, 0.4);
-  transform: scale(1.05) rotate(90deg);
 }
 
 .effects-dialog-titles {
@@ -1027,6 +896,9 @@ header p {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .brand-and-title {
@@ -1054,14 +926,6 @@ header p {
     sans-serif;
   margin: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.section-title {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-  margin: 0;
 }
 
 .control-group {
@@ -1218,31 +1082,28 @@ header p {
   bottom: 0;
   left: 0;
   right: 0;
-  min-height: 52px;
   height: auto;
-  background: rgba(8, 8, 12, 0.94);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 80px;
+  background-color: #eedfca !important; /* Warm beige page background */
+  border-top: 10px solid #302217 !important; /* Thicker solid dark-brown divider line */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #94a3b8;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 24px 16px 16px 16px !important;
   z-index: 1005;
-  backdrop-filter: blur(16px);
-  padding: 12px 24px;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #302217 !important;
+  backdrop-filter: none !important;
 }
 
 .cheat-sheet-footer.collapsed {
-  min-height: 48px;
-  height: auto;
-  padding: 10px 24px;
-  background: rgba(5, 5, 8, 0.98);
-  border-top: 1px solid rgba(16, 185, 129, 0.25);
+  min-height: auto !important;
+  padding: 32px 16px 15px 16px !important;
+  background-color: #eedfca !important;
+  border-top: 10px solid #302217 !important;
 }
 
 .cheat-sheet-footer.collapsed .footer-controls-row {
@@ -1250,126 +1111,97 @@ header p {
 }
 
 .cheat-sheet-footer.collapsed #footer-hands-row {
-  display: flex !important; /* Keep hands row (arrow keys) visible when collapsed! */
+  display: flex !important;
 }
 
-/* Floating Collapse/Expand Button */
+/* Toggle collapse button - sitting exactly on the border line */
 .footer-toggle-btn {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-size: 0.8rem;
-  color: #10b981;
-  cursor: pointer;
-  z-index: 1010;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
+  position: absolute !important;
+  top: -28px !important; /* Raised up to give more space below */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #77a195 !important; /* Muted teal/green matching the board */
+  border: 3px solid #302217 !important;
+  border-radius: 8px !important; /* Nice rounded square */
+  width: auto !important; /* Wider to fit the text */
+  min-width: 140px !important; /* Ensures it's robust and readable */
+  height: 38px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important; /* Nice gap between name and arrow */
+  padding: 0 16px !important;
+  color: #302217 !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  z-index: 1010 !important;
+  box-shadow: 4px 4px 0px #302217 !important; /* Solid retro 3D shadow */
+  white-space: nowrap !important;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease !important;
 }
 
 .footer-toggle-btn:hover {
-  background: #1e293b;
-  border-color: #10b981;
-  color: #34d399;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
+  background: #89b3a7 !important;
+  transform: translateX(-50%) translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0px #302217 !important;
+}
+
+.footer-toggle-btn:active {
+  transform: translateX(-50%) translate(1px, 1px) !important;
+  box-shadow: 2px 2px 0px #302217 !important;
 }
 
 .cheat-sheet-footer.collapsed .footer-toggle-btn {
-  top: -16px; /* Stable position floats over top center in collapsed state as well */
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.4);
-  color: #34d399;
+  top: -21px !important;
 }
 
-/* Mobile and Tablet Stacked Layout (under 1024px) */
-@media (max-width: 1023px) {
-  .footer-controls-row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-    width: 100% !important;
-    margin-bottom: 8px !important;
-    padding-bottom: 8px !important;
-  }
-
-  .footer-control-group {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 8px 12px !important;
-    gap: 12px !important;
-    background: rgba(18, 18, 26, 0.4) !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.04) !important;
-  }
-
-  .footer-select {
-    font-size: 0.75rem !important;
-    padding: 4px 8px !important;
-    max-width: 100% !important;
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-  }
-
-  #drum-instrument,
-  #drum-selection {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    flex: 1 1 0px !important;
-  }
-
-  .footer-btn {
-    font-size: 0.7rem !important;
-    padding: 5px 12px !important;
-  }
+/* Mobile, Tablet, and Desktop Unified Comic Layout */
+.footer-controls-row {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 900px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
 }
 
-/* Desktop and Large Screens Horizontal Row Layout (1024px and up) */
-@media (min-width: 1024px) {
-  .footer-controls-row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-    width: 100% !important;
-    margin-bottom: 8px !important;
-    padding-bottom: 8px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  }
+.footer-control-group {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #77a195 !important; /* Muted teal/green background */
+  border: 3px solid #302217 !important;
+  border-radius: 12px !important;
+  padding: 6px 12px !important;
+  box-shadow: 0px 4px 0px #302217 !important; /* Solid flat shadow */
+  gap: 12px !important;
+}
 
-  .footer-control-group {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    background: rgba(18, 18, 26, 0.5) !important;
-    padding: 10px 14px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.01) !important;
-    gap: 12px !important;
-  }
+/* Pattern group is a column stacking Pattern selection and BPM */
+.footer-control-group.play-along-group {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
 
-  .footer-control-label {
-    font-size: 0.65rem !important;
-    margin-bottom: 0 !important;
-  }
+.footer-select {
+  flex: 1 1 0px !important;
+  min-width: 0 !important;
+  font-size: 0.78rem !important;
+  padding: 0 10px !important;
 }
 
 /* Default group controls flex wrapper styling */
@@ -1386,92 +1218,94 @@ header p {
 .footer-select,
 .footer-btn,
 .footer-icon-btn,
-.footer-bpm-wrapper {
-  height: 28px !important;
+/* Align heights and aesthetics of footer interactive elements */
+.footer-select,
+.footer-btn,
+.footer-icon-btn {
+  height: 36px !important;
   box-sizing: border-box !important;
 }
 
 .footer-select {
-  padding: 0 8px !important;
-  font-size: 0.72rem !important;
+  background: #fdfbf7 !important; /* Cream select */
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  padding: 0 10px !important;
+  outline: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
 }
 
-.footer-btn {
-  padding: 0 12px !important;
-  font-size: 0.65rem !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+.footer-select:hover,
+.footer-select:focus {
+  background: #fdfbf7 !important;
+  border-color: #302217 !important;
 }
 
 .footer-icon-btn {
-  width: 28px !important;
+  background: #fdfbf7 !important; /* Cream button */
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 8px !important;
+  width: 36px !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  cursor: pointer !important;
+  transition:
+    transform 0.1s ease,
+    background-color 0.1s ease !important;
+  box-shadow: none !important;
+}
+
+.footer-icon-btn:hover {
+  background: #eedfcc !important;
+  color: #302217 !important;
+  border-color: #302217 !important;
+}
+
+/* Play/stop/filter action buttons get vibrant orange */
+.footer-icon-btn.filter-btn,
+#pattern-play-btn,
+#pattern-creator-toggle-btn,
+#effects-toggle-btn,
+#record-btn {
+  background: #de6b48 !important; /* Orange background */
+  color: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+}
+
+.footer-icon-btn.filter-btn:hover,
+#pattern-play-btn:hover,
+#pattern-creator-toggle-btn:hover,
+#effects-toggle-btn:hover,
+#record-btn:hover {
+  background: #d45f3a !important;
 }
 
 .footer-control-label {
-  font-size: 0.62rem;
-  font-weight: 800;
-  color: #10b981;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  width: 120px !important;
+  font-size: 0.72rem !important;
+  font-weight: 900 !important;
+  color: #302217 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  white-space: nowrap !important;
+  width: 95px !important;
   flex-shrink: 0 !important;
   text-align: left !important;
   display: inline-block !important;
 }
 
 .footer-drum-name {
-  color: #f1f5f9;
-  font-weight: 800;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
-  margin-right: 2px;
-}
-
-.footer-icon-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  border-radius: 6px;
-  padding: 4px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.footer-icon-btn:hover {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: #10b981;
-  color: #34d399;
-}
-
-.footer-select {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f1f5f9;
-  font-size: 0.72rem;
-  font-weight: 700;
-  border-radius: 6px;
-  padding: 3px 6px;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-#drum-instrument,
-#drum-selection {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  flex: 1 1 0px !important;
+  color: #302217 !important;
+  font-weight: 900 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.02em !important;
 }
 
 #drum-selection-container {
@@ -1480,85 +1314,84 @@ header p {
   max-width: none !important;
 }
 
-.footer-select:hover,
-.footer-select:focus {
-  border-color: #10b981;
-  background: rgba(0, 0, 0, 0.6);
+/* Pick Drums Labels / Button items */
+.drum-checkbox-label {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  border-radius: 8px !important;
+  color: #302217 !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  padding: 6px 12px !important;
+  transition: all 0.1s ease !important;
+  box-shadow: 2px 2px 0px #302217 !important;
 }
 
-.footer-btn {
-  background: #10b981;
-  border: 1px solid #10b981;
-  color: #052e16;
-  font-size: 0.65rem;
-  font-weight: 800;
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all 0.2s ease;
+.drum-checkbox-label.active {
+  background: #de6b48 !important; /* Orange when selected */
+  color: #fdfbf7 !important;
+  box-shadow: 2px 2px 0px #302217 !important;
 }
 
-.footer-btn:hover {
-  background: #059669;
-  border-color: #059669;
+.drum-checkbox-label:hover {
+  background: #eedfcc !important;
 }
 
-.footer-btn.playing,
-.footer-icon-btn.playing {
-  background: #ef4444 !important;
-  border-color: #ef4444 !important;
-  color: white !important;
-  animation: pulse-red 1.5s infinite;
+.drum-checkbox-label.active:hover {
+  background: #d45f3a !important;
 }
 
-.footer-btn.record-btn.recording,
-.footer-icon-btn.record-btn.recording {
-  background: #ef4444 !important;
-  border-color: #ef4444 !important;
-  color: white !important;
-  animation: pulse-red 1.5s infinite;
+.drum-checkbox-input {
+  accent-color: #de6b48 !important;
+  width: 14px !important;
+  height: 14px !important;
 }
 
+/* BPM styling */
 .footer-bpm-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 4px;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  padding-left: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  border-left: none !important;
+  padding-left: 0 !important;
 }
 
 .footer-bpm-label {
-  font-size: 0.65rem;
-  color: #94a3b8;
-  font-weight: 700;
-  white-space: nowrap;
+  font-size: 0.78rem !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
 }
 
 .footer-bpm-slider {
-  width: 70px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.1);
-  outline: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  transition: background 0.2s;
+  flex: 1 1 0px !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+  background: #302217 !important; /* Robust slider line */
+  outline: none !important;
+  -webkit-appearance: none !important;
+  cursor: pointer !important;
 }
 
 .footer-bpm-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #10b981;
-  cursor: pointer;
-  transition: transform 0.1s;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: #de6b48 !important; /* Orange thumb */
+  border: 2px solid #302217 !important;
+  cursor: pointer !important;
+  transition: transform 0.1s !important;
 }
 
 .footer-bpm-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) !important;
+}
+
+.footer-bpm-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2) !important;
 }
 
 @keyframes pulse-red {
@@ -1578,18 +1411,30 @@ header p {
 }
 
 .cheat-label {
-  color: #818cf8;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: #de6b48 !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+.cheat-item {
+  font-size: 0.72rem !important;
+  font-weight: 900 !important;
+  color: #302217 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
 }
 
 .cheat-item b {
-  color: #f1f5f9;
+  color: #de6b48 !important;
+  font-weight: 900 !important;
 }
 
 .cheat-divider {
-  color: rgba(255, 255, 255, 0.15);
+  color: #302217 !important;
+  font-weight: 900 !important;
+  font-size: 0.72rem !important;
+  opacity: 0.5;
 }
 
 /* WebHID section */
@@ -1792,47 +1637,6 @@ header p {
     flex: none;
     overflow-y: visible;
   }
-
-  /* Slide-up drawer for Audio Lab */
-  .effects-dialog-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(10, 10, 15, 0.7);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s;
-    z-index: 2000;
-  }
-
-  .effects-dialog-backdrop.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .effects-dialog {
-    width: 100vw;
-    max-width: 100vw;
-    max-height: 90vh;
-    border-radius: 20px 20px 0 0;
-    border: none;
-    border-top: 1px solid var(--border);
-    transform: translateY(110%) !important;
-    margin: 0;
-    padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .effects-dialog-backdrop.show .effects-dialog {
-    transform: translateY(0) !important;
-  }
 }
 
 /* ==========================================================================
@@ -1845,7 +1649,7 @@ header p {
   gap: 14px;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .section-header-fx {
@@ -2085,22 +1889,20 @@ header p {
 }
 
 .fx-control-card {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
+  background: #eedfca !important; /* Warm beige background */
+  border: 2px solid #302217 !important; /* Thick dark brown outline */
+  border-radius: 12px !important;
   padding: 10px 12px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 6px;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: 2px 2px 0px #302217 !important; /* Solid flat shadow */
+  transition: all 0.1s ease;
 }
 
 .fx-control-card:hover {
-  border-color: rgba(16, 185, 129, 0.2);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  background: #e1d2be !important; /* Slightly darker on hover */
 }
 
 .fx-title-row {
@@ -2112,45 +1914,44 @@ header p {
 
 .fx-name {
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 900 !important;
   letter-spacing: 0.05em;
-  color: #10b981;
+  color: #302217 !important; /* Dark brown heading */
 }
 
 .fx-value-label {
   font-size: 0.85rem;
   font-weight: 800;
-  color: var(--text-muted);
+  color: #302217 !important;
 }
 
 /* Styled Range Sliders */
 .fx-slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 8px !important;
+  background: #302217 !important; /* Dark robust line */
+  border-radius: 4px !important;
+  outline: none !important;
+  cursor: pointer !important;
 }
 
 .fx-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #10b981;
-  cursor: pointer;
-  box-shadow: 0 0 5px rgba(16, 185, 129, 0.6);
-  transition:
-    transform 0.1s,
-    background-color 0.1s;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: #de6b48 !important; /* Orange thumb */
+  border: 2px solid #302217 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: transform 0.1s !important;
 }
 
 .fx-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.3);
-  background: white;
+  transform: scale(1.2) !important;
 }
 
 .slider-sub-row {
@@ -2285,74 +2086,8 @@ header p {
     left 0.05s ease;
 }
 
-/* ==========================================================================
-   LANDSCAPE & EXTREME LANDSCAPE ADAPTABILITY
-   ========================================================================== */
-@media (max-width: 1023px) and (orientation: landscape) {
-  .effects-dialog {
-    width: 820px;
-    max-width: 95vw;
-    max-height: 92vh;
-    padding: 16px !important;
-  }
-
-  .effects-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px !important;
-  }
-
-  .section-header-fx {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    margin-bottom: 0;
-    padding-bottom: 6px;
-  }
-
-  .effects-controls-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    max-height: 75vh;
-    overflow-y: auto;
-    padding-right: 6px;
-  }
-}
-
 /* Further optimizations for landscape screens with very low height (like mobile phones) */
 @media (max-height: 520px) {
-  .effects-dialog {
-    padding: 10px 16px;
-    border-radius: 16px;
-  }
-
-  .effects-section {
-    gap: 8px;
-  }
-
-  .section-header-fx {
-    padding-bottom: 0;
-  }
-
-  .effects-dialog-brand {
-    font-size: 0.85rem;
-  }
-
-  .effects-dialog-subtitle {
-    font-size: 0.8rem;
-  }
-
-  .effects-dialog-emoji {
-    font-size: 1.1rem;
-  }
-
-  .effects-close-btn {
-    top: 14px;
-    right: 14px;
-    width: 28px;
-    height: 28px;
-    font-size: 18px;
-  }
-
   .effects-presets-control {
     padding: 4px 8px;
   }
@@ -2391,10 +2126,6 @@ header p {
   .save-preset-btn {
     padding: 4px 8px;
     font-size: 0.8rem;
-  }
-
-  .save-preset-btn .save-btn-text {
-    display: none !important; /* Hide 'SAVE' text, keep icon only */
   }
 
   .bottom-bar {
@@ -2467,60 +2198,12 @@ header p {
   }
 }
 
-/* Ensure proper desktop sidebar styling for Audio Lab, overriding general modal rules */
-@media (min-width: 1024px) {
-  .effects-dialog-backdrop {
-    position: relative !important;
-    width: 0 !important;
-    height: 100% !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    display: block !important;
-    opacity: 1 !important;
-    pointer-events: none !important;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    z-index: 1001 !important; /* Align with bottom bar */
-    overflow: hidden !important; /* Hide overflow border/shadow when width is 0 */
-  }
-
-  .effects-dialog-backdrop.show {
-    width: 520px !important;
-    pointer-events: auto !important;
-  }
-
-  .effects-dialog {
-    position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
-    width: 520px !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    border-radius: 20px 0 0 20px !important;
-    margin: 0 !important;
-    border: 1px solid transparent !important;
-    border-right: none !important;
-    transform: translateX(100%) !important;
-    box-shadow: none !important;
-    transition:
-      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.4s,
-      box-shadow 0.4s !important;
-    display: flex !important;
-  }
-
-  .effects-dialog-backdrop.show .effects-dialog {
-    transform: translateX(0) !important;
-    border-color: var(--border) !important;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5) !important;
-  }
-}
-
 /* Color filter button when a filter is active */
 #settings-toggle-btn.filter-selected {
-  color: #10b981 !important;
-  border-color: rgba(16, 185, 129, 0.4) !important;
-  background: rgba(16, 185, 129, 0.1) !important;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2) !important;
+  color: #fdfbf7 !important; /* Keep icon white */
+  background: #de6b48 !important; /* Keep background orange */
+  border: 2px solid #302217 !important; /* Standard dark brown border */
+  box-shadow: 2px 2px 0px #302217 !important;
 }
 
 /* Beautiful custom styling for "No drums selected" display */
@@ -2630,4 +2313,463 @@ header p {
   user-select: none !important;
   -webkit-user-select: none !important;
   -webkit-touch-callout: none !important;
+}
+
+/* ==========================================================================
+   POPUP DIALOGS RETROOVERHAUL STYLES
+   ========================================================================== */
+.drum-dialog,
+.effects-dialog,
+.info-dialog {
+  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+}
+
+/* General typography inside dialogs */
+.drum-dialog p,
+.effects-dialog p,
+.info-dialog p,
+.drum-dialog span:not(.section-title),
+.effects-dialog span:not(.section-title),
+.info-dialog span:not(.section-title),
+.drum-dialog label,
+.effects-dialog label,
+.info-dialog label,
+.drum-dialog th,
+.drum-dialog td {
+  color: #302217 !important; /* Dark brown typography */
+}
+
+/* Custom Pattern Creator input & select overrides */
+#new-pattern-name {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+}
+
+#new-pattern-name::placeholder {
+  color: rgba(48, 34, 23, 0.4) !important;
+}
+
+#new-pattern-steps {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+}
+
+/* Pattern Grid Overrides */
+#pattern-grid-container {
+  background: #eedfca !important;
+  border: 2px solid #302217 !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+}
+
+#pattern-grid-container th {
+  color: #302217 !important;
+  font-weight: 800 !important;
+  font-size: 0.75rem !important;
+}
+
+/* Grid Cells styling */
+.pattern-cell {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 4px !important;
+  background: #fdfbf7 !important; /* Cream unselected */
+  border: 2px solid #302217 !important; /* Thick border */
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: all 0.1s ease !important;
+}
+
+.pattern-cell.active {
+  background: #de6b48 !important; /* Orange active */
+  border: 2px solid #302217 !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
+/* Custom Pattern Creator buttons styling */
+#pattern-preview-btn,
+#pattern-clear-btn,
+#pattern-save-btn {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 8px !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+  font-weight: 800 !important;
+  font-size: 0.72rem !important;
+  padding: 6px 12px !important;
+  cursor: pointer !important;
+  transition: all 0.1s ease !important;
+}
+
+#pattern-preview-btn:hover,
+#pattern-clear-btn:hover,
+#pattern-save-btn:hover {
+  background: #eedfcc !important;
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
+/* Active listen state of preview button */
+#pattern-preview-btn[style*='background'] {
+  background: #ef4444 !important; /* Force red background when playing */
+  color: white !important;
+  border-color: #302217 !important;
+}
+
+/* Educational/Info modal details */
+.info-paragraph {
+  color: #302217 !important;
+  font-size: 0.88rem !important;
+  line-height: 1.5 !important;
+}
+
+.info-section-title {
+  color: #de6b48 !important; /* Orange subheading */
+  font-weight: 900 !important;
+  font-size: 0.85rem !important;
+  border-bottom: 2px solid #302217 !important;
+  padding-bottom: 3px !important;
+  margin-top: 16px !important;
+  margin-bottom: 8px !important;
+  text-transform: uppercase !important;
+}
+
+.info-list-item {
+  background: #eedfca !important; /* Warm beige */
+  border: 2px solid #302217 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  margin-bottom: 8px !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+  color: #302217 !important;
+}
+
+.info-item-name {
+  font-weight: 800 !important;
+  color: #302217 !important;
+}
+
+.info-item-desc {
+  color: rgba(48, 34, 23, 0.8) !important;
+  font-size: 0.78rem !important;
+}
+
+/* Preset save inputs inside effects modal */
+#fx-preset-select,
+#preset-select-wrapper select {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 6px !important;
+  padding: 3px 6px !important;
+  font-weight: 700 !important;
+}
+
+.save-preset-btn,
+.preset-nav-btn {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 6px !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  transition: all 0.1s ease !important;
+}
+
+.save-preset-btn:hover,
+.preset-nav-btn:hover {
+  background: #eedfcc !important;
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
+/* Header Action Buttons in modal look & feel */
+.section-header-fx {
+  border-bottom: 2px solid #302217 !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+/* Consistent white title styles */
+.effects-title-wrap .effects-dialog-brand {
+  color: #ffffff !important;
+}
+
+.pills-title {
+  color: #302217 !important;
+  font-weight: 800 !important;
+}
+
+.try-btn {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  font-weight: 700 !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
+.try-btn:hover {
+  background: #de6b48 !important; /* Orange hover for play along */
+  color: white !important;
+}
+
+.try-effects-pills {
+  background: #eedfca !important;
+  border: 2px solid #302217 !important;
+  border-radius: 8px !important;
+}
+
+.effects-presets-control {
+  background: #eedfca !important;
+  border: 2px solid #302217 !important;
+  border-radius: 8px !important;
+}
+
+/* ==========================================================================
+   RETRO OVERHAUL CUSTOM OVERRIDES & CONSISTENCY
+   ========================================================================== */
+
+/* Ensure bento grid scroll area inside modal fits cleanly */
+.effects-controls-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  overflow-y: auto !important;
+  padding-right: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+@media (max-width: 768px), (orientation: portrait) {
+  .effects-controls-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Consistent Retro Header Banners for Dialogs (Audio Lab, Filters, Pattern Creator, Info) */
+.section-header-fx,
+.brand-and-title {
+  background: #77a195 !important; /* Muted board green */
+  border-bottom: 3px solid #302217 !important; /* Thick dark-brown border */
+  padding: 24px 64px 16px 64px !important; /* Symmetric padding to ensure absolute center alignment and prevent overlapping back buttons! */
+  margin: -24px -24px 16px -24px !important; /* Flush to edges */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 4px !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Align titles in the dialog headers */
+.section-title {
+  color: #ffffff !important; /* Pure white text */
+  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.05em !important;
+  text-shadow:
+    1px 1px 0px #302217,
+    -1px -1px 0px #302217,
+    1px -1px 0px #302217,
+    -1px 1px 0px #302217 !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  gap: 8px !important;
+}
+
+/* Container for multiple titles inside headers */
+.effects-dialog-titles {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  gap: 4px !important;
+}
+
+/* Subtitle sizing inside header - Hidden for complete header consistency */
+.effects-dialog-subtitle {
+  display: none !important;
+}
+
+/* Footer Icon Button Global Styles - Orange with white icon */
+.footer-icon-btn {
+  background: #de6b48 !important;
+  color: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.1s ease !important;
+}
+
+.footer-icon-btn svg {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.footer-icon-btn:hover {
+  background: #d45f3a !important;
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
+/* Adjust record button layout and state feedback */
+.footer-icon-btn.record-btn {
+  background: #de6b48 !important;
+  color: #fdfbf7 !important;
+}
+
+.footer-icon-btn.record-btn svg {
+  fill: #fdfbf7 !important; /* ensure record icon is white */
+}
+
+.footer-icon-btn.record-btn.recording,
+.footer-icon-btn.record-btn.active {
+  background: #ef4444 !important;
+  color: #fdfbf7 !important;
+  animation: recordingPulse 1.5s infinite alternate !important;
+}
+
+@keyframes recordingPulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+
+/* Make info button icon text center correctly */
+.footer-icon-btn span {
+  display: inline-block !important;
+  width: 100% !important;
+  text-align: center !important;
+  color: #fdfbf7 !important;
+}
+
+/* Subtle, transparent drum bottom padding */
+.drum-label-container {
+  margin-top: 10px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  z-index: 15 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  gap: 4px !important;
+}
+
+.two-sided-label {
+  position: absolute !important;
+  top: 100% !important;
+  bottom: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 10px !important;
+}
+
+.drum-name {
+  font-size: 0.72rem !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  text-shadow:
+    1px 1px 0px #302217,
+    -1px -1px 0px #302217,
+    1px -1px 0px #302217,
+    -1px 1px 0px #302217 !important;
+  background: rgba(48, 34, 23, 0.8) !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  border: 2px solid #302217 !important;
+  box-shadow: 2px 2px 0px #302217 !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.drum-name.hidden {
+  display: none !important;
+}
+
+/* Make low pass, chamber changer, and vocalizer dropdowns black and white like others */
+#filter-type-select,
+#resonator-type-select,
+#formant-vowel-select {
+  background: #fdfbf7 !important;
+  border: 2px solid #302217 !important;
+  color: #302217 !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  outline: none !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+/* Match presets dropdown height with its sibling arrow buttons */
+.preset-nav-btn,
+#fx-preset-select,
+#preset-select-wrapper select,
+.save-preset-btn {
+  height: 32px !important;
+  padding: 0 10px !important;
+  box-sizing: border-box !important;
+  font-size: 0.8rem !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#fx-preset-select {
+  box-shadow: 2px 2px 0px #302217 !important;
+}
+
+/* Match Custom Pattern steps dropdown height with input box */
+#new-pattern-name,
+#new-pattern-steps {
+  height: 36px !important;
+  box-sizing: border-box !important;
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
 }

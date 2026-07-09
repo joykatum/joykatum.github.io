@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { drumTypes, instrumentMappings } from './drumTypes.js';
+import { drumTypes, instrumentMappings, getVisibleDrums } from './drumTypes.js';
 import { initAudio } from './audio.js';
 import {
   generateDrumheadSVG,
@@ -397,7 +397,15 @@ export function buildDrumWrapper(d) {
 
   const nameSpan = document.createElement('span');
   nameSpan.className = 'drum-name';
-  nameSpan.innerText = d.label;
+
+  const visibleDrums = getVisibleDrums();
+  if (visibleDrums && visibleDrums.length > 1) {
+    nameSpan.innerText = d.label;
+    nameSpan.classList.remove('hidden');
+  } else {
+    nameSpan.innerText = '';
+    nameSpan.classList.add('hidden');
+  }
 
   labelContainer.appendChild(nameSpan);
   wrapper.appendChild(labelContainer);

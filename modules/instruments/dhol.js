@@ -54,8 +54,7 @@ export const dhol = {
           </filter>
         </defs>
           
-        <!-- Ambient Drop Shadow -->
-        <path d="M 45 144 Q 200 170 355 142 L 355 154 Q 200 182 45 156 Z" fill="#010204" opacity="0.8" filter="blur(7px)"/>
+        <!-- Ambient Drop Shadow removed -->
           
         <!-- Barrel Wood Body (Convex Hourglass / Bulging) -->
         <g filter="url(#shadow-${id})">

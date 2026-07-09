@@ -1231,7 +1231,7 @@ export const drumTypes = {
     ]
   },
   mechanical_keyboard: {
-    name: '⌨️ Mechanical Keyboard',
+    name: 'Mechanical Keyboard',
     drums: [
       {
         id: 0,
@@ -1243,7 +1243,7 @@ export const drumTypes = {
     ]
   },
   synsonics_drums: {
-    name: '🎛️ Synsonics Drums',
+    name: 'Synsonics Drums',
     drums: [
       {
         id: 0,
@@ -1255,7 +1255,7 @@ export const drumTypes = {
     ]
   },
   hydraulic_piston: {
-    name: '⚙️ Hydraulic Piston',
+    name: 'Hydraulic Piston',
     drums: [
       {
         id: 0,
@@ -1267,7 +1267,7 @@ export const drumTypes = {
     ]
   },
   bop_it: {
-    name: '🔴 Bop It!',
+    name: 'Bop It!',
     drums: [
       {
         id: 0,
@@ -1279,7 +1279,7 @@ export const drumTypes = {
     ]
   },
   moo_box: {
-    name: '🐮 Moo Box',
+    name: 'Moo Box',
     drums: [
       {
         id: 0,
@@ -1291,7 +1291,7 @@ export const drumTypes = {
     ]
   },
   pakhavaj: {
-    name: '🥁 Pakhavaj',
+    name: 'Pakhavaj',
     drums: [
       {
         id: 0,
@@ -1310,7 +1310,7 @@ export const drumTypes = {
     ]
   },
   binzasara: {
-    name: '🎋 Binzasara',
+    name: 'Binzasara',
     drums: [
       {
         id: 0,
@@ -1322,7 +1322,7 @@ export const drumTypes = {
     ]
   },
   caxixi: {
-    name: '🌾 Caxixi',
+    name: 'Caxixi',
     drums: [
       {
         id: 0,
@@ -1334,7 +1334,7 @@ export const drumTypes = {
     ]
   },
   slap_tubes: {
-    name: '🌬️ Slap Tubes',
+    name: 'Slap Tubes',
     drums: [
       {
         id: 0,
@@ -1346,7 +1346,7 @@ export const drumTypes = {
     ]
   },
   whistle_drum: {
-    name: '🦆 Whistle-Drum',
+    name: 'Whistle-Drum',
     drums: [
       {
         id: 0,
@@ -1358,7 +1358,7 @@ export const drumTypes = {
     ]
   },
   singing_bowl: {
-    name: '🥣 Singing Bowl',
+    name: 'Singing Bowl',
     drums: [
       {
         id: 0,
@@ -1370,7 +1370,7 @@ export const drumTypes = {
     ]
   },
   quijada: {
-    name: '💀 Quijada',
+    name: 'Quijada',
     drums: [
       {
         id: 0,
@@ -1382,7 +1382,7 @@ export const drumTypes = {
     ]
   },
   water_canister: {
-    name: '💧 Water Canister',
+    name: 'Water Canister',
     drums: [
       {
         id: 0,
@@ -1394,7 +1394,7 @@ export const drumTypes = {
     ]
   },
   vintage_cash_register: {
-    name: '💵 Cash Register',
+    name: 'Cash Register',
     drums: [
       {
         id: 0,
@@ -1406,7 +1406,7 @@ export const drumTypes = {
     ]
   },
   geiger_counter: {
-    name: '☢️ Geiger Counter',
+    name: 'Geiger Counter',
     drums: [
       {
         id: 0,
@@ -1418,7 +1418,7 @@ export const drumTypes = {
     ]
   },
   centrifugal_bullroarer: {
-    name: '🌀 Bullroarer',
+    name: 'Bullroarer',
     drums: [
       {
         id: 0,
@@ -1430,7 +1430,7 @@ export const drumTypes = {
     ]
   },
   newtons_cradle: {
-    name: '🖲️ Newton Cradle',
+    name: 'Newton Cradle',
     drums: [
       {
         id: 0,
@@ -1442,7 +1442,7 @@ export const drumTypes = {
     ]
   },
   slime_plop_box: {
-    name: '🧪 Slime Plop Box',
+    name: 'Slime Plop Box',
     drums: [
       {
         id: 0,
@@ -1454,7 +1454,7 @@ export const drumTypes = {
     ]
   },
   talk_box: {
-    name: '🗣️ Talk Box Toy',
+    name: 'Talk Box Toy',
     drums: [
       {
         id: 0,
@@ -1466,7 +1466,7 @@ export const drumTypes = {
     ]
   },
   mouth_tube_synth: {
-    name: '🖲️ Mouth Synth',
+    name: 'Mouth Synth',
     drums: [
       {
         id: 0,

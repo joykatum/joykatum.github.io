@@ -96,8 +96,7 @@ export const mridangam = {
           </filter>
         </defs>
           
-        <!-- Ambient Drop Shadow -->
-        <path d="M 50 144 Q 200 168 350 142 L 350 154 Q 200 180 50 156 Z" fill="#010306" opacity="0.8" filter="blur(7px)"/>
+        <!-- Ambient Drop Shadow removed -->
           
         <!-- Barrel Jackwood Body with 3D contours -->
         <g filter="url(#shadow-${id})">

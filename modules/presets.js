@@ -534,7 +534,7 @@ export function populatePresetsDropdown(activeName) {
 
     const opt = document.createElement('option');
     opt.value = 'none';
-    opt.innerText = '✨ No Effects (Bypass)';
+    opt.innerText = 'No Effects (Bypass)';
     sel.appendChild(opt);
 
     // Add default presets sorted alphabetically
@@ -555,7 +555,7 @@ export function populatePresetsDropdown(activeName) {
       sortedCustom.forEach((p) => {
         const opt = document.createElement('option');
         opt.value = p.name;
-        opt.innerText = `💾 ${p.name}`;
+        opt.innerText = p.name;
         group.appendChild(opt);
       });
       sel.appendChild(group);
@@ -588,7 +588,7 @@ export function markAsCustom() {
     if (!opt) {
       opt = document.createElement('option');
       opt.value = '_custom_';
-      opt.innerText = '✍️ Custom (Modified)';
+      opt.innerText = 'Custom (Modified)';
       sel.appendChild(opt);
     }
     sel.value = '_custom_';

@@ -108,8 +108,7 @@ export const bata = {
           </filter>
         </defs>
 
-        <!-- Ambient Drop Shadow -->
-        <path d="M 50 142 Q 200 165 350 138 L 350 152 Q 200 175 50 152 Z" fill="#02040a" opacity="0.8" filter="blur(7px)"/>
+        <!-- Ambient Drop Shadow removed -->
         
         <!-- Hourglass Wood Shell Body with 3D styling -->
         <g filter="url(#shadow-${id})">

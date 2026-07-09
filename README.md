@@ -1,20 +1,8 @@
 # Joykatum: World Percussion Explorer
 
-Joykatum is an interactive audio playground lets you explore and play percussion instruments from all over the world.
+Welcome to Joykatum! This interactive audio playground lets you explore and play percussion instruments from all over the world.
 
-## Connecting to a Hori drum kit
-
-Install a joystick mapping app. For the Mac, I use [Enjoyable](https://yukkurigames.com/enjoyable/). 
-
-Map the keys **AWSD** to the key mapping app after inserting your controller to your USB port to the left hand, or **JKIL** if you prefer the right hand. But I normally don’t do this since the arrow keys are naturally mapped to them. 
-
-These should then just work. You can also map the **Q** and **R** keyboard keys to the L and R buttons of the controller. 
-
-The page should now be able to work on your stick. 
-
-## Running
-
-This should run as is, but sometimes just double clicking on index.html won’t work due to file restrictions so you have to do `npx run` and then navigate to the server
+---
 
 ## 🥁 How to Add a New Instrument / Drum
 
@@ -35,7 +23,3 @@ If you want the AI to generate a brand-new drum for the app, here is a casual gu
 4. **Add at Least 10 Interestingly Named Patterns**
    - Create at least **10 customized rhythm patterns** in the preset file (`/modules/patterns.js`).
    - Do not name them boring things like "Pattern 1" or "Beat 2". Give them cool, authentic names based on traditional rhythms, genres, or moods (e.g., *Guaguancó Tumbao*, *Shamanic Ritual Pulse*, or *Retro Arcade Speedrun*).
-
-## Issues 
-
-I'm using Google's AI Studio to mostly vibe code this so unfortaunately won't take a lot of code changes and pull requests. But am always happy to get issues reported against the app to improve it. 

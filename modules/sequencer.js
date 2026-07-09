@@ -24,7 +24,7 @@ export function startPattern(isPreview = false) {
 
   if (playBtn) {
     if (isPreview) {
-      playBtn.innerHTML = '⏹️ STOP';
+      playBtn.innerHTML = 'STOP';
       playBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
       playBtn.style.borderColor = '#f87171';
     } else {
@@ -36,7 +36,7 @@ export function startPattern(isPreview = false) {
 
   const effectsPlayBtn = document.querySelector('.play-pattern-btn');
   if (effectsPlayBtn) {
-    effectsPlayBtn.innerText = '⏹️ STOP';
+    effectsPlayBtn.innerText = 'STOP';
     effectsPlayBtn.style.background = 'rgba(239, 68, 68, 0.2)';
     effectsPlayBtn.style.borderColor = '#ef4444';
     effectsPlayBtn.style.color = '#fca5a5';
@@ -70,14 +70,14 @@ export function stopPattern() {
 
   const previewBtn = document.getElementById('pattern-preview-btn');
   if (previewBtn) {
-    previewBtn.innerText = '🎧 LISTEN';
+    previewBtn.innerText = 'LISTEN';
     previewBtn.style.background = '';
     previewBtn.style.borderColor = '';
   }
 
   const effectsPlayBtn = document.querySelector('.play-pattern-btn');
   if (effectsPlayBtn) {
-    effectsPlayBtn.innerText = '▶️ PLAY PATTERN';
+    effectsPlayBtn.innerText = 'PLAY PATTERN';
     effectsPlayBtn.style.background = 'rgba(16, 185, 129, 0.2)';
     effectsPlayBtn.style.borderColor = '#10b981';
     effectsPlayBtn.style.color = '#6ee7b7';

@@ -63,8 +63,7 @@ export const bongo = {
           </filter>
         </defs>
           
-        <!-- Ambient Drop Shadow -->
-        <path d="M 40 144 Q 200 168 360 144 L 360 154 Q 200 178 40 154 Z" fill="#010204" opacity="0.8" filter="blur(7px)"/>
+        <!-- Ambient Drop Shadow removed -->
           
         <!-- Middle Wooden Connector Block -->
         <g filter="url(#shadow-${id})">

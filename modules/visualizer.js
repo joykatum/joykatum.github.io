@@ -79,7 +79,7 @@ class RadialGlow {
     this.maxRadius = 130 + Math.random() * 70;
     this.alpha = 1.0;
     this.decay = 0.035 + Math.random() * 0.015;
-    this.color = color || 'rgba(249, 115, 22, 1)'; // Radial glow base color
+    this.color = color || 'rgba(16, 185, 129, 1)'; // Default green (16, 185, 129)
   }
 
   update() {
@@ -92,16 +92,17 @@ class RadialGlow {
     if (this.alpha <= 0) return;
     ctx.save();
 
-    // 1. Resolve base RGB color from theme string
-    let baseColor = '249, 115, 22'; // Default deep amber/orange
-    if (this.color.includes('blue') || this.color.includes('37')) {
-      baseColor = '59, 130, 246'; // blue
-    } else if (this.color.includes('purple')) {
-      baseColor = '168, 85, 247'; // purple
-    } else if (this.color.includes('gold') || this.color.includes('yellow')) {
-      baseColor = '234, 179, 8'; // gold
-    } else if (this.color.includes('green') || this.color.includes('16')) {
-      baseColor = '16, 185, 129'; // emerald
+    // 1. Resolve base RGB color from theme string (Green #10b981 and Red #de6b48)
+    let baseColor = '16, 185, 129'; // Default emerald green
+    if (
+      this.color.includes('de6b48') ||
+      this.color.includes('222') ||
+      this.color.includes('red') ||
+      this.color.includes('orange')
+    ) {
+      baseColor = '222, 107, 72'; // design orange-red
+    } else if (this.color.includes('dc2626') || this.color.includes('220')) {
+      baseColor = '220, 38, 38'; // vibrant red
     }
 
     // 2. Soft expanding radial glow representing bass pressure
@@ -130,7 +131,7 @@ class RadialGlow {
 
 // Elegant high-speed sparks with beautiful motion blur
 class SparkParticle {
-  constructor(x, y, isSlap = false) {
+  constructor(x, y, isSlap = false, theme = 'green') {
     this.x = x;
     this.y = y;
     const angle = Math.random() * Math.PI * 2;
@@ -144,12 +145,12 @@ class SparkParticle {
     this.gravity = isSlap ? 0.15 : 0.08;
     this.friction = 0.97; // smooth deceleration
 
-    // Color pallets
-    if (isSlap) {
-      const colors = ['#ffffff', '#60a5fa', '#a5f3fc', '#38bdf8', '#c084fc', '#e9d5ff'];
+    // Color pallets - perfectly aligned with retro green and red theme
+    if (theme === 'green') {
+      const colors = ['#10b981', '#34d399', '#a7f3d0', '#6ee7b7', '#ffffff'];
       this.color = colors[Math.floor(Math.random() * colors.length)];
     } else {
-      const colors = ['#f97316', '#fb923c', '#fde047', '#f43f5e', '#ffedd5'];
+      const colors = ['#de6b48', '#dc2626', '#d45f3a', '#fca5a5', '#ffffff'];
       this.color = colors[Math.floor(Math.random() * colors.length)];
     }
   }
@@ -434,35 +435,36 @@ export function triggerStroke(drumId, hitType) {
   const { category, dirUp } = getStrokeCategory(hitType, instrument);
 
   if (category === 'bass') {
-    // Deep glowing radial pulse
-    const color = 'rgba(249, 115, 22, 1)';
+    // Deep glowing radial pulse - emerald green representing heavy bass tone
+    const color = 'rgba(16, 185, 129, 1)';
     radialGlows.push(new RadialGlow(center.x, center.y, color));
 
     // Spawn deep heavy sparks drifting slowly
     for (let i = 0; i < 12; i++) {
-      particles.push(new SparkParticle(center.x, center.y, false));
+      particles.push(new SparkParticle(center.x, center.y, false, 'green'));
     }
   } else if (category === 'slap') {
-    // Organic, high-end Acoustic Shockwave ripple
-    const color = Math.random() > 0.5 ? '#38bdf8' : '#e2f8ff';
+    // Organic, high-end Acoustic Shockwave ripple - retro orange-red
+    const color = '#de6b48';
     acousticShockwaves.push(new AcousticShockwave(center.x, center.y, color));
 
-    // Spawn high velocity sharp sparkle sparks
+    // Spawn high velocity sharp sparkle sparks - red themed
     for (let i = 0; i < 24; i++) {
-      particles.push(new SparkParticle(center.x, center.y, true));
+      particles.push(new SparkParticle(center.x, center.y, true, 'red'));
     }
   } else if (category === 'pitch-bend') {
-    // Elegant slide neon ribbon
-    bendingTrails.push(new PitchBendTrail(center.x, center.y, dirUp));
+    // Elegant slide neon ribbon - green for sliding up, red for sliding down
+    const color = dirUp ? '#10b981' : '#de6b48';
+    bendingTrails.push(new PitchBendTrail(center.x, center.y, dirUp, color));
 
     // Fast sparks twisting out
     for (let i = 0; i < 15; i++) {
-      particles.push(new SparkParticle(center.x, center.y, true));
+      particles.push(new SparkParticle(center.x, center.y, true, dirUp ? 'green' : 'red'));
     }
   } else {
     // Standard default hit particle reaction
     for (let i = 0; i < 8; i++) {
-      particles.push(new SparkParticle(center.x, center.y, false));
+      particles.push(new SparkParticle(center.x, center.y, false, 'green'));
     }
   }
 }

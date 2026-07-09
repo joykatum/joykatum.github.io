@@ -80,7 +80,7 @@ export function renderPatternCreatorGrid() {
 
   let html = `<table style="width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;">`;
 
-  html += `<thead><tr style="border-bottom: 1px solid rgba(255,255,255,0.08);"><th style="padding: 6px; color: var(--text-muted); font-weight: 600; width: 130px;">DRUM & SOUND</th>`;
+  html += `<thead><tr style="border-bottom: 2px solid rgba(255,255,255,0.1);"><th style="padding: 6px; color: var(--text-muted); font-weight: 600; width: 45px; text-align: center;">DRUM</th><th style="padding: 6px; color: var(--text-muted); font-weight: 600; width: 85px;">SOUND</th>`;
   for (let s = 1; s <= stepCount; s++) {
     const isBeatStart = (s - 1) % 4 === 0;
     const style = isBeatStart ? 'color: #10b981; font-weight: 800;' : 'color: #64748b;';
@@ -89,8 +89,18 @@ export function renderPatternCreatorGrid() {
   html += `</tr></thead><tbody>`;
 
   drums.forEach((drum) => {
-    sounds.forEach((sound) => {
-      html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.03);"><td style="padding: 5px 4px; font-weight: 600; color: #f1f5f9;"><span style="color: #94a3b8; font-size: 0.68rem;">${drum.label}</span> <span style="font-size: 0.6rem; padding: 1px 4px; border-radius: 4px; background: rgba(16,185,129,0.1); color: #34d399; margin-left: 2px; text-transform: uppercase;">${sound}</span></td>`;
+    sounds.forEach((sound, sIdx) => {
+      const touches = instrumentTouches[inst] || [];
+      const touch = touches.find((t) => t.id === sound);
+      const soundDisplayName = touch ? touch.label : sound.charAt(0).toUpperCase() + sound.slice(1).replace(/_/g, ' ');
+
+      html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">`;
+
+      if (sIdx === 0) {
+        html += `<td rowspan="${sounds.length}" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; vertical-align: middle; font-weight: 900; color: #eedfca; border-right: 1px solid rgba(255,255,255,0.1); padding: 8px; background: rgba(255,255,255,0.02); text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.05em; line-height: 1.1;">${drum.label}</td>`;
+      }
+
+      html += `<td style="padding: 5px 6px; font-weight: 700; color: #34d399; font-size: 0.72rem; text-transform: uppercase; border-right: 1px solid rgba(255,255,255,0.05);">${soundDisplayName}</td>`;
 
       for (let s = 0; s < stepCount; s++) {
         const stepHits = currentEditingPattern.steps[s] || [];
@@ -107,7 +117,7 @@ export function renderPatternCreatorGrid() {
 
         html += `<td style="padding: 3px; text-align: center;">
           <button 
-            class="pattern-cell" 
+            class="pattern-cell ${isHit ? 'active' : ''}" 
             data-drum="${drum.id}" 
             data-sound="${sound}" 
             data-step="${s}" 
@@ -398,11 +408,11 @@ export function setupTagFilters() {
     };
 
     return `
-      <div style="margin-bottom: 6px;">
-        <div class="pills-title" style="margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+      <div style="margin-bottom: 8px;">
+        <div class="info-section-title" style="margin-top: 4px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: #de6b48; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #302217; padding-bottom: 2px;">
           <span>${title}</span>
         </div>
-        <div class="tag-scroll-row" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; align-items: center;">
+        <div class="tag-scroll-row" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #eae3d2; border: 2px solid #302217; border-radius: 8px; align-items: center;">
           ${items
             .map((item) => {
               const isSelected = activeVals.includes(item);
@@ -413,20 +423,27 @@ export function setupTagFilters() {
               const opacity = hasMatch ? '1' : '0.35';
               const displayName = friendlyNames[item] || item;
 
+              // Brown & White (Unselected) / Red Button Highlight (Selected)
+              const bg = isSelected ? '#dc2626' : '#ffffff';
+              const border = '2px solid #302217';
+              const color = isSelected ? '#ffffff' : '#302217';
+              const shadow = isSelected ? '2px 2px 0px #302217' : '1px 1px 0px #302217';
+
               return `
               <button 
                 class="tag-filter-btn ${isSelected ? 'active-tag-filter' : ''}" 
                 data-row-id="${rowId}" 
                 data-value="${item}"
-                style="background: ${isSelected ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.03)'}; 
-                       border: 1px solid ${isSelected ? '#10b981' : 'rgba(255, 255, 255, 0.08)'}; 
-                       color: ${isSelected ? '#10b981' : 'var(--text)'}; 
+                style="background: ${bg}; 
+                       border: ${border}; 
+                       color: ${color}; 
                        font-size: ${fontSize}; 
-                       font-weight: 600; 
+                       font-weight: 800; 
                        padding: ${padding}; 
-                       border-radius: 8px; 
+                       border-radius: 6px; 
                        cursor: pointer; 
-                       transition: all 0.2s ease; 
+                       box-shadow: ${shadow};
+                       transition: all 0.1s ease; 
                        opacity: ${opacity};
                        outline: none;"
               >${displayName}</button>
@@ -439,11 +456,11 @@ export function setupTagFilters() {
   };
 
   container.innerHTML = `
-    ${renderFilterRow('🌍 Origin', regions, 'region', selectedRegions)}
-    ${renderFilterRow('🥁 Play Style', playStyles, 'playStyle', selectedPlayStyles)}
-    ${renderFilterRow('🧱 Material', materials, 'material', selectedMaterials)}
-    ${renderFilterRow('🏷️ Attributes', attributes, 'attribute', selectedAttributes)}
-    ${renderFilterRow('🎭 Category', categories, 'category', selectedCategories)}
+    ${renderFilterRow('Origin', regions, 'region', selectedRegions)}
+    ${renderFilterRow('Play Style', playStyles, 'playStyle', selectedPlayStyles)}
+    ${renderFilterRow('Material', materials, 'material', selectedMaterials)}
+    ${renderFilterRow('Attributes', attributes, 'attribute', selectedAttributes)}
+    ${renderFilterRow('Category', categories, 'category', selectedCategories)}
   `;
 
   // Bind click events
@@ -620,8 +637,8 @@ export function applyFilters() {
     countEl.appendChild(countVal);
     summaryContainer.appendChild(countEl);
 
-    // If there are fewer than 7 matching drums, list them all alphabetically
-    if (matchingDrums.length < 7 && matchingDrums.length > 0) {
+    // Always list the matching instruments alphabetically
+    if (matchingDrums.length > 0) {
       const listContainer = document.createElement('div');
       listContainer.style.display = 'flex';
       listContainer.style.flexDirection = 'column';
@@ -631,8 +648,8 @@ export function applyFilters() {
       const listTitle = document.createElement('div');
       listTitle.innerText = 'MATCHING INSTRUMENTS:';
       listTitle.style.fontSize = '0.65rem';
-      listTitle.style.color = 'var(--text-muted)';
-      listTitle.style.fontWeight = '700';
+      listTitle.style.color = '#de6b48';
+      listTitle.style.fontWeight = '800';
       listTitle.style.letterSpacing = '0.05em';
       listContainer.appendChild(listTitle);
 
@@ -640,16 +657,22 @@ export function applyFilters() {
       itemsGrid.style.display = 'flex';
       itemsGrid.style.flexDirection = 'column';
       itemsGrid.style.gap = '4px';
+      itemsGrid.style.border = '2px solid #302217';
+      itemsGrid.style.borderRadius = '8px';
+      itemsGrid.style.padding = '4px';
+      itemsGrid.style.background = '#eae3d2';
+      itemsGrid.style.maxHeight = '180px';
+      itemsGrid.style.overflowY = 'auto';
 
       matchingDrums.forEach((d) => {
         const itemEl = document.createElement('div');
         itemEl.style.fontSize = '0.75rem';
         itemEl.style.padding = '6px 10px';
-        itemEl.style.background = 'rgba(255, 255, 255, 0.03)';
-        itemEl.style.border = '1px solid rgba(255, 255, 255, 0.06)';
+        itemEl.style.background = '#fdfbf7';
+        itemEl.style.border = '1px solid #302217';
         itemEl.style.borderRadius = '6px';
-        itemEl.style.color = '#f1f5f9';
-        itemEl.style.fontWeight = '500';
+        itemEl.style.color = '#302217';
+        itemEl.style.fontWeight = '700';
         itemEl.style.display = 'flex';
         itemEl.style.alignItems = 'center';
         itemEl.style.justifyContent = 'space-between';
@@ -657,22 +680,21 @@ export function applyFilters() {
         itemEl.style.transition = 'all 0.15s ease';
 
         if (d.key === state.currentInstrument) {
-          itemEl.style.background = 'rgba(16, 185, 129, 0.1)';
-          itemEl.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-          itemEl.style.color = '#34d399';
-          itemEl.style.fontWeight = '700';
+          itemEl.style.background = 'rgba(222, 107, 72, 0.12)';
+          itemEl.style.borderColor = '#de6b48';
+          itemEl.style.borderWidth = '2px';
+          itemEl.style.color = '#de6b48';
+          itemEl.style.fontWeight = '900';
         }
 
         itemEl.addEventListener('mouseenter', () => {
           if (d.key !== state.currentInstrument) {
-            itemEl.style.background = 'rgba(255, 255, 255, 0.06)';
-            itemEl.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+            itemEl.style.background = '#eedfcc';
           }
         });
         itemEl.addEventListener('mouseleave', () => {
           if (d.key !== state.currentInstrument) {
-            itemEl.style.background = 'rgba(255, 255, 255, 0.03)';
-            itemEl.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+            itemEl.style.background = '#fdfbf7';
           }
         });
 
@@ -694,8 +716,8 @@ export function applyFilters() {
           activeDot.style.width = '6px';
           activeDot.style.height = '6px';
           activeDot.style.borderRadius = '50%';
-          activeDot.style.background = '#34d399';
-          activeDot.style.boxShadow = '0 0 8px #10b981';
+          activeDot.style.background = '#de6b48';
+          activeDot.style.boxShadow = '0 0 6px #de6b48';
           itemEl.appendChild(activeDot);
         }
 
@@ -766,12 +788,16 @@ export function triggerHitEffect(drumId, hitType) {
   textEl.style.left = `calc(50% + ${rx}px)`;
   textEl.style.top = `calc(50% + ${ry}px)`;
 
-  // Color code hit types
-  if (hitType === 'slap') textEl.style.color = '#ffedd5';
-  else if (hitType === 'muffled') textEl.style.color = '#4ade80';
-  else if (hitType === 'open') textEl.style.color = '#60a5fa';
-  else if (hitType === 'bass') textEl.style.color = '#fde047';
-  else textEl.style.color = '#c084fc';
+  // Color code hit types (Red, Green, Orange, Cream to align with the board's retro aesthetic)
+  if (hitType === 'slap')
+    textEl.style.color = '#de6b48'; // Retro orange-red
+  else if (hitType === 'muffled')
+    textEl.style.color = '#10b981'; // Retro green
+  else if (hitType === 'open')
+    textEl.style.color = '#dc2626'; // Vibrant red
+  else if (hitType === 'bass')
+    textEl.style.color = '#77a195'; // Retro board green
+  else textEl.style.color = '#eedfca'; // Retro cream-beige
 
   let body = wrapper.querySelector('.drum-body');
   if (state.currentInstrument === 'bata') {
@@ -837,27 +863,17 @@ function isDrumSelected(drum, inst) {
 // Helper to create a styled checkbox label
 function createCheckbox(id, text, isChecked, onChange) {
   const label = document.createElement('label');
-  label.className = 'drum-checkbox-label';
+  label.className = `drum-checkbox-label${isChecked ? ' active' : ''}`;
   label.style.display = 'inline-flex';
   label.style.alignItems = 'center';
   label.style.gap = '6px';
-  label.style.fontSize = '0.65rem';
-  label.style.fontWeight = '700';
-  label.style.color = isChecked ? '#34d399' : '#94a3b8';
-  label.style.background = isChecked ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.02)';
-  label.style.border = isChecked ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)';
-  label.style.padding = '4px 8px';
-  label.style.borderRadius = '4px';
   label.style.cursor = 'pointer';
   label.style.userSelect = 'none';
-  label.style.transition = 'all 0.15s ease';
 
   const input = document.createElement('input');
   input.type = 'checkbox';
   input.checked = isChecked;
-  input.style.margin = '0';
-  input.style.cursor = 'pointer';
-  input.style.accentColor = '#10b981';
+  input.className = 'drum-checkbox-input';
 
   label.appendChild(input);
 
@@ -867,22 +883,6 @@ function createCheckbox(id, text, isChecked, onChange) {
 
   input.addEventListener('change', (e) => {
     onChange(e.target.checked);
-  });
-
-  // Add hover effects
-  label.addEventListener('mouseenter', () => {
-    if (!input.checked) {
-      label.style.background = 'rgba(16, 185, 129, 0.05)';
-      label.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-      label.style.color = '#e2e8f0';
-    }
-  });
-  label.addEventListener('mouseleave', () => {
-    if (!input.checked) {
-      label.style.background = 'rgba(255, 255, 255, 0.02)';
-      label.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-      label.style.color = '#94a3b8';
-    }
   });
 
   return { label, input };
@@ -906,7 +906,7 @@ export function populateDrumSelectionOptions() {
 
   if (isSeparable) {
     container.style.display = 'flex';
-    container.innerHTML = '<span class="footer-control-label" style="width: 100%;">🎯 PICK DRUMS:</span>';
+    container.innerHTML = '<span class="footer-control-label" style="width: 100%;">PICK DRUMS:</span>';
     if (singleDrumModeContainer) singleDrumModeContainer.style.display = 'flex';
 
     const wrapper = document.createElement('div');
@@ -993,7 +993,7 @@ export function populateTryEffectsPills() {
 
   const playBtn = document.createElement('button');
   playBtn.className = 'try-btn play-pattern-btn';
-  playBtn.innerText = state.isPatternPlaying ? '⏹️ STOP' : '▶️ PLAY PATTERN';
+  playBtn.innerText = state.isPatternPlaying ? 'STOP' : 'PLAY PATTERN';
   playBtn.style.background = state.isPatternPlaying ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
   playBtn.style.borderColor = state.isPatternPlaying ? '#ef4444' : '#10b981';
   playBtn.style.color = state.isPatternPlaying ? '#fca5a5' : '#6ee7b7';
@@ -1003,13 +1003,13 @@ export function populateTryEffectsPills() {
     initAudio();
     if (state.isPatternPlaying) {
       stopPattern();
-      playBtn.innerText = '▶️ PLAY PATTERN';
+      playBtn.innerText = 'PLAY PATTERN';
       playBtn.style.background = 'rgba(16, 185, 129, 0.2)';
       playBtn.style.borderColor = '#10b981';
       playBtn.style.color = '#6ee7b7';
     } else {
       startPattern(false); // play pattern
-      playBtn.innerText = '⏹️ STOP';
+      playBtn.innerText = 'STOP';
       playBtn.style.background = 'rgba(239, 68, 68, 0.2)';
       playBtn.style.borderColor = '#ef4444';
       playBtn.style.color = '#fca5a5';
@@ -1123,12 +1123,6 @@ export function updateActiveDrumUI() {
 
     // Dynamic Mapping Text for Active Hands (e.g. indicating it's the active drum for the hand, and L1/R1 cycles it)
     let mappingBadge = wrapper.querySelector('.dynamic-mapping');
-    if (!mappingBadge) {
-      mappingBadge = document.createElement('span');
-      mappingBadge.className = 'drum-mapping dynamic-mapping';
-      const labelContainer = wrapper.querySelector('.drum-label-container');
-      if (labelContainer) labelContainer.appendChild(mappingBadge);
-    }
 
     const visibleDrums = getVisibleDrums();
     const instDef = drumTypes[state.currentInstrument];
@@ -1140,16 +1134,24 @@ export function updateActiveDrumUI() {
 
     let badgeText = [];
     if (canCycle) {
-      if (isLeft && isRight) badgeText.push('L1/q / R1/p');
-      else if (isLeft) badgeText.push('L1/q');
-      else if (isRight) badgeText.push('R1/p');
+      if (isLeft && isRight) badgeText.push('L1/Q / R1/P');
+      else if (isLeft) badgeText.push('L1/Q');
+      else if (isRight) badgeText.push('R1/P');
     }
 
     if (badgeText.length > 0) {
-      mappingBadge.innerText = badgeText.join(' / ');
-      mappingBadge.style.display = 'inline-block';
-    } else {
-      mappingBadge.style.display = 'none';
+      if (!mappingBadge) {
+        mappingBadge = document.createElement('span');
+        mappingBadge.className = 'drum-mapping dynamic-mapping';
+        const labelContainer = wrapper.querySelector('.drum-label-container');
+        if (labelContainer) labelContainer.appendChild(mappingBadge);
+      }
+      if (mappingBadge) {
+        mappingBadge.innerText = badgeText.join(' / ');
+        mappingBadge.style.setProperty('display', 'inline-flex', 'important');
+      }
+    } else if (mappingBadge) {
+      mappingBadge.remove();
     }
   });
 }
@@ -1232,6 +1234,7 @@ export async function handleInstrumentChange(newInst) {
   renderPatternCreatorGrid();
 
   renderDrums();
+  updateFooterSelectedDrumName();
 }
 
 export function populatePatternSelectOptions() {
@@ -1243,7 +1246,7 @@ export function populatePatternSelectOptions() {
   // First option is always "Off"
   const offOpt = document.createElement('option');
   offOpt.value = 'none';
-  offOpt.innerText = '⏹️ Off';
+  offOpt.innerText = 'Off';
   select.appendChild(offOpt);
 
   const inst = state.currentInstrument;
@@ -1252,7 +1255,7 @@ export function populatePatternSelectOptions() {
   sortedEntries.forEach(([patternId, pattern]) => {
     const opt = document.createElement('option');
     opt.value = patternId;
-    opt.innerText = pattern.name;
+    opt.innerText = pattern.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
     select.appendChild(opt);
   });
 
@@ -1273,7 +1276,7 @@ export function populatePatternSelectOptions() {
         sortedCustom.forEach(([patternId, pattern]) => {
           const opt = document.createElement('option');
           opt.value = `custom_${patternId}`;
-          opt.innerText = `⭐ ${pattern.name}`;
+          opt.innerText = pattern.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
           select.appendChild(opt);
         });
       }
@@ -1320,35 +1323,6 @@ export function updateControllerCheatSheet() {
   };
 
   const getHandText = (mapping) => {
-    const getPart = (dir) => {
-      const normal = getDirectionLabel(mapping, dir, touches);
-      const longKey = dir + 'Long';
-      if (mapping[longKey] && mapping[longKey] !== mapping[dir]) {
-        const longStr = getDirectionLabel(mapping, longKey, touches);
-        return `${normal} [ Hold : ${longStr} ]`;
-      }
-      return normal;
-    };
-
-    const dirs = ['up', 'down', 'left', 'right'];
-    const parts = {
-      up: getPart('up'),
-      down: getPart('down'),
-      left: getPart('left'),
-      right: getPart('right')
-    };
-
-    // Group directions by their formatted part text
-    const groups = {};
-    dirs.forEach((d) => {
-      const p = parts[d];
-      if (!p || p.trim() === '') return;
-      if (!groups[p]) {
-        groups[p] = [];
-      }
-      groups[p].push(d);
-    });
-
     const syms = {
       up: '↑',
       down: '↓',
@@ -1356,17 +1330,33 @@ export function updateControllerCheatSheet() {
       right: '→'
     };
 
-    const groupStrings = [];
-    for (const [partText, dirList] of Object.entries(groups)) {
-      if (dirList.length === 4) {
-        groupStrings.push(partText);
-      } else {
-        const dirSyms = dirList.map((d) => syms[d]).join('');
-        groupStrings.push(`${dirSyms} ${partText}`);
-      }
-    }
+    const allItems = [];
 
-    return groupStrings.join(' &nbsp;|&nbsp; ');
+    const dirs = ['up', 'down', 'left', 'right'];
+    dirs.forEach((dir) => {
+      let dirText = '';
+      const normalVal = getDirectionLabel(mapping, dir, touches);
+      if (normalVal && normalVal.trim() !== '') {
+        dirText += `<span style="color: #10b981; font-weight: bold;">${syms[dir]}</span>&nbsp;${normalVal}`;
+      }
+
+      const longKey = dir + 'Long';
+      if (mapping[longKey] && mapping[longKey] !== mapping[dir]) {
+        const longVal = getDirectionLabel(mapping, longKey, touches);
+        if (longVal && longVal.trim() !== '') {
+          if (dirText.length > 0) {
+            dirText += ' * ';
+          }
+          dirText += `<span style="color: #de6b48; font-weight: bold;">HOLD ${syms[dir]}</span>&nbsp;${longVal}`;
+        }
+      }
+      
+      if (dirText.length > 0) {
+        allItems.push(dirText);
+      }
+    });
+
+    return allItems.join(' &nbsp;•&nbsp; ');
   };
 
   const leftText = getHandText(mappingObj.left);
@@ -1396,11 +1386,11 @@ export function updateControllerCheatSheet() {
   } else {
     // Different mappings (distinct hands)
     if (areDrumsDifferent) {
-      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">${lName}</span> ${leftText}`;
-      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">${rName}</span> ${rightText}`;
+      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold; margin-right: 4px;">${lName}:</span> ${leftText}`;
+      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold; margin-right: 4px;">${rName}:</span> ${rightText}`;
     } else {
-      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">LEFT</span> ${leftText}`;
-      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold;">RIGHT</span> ${rightText}`;
+      leftEl.innerHTML = `<span style="opacity:0.7; font-weight: bold; margin-right: 4px;">LEFT:</span> ${leftText}`;
+      rightEl.innerHTML = `<span style="opacity:0.7; font-weight: bold; margin-right: 4px;">RIGHT:</span> ${rightText}`;
     }
     leftEl.style.display = 'inline';
     rightEl.style.display = 'inline';
@@ -1784,6 +1774,7 @@ if (footerEl && footerToggleBtn) {
   let isFooterCollapsed = savedFooterCollapsed === 'true';
 
   const applyFooterCollapsedState = () => {
+    const stageContainer = document.querySelector('.stage-container');
     if (isFooterCollapsed) {
       footerEl.classList.add('collapsed');
       if (footerToggleIcon) footerToggleIcon.textContent = '▲';
@@ -1794,10 +1785,19 @@ if (footerEl && footerToggleBtn) {
   };
 
   applyFooterCollapsedState();
+  updateFooterSelectedDrumName();
 
   footerToggleBtn.addEventListener('click', () => {
     isFooterCollapsed = !isFooterCollapsed;
     localStorage.setItem('footerCollapsed', isFooterCollapsed.toString());
     applyFooterCollapsedState();
   });
+}
+
+export function updateFooterSelectedDrumName() {
+  const selectedDrumLabel = document.getElementById('footer-selected-drum');
+  if (selectedDrumLabel) {
+    const drumDef = drumTypes[state.currentInstrument];
+    selectedDrumLabel.textContent = drumDef ? drumDef.name.replace(/^[^a-zA-Z0-9]+/, '').trim() : '';
+  }
 }

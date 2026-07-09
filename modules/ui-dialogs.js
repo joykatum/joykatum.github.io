@@ -74,18 +74,27 @@ export function showDrumInfo(instrumentId) {
     effectsSongs: []
   };
 
-  if (emojiEl) emojiEl.innerText = '🥁';
   if (titleEl) titleEl.innerText = info.name.toUpperCase();
-  if (subtitleEl) subtitleEl.innerText = 'ORIGIN: ' + info.origin;
+  if (subtitleEl) {
+    subtitleEl.innerText = '';
+    subtitleEl.style.display = 'none';
+  }
 
-  let html = '';
+  let html = `
+    <div class="info-list-item" style="margin-bottom: 12px; background: #eedfca; border: 2px solid #302217; border-radius: 8px; padding: 8px 12px; box-shadow: 1px 1px 0px #302217;">
+      <div style="font-size: 0.65rem; color: #de6b48; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">Origin</div>
+      <div class="info-item-name" style="font-size: 1rem; font-weight: 900; color: #302217;">${info.origin}</div>
+    </div>
+  `;
   const tags = drumTags[instrumentId];
   if (tags) {
+    const tagStyle =
+      'background: #ffffff; border: 2px solid #302217; color: #302217; font-size: 0.75rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.02em; cursor: pointer; box-shadow: 1px 1px 0px #302217; transition: all 0.1s ease;';
     html += `
-      <div class="modal-tags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        <span class="info-tag clickable-filter-tag" data-filter-type="region" data-filter-value="${tags.region}" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; font-size: 0.8rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s ease;" title="Click to filter by this origin">🌍 Origin: ${tags.region}</span>
-        <span class="info-tag clickable-filter-tag" data-filter-type="type" data-filter-value="${tags.type}" style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; font-size: 0.8rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s ease;" title="Click to filter by this style">🥁 Style: ${tags.type}</span>
-        ${tags.features.map((f) => `<span class="info-tag clickable-filter-tag" data-filter-type="type" data-filter-value="${f}" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; font-size: 0.8rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s ease;" title="Click to filter by this feature">✨ ${f}</span>`).join('')}
+      <div class="modal-tags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #302217;">
+        <span class="info-tag clickable-filter-tag" data-filter-type="region" data-filter-value="${tags.region}" style="${tagStyle}" title="Click to filter by this origin">Origin: ${tags.region}</span>
+        <span class="info-tag clickable-filter-tag" data-filter-type="type" data-filter-value="${tags.type}" style="${tagStyle}" title="Click to filter by this style">Style: ${tags.type}</span>
+        ${tags.features.map((f) => `<span class="info-tag clickable-filter-tag" data-filter-type="type" data-filter-value="${f}" style="${tagStyle}" title="Click to filter by this feature">${f}</span>`).join('')}
       </div>
     `;
   }
@@ -93,7 +102,7 @@ export function showDrumInfo(instrumentId) {
 
   // Performers
   if (info.performers && info.performers.length > 0) {
-    html += `<div class="info-section-title">🌟 Key Performers</div>`;
+    html += `<div class="info-section-title">Key Performers</div>`;
     info.performers.forEach((p) => {
       const spotifySearchUrl =
         p.spotify && p.spotify.startsWith('http')
@@ -129,7 +138,7 @@ export function showDrumInfo(instrumentId) {
 
   // Famous Songs
   if (info.songs && info.songs.length > 0) {
-    html += `<div class="info-section-title">🎵 Iconic Songs</div>`;
+    html += `<div class="info-section-title">Iconic Songs</div>`;
     info.songs.forEach((s) => {
       const query = `${s.artist} ${s.name}`;
       const spotifySearchUrl =
@@ -166,7 +175,7 @@ export function showDrumInfo(instrumentId) {
 
   // Audio Effects Usage
   if (info.effectsSongs && info.effectsSongs.length > 0) {
-    html += `<div class="info-section-title">🎛️ Audio Effects Usage</div>`;
+    html += `<div class="info-section-title">Audio Effects Usage</div>`;
     info.effectsSongs.forEach((es) => {
       const query = `${es.artist} ${es.name}`;
       const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(query)}`;
@@ -225,7 +234,6 @@ export function showPatternInfo(patternId) {
     songs: []
   };
 
-  if (emojiEl) emojiEl.innerText = '🎶';
   if (titleEl) titleEl.innerText = info.name.toUpperCase();
   if (subtitleEl) subtitleEl.innerText = 'RHYTHM PATTERN';
 
@@ -233,7 +241,7 @@ export function showPatternInfo(patternId) {
 
   // Songs
   if (info.songs && info.songs.length > 0) {
-    html += `<div class="info-section-title">🎵 Representative Songs</div>`;
+    html += `<div class="info-section-title">Representative Songs</div>`;
     info.songs.forEach((s) => {
       const query = `${s.artist} ${s.name}`;
       const spotifySearchUrl =
@@ -281,12 +289,11 @@ export function showTapsInfo(instrumentId) {
 
   if (!backdrop || !bodyEl) return;
 
-  const instDef = drumTypes[instrumentId];
-  const name = instDef ? instDef.name.toUpperCase() : instrumentId.toUpperCase();
-
-  if (emojiEl) emojiEl.innerText = '👉';
-  if (titleEl) titleEl.innerText = `${name} TAP DETAILS`;
-  if (subtitleEl) subtitleEl.innerText = 'TOUCH TECHNIQUE & SONIC PROPERTIES';
+  if (titleEl) titleEl.innerText = 'TAP DETAILS';
+  if (subtitleEl) {
+    subtitleEl.innerText = '';
+    subtitleEl.style.display = 'none';
+  }
 
   const touches = instrumentTouches[instrumentId] || [];
 
@@ -296,11 +303,11 @@ export function showTapsInfo(instrumentId) {
   } else {
     touches.forEach((touch) => {
       html += `
-        <div class="info-list-item" style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+        <div class="info-list-item" style="display: flex; flex-direction: column; gap: 4px;">
           <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-weight: 800; color: #10b981; font-size: 0.95rem;">${touch.label.toUpperCase()}</span>
+            <span style="font-weight: 800; color: #de6b48; font-size: 0.88rem;">${touch.label.toUpperCase()}</span>
           </div>
-          <div style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.4; margin-top: 2px;">
+          <div style="font-size: 0.82rem; color: #302217; line-height: 1.4; margin-top: 2px; font-weight: 500;">
             ${touch.description || ''}
           </div>
         </div>

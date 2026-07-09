@@ -57,9 +57,7 @@ export const agogo = {
           </radialGradient>
         </defs>
           
-        <!-- Drop shadows -->
-        <path d="M 40 145 L 150 145 L 140 156 L 50 156 Z" fill="#010204" opacity="0.75" filter="blur(5px)"/>
-        <path d="M 250 145 L 360 145 L 350 156 L 260 156 Z" fill="#010204" opacity="0.75" filter="blur(5px)"/>
+        <!-- Drop shadows removed -->
           
         <!-- Elegant 3D U-shape Handle connecting the two bells -->
         <path d="M 140 80 C 180 135 220 135 260 80" fill="none" stroke="url(#handle-${id})" stroke-width="14" stroke-linecap="round" filter="url(#shadow-${id})"/>

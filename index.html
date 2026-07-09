@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>JoykaTum</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="icon" type="image/jpeg" href="icon.jpg" />
+    <link rel="apple-touch-icon" href="icon.jpg" />
     <link rel="manifest" href="manifest.json" />
   </head>
   <body>
@@ -21,23 +21,18 @@
       </div>
 
       <!-- Standalone Audio Effects Dialog Backdrop (Modal) -->
-      <div class="effects-dialog-backdrop" id="effects-dialog-backdrop">
-        <div class="effects-dialog" id="effects-dialog">
+      <div class="retro-dialog-backdrop effects-dialog-backdrop" id="effects-dialog-backdrop">
+        <div class="retro-dialog effects-dialog" id="effects-dialog">
           <!-- Back Button (replaces x close button) -->
           <button id="effects-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
 
           <!-- Audio Effects Section (Dialog Layout) -->
-          <div class="effects-section" id="effects-section">
-            <div class="section-header-fx">
-              <div class="effects-title-wrap">
-                <span class="effects-dialog-emoji">✨</span>
-                <div class="effects-dialog-titles">
-                  <span class="effects-dialog-brand">AUDIO LAB</span>
-                </div>
-                <span class="fx-active-dot" id="fx-active-dot"></span>
-              </div>
-            </div>
+          <div class="brand-and-title">
+            <span class="section-title">AUDIO LAB</span>
+            <span id="fx-active-dot" style="display: none !important"></span>
+          </div>
 
+          <div class="effects-section" id="effects-section">
             <!-- Try Effects Pill Buttons (dynamically populated) -->
             <div class="try-effects-pills" id="try-effects-pills-container">
               <!-- Populated dynamically via JS -->
@@ -59,7 +54,7 @@
                   title="Save Current FX Settings"
                   style="margin-left: 4px"
                 >
-                  💾<span class="save-btn-text"> SAVE</span>
+                  <span class="save-btn-text">SAVE</span>
                 </button>
               </div>
               <div
@@ -100,7 +95,7 @@
               <!-- Reverb Slider & Presets -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">🪐 SPACE (REVERB)</span>
+                  <span class="fx-name">SPACE (REVERB)</span>
                   <span class="fx-value-label" id="reverb-val-label">0%</span>
                 </div>
                 <input type="range" id="reverb-slider" min="0" max="100" value="0" class="fx-slider" />
@@ -114,7 +109,7 @@
               <!-- Delay Slider -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">🔁 RHYTHM REPEATER (DELAY)</span>
+                  <span class="fx-name">RHYTHM REPEATER (DELAY)</span>
                 </div>
                 <div class="slider-sub-row">
                   <label>Time: <span id="delay-time-label">0.30s</span></label>
@@ -129,7 +124,7 @@
               <!-- Pitch Shifter Slider -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">👤 CHARACTER (PITCH SHIFTER)</span>
+                  <span class="fx-name">CHARACTER (PITCH SHIFTER)</span>
                   <span class="fx-value-label" id="pitch-val-label">0</span>
                 </div>
                 <input type="range" id="pitch-slider" min="-12" max="12" value="0" class="fx-slider" />
@@ -140,28 +135,10 @@
                 </div>
               </div>
 
-              <!-- DJ Filters (Type and X/Y Pad) -->
-              <div class="fx-control-card filter-card">
-                <div class="fx-title-row">
-                  <span class="fx-name">🎛️ DJ FILTER</span>
-                  <select id="filter-type-select">
-                    <option value="none">Filter Bypass</option>
-                    <option value="highpass">High-Pass</option>
-                    <option value="lowpass">Low-Pass</option>
-                  </select>
-                </div>
-                <!-- XY Pad Container -->
-                <div class="xy-pad-container" id="xy-pad">
-                  <div class="xy-pad-label-x">Frequency (Hz) →</div>
-                  <div class="xy-pad-label-y">← Resonance</div>
-                  <div class="xy-pad-dot" id="xy-pad-dot"></div>
-                </div>
-              </div>
-
               <!-- Distortion Drive Slider -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">⚡ GRIT (DISTORTION)</span>
+                  <span class="fx-name">GRIT (DISTORTION)</span>
                   <span class="fx-value-label" id="dist-val-label">0%</span>
                 </div>
                 <input type="range" id="dist-slider" min="0" max="100" value="0" class="fx-slider" />
@@ -170,7 +147,7 @@
               <!-- 1. Spatial Swirl (Dynamic Auto-Pan) -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">🌀 SPATIAL SWIRL (AUTO-PAN)</span>
+                  <span class="fx-name">SPATIAL SWIRL (AUTO-PAN)</span>
                 </div>
                 <div class="slider-sub-row">
                   <label>Speed: <span id="pan-speed-label">1.0 Hz</span></label>
@@ -193,18 +170,8 @@
               <!-- 2. Physical Modeling Resonator (Chamber Changer) -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">🏺 CHAMBER CHANGER</span>
-                  <select
-                    id="resonator-type-select"
-                    style="
-                      background: rgba(0, 0, 0, 0.4);
-                      border: 1px solid rgba(255, 255, 255, 0.1);
-                      color: white;
-                      font-size: 0.6rem;
-                      border-radius: 4px;
-                      padding: 2px;
-                    "
-                  >
+                  <span class="fx-name">CHAMBER CHANGER</span>
+                  <select id="resonator-type-select">
                     <option value="none">Bypass</option>
                     <option value="ceramic">Ancient Ceramic</option>
                     <option value="metal">Hollow Metal</option>
@@ -220,25 +187,15 @@
               <!-- 3. Formant Shifter (Vocalizer) -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">🗣️ VOCALIZER (FORMANT SHIFTER)</span>
-                  <select
-                    id="formant-vowel-select"
-                    style="
-                      background: rgba(0, 0, 0, 0.4);
-                      border: 1px solid rgba(255, 255, 255, 0.1);
-                      color: white;
-                      font-size: 0.6rem;
-                      border-radius: 4px;
-                      padding: 2px;
-                    "
-                  >
+                  <span class="fx-name">VOCALIZER (FORMANT SHIFTER)</span>
+                  <select id="formant-vowel-select">
                     <option value="none">Bypass</option>
                     <option value="A">"Ah" (A)</option>
                     <option value="I">"Ee" (I)</option>
                     <option value="E">"Eh" (E)</option>
                     <option value="O">"Oh" (O)</option>
                     <option value="U">"Oo" (U)</option>
-                    <option value="sweep">Vowel Sweep 🌀</option>
+                    <option value="sweep">Vowel Sweep</option>
                   </select>
                 </div>
                 <div class="slider-sub-row">
@@ -250,7 +207,7 @@
               <!-- 4. Transient Designer (Attack / Sustain) -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">💥 TRANSIENT SHAPER</span>
+                  <span class="fx-name">TRANSIENT SHAPER</span>
                 </div>
                 <div class="slider-sub-row">
                   <label>Attack: <span id="transient-attack-label">0%</span></label>
@@ -265,7 +222,7 @@
               <!-- 5. Spectral Freeze -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">❄️ SPECTRAL FREEZE</span>
+                  <span class="fx-name">SPECTRAL FREEZE</span>
                   <label class="switch-container" style="transform: scale(0.85); transform-origin: right center">
                     <input type="checkbox" id="spectral-freeze-checkbox" />
                     <span class="switch-slider"></span>
@@ -281,7 +238,7 @@
               <!-- 6. Lo-Fi Resampler (Bit-Crusher) -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">👾 LO-FI BIT-CRUSHER</span>
+                  <span class="fx-name">LO-FI BIT-CRUSHER</span>
                 </div>
                 <div class="slider-sub-row">
                   <label>Bit Depth: <span id="bitcrusher-bits-label">16-bit</span></label>
@@ -296,7 +253,7 @@
               <!-- 7. Envelope-Follower Ring Modulator -->
               <div class="fx-control-card">
                 <div class="fx-title-row">
-                  <span class="fx-name">📡 ENVELOPE RING-MOD</span>
+                  <span class="fx-name">ENVELOPE RING-MOD</span>
                 </div>
                 <div class="slider-sub-row">
                   <label>Carrier Frequency: <span id="ringmod-freq-label">200 Hz</span></label>
@@ -315,49 +272,44 @@
                   <input type="range" id="ringmod-depth-slider" min="0" max="100" value="0" class="fx-slider" />
                 </div>
               </div>
+
+              <!-- DJ Filters (Type and X/Y Pad) -->
+              <div class="fx-control-card filter-card">
+                <div class="fx-title-row">
+                  <span class="fx-name">DJ FILTER</span>
+                  <select id="filter-type-select">
+                    <option value="none">Filter Bypass</option>
+                    <option value="highpass">High-Pass</option>
+                    <option value="lowpass">Low-Pass</option>
+                  </select>
+                </div>
+                <!-- XY Pad Container -->
+                <div class="xy-pad-container" id="xy-pad">
+                  <div class="xy-pad-label-x">Frequency (Hz) →</div>
+                  <div class="xy-pad-label-y">← Resonance</div>
+                  <div class="xy-pad-dot" id="xy-pad-dot"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Standalone Educational Info Dialog Backdrop (Modal) -->
-      <div class="info-dialog-backdrop" id="info-dialog-backdrop">
-        <div class="info-dialog" id="info-dialog">
+      <div class="retro-dialog-backdrop info-dialog-backdrop" id="info-dialog-backdrop">
+        <div class="retro-dialog info-dialog" id="info-dialog">
           <!-- Close Button -->
-          <button id="info-close-btn" class="effects-close-btn" title="Close Info">&times;</button>
+          <button id="info-close-btn" class="dialog-back-btn" title="Close Info">← BACK</button>
 
           <!-- Info Section -->
-          <div style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
-            <div
-              class="section-header-fx"
-              style="
-                margin-bottom: 8px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                padding-bottom: 8px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              "
+          <div class="brand-and-title">
+            <span class="section-title" id="info-title">DRUM INFO</span>
+            <span class="effects-dialog-subtitle" id="info-subtitle" style="display: none !important"
+              >Origin or Genre</span
             >
-              <span class="effects-dialog-emoji" id="info-emoji" style="margin-right: 4px">ℹ️</span>
-              <div class="effects-dialog-titles">
-                <span class="effects-dialog-brand" id="info-title" style="font-size: 1.1rem; line-height: 1.2"
-                  >DRUM INFO</span
-                >
-                <span
-                  class="effects-dialog-subtitle"
-                  id="info-subtitle"
-                  style="
-                    font-size: 0.72rem;
-                    color: var(--text-muted);
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                  "
-                  >Origin or Genre</span
-                >
-              </div>
-            </div>
+          </div>
 
+          <div style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden">
             <!-- Scrollable Content Body -->
             <div id="info-body-content" style="flex: 1; overflow-y: auto; padding-right: 4px; margin-top: 8px">
               <!-- Dynamic educational details will be populated here -->
@@ -367,10 +319,14 @@
       </div>
 
       <!-- Standalone Drum & Control Dialog Backdrop (Modal Popup) -->
-      <div class="drum-dialog-backdrop" id="drum-panel-backdrop">
-        <div class="drum-dialog" id="drum-panel">
+      <div class="retro-dialog-backdrop drum-dialog-backdrop" id="drum-panel-backdrop">
+        <div class="retro-dialog drum-dialog" id="drum-panel">
           <!-- Back Button (replaces x close button) -->
           <button id="settings-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+
+          <div class="brand-and-title">
+            <span class="section-title">DRUM FILTERS</span>
+          </div>
 
           <!-- Settings/Config Panel content (renamed to Drum Panel) -->
           <div
@@ -378,13 +334,6 @@
             id="settings-content"
             style="display: flex; flex-direction: column; height: 100%"
           >
-            <div
-              class="brand-and-title"
-              style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 8px"
-            >
-              <span class="section-title">✨ DRUM FILTERS</span>
-            </div>
-
             <!-- Tag Filters Panel -->
             <div
               class="control-group"
@@ -415,10 +364,14 @@
       </div>
 
       <!-- Standalone Custom Pattern Creator Dialog Backdrop (Modal Popup) -->
-      <div class="drum-dialog-backdrop" id="pattern-creator-backdrop">
-        <div class="drum-dialog" id="pattern-creator-panel">
+      <div class="retro-dialog-backdrop drum-dialog-backdrop" id="pattern-creator-backdrop">
+        <div class="retro-dialog drum-dialog" id="pattern-creator-panel">
           <!-- Back Button -->
           <button id="pattern-creator-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+
+          <div class="brand-and-title">
+            <span class="section-title">CUSTOM PATTERN CREATOR</span>
+          </div>
 
           <!-- Pattern Creator Panel content -->
           <div
@@ -426,13 +379,6 @@
             id="pattern-creator-content"
             style="display: flex; flex-direction: column; height: 100%"
           >
-            <div
-              class="brand-and-title"
-              style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 8px"
-            >
-              <span class="section-title">✨ CUSTOM PATTERN CREATOR</span>
-            </div>
-
             <p style="font-size: 0.72rem; color: #94a3b8; margin-top: 0; margin-bottom: 12px; line-height: 1.4">
               Design your own rhythm by clicking on the grid. Custom patterns are saved in local storage.
             </p>
@@ -444,45 +390,43 @@
               <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 4px">
                 <label
                   for="new-pattern-name"
-                  style="font-size: 0.65rem; color: #10b981; font-weight: 800; text-transform: uppercase"
+                  class="info-section-title"
+                  style="
+                    font-size: 0.8rem;
+                    color: #de6b48;
+                    font-weight: 900;
+                    text-transform: uppercase;
+                    border-bottom: 2px solid #302217;
+                    padding-bottom: 2px;
+                    margin-bottom: 6px;
+                    display: block;
+                  "
                   >PATTERN NAME:</label
                 >
                 <input
                   type="text"
                   id="new-pattern-name"
                   placeholder="My Custom Rhythm"
-                  style="
-                    background: rgba(0, 0, 0, 0.3);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    color: white;
-                    padding: 6px 12px;
-                    border-radius: 8px;
-                    font-size: 0.85rem;
-                    outline: none;
-                    width: 100%;
-                    box-sizing: border-box;
-                  "
+                  style="padding: 6px 12px; font-size: 0.85rem; outline: none; width: 100%; box-sizing: border-box"
                 />
               </div>
               <div style="width: 110px; display: flex; flex-direction: column; gap: 4px">
                 <label
                   for="new-pattern-steps"
-                  style="font-size: 0.65rem; color: #10b981; font-weight: 800; text-transform: uppercase"
+                  class="info-section-title"
+                  style="
+                    font-size: 0.8rem;
+                    color: #de6b48;
+                    font-weight: 900;
+                    text-transform: uppercase;
+                    border-bottom: 2px solid #302217;
+                    padding-bottom: 2px;
+                    margin-bottom: 6px;
+                    display: block;
+                  "
                   >STEPS:</label
                 >
-                <select
-                  id="new-pattern-steps"
-                  style="
-                    background: rgba(0, 0, 0, 0.3);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    color: white;
-                    padding: 6px;
-                    border-radius: 8px;
-                    font-size: 0.85rem;
-                    outline: none;
-                    width: 100%;
-                  "
-                >
+                <select id="new-pattern-steps" style="padding: 6px; font-size: 0.85rem; outline: none; width: 100%">
                   <option value="12">12 (6/8)</option>
                   <option value="16">16 (4/4)</option>
                 </select>
@@ -490,17 +434,7 @@
             </div>
 
             <!-- Dynamic grid container -->
-            <div
-              id="pattern-grid-container"
-              style="
-                overflow-x: auto;
-                background: rgba(0, 0, 0, 0.25);
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                border-radius: 12px;
-                padding: 12px;
-                margin-bottom: 12px;
-              "
-            >
+            <div id="pattern-grid-container" style="overflow-x: auto; margin-bottom: 12px">
               <!-- Rendered dynamically by javascript -->
             </div>
 
@@ -518,7 +452,7 @@
                   font-weight: 800;
                 "
               >
-                🎧 LISTEN
+                LISTEN
               </button>
               <button
                 id="pattern-clear-btn"
@@ -563,6 +497,10 @@
     <div class="cheat-sheet-footer" id="cheat-sheet-footer">
       <!-- Floating Collapse/Expand Toggle Button -->
       <button id="footer-toggle-btn" class="footer-toggle-btn" title="Toggle Footer Panel">
+        <span
+          id="footer-selected-drum"
+          style="text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em"
+        ></span>
         <span id="footer-toggle-icon" class="toggle-icon">▼</span>
       </button>
 
@@ -570,7 +508,7 @@
       <div class="footer-controls-row" id="footer-controls-row">
         <!-- Drum Instrument Information -->
         <div class="footer-control-group drum-group">
-          <span class="footer-control-label">🥁 DRUM:</span>
+          <span class="footer-control-label">DRUM:</span>
           <div
             class="footer-group-controls"
             id="drum-dropdowns-row"
@@ -585,18 +523,16 @@
             </select>
 
             <button id="footer-drum-info-btn" class="footer-icon-btn" title="Drum Info" style="margin: 0">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                style="width: 14px; height: 14px"
+              <span
+                style="
+                  font-size: 1.15rem;
+                  font-weight: 900;
+                  font-family: Georgia, serif;
+                  font-style: italic;
+                  line-height: 1;
+                "
+                >i</span
               >
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
             </button>
 
             <!-- Filter Button -->
@@ -627,9 +563,9 @@
             id="pattern-dropdowns-row"
             style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
           >
-            <span class="footer-control-label">🎵 PATTERN:</span>
+            <span class="footer-control-label">PATTERN:</span>
             <select id="pattern-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
-              <option value="none">⏹️ Off</option>
+              <option value="none">Off</option>
             </select>
             <button id="pattern-play-btn" class="footer-icon-btn" title="Play/Stop Pattern" style="margin: 0">
               <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
@@ -674,7 +610,7 @@
               "
             >
               <span class="footer-bpm-label" style="flex-shrink: 0; white-space: nowrap"
-                >BPM: <span id="pattern-bpm-val" style="color: #10b981; font-weight: 800">100</span></span
+                >BPM: <span id="pattern-bpm-val" style="color: #000000; font-weight: 900">100</span></span
               >
               <input
                 type="range"
@@ -691,10 +627,10 @@
 
         <!-- Copy of Effects Selection with Lab Button -->
         <div class="footer-control-group fx-group">
-          <span class="footer-control-label">✨ EFFECT:</span>
+          <span class="footer-control-label">EFFECT:</span>
           <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
             <select id="footer-fx-preset-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
-              <option value="none">✨ No Effects (Bypass)</option>
+              <option value="none">No Effects (Bypass)</option>
             </select>
             <button
               id="effects-toggle-btn"
@@ -713,7 +649,7 @@
 
         <!-- Combined Recorder & Format Group -->
         <div class="footer-control-group record-group">
-          <span class="footer-control-label">🔴 RECORDER:</span>
+          <span class="footer-control-label">RECORDER:</span>
           <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
             <select
               id="record-format-select"
@@ -722,18 +658,8 @@
             >
               <option value="audio/webm">WebM</option>
             </select>
-            <button
-              id="record-btn"
-              class="footer-icon-btn record-btn"
-              title="Record Audio"
-              style="background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3); margin: 0"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                class="record-icon"
-                id="record-icon-svg"
-                style="width: 14px; height: 14px; fill: #ef4444"
-              >
+            <button id="record-btn" class="footer-icon-btn record-btn" title="Record Audio" style="margin: 0">
+              <svg viewBox="0 0 24 24" class="record-icon" id="record-icon-svg" style="width: 14px; height: 14px">
                 <circle cx="12" cy="12" r="8"></circle>
               </svg>
             </button>
@@ -758,18 +684,16 @@
         <span class="cheat-divider" id="cheat-divider-hands">|</span>
         <span class="cheat-item" id="cheat-right-hand"><b>RIGHT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
         <button id="footer-taps-info-btn" class="footer-icon-btn" title="View Tap Details" style="margin: 0">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style="width: 14px; height: 14px"
+          <span
+            style="
+              font-size: 1.15rem;
+              font-weight: 900;
+              font-family: Georgia, serif;
+              font-style: italic;
+              line-height: 1;
+            "
+            >i</span
           >
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
         </button>
       </div>
 
@@ -778,25 +702,28 @@
         style="
           text-align: center;
           font-size: 0.65rem;
-          color: #64748b;
-          margin-top: 12px;
-          padding-top: 8px;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          width: 100%;
-          display: flex;
+          color: #302217;
+          background-color: #dbebe6;
+          border: 1.5px solid #77a195;
+          border-radius: 8px;
+          margin-top: 6px;
+          padding: 6px 16px;
+          display: inline-flex;
           flex-direction: row;
           justify-content: center;
+          align-items: center;
           gap: 8px;
+          box-shadow: 1px 1px 0px rgba(48, 34, 23, 0.1);
         "
       >
-        <span>JoyKaTum</span>
-        <span>|</span>
-        <span>Made with ❤️ from Salem OR</span>
-        <span>|</span>
+        <span style="font-weight: 800; letter-spacing: 0.02em">JoyKaTum</span>
+        <span style="opacity: 0.4">|</span>
+        <span style="font-weight: 600">Made with ❤️ in Salem OR</span>
+        <span style="opacity: 0.4">|</span>
         <a
           href="https://github.com/joykatum/joykatum.github.io"
           target="_blank"
-          style="color: #10b981; text-decoration: none"
+          style="color: #216d54; text-decoration: underline; font-weight: 800"
           >Source</a
         >
       </div>
