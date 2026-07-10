@@ -1,4 +1,4 @@
-import { playMembrane, playNoise } from '../audio.js';
+import { playMembrane, playNoise, playAttackClick, playTablaSlideUp } from '../audio.js';
 import { state } from '../state.js';
 
 export const cajon = {
@@ -15,24 +15,29 @@ export const cajon = {
     }
   ],
   sounds: {
-    bass_tone: (d) => {
-      playMembrane(50 * d.pitchMult, 0.7, 1.5, false); // deep boom
-      playNoise(0.02, 500, state.currentTiltVolume * 0.5); // slight snare rattle
+    bass_tone: (d, velocity = 0.85) => {
+      playMembrane(55 * d.pitchMult, 0.45, 1.4, false, velocity); // deep boom
+      playNoise(0.04, 700, velocity * 0.25); // slight snare rattle
     },
-    corner_slap: (d) => {
-      playMembrane(120 * d.pitchMult, 0.2, 1.0, false);
-      playNoise(0.12, 2200, state.currentTiltVolume * 1.2); // strong snare rattle
+    corner_slap: (d, velocity = 0.9) => {
+      playMembrane(140 * d.pitchMult, 0.15, 1.0, true, velocity);
+      playNoise(0.15, 2400, velocity * 1.1, 'highpass'); // strong snare rattle
     },
-    high_finger_snap: (d) => {
-      playMembrane(50 * d.pitchMult, 0.7, 1.5, false);
-      playNoise(0.02, 500, state.currentTiltVolume * 0.5);
+    high_finger_snap: (d, velocity = 0.6) => {
+      playMembrane(380 * d.pitchMult, 0.06, 1.0, true, velocity * 0.5);
+      playNoise(0.04, 2000, velocity * 0.4, 'highpass');
     },
-    tapado: (d) => playMembrane(250 * d.pitchMult, 0.05, 1.0, false),
-    side_knock: (d) => {
-      playMembrane(50 * d.pitchMult, 0.7, 1.5, false);
-      playNoise(0.02, 500, state.currentTiltVolume * 0.5);
+    tapado: (d, velocity = 0.8) => {
+      playMembrane(180 * d.pitchMult, 0.04, 1.0, true, velocity * 0.8);
+      playNoise(0.02, 1200, velocity * 0.3, 'bandpass', 3.0);
     },
-    heel_slide_pitch_bend: (d) => playMembrane(250 * d.pitchMult, 0.05, 1.0, false)
+    side_knock: (d, velocity = 0.8) => {
+      playMembrane(220 * d.pitchMult, 0.12, 1.0, false, velocity);
+      playAttackClick(0.012, 1500, 0.45 * velocity);
+    },
+    heel_slide_pitch_bend: (d, velocity = 0.8) => {
+      playTablaSlideUp(75 * d.pitchMult, 150 * d.pitchMult, 0.6, velocity);
+    }
   },
   generateSVG: (id) => {
     // Screws around the front plate

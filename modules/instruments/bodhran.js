@@ -31,18 +31,18 @@ export const bodhran = {
   sounds: {
     // Light rapid strike with minimal decay time
     tipper_roll: (d) => playMembrane(95 * d.pitchMult, 0.12, 1.1, false),
-    
+
     // Wood shell + head contact layer utilizing the imported attack click
     rimshot: (d) => {
       playMembrane(155 * d.pitchMult, 0.14, 0.8, false);
       playAttackClick();
     },
-    
+
     // Dynamic real-time upward pitch sweep bending across the hide
     back_hand_pitch_glide: (d) => {
       playTablaSlideUp(110 * d.pitchMult, 175 * d.pitchMult, 0.22);
     },
-    
+
     // Drastically shortened decay/sustain setting to replicate palm muting physics
     back_hand_pressure_damp: (d) => playMembrane(65 * d.pitchMult, 0.04, 0.4, false)
   },

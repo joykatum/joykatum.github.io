@@ -15,14 +15,27 @@ export const spring_drum = {
     }
   ],
   sounds: {
-    spring_flick: (d) => {
-      playTablaSlideUp(100 * d.pitchMult, 300 * d.pitchMult, 1.0);
-      playNoise(1.0, 1500, state.currentTiltVolume * 0.6);
+    spring_flick: (d, velocity = 0.8) => {
+      // Springy metallic twang slide
+      playTablaSlideUp(280 * d.pitchMult, 90 * d.pitchMult, 0.8, velocity, 0.0);
+      playNoise(0.9, 1200, velocity * 0.5, 'bandpass', 2.0);
     },
-    cylinder_acoustic_wobble: (d) => playNoise(1.5, 1200, state.currentTiltVolume * 0.7),
-    rim_strike: (d) => {
-      playTablaSlideUp(100 * d.pitchMult, 300 * d.pitchMult, 1.0);
-      playNoise(1.0, 1500, state.currentTiltVolume * 0.6);
+    cylinder_acoustic_wobble: (d, velocity = 0.85) => {
+      // Thunder wobble: low-frequency sliding waves and rumbling lowpass noise
+      playTablaSlideUp(45 * d.pitchMult, 110 * d.pitchMult, 1.6, velocity, 0.0);
+      playNoise(1.8, 140, velocity * 0.8, 'lowpass');
+      setTimeout(() => {
+        playTablaSlideUp(120 * d.pitchMult, 60 * d.pitchMult, 1.2, velocity * 0.6, 0.0);
+      }, 150);
+    },
+    rim_strike: (d, velocity = 0.85) => {
+      // Sharp counterhoop strike + spring reaction
+      playMembrane(380 * d.pitchMult, 0.1, 1.0, true, velocity, 0.0);
+      playAttackClick(0.012, 4000, 0.6 * velocity);
+      setTimeout(() => {
+        playTablaSlideUp(150 * d.pitchMult, 45 * d.pitchMult, 1.2, velocity * 0.8, 0.0);
+        playNoise(1.2, 350, velocity * 0.4, 'bandpass');
+      }, 30);
     }
   },
   touches: [

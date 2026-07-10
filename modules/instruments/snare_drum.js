@@ -62,20 +62,33 @@ export const snare_drum = {
     }
   ],
   sounds: {
-    center_stick_hit: (d) => {
-      playMembrane(180 * d.pitchMult, 0.28, 0.9, false);
-      playNoise(0.18, 3000, state.currentTiltVolume * 0.85);
+    center_stick_hit: (d, velocity = 0.85) => {
+      playMembrane(180 * d.pitchMult, 0.22, 0.9, false, velocity);
+      playNoise(0.18, 2800, velocity * 0.9, 'highpass');
     },
-    rimshot: (d) => {
-      playMembrane(150 * d.pitchMult, 0.35, 1.0, false);
-      playNoise(0.12, 2500, state.currentTiltVolume * 0.75);
+    rimshot: (d, velocity = 0.95) => {
+      playMembrane(320 * d.pitchMult, 0.12, 1.0, true, velocity);
+      playNoise(0.15, 3500, velocity * 1.1, 'highpass');
+      playAttackClick(0.01, 4000, 0.4 * velocity);
     },
-    cross_stick_rim_click: (d) => playNoise(0.08, 1200, state.currentTiltVolume * 0.4),
-    buzz_press_roll: (d) => {
-      playMembrane(300 * d.pitchMult, 0.1, 0.8, true);
-      playNoise(0.3, 4000, state.currentTiltVolume * 1.3);
+    cross_stick_rim_click: (d, velocity = 0.65) => {
+      playMembrane(450 * d.pitchMult, 0.05, 1.0, false, velocity * 0.7);
+      playNoise(0.03, 1600, velocity * 0.3, 'bandpass', 3.0);
     },
-    rim_shot_mute: (d) => playNoise(0.08, 1200, state.currentTiltVolume * 0.4)
+    buzz_press_roll: (d, velocity = 0.8) => {
+      // Simulate rapid buzz by cascading multiple hits
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const vol = velocity * Math.pow(0.85, i);
+          playMembrane(320 * d.pitchMult, 0.05, 1.0, true, vol * 0.6);
+          playNoise(0.12, 4000, vol * 0.8, 'highpass');
+        }, i * 35);
+      }
+    },
+    rim_shot_mute: (d, velocity = 0.75) => {
+      playMembrane(580 * d.pitchMult, 0.03, 1.0, true, velocity * 0.6);
+      playNoise(0.02, 2200, velocity * 0.45, 'bandpass', 3.0);
+    }
   },
   touches: [
     {

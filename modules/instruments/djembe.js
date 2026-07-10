@@ -15,21 +15,21 @@ export const djembe = {
     }
   ],
   sounds: {
-    bass: (d) => playMembrane(45 * d.pitchMult, 0.9, 1.6, false),
-    tone: (d) => playMembrane(260 * d.pitchMult, 0.5, 1.0, false),
-    slap: (d) => {
-      playMembrane(480 * d.pitchMult, 0.1, 1.2, true);
-      playNoise(0.05, 2000, state.currentTiltVolume * 1.5);
+    bass: (d, velocity = 0.85) => playMembrane(45 * d.pitchMult, 0.9, 1.6, false, velocity),
+    tone: (d, velocity = 0.8) => playMembrane(260 * d.pitchMult, 0.45, 1.0, false, velocity),
+    slap: (d, velocity = 0.95) => {
+      playMembrane(440 * d.pitchMult, 0.12, 1.2, true, velocity);
+      playNoise(0.06, 2800, velocity * 1.3, 'highpass');
     },
-    flam_roll: (d) => {
-      playMembrane(260 * d.pitchMult, 0.1, 1.0, true);
+    flam_roll: (d, velocity = 0.8) => {
+      playMembrane(260 * d.pitchMult, 0.12, 1.0, true, velocity * 0.75, -0.15);
       setTimeout(() => {
-        playMembrane(260 * d.pitchMult, 0.12, 1.0, false);
-      }, 50);
+        playMembrane(275 * d.pitchMult, 0.15, 1.0, false, velocity * 0.9, 0.15);
+      }, 45);
     },
-    rim_click: (d) => {
-      playMembrane(800 * d.pitchMult, 0.05, 1.0, true);
-      playNoise(0.02, 3500, state.currentTiltVolume);
+    rim_click: (d, velocity = 0.8) => {
+      playMembrane(720 * d.pitchMult, 0.04, 1.0, true, velocity * 0.8);
+      playNoise(0.015, 3200, velocity * 0.4, 'highpass');
     }
   },
   generateSVG: (id) => `

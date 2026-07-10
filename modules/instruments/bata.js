@@ -8,8 +8,8 @@ import { state } from '../state.js';
 // Okónkolo (Small, ID 0) -> Right (+0.35)
 const getBataPan = (id) => {
   if (id === 1) return -0.35; // Itótele
-  if (id === 0) return 0.35;  // Okónkolo
-  return 0.0;                 // Iyá (Center anchor)
+  if (id === 0) return 0.35; // Okónkolo
+  return 0.0; // Iyá (Center anchor)
 };
 
 export const bata = {
@@ -43,11 +43,11 @@ export const bata = {
     // ==========================================
     // ENÚ HEAD SOUNDS (Large Bass Head)
     // ==========================================
-    
+
     enu_abierto: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
-      
+
       let f = baseId === 0 ? 190 : baseId === 1 ? 130 : 90;
       f *= d.pitchMult;
 
@@ -55,7 +55,7 @@ export const bata = {
       if (baseId > 0) {
         const dynamicDecay = 0.35 + velocity * 0.12;
         playMembrane(f * 1.04, dynamicDecay, 1.0, false, velocity, pan);
-        
+
         // Secondary lingering bass wave modeling the internal air column ring
         setTimeout(() => {
           playMembrane(f * 0.96, dynamicDecay * 0.6, 0.4, false, velocity * 0.7, pan);
@@ -69,14 +69,14 @@ export const bata = {
     enu_tapado: (d, velocity = 0.85) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
-      
+
       let f = baseId === 0 ? 240 : baseId === 1 ? 165 : 120;
       f *= d.pitchMult;
 
       // Real-World Optimization 2: High Slap Transient Layer with Velocity Crack
       playMembrane(f * 1.15, 0.07, 1.2, false, velocity, pan);
       playMembrane(f * 0.85, 0.05, 0.5, true, velocity * 0.5, pan);
-      
+
       // Leather slap friction pop on strong strikes
       if (velocity > 0.6) {
         playNoise(0.02 * velocity, 2800, velocity * 0.25, 'highpass');
@@ -86,7 +86,7 @@ export const bata = {
     enu_muff: (d, velocity = 0.7) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
-      
+
       let f = baseId === 0 ? 140 : baseId === 1 ? 95 : 70;
       f *= d.pitchMult;
 
@@ -97,11 +97,11 @@ export const bata = {
     // ==========================================
     // CHACHÁ HEAD SOUNDS (Small Treble Head)
     // ==========================================
-    
+
     chacha_abierto: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
-      
+
       let f = baseId === 0 ? 440 : baseId === 1 ? 320 : 240;
       f *= d.pitchMult;
 
@@ -118,7 +118,7 @@ export const bata = {
     chacha_tapado: (d, velocity = 0.9) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
-      
+
       let f = baseId === 0 ? 520 : baseId === 1 ? 380 : 290;
       f *= d.pitchMult;
 
@@ -141,31 +141,36 @@ export const bata = {
       id: 'enu_abierto',
       label: 'Enú Abierto',
       shortName: 'Enú Open',
-      description: 'A deep, resonant open strike on the large head of the drum, mimicking the weight shift and fundamental decay of weighted rawhide.'
+      description:
+        'A deep, resonant open strike on the large head of the drum, mimicking the weight shift and fundamental decay of weighted rawhide.'
     },
     {
       id: 'enu_tapado',
       label: 'Enú Tapado',
       shortName: 'Enú Slap',
-      description: 'A crisp, suppressed slap targeting the edge of the large head while using the hand to trap overtones.'
+      description:
+        'A crisp, suppressed slap targeting the edge of the large head while using the hand to trap overtones.'
     },
     {
       id: 'enu_muff',
       label: 'Enú Muff',
       shortName: 'Enú Muff',
-      description: 'Pressing the palm weight completely flat against the skin to eliminate pitch vibration, generating a deadened bass pulse.'
+      description:
+        'Pressing the palm weight completely flat against the skin to eliminate pitch vibration, generating a deadened bass pulse.'
     },
     {
       id: 'chacha_abierto',
       label: 'Chachá Abierto',
       shortName: 'Chachá Open',
-      description: 'A bright, singing high-register ring struck cleanly with grouped fingertips on the small treble head.'
+      description:
+        'A bright, singing high-register ring struck cleanly with grouped fingertips on the small treble head.'
     },
     {
       id: 'chacha_tapado',
       label: 'Chachá Tapado',
       shortName: 'Chachá Snap',
-      description: 'An aggressive, whip-fast closed snap directly on the small head rim, triggering high internal acoustic pressure.'
+      description:
+        'An aggressive, whip-fast closed snap directly on the small head rim, triggering high internal acoustic pressure.'
     }
   ],
   mappings: {

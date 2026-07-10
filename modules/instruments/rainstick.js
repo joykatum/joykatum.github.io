@@ -15,9 +15,28 @@ export const rainstick = {
     }
   ],
   sounds: {
-    vertical_inversion_slide: (d) => playNoise(0.8, 1600, state.currentTiltVolume * 0.6),
-    fast_tilt_crash: (d) => playNoise(0.2, 2000, state.currentTiltVolume * 0.9),
-    shell_knock: (d) => playNoise(1.5, 1200, state.currentTiltVolume * 0.6)
+    vertical_inversion_slide: (d, velocity = 0.8) => {
+      // Beautiful long textured cascade using layered noise bursts with different decay and bandpass frequencies
+      playNoise(2.2, 1200, velocity * 0.5, 'bandpass', 1.5);
+      setTimeout(() => {
+        playNoise(1.8, 1500, velocity * 0.4, 'bandpass', 2.0);
+      }, 150);
+      setTimeout(() => {
+        playNoise(1.3, 1800, velocity * 0.3, 'highpass');
+      }, 350);
+    },
+    fast_tilt_crash: (d, velocity = 0.9) => {
+      // Sharp, sudden slide crash of pebbles
+      playNoise(0.4, 2500, velocity * 1.1, 'highpass');
+      playNoise(0.35, 1400, velocity * 0.6, 'bandpass', 2.5);
+    },
+    shell_knock: (d, velocity = 0.8) => {
+      // Wooden hollow knuckles/ring tap
+      playMembrane(190 * d.pitchMult, 0.08, 1.0, false, velocity);
+      playAttackClick(0.01, 1500, 0.5 * velocity);
+      // Small pebble reaction to the knock
+      playNoise(0.8, 1600, velocity * 0.3, 'bandpass');
+    }
   },
   touches: [
     {

@@ -1,4 +1,4 @@
-import { playMembrane, playNoise } from '../audio.js';
+import { playMembrane, playNoise, playTablaSlideUp, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
 
 export const bongo = {
@@ -15,15 +15,35 @@ export const bongo = {
     }
   ],
   sounds: {
-    martillo: (d) => playMembrane((d.id === 0 ? 320 : 160) * d.pitchMult, 0.1, 1.0, false),
-    open_tone: (d) => playMembrane((d.id === 0 ? 400 : 200) * d.pitchMult, 0.4, 1.0, false),
-    slap: (d) => {
-      const f = (d.id === 0 ? 550 : 350) * d.pitchMult;
-      playMembrane(f, 0.08, 1.1, true);
-      playNoise(0.04, d.id === 0 ? 3000 : 2000, state.currentTiltVolume * 1.2);
+    martillo: (d, velocity = 0.8) => {
+      const pan = d.id === 0 ? -0.25 : 0.25;
+      const f = (d.id === 0 ? 340 : 170) * d.pitchMult;
+      playMembrane(f, 0.06, 1.0, true, velocity, pan);
+      playAttackClick(0.008, 3800, 0.45 * velocity);
     },
-    mute_tap: (d) => playMembrane((d.id === 0 ? 350 : 180) * d.pitchMult, 0.05, 1.0, false),
-    glissando_de_dedo: (d) => playMembrane((d.id === 0 ? 600 : 300) * d.pitchMult, 0.2, 0.8, false)
+    open_tone: (d, velocity = 0.8) => {
+      const pan = d.id === 0 ? -0.25 : 0.25;
+      const f = (d.id === 0 ? 390 : 195) * d.pitchMult;
+      playMembrane(f, 0.22, 1.0, false, velocity, pan);
+    },
+    slap: (d, velocity = 0.95) => {
+      const pan = d.id === 0 ? -0.25 : 0.25;
+      const f = (d.id === 0 ? 580 : 330) * d.pitchMult;
+      playMembrane(f, 0.07, 1.1, true, velocity, pan);
+      playNoise(0.05, d.id === 0 ? 3200 : 2200, velocity * 1.3, 'highpass');
+      playAttackClick(0.007, 4500, 0.6 * velocity);
+    },
+    mute_tap: (d, velocity = 0.55) => {
+      const pan = d.id === 0 ? -0.25 : 0.25;
+      const f = (d.id === 0 ? 330 : 165) * d.pitchMult;
+      playMembrane(f, 0.04, 1.0, true, velocity, pan);
+    },
+    glissando_de_dedo: (d, velocity = 0.75) => {
+      const pan = d.id === 0 ? -0.25 : 0.25;
+      const startFreq = (d.id === 0 ? 350 : 175) * d.pitchMult;
+      const endFreq = (d.id === 0 ? 550 : 275) * d.pitchMult;
+      playTablaSlideUp(startFreq, endFreq, 0.28, velocity, pan);
+    }
   },
   generateSVG: (id, colorType) => {
     let skinGradient = '';

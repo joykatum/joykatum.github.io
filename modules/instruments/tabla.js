@@ -1,4 +1,4 @@
-import { playMembrane, playTablaSlideUp } from '../audio.js';
+import { playMembrane, playTablaSlideUp, playAttackClick } from '../audio.js';
 
 export const tabla = {
   name: 'Tabla',
@@ -21,20 +21,27 @@ export const tabla = {
     }
   ],
   sounds: {
-    dayan_na_ta: (d) => {
-      playMembrane(350 * d.pitchMult, 0.3, 1.1, true); // Sharp, ringing edge stroke
+    dayan_na_ta: (d, velocity = 0.8) => {
+      const pan = d.id === 0 ? -0.35 : 0.35;
+      playMembrane(350 * d.pitchMult, 0.3, 1.1, true, velocity, pan); // Sharp, ringing edge stroke
+      playAttackClick(0.01, 3500, 0.3 * velocity);
     },
-    dayan_tin: (d) => {
-      playMembrane(400 * d.pitchMult, 0.1, 1.1, true);
+    dayan_tin: (d, velocity = 0.75) => {
+      const pan = d.id === 0 ? -0.35 : 0.35;
+      playMembrane(400 * d.pitchMult, 0.12, 1.1, true, velocity, pan);
+      playAttackClick(0.008, 4000, 0.25 * velocity);
     },
-    dayan_tun: (d) => {
-      playMembrane(280 * d.pitchMult, 0.5, 1.5, false); // Resonant center stroke
+    dayan_tun: (d, velocity = 0.85) => {
+      const pan = d.id === 0 ? -0.35 : 0.35;
+      playMembrane(280 * d.pitchMult, 0.45, 1.4, false, velocity, pan); // Resonant center stroke
     },
-    bayan_ga_ghe: (d) => {
-      playTablaSlideUp(65 * d.pitchMult, 120 * d.pitchMult, 0.7); // Deep sliding bass
+    bayan_ga_ghe: (d, velocity = 0.9) => {
+      const pan = d.id === 0 ? -0.35 : 0.35;
+      playTablaSlideUp(65 * d.pitchMult, 125 * d.pitchMult, 0.75, velocity, pan); // Deep sliding bass
     },
-    bayan_ka_ke: (d) => {
-      playMembrane(150 * d.pitchMult, 0.1, 1.0, false); // Flat non-resonant bass slap
+    bayan_ka_ke: (d, velocity = 0.8) => {
+      const pan = d.id === 0 ? -0.35 : 0.35;
+      playMembrane(140 * d.pitchMult, 0.12, 1.0, false, velocity, pan); // Flat non-resonant bass slap
     }
   },
   generateSVG: (id) => `

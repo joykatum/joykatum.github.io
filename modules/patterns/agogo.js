@@ -107,5 +107,34 @@ export default {
       12: [{ drum: 0, sound: 'low_strike' }],
       14: [{ drum: 1, sound: 'high_strike' }]
     }
+  },
+  samba_reggae_bell: {
+    name: '🔔 Samba Reggae Syncopation (Bahia)',
+    stepCount: 16,
+    steps: {
+      0: [{ drum: 0, sound: 'low_strike' }],
+      2: [{ drum: 1, sound: 'high_strike' }],
+      4: [{ drum: 0, sound: 'low_strike' }],
+      6: [{ drum: 1, sound: 'high_strike' }],
+      8: [{ drum: 0, sound: 'low_strike' }],
+      10: [{ drum: 1, sound: 'high_strike' }],
+      11: [{ drum: 1, sound: 'high_strike' }],
+      13: [{ drum: 0, sound: 'low_strike' }],
+      14: [{ drum: 1, sound: 'high_strike' }]
+    }
+  },
+  afoxe_filhos_gandhy: {
+    name: '🔔 Afoxé Sacred Bell (Filhos de Gandhy)',
+    stepCount: 16,
+    steps: {
+      0: [{ drum: 0, sound: 'low_strike' }],
+      2: [{ drum: 1, sound: 'high_strike' }],
+      4: [{ drum: 0, sound: 'low_strike' }],
+      6: [{ drum: 1, sound: 'high_strike' }],
+      8: [{ drum: 1, sound: 'high_strike' }],
+      10: [{ drum: 0, sound: 'low_strike' }],
+      12: [{ drum: 1, sound: 'high_strike' }],
+      14: [{ drum: 1, sound: 'high_strike' }]
+    }
   }
 };

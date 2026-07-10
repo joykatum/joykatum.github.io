@@ -770,12 +770,12 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false, velocity = 
   }
 
   gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
-  
+
   // 2. Velocity-Sensitive Overtone Timbre scaling
-  const overtoneScale = 0.4 + (velocity * 0.6); // Harder hits excite overtones drastically
+  const overtoneScale = 0.4 + velocity * 0.6; // Harder hits excite overtones drastically
   gain2.gain.setValueAtTime((isSlap ? 0.8 : 0.3) * overtoneScale, audioCtx.currentTime);
   gain3.gain.setValueAtTime((isSlap ? 0.4 : 0.15) * overtoneScale, audioCtx.currentTime);
-  
+
   // Shell resonance gain is independent, blooming outwards gently
   shellGain.gain.setValueAtTime(0.18 * velocity, audioCtx.currentTime);
 
@@ -852,7 +852,7 @@ export function playNoise(decay, filterFreq = 800, vol = 1.0, filterType = 'high
 }
 
 // Custom sliding pitch synthesis for Indian Tabla Bayan bass drum
-export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0) {
+export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0, panValue = 0.0) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
   decay = adjustDecayForSustain(decay);
@@ -881,7 +881,11 @@ export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0) {
   const saturator = audioCtx.createWaveShaper();
   saturator.curve = getSoftClipCurve();
   masterGain.connect(saturator);
-  saturator.connect(getAudioDestination());
+
+  const spatialPanNode = audioCtx.createStereoPanner();
+  spatialPanNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
+  saturator.connect(spatialPanNode);
+  spatialPanNode.connect(getAudioDestination());
 
   osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + decay * 0.85);

@@ -52,10 +52,27 @@ export const surdo = {
     }
   ],
   sounds: {
-    open_strike: (d) => playMembrane(55 * d.pitchMult, 1.1, 1.6, false),
-    muted_mallet_strike: (d) => playMembrane(60 * d.pitchMult, 0.2, 1.0, false),
-    hand_keep_time_tap: (d) => playMembrane(60 * d.pitchMult, 0.2, 1.0, false),
-    rim_click: (d) => playMembrane(120 * d.pitchMult, 0.5, 1.2, true)
+    open_strike: (d, velocity = 0.85) => {
+      // Deep, low fundamental boom of a massive 22" or 24" surdo (around 48Hz)
+      playMembrane(48 * d.pitchMult, 1.1, 1.5, false, velocity, 0.0);
+      playAttackClick(0.016, 750, 0.35 * velocity);
+    },
+    muted_mallet_strike: (d, velocity = 0.8) => {
+      // Dampened strike with hand on skin
+      playMembrane(52 * d.pitchMult, 0.16, 1.0, true, velocity, 0.0);
+      playAttackClick(0.012, 800, 0.3 * velocity);
+      playNoise(0.05, 400, velocity * 0.15, 'lowpass');
+    },
+    hand_keep_time_tap: (d, velocity = 0.4) => {
+      // Quiet bare-hand tap on the head - higher frequency, very short damp decay
+      playMembrane(125 * d.pitchMult, 0.06, 1.0, true, velocity, 0.0);
+      playNoise(0.02, 1200, velocity * 0.25, 'bandpass', 3.0);
+    },
+    rim_click: (d, velocity = 0.75) => {
+      // Sharp wood-on-metal counterhoop click (approx 880Hz)
+      playMembrane(880 * d.pitchMult, 0.06, 1.0, true, velocity, -0.1);
+      playAttackClick(0.008, 4000, 0.5 * velocity);
+    }
   },
   touches: [
     {

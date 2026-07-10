@@ -16,9 +16,7 @@ export default {
         { drum: 2, sound: 'enu_abierto' },
         { drum: 1, stroke: 'chacha_tapado' }
       ],
-      6: [
-        { drum: 0, sound: 'chacha_abierto' }
-      ],
+      6: [{ drum: 0, sound: 'chacha_abierto' }],
       8: [
         { drum: 2, sound: 'enu_tapado' },
         { drum: 1, sound: 'enu_tapado' }
@@ -27,12 +25,8 @@ export default {
         { drum: 1, sound: 'chacha_tapado' },
         { drum: 0, sound: 'chacha_tapado' }
       ],
-      12: [
-        { drum: 2, sound: 'enu_abierto' }
-      ],
-      14: [
-        { drum: 1, sound: 'enu_tapado' }
-      ]
+      12: [{ drum: 2, sound: 'enu_abierto' }],
+      14: [{ drum: 1, sound: 'enu_tapado' }]
     }
   },
   toque_elegua: {
@@ -169,7 +163,10 @@ export default {
     name: '🥁 Toque Los Ibeyi (Sacred Twins)',
     stepCount: 12,
     steps: {
-      0: [{ drum: 0, sound: 'chacha_abierto' }, { drum: 2, sound: 'enu_abierto' }],
+      0: [
+        { drum: 0, sound: 'chacha_abierto' },
+        { drum: 2, sound: 'enu_abierto' }
+      ],
       2: [{ drum: 1, sound: 'enu_tapado' }],
       4: [{ drum: 0, sound: 'chacha_tapado' }],
       6: [{ drum: 2, sound: 'enu_tapado' }],
@@ -196,7 +193,10 @@ export default {
     stepCount: 12,
     steps: {
       0: [{ drum: 2, sound: 'chacha_tapado' }],
-      3: [{ drum: 1, sound: 'enu_muff' }, { drum: 0, sound: 'chacha_abierto' }],
+      3: [
+        { drum: 1, sound: 'enu_muff' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ],
       6: [{ drum: 2, sound: 'enu_abierto' }],
       9: [{ drum: 1, sound: 'enu_tapado' }]
     }
@@ -205,10 +205,16 @@ export default {
     name: '🥁 Toque Osain (Forest Herbs)',
     stepCount: 16,
     steps: {
-      0: [{ drum: 2, sound: 'enu_abierto' }, { drum: 0, sound: 'chacha_tapado' }],
+      0: [
+        { drum: 2, sound: 'enu_abierto' },
+        { drum: 0, sound: 'chacha_tapado' }
+      ],
       4: [{ drum: 1, sound: 'enu_tapado' }],
       6: [{ drum: 1, sound: 'enu_abierto' }],
-      8: [{ drum: 2, sound: 'enu_muff' }, { drum: 0, sound: 'chacha_abierto' }],
+      8: [
+        { drum: 2, sound: 'enu_muff' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ],
       12: [{ drum: 1, sound: 'enu_tapado' }],
       14: [{ drum: 2, sound: 'enu_abierto' }]
     }
@@ -229,10 +235,16 @@ export default {
     name: '🥁 Toque Ñongo (Festive Standard)',
     stepCount: 16,
     steps: {
-      0: [{ drum: 2, sound: 'enu_abierto' }, { drum: 0, sound: 'chacha_tapado' }],
+      0: [
+        { drum: 2, sound: 'enu_abierto' },
+        { drum: 0, sound: 'chacha_tapado' }
+      ],
       4: [{ drum: 1, sound: 'enu_tapado' }],
       6: [{ drum: 1, sound: 'enu_abierto' }],
-      8: [{ drum: 2, sound: 'enu_tapado' }, { drum: 0, sound: 'chacha_abierto' }],
+      8: [
+        { drum: 2, sound: 'enu_tapado' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ],
       12: [{ drum: 1, sound: 'enu_abierto' }],
       14: [{ drum: 0, sound: 'chacha_tapado' }]
     }
@@ -241,9 +253,15 @@ export default {
     name: '🥁 Toque Ñongo (Acelerado Fast)',
     stepCount: 12, // Shifting to a rolling triplet configuration at higher tempo
     steps: {
-      0: [{ drum: 2, sound: 'enu_abierto' }, { drum: 0, sound: 'chacha_tapado' }],
+      0: [
+        { drum: 2, sound: 'enu_abierto' },
+        { drum: 0, sound: 'chacha_tapado' }
+      ],
       3: [{ drum: 1, sound: 'enu_tapado' }],
-      6: [{ drum: 2, sound: 'enu_tapado' }, { drum: 0, sound: 'chacha_abierto' }],
+      6: [
+        { drum: 2, sound: 'enu_tapado' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ],
       9: [{ drum: 1, sound: 'enu_abierto' }]
     }
   },
@@ -251,7 +269,10 @@ export default {
     name: '🥁 Toque Chachalokafún (Fast Egbado)',
     stepCount: 16,
     steps: {
-      0: [{ drum: 2, sound: 'chacha_tapado' }, { drum: 1, sound: 'enu_tapado' }],
+      0: [
+        { drum: 2, sound: 'chacha_tapado' },
+        { drum: 1, sound: 'enu_tapado' }
+      ],
       3: [{ drum: 0, sound: 'chacha_abierto' }],
       4: [{ drum: 2, sound: 'enu_abierto' }],
       7: [{ drum: 1, sound: 'enu_abierto' }],
@@ -265,7 +286,10 @@ export default {
     name: '🥁 Toque Tuibí (Complex Cross-Pulse)',
     stepCount: 12,
     steps: {
-      0: [{ drum: 2, sound: 'enu_muff' }, { drum: 0, sound: 'chacha_abierto' }],
+      0: [
+        { drum: 2, sound: 'enu_muff' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ],
       2: [{ drum: 1, sound: 'enu_abierto' }],
       4: [{ drum: 2, sound: 'enu_tapado' }],
       6: [{ drum: 0, sound: 'chacha_tapado' }],
@@ -293,8 +317,14 @@ export default {
     steps: {
       0: [{ drum: 2, sound: 'enu_muff' }],
       3: [{ drum: 1, sound: 'enu_muff' }],
-      6: [{ drum: 2, sound: 'enu_abierto' }, { drum: 0, sound: 'chacha_tapado' }],
-      9: [{ drum: 1, sound: 'enu_abierto' }, { drum: 0, sound: 'chacha_abierto' }]
+      6: [
+        { drum: 2, sound: 'enu_abierto' },
+        { drum: 0, sound: 'chacha_tapado' }
+      ],
+      9: [
+        { drum: 1, sound: 'enu_abierto' },
+        { drum: 0, sound: 'chacha_abierto' }
+      ]
     }
   },
   toque_yewa: {

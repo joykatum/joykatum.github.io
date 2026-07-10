@@ -59,12 +59,35 @@ export const dunun = {
     }
   ],
   sounds: {
-    open_strike: (d) => playMembrane((d.id === 0 ? 65 : d.id === 1 ? 95 : 130) * d.pitchMult, 0.7, 1.25, false),
-    muted_strike: (d) => playMembrane((d.id === 0 ? 80 : d.id === 1 ? 120 : 160) * d.pitchMult, 0.12, 1.0, false),
-    bell_strike: (d) => playMembrane((d.id === 0 ? 65 : d.id === 1 ? 95 : 130) * d.pitchMult, 0.7, 1.25, false),
-    bell_rim_shot: (d) => {
-      playMembrane(800 * d.pitchMult, 0.15, 0.8, true);
-      playNoise(0.05, 3000, state.currentTiltVolume * 0.4);
+    open_strike: (d, velocity = 0.85) => {
+      let f = d.id === 0 ? 65 : d.id === 1 ? 95 : 130;
+      f *= d.pitchMult;
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      playMembrane(f, 0.85, 1.15, false, velocity, pan);
+    },
+    muted_strike: (d, velocity = 0.8) => {
+      let f = d.id === 0 ? 80 : d.id === 1 ? 120 : 160;
+      f *= d.pitchMult;
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      playMembrane(f, 0.12, 1.0, true, velocity, pan);
+      playNoise(0.03, 800, velocity * 0.15, 'lowpass');
+    },
+    bell_strike: (d, velocity = 0.75) => {
+      let f = d.id === 0 ? 420 : d.id === 1 ? 550 : 720;
+      f *= d.pitchMult;
+      const pan = d.id === 0 ? -0.4 : d.id === 1 ? -0.05 : 0.3;
+      // Authentic high ringing iron bell ring with mallet click
+      playMembrane(f, 0.45, 1.0, false, velocity * 0.9, pan);
+      playAttackClick(0.012, 3500, 0.45 * velocity);
+    },
+    bell_rim_shot: (d, velocity = 0.85) => {
+      let f = d.id === 0 ? 420 : d.id === 1 ? 550 : 720;
+      f *= d.pitchMult;
+      const pan = d.id === 0 ? -0.4 : d.id === 1 ? -0.05 : 0.3;
+      // High bell hit combined with a dry hoop snap
+      playMembrane(f, 0.25, 1.0, true, velocity * 0.8, pan);
+      playMembrane(180, 0.06, 1.0, true, velocity * 0.5, pan);
+      playNoise(0.08, 4000, velocity * 0.5, 'highpass');
     }
   },
   touches: [

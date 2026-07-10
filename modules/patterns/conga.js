@@ -5,7 +5,7 @@ export default {
     steps: {
       0: [
         { drum: 1, sound: 'abierto' }, // Quinto accent
-        { drum: 3, sound: 'bajo' }    // Tumba pulse
+        { drum: 3, sound: 'bajo' } // Tumba pulse
       ],
       2: [{ drum: 2, sound: 'manoteo' }],
       3: [{ drum: 1, sound: 'abierto' }],
@@ -14,7 +14,7 @@ export default {
       8: [{ drum: 1, sound: 'abierto' }],
       10: [{ drum: 2, sound: 'manoteo' }],
       11: [{ drum: 3, sound: 'abierto' }], // Low voice response
-      12: [{ drum: 0, sound: 'seco' }],    // High crack solo punch
+      12: [{ drum: 0, sound: 'seco' }], // High crack solo punch
       14: [{ drum: 2, sound: 'abierto' }]
     }
   },
@@ -29,7 +29,7 @@ export default {
       8: [{ drum: 2, sound: 'manoteo' }],
       10: [{ drum: 2, sound: 'manoteo' }],
       12: [{ drum: 2, sound: 'abierto' }], // Conga open tone
-      14: [{ drum: 3, sound: 'abierto' }]  // Tumba open tone drop
+      14: [{ drum: 3, sound: 'abierto' }] // Tumba open tone drop
     }
   },
   guaguanco: {
@@ -37,13 +37,13 @@ export default {
     stepCount: 16,
     steps: {
       0: [{ drum: 2, sound: 'manoteo' }],
-      2: [{ drum: 1, sound: 'seco' }],     // Quinto slap entry
-      4: [{ drum: 3, sound: 'abierto' }],  // Tumba low answer
+      2: [{ drum: 1, sound: 'seco' }], // Quinto slap entry
+      4: [{ drum: 3, sound: 'abierto' }], // Tumba low answer
       6: [{ drum: 2, sound: 'manoteo' }],
-      8: [{ drum: 1, sound: 'abierto' }],  // Quinto open accent
+      8: [{ drum: 1, sound: 'abierto' }], // Quinto open accent
       10: [{ drum: 2, sound: 'abierto' }], // Conga melody bridge
-      12: [{ drum: 1, sound: 'seco' }],     // Quinto high slap finish
-      14: [{ drum: 3, sound: 'abierto' }]  // Tumba drop response
+      12: [{ drum: 1, sound: 'seco' }], // Quinto high slap finish
+      14: [{ drum: 3, sound: 'abierto' }] // Tumba drop response
     }
   },
   cha_cha: {
@@ -80,12 +80,12 @@ export default {
     steps: {
       0: [{ drum: 2, sound: 'manoteo' }],
       2: [{ drum: 2, sound: 'manoteo' }],
-      4: [{ drum: 1, sound: 'seco' }],     // Quinto high aggressive syncopation
+      4: [{ drum: 1, sound: 'seco' }], // Quinto high aggressive syncopation
       6: [{ drum: 2, sound: 'manoteo' }],
-      8: [{ drum: 3, sound: 'bajo' }],     // Tumba sub response drop
+      8: [{ drum: 3, sound: 'bajo' }], // Tumba sub response drop
       10: [{ drum: 2, sound: 'abierto' }],
-      12: [{ drum: 1, sound: 'seco' }],     // Quinto accent
-      14: [{ drum: 3, sound: 'abierto' }]  // Tumba low finish
+      12: [{ drum: 1, sound: 'seco' }], // Quinto accent
+      14: [{ drum: 3, sound: 'abierto' }] // Tumba low finish
     }
   },
   salsa_palo_3_drum: {
@@ -93,13 +93,13 @@ export default {
     stepCount: 16,
     steps: {
       0: [{ drum: 2, sound: 'manoteo' }],
-      2: [{ drum: 3, sound: 'bajo' }],     // Low end ground floor pulse
-      4: [{ drum: 1, sound: 'seco' }],     // High top slice slap
+      2: [{ drum: 3, sound: 'bajo' }], // Low end ground floor pulse
+      4: [{ drum: 1, sound: 'seco' }], // High top slice slap
       6: [{ drum: 2, sound: 'manoteo' }],
       8: [{ drum: 2, sound: 'manoteo' }],
       10: [{ drum: 1, sound: 'abierto' }], // High tone phrase
       12: [{ drum: 2, sound: 'abierto' }], // Mid tone phrase
-      14: [{ drum: 3, sound: 'abierto' }]  // Low tone phrase
+      14: [{ drum: 3, sound: 'abierto' }] // Low tone phrase
     }
   },
   bolero: {
@@ -163,7 +163,7 @@ export default {
     stepCount: 12,
     steps: {
       0: [{ drum: 2, sound: 'abierto' }],
-      2: [{ drum: 0, sound: 'seco' }],    // Sharp high breakdown
+      2: [{ drum: 0, sound: 'seco' }], // Sharp high breakdown
       4: [{ drum: 1, sound: 'abierto' }], // Mid accent
       6: [{ drum: 2, sound: 'abierto' }],
       8: [{ drum: 0, sound: 'seco' }],
@@ -178,7 +178,7 @@ export default {
       2: [{ drum: 0, sound: 'seco' }],
       4: [{ drum: 1, sound: 'abierto' }],
       6: [{ drum: 1, sound: 'abierto' }],
-      8: [{ drum: 3, sound: 'bajo' }],    // Low end Surdo-like pulse drop
+      8: [{ drum: 3, sound: 'bajo' }], // Low end Surdo-like pulse drop
       10: [{ drum: 0, sound: 'seco' }],
       12: [{ drum: 1, sound: 'manoteo' }],
       14: [{ drum: 2, sound: 'abierto' }]
@@ -188,8 +188,8 @@ export default {
     name: 'Afro-Cuban Columbia (3-Drum 6/8)',
     stepCount: 12,
     steps: {
-      0: [{ drum: 3, sound: 'bajo' }],    // Bottom floor anchor
-      2: [{ drum: 0, sound: 'seco' }],    // Lead soloist crackle
+      0: [{ drum: 3, sound: 'bajo' }], // Bottom floor anchor
+      2: [{ drum: 0, sound: 'seco' }], // Lead soloist crackle
       4: [{ drum: 1, sound: 'abierto' }],
       6: [{ drum: 2, sound: 'abierto' }],
       8: [{ drum: 0, sound: 'seco' }],
@@ -201,9 +201,9 @@ export default {
     stepCount: 16,
     steps: {
       0: [{ drum: 1, sound: 'manoteo' }],
-      2: [{ drum: 0, sound: 'seco' }],     // High block pop
+      2: [{ drum: 0, sound: 'seco' }], // High block pop
       4: [{ drum: 1, sound: 'abierto' }],
-      6: [{ drum: 3, sound: 'abierto' }],  // Tumba syncopated engine drop
+      6: [{ drum: 3, sound: 'abierto' }], // Tumba syncopated engine drop
       8: [{ drum: 1, sound: 'manoteo' }],
       10: [{ drum: 0, sound: 'seco' }],
       12: [{ drum: 2, sound: 'abierto' }],
@@ -241,7 +241,7 @@ export default {
     stepCount: 12,
     steps: {
       0: [{ drum: 3, sound: 'bajo' }],
-      2: [{ drum: 1, sound: 'seco' }],    // Quinto soloist snap
+      2: [{ drum: 1, sound: 'seco' }], // Quinto soloist snap
       4: [{ drum: 2, sound: 'abierto' }], // Conga core response
       5: [{ drum: 3, sound: 'abierto' }], // Tumba response tail
       7: [{ drum: 1, sound: 'seco' }],
@@ -268,7 +268,7 @@ export default {
     stepCount: 12,
     steps: {
       0: [{ drum: 2, sound: 'manoteo' }],
-      2: [{ drum: 1, sound: 'seco' }],    // Quinto response
+      2: [{ drum: 1, sound: 'seco' }], // Quinto response
       3: [{ drum: 3, sound: 'abierto' }], // Tumba foundational drop
       5: [{ drum: 2, sound: 'abierto' }],
       6: [{ drum: 2, sound: 'manoteo' }],

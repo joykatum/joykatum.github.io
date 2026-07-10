@@ -58,7 +58,7 @@ export const conga = {
       const pan = getCongaPan(d.id);
       const dynamicDecay = 0.55 + velocity * 0.15; // Harder hits sustain longer
       playMembrane(110 * d.pitchMult, dynamicDecay, 1.0, false, velocity, pan);
-      
+
       // High-frequency skin crackle explosion on hard acoustic strikes
       if (velocity > 0.65) {
         playNoise(0.025 * velocity, 3200, velocity * 0.18, 'highpass');

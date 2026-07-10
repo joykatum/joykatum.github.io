@@ -28,14 +28,33 @@ export const steelpan = {
     }
   ],
   sounds: {
-    indentation_strike: (d) => playMembrane(440 * d.pitchMult, 0.45, 1.2, false),
-    rapid_chordal_roll: (d) => {
-      playMembrane(440 * d.pitchMult, 0.15, 0.8, false);
-      playMembrane(554 * d.pitchMult, 0.12, 0.7, false);
-      playMembrane(659 * d.pitchMult, 0.1, 0.6, false);
+    indentation_strike: (d, velocity = 0.85) => {
+      // Tuned convex note strike with rubber-tipped mallet
+      playMembrane(440 * d.pitchMult, 0.6, 1.05, false, velocity);
+      playAttackClick(0.015, 3200, 0.3 * velocity);
     },
-    rim_ring: (d) => playMembrane(880 * d.pitchMult, 0.8, 1.4, false),
-    mute_slap: (d) => playMembrane(330 * d.pitchMult, 0.05, 0.9, true)
+    rapid_chordal_roll: (d, velocity = 0.8) => {
+      // Arpeggiated sweeping melodic chord roll across the pan in stereo
+      playMembrane(440 * d.pitchMult, 0.18, 1.0, false, velocity, -0.15);
+      playAttackClick(0.01, 3200, 0.25 * velocity);
+      setTimeout(() => {
+        playMembrane(554 * d.pitchMult, 0.15, 1.0, false, velocity * 0.9, 0.15);
+        playAttackClick(0.01, 3200, 0.2 * velocity);
+      }, 45);
+      setTimeout(() => {
+        playMembrane(659 * d.pitchMult, 0.12, 1.0, false, velocity * 0.8, 0.0);
+        playAttackClick(0.01, 3200, 0.15 * velocity);
+      }, 90);
+    },
+    rim_ring: (d, velocity = 0.8) => {
+      // Bright, industrial untuned metallic chrome skirt ring
+      playMembrane(920 * d.pitchMult, 0.7, 1.0, true, velocity);
+      playNoise(0.4, 4500, velocity * 0.5, 'highpass');
+    },
+    mute_slap: (d, velocity = 0.75) => {
+      // Dry choked hand slap
+      playMembrane(330 * d.pitchMult, 0.05, 0.9, true, velocity);
+    }
   },
   touches: [
     {

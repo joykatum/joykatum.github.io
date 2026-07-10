@@ -1,4 +1,4 @@
-import { playMembrane, playNoise } from '../audio.js';
+import { playMembrane, playNoise, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
 
 export const agogo = {
@@ -15,19 +15,25 @@ export const agogo = {
     }
   ],
   sounds: {
-    high_strike: (d) => playMembrane(480 * d.pitchMult, 0.4, 1.0, false),
-    low_strike: (d) => playMembrane(380 * d.pitchMult, 0.55, 1.0, false),
-    clap: (d) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true),
-    stick_drag: (d) => {
-      playMembrane(600 * d.pitchMult, 0.03, 1.0, true);
-      playNoise(0.04, 2500, state.currentTiltVolume * 0.7);
+    high_strike: (d, velocity = 0.8) => {
+      playMembrane(480 * d.pitchMult, 0.35, 1.0, false, velocity, -0.25);
+      playAttackClick(0.015, 4500, 0.5 * velocity);
+    },
+    low_strike: (d, velocity = 0.8) => {
+      playMembrane(380 * d.pitchMult, 0.48, 1.0, false, velocity, 0.25);
+      playAttackClick(0.015, 3800, 0.45 * velocity);
+    },
+    clap: (d, velocity = 0.85) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true, velocity, 0.0),
+    stick_drag: (d, velocity = 0.7) => {
+      playMembrane(600 * d.pitchMult, 0.03, 1.0, true, velocity * 0.8, -0.2);
+      playNoise(0.04, 2500, velocity * 0.5, 'highpass');
       setTimeout(() => {
-        playMembrane(650 * d.pitchMult, 0.03, 1.0, true);
-        playNoise(0.03, 2800, state.currentTiltVolume * 0.6);
+        playMembrane(650 * d.pitchMult, 0.03, 1.0, true, velocity * 0.7, -0.1);
+        playNoise(0.03, 2800, velocity * 0.4, 'highpass');
       }, 50);
       setTimeout(() => {
-        playMembrane(700 * d.pitchMult, 0.04, 1.0, true);
-        playNoise(0.03, 3000, state.currentTiltVolume * 0.5);
+        playMembrane(700 * d.pitchMult, 0.04, 1.0, true, velocity * 0.6, 0.1);
+        playNoise(0.03, 3000, velocity * 0.3, 'highpass');
       }, 100);
     }
   },

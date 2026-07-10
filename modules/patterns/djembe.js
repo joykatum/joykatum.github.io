@@ -19,7 +19,7 @@ export default {
     }
   },
   moribayassa: {
-    name: '🥁 Moribayassa (Joyous Women\'s Celebration)',
+    name: "🥁 Moribayassa (Joyous Women's Celebration)",
     stepCount: 16,
     steps: {
       // Fast, driving traditional template featuring a mix of rapid tones and accents
@@ -109,7 +109,7 @@ export default {
     }
   },
   djembe_solo_echauffement: {
-    name: '🔥 L\'Échauffement (Solo Climax Acceleration)',
+    name: "🔥 L'Échauffement (Solo Climax Acceleration)",
     stepCount: 16,
     steps: {
       // The authentic multi-stroke call pattern a soloist throws out to signaling a massive tempo lift

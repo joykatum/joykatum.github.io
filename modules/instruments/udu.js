@@ -40,13 +40,28 @@ export const udu = {
     }
   ],
   sounds: {
-    ceramic_side_body_slap: (d) => {
-      playMembrane(420 * d.pitchMult, 0.08, 1.1, true);
-      playNoise(0.02, 3500, state.currentTiltVolume * 0.4);
+    ceramic_side_body_slap: (d, velocity = 0.8) => {
+      // Crisp ceramic slap on the side of the clay vessel (around 450Hz)
+      playMembrane(450 * d.pitchMult, 0.08, 1.1, true, velocity, 0.0);
+      playAttackClick(0.01, 3800, 0.5 * velocity);
+      playNoise(0.015, 3000, velocity * 0.35, 'highpass');
     },
-    mouth_port_palm_pop: (d) => playMembrane(75 * d.pitchMult, 0.45, 1.3, false),
-    neck_scratch: (d) => playTablaSlideUp(140 * d.pitchMult, 220 * d.pitchMult, 0.35),
-    ceramic_finger_tap: (d) => playMembrane(680 * d.pitchMult, 0.04, 0.9, true)
+    mouth_port_palm_pop: (d, velocity = 0.9) => {
+      // The classic deep, hollow air-column "Whoomph" (around 65Hz)
+      playMembrane(65 * d.pitchMult, 0.42, 1.35, false, velocity, -0.05);
+      // Low frequency air displacement noise
+      playNoise(0.12, 180, velocity * 0.4, 'lowpass');
+      playAttackClick(0.02, 350, 0.3 * velocity);
+    },
+    neck_scratch: (d, velocity = 0.65) => {
+      // Crisp fingernail scraping across the clay neck ridges
+      playNoise(0.24, 1800, velocity * 0.75, 'bandpass', 4.0);
+    },
+    ceramic_finger_tap: (d, velocity = 0.7) => {
+      // Light, high glass-like click on the top rim (around 720Hz)
+      playMembrane(720 * d.pitchMult, 0.04, 0.9, true, velocity, 0.05);
+      playAttackClick(0.006, 5200, 0.65 * velocity);
+    }
   },
   touches: [
     {

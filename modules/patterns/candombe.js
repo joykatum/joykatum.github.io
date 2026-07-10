@@ -6,13 +6,28 @@ export default {
     stepCount: 16,
     steps: {
       // Chico maintains standard constant metric timeline
-      0: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'palo' }],
+      0: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
       2: [{ drum: 0, sound: 'mano' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'mano' }],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
       6: [{ drum: 0, sound: 'mano' }],
-      8: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'palo' }],
-      10: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'mano' }],
+      8: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
+      10: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' }
+      ],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
       14: [{ drum: 0, sound: 'mano' }]
     }
   },
@@ -21,14 +36,38 @@ export default {
     stepCount: 16,
     steps: {
       // Features the prominent wood-knocking cadence on the staves (trigro_madera)
-      0: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }],
-      2: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'mano' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }],
-      6: [{ drum: 0, sound: 'mano' }, { drum: 2, sound: 'palo' }],
-      8: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }],
-      10: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'trigro_madera' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'mano' }],
-      14: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }]
+      0: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
+      2: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'mano' }
+      ],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
+      6: [
+        { drum: 0, sound: 'mano' },
+        { drum: 2, sound: 'palo' }
+      ],
+      8: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' }
+      ],
+      10: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
+      14: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' }
+      ]
     }
   },
   cordon_traditional: {
@@ -36,15 +75,34 @@ export default {
     stepCount: 16,
     steps: {
       // Rapid syncopations balancing between the heavy open Piano beats and Chico
-      0: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }, { drum: 2, sound: 'palo' }],
+      0: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
       2: [{ drum: 0, sound: 'mano' }],
       3: [{ drum: 1, sound: 'mano' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'palo' }],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
       6: [{ drum: 0, sound: 'mano' }],
-      8: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }],
-      10: [{ drum: 0, sound: 'mano' }, { drum: 2, sound: 'mano' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'mano' }],
-      14: [{ drum: 0, sound: 'mano' }, { drum: 2, sound: 'palo' }]
+      8: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' }
+      ],
+      10: [
+        { drum: 0, sound: 'mano' },
+        { drum: 2, sound: 'mano' }
+      ],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'mano' }
+      ],
+      14: [
+        { drum: 0, sound: 'mano' },
+        { drum: 2, sound: 'palo' }
+      ]
     }
   },
   chico_base: {
@@ -95,13 +153,35 @@ export default {
     stepCount: 16,
     steps: {
       // Emulates a full street carnival block (Comparsa) processing past
-      0: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }, { drum: 2, sound: 'palo' }],
-      2: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'mano' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }, { drum: 2, sound: 'mano' }],
+      0: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' },
+        { drum: 2, sound: 'palo' }
+      ],
+      2: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'mano' }
+      ],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
       6: [{ drum: 0, sound: 'mano' }],
-      8: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }, { drum: 2, sound: 'palo' }],
-      10: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }, { drum: 2, sound: 'mano' }],
+      8: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' },
+        { drum: 2, sound: 'palo' }
+      ],
+      10: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' }
+      ],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' },
+        { drum: 2, sound: 'mano' }
+      ],
       14: [{ drum: 0, sound: 'mano' }]
     }
   },
@@ -112,11 +192,20 @@ export default {
       // Modern syncopation blending Uruguayan folk with jazz fusion kit structures
       0: [{ drum: 2, sound: 'palo' }],
       2: [{ drum: 1, sound: 'trigro_madera' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' }
+      ],
       6: [{ drum: 2, sound: 'mano' }],
-      8: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'trigro_madera' }],
+      8: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
       10: [{ drum: 2, sound: 'palo' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' }
+      ],
       14: [{ drum: 1, sound: 'mano' }]
     }
   },
@@ -131,7 +220,10 @@ export default {
       8: [{ drum: 2, sound: 'mano' }],
       10: [{ drum: 2, sound: 'palo' }],
       12: [{ drum: 1, sound: 'palo' }],
-      14: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'trigro_madera' }]
+      14: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'trigro_madera' }
+      ]
     }
   },
   stave_textures: {
@@ -139,9 +231,15 @@ export default {
     stepCount: 16,
     steps: {
       // Experimental implementation centered purely on scraping and clicking the wooden shells
-      0: [{ drum: 0, sound: 'cu_stave_rake' }, { drum: 2, sound: 'trigro_madera' }],
+      0: [
+        { drum: 0, sound: 'cu_stave_rake' },
+        { drum: 2, sound: 'trigro_madera' }
+      ],
       4: [{ drum: 1, sound: 'cu_stave_rake' }],
-      8: [{ drum: 0, sound: 'trigro_madera' }, { drum: 2, sound: 'cu_stave_rake' }],
+      8: [
+        { drum: 0, sound: 'trigro_madera' },
+        { drum: 2, sound: 'cu_stave_rake' }
+      ],
       12: [{ drum: 1, sound: 'trigro_madera' }]
     }
   },
@@ -150,12 +248,24 @@ export default {
     stepCount: 12,
     steps: {
       // 12-beat swing variation closely tying Candombe to ancient Milonga dance cadences
-      0: [{ drum: 2, sound: 'palo' }, { drum: 0, sound: 'palo' }],
+      0: [
+        { drum: 2, sound: 'palo' },
+        { drum: 0, sound: 'palo' }
+      ],
       2: [{ drum: 1, sound: 'palo' }],
-      4: [{ drum: 0, sound: 'mano' }, { drum: 2, sound: 'mano' }],
-      6: [{ drum: 1, sound: 'trigro_madera' }, { drum: 0, sound: 'palo' }],
+      4: [
+        { drum: 0, sound: 'mano' },
+        { drum: 2, sound: 'mano' }
+      ],
+      6: [
+        { drum: 1, sound: 'trigro_madera' },
+        { drum: 0, sound: 'palo' }
+      ],
       8: [{ drum: 2, sound: 'palo' }],
-      10: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }]
+      10: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' }
+      ]
     }
   },
   afro_uruguayan_bossa: {
@@ -163,7 +273,10 @@ export default {
     stepCount: 16,
     steps: {
       // Intertwines Brazilian bossa nova rim aesthetics with the traditional Uruguayan Piano march
-      0: [{ drum: 2, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }],
+      0: [
+        { drum: 2, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
       3: [{ drum: 1, sound: 'trigro_madera' }],
       4: [{ drum: 0, sound: 'palo' }],
       6: [{ drum: 2, sound: 'mano' }],
@@ -179,13 +292,25 @@ export default {
     stepCount: 16,
     steps: {
       // Incorporates theatrical, march-like military syncopation inspired by Murga ensembles
-      0: [{ drum: 2, sound: 'palo' }, { drum: 1, sound: 'palo' }],
+      0: [
+        { drum: 2, sound: 'palo' },
+        { drum: 1, sound: 'palo' }
+      ],
       2: [{ drum: 1, sound: 'palo' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'mano' }],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
       6: [{ drum: 1, sound: 'palo' }],
-      8: [{ drum: 2, sound: 'palo' }, { drum: 1, sound: 'trigro_madera' }],
+      8: [
+        { drum: 2, sound: 'palo' },
+        { drum: 1, sound: 'trigro_madera' }
+      ],
       10: [{ drum: 1, sound: 'palo' }],
-      12: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'palo' }],
+      12: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
       14: [{ drum: 1, sound: 'mano' }]
     }
   },
@@ -194,7 +319,10 @@ export default {
     stepCount: 12,
     steps: {
       // Shifting signature utilizing hocketing accents across staves and dragging rakes
-      0: [{ drum: 1, sound: 'trigro_madera' }, { drum: 2, sound: 'cu_stave_rake' }],
+      0: [
+        { drum: 1, sound: 'trigro_madera' },
+        { drum: 2, sound: 'cu_stave_rake' }
+      ],
       3: [{ drum: 0, sound: 'trigro_madera' }],
       5: [{ drum: 1, sound: 'cu_stave_rake' }],
       6: [{ drum: 2, sound: 'trigro_madera' }],
@@ -207,10 +335,24 @@ export default {
     stepCount: 8,
     steps: {
       // Rapid, high-intensity pattern typical of a street performance's dramatic final speed-up
-      0: [{ drum: 0, sound: 'palo' }, { drum: 1, sound: 'palo' }, { drum: 2, sound: 'palo' }],
-      2: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }],
-      4: [{ drum: 0, sound: 'palo' }, { drum: 2, sound: 'mano' }],
-      6: [{ drum: 0, sound: 'mano' }, { drum: 1, sound: 'palo' }, { drum: 2, sound: 'palo' }]
+      0: [
+        { drum: 0, sound: 'palo' },
+        { drum: 1, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ],
+      2: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' }
+      ],
+      4: [
+        { drum: 0, sound: 'palo' },
+        { drum: 2, sound: 'mano' }
+      ],
+      6: [
+        { drum: 0, sound: 'mano' },
+        { drum: 1, sound: 'palo' },
+        { drum: 2, sound: 'palo' }
+      ]
     }
   }
 };

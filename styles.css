@@ -136,36 +136,36 @@ header p {
 
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
-    --drum-unit: min(4.6cqh, 4.6cqw);
+    --drum-unit: min(3.8cqh, 4.2cqw);
   }
   .drums-grid.count-2 {
-    --drum-unit: min(4.5cqh, 3.2cqw);
+    --drum-unit: min(3.6cqh, 2.3cqw);
   }
   .drums-grid.count-3 {
-    --drum-unit: min(4.4cqh, 2.2cqw);
+    --drum-unit: min(3.4cqh, 1.6cqw);
   }
   .drums-grid.count-4 {
-    --drum-unit: min(4.3cqh, 1.7cqw);
+    --drum-unit: min(3.2cqh, 1.25cqw);
   }
   .drums-grid.count-5 {
-    --drum-unit: min(4.2cqh, 1.4cqw);
+    --drum-unit: min(3cqh, 1.05cqw);
   }
 
   /* Specific sizes for horizontal layout of Two-Sided drums */
   .drums-grid.two-sided-drum.count-1 {
-    --drum-unit: min(4.3cqh, 2.8cqw);
+    --drum-unit: min(4.8cqh, 3.2cqw);
   }
   .drums-grid.two-sided-drum.count-2 {
-    --drum-unit: min(3.5cqh, 1.7cqw);
+    --drum-unit: min(3.8cqh, 2cqw);
   }
   .drums-grid.two-sided-drum.count-3 {
-    --drum-unit: min(2.8cqh, 1.2cqw);
+    --drum-unit: min(3.1cqh, 1.45cqw);
   }
   .drums-grid.two-sided-drum.count-4 {
-    --drum-unit: min(2.4cqh, 0.9cqw);
+    --drum-unit: min(2.7cqh, 1.15cqw);
   }
   .drums-grid.two-sided-drum.count-5 {
-    --drum-unit: min(2cqh, 0.7cqw);
+    --drum-unit: min(2.3cqh, 0.95cqw);
   }
 }
 
@@ -188,19 +188,19 @@ header p {
   }
 
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-1 {
-    --drum-unit: min(2cqh, 3.2cqw);
+    --drum-unit: min(2.4cqh, 3.6cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-2 {
-    --drum-unit: min(1.2cqh, 2.2cqw);
+    --drum-unit: min(1.5cqh, 2.5cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-3 {
-    --drum-unit: min(1cqh, 1.8cqw);
+    --drum-unit: min(1.2cqh, 2cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-4 {
-    --drum-unit: min(0.8cqh, 1.5cqw);
+    --drum-unit: min(1cqh, 1.7cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-5 {
-    --drum-unit: min(0.7cqh, 1.2cqw);
+    --drum-unit: min(0.85cqh, 1.4cqw);
   }
 
   /* Specific horizontal layout and scaling for bongo in portrait mode */
@@ -210,19 +210,19 @@ header p {
     gap: 4cqh;
   }
   .drums-grid.two-sided-bongo.count-1 {
-    --drum-unit: min(3.8cqh, 2.4cqw);
+    --drum-unit: min(4.2cqh, 2.8cqw);
   }
   .drums-grid.two-sided-bongo.count-2 {
-    --drum-unit: min(3.2cqh, 2cqw);
+    --drum-unit: min(3.5cqh, 2.3cqw);
   }
   .drums-grid.two-sided-bongo.count-3 {
-    --drum-unit: min(2.6cqh, 1.6cqw);
+    --drum-unit: min(2.9cqh, 1.8cqw);
   }
   .drums-grid.two-sided-bongo.count-4 {
-    --drum-unit: min(2.2cqh, 1.3cqw);
+    --drum-unit: min(2.4cqh, 1.5cqw);
   }
   .drums-grid.two-sided-bongo.count-5 {
-    --drum-unit: min(1.8cqh, 1cqw);
+    --drum-unit: min(2cqh, 1.2cqw);
   }
 
   /* Force Conga and Tumba to be next to each other in 2-column grid */
@@ -246,11 +246,11 @@ header p {
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
     grid-template-columns: repeat(1, auto);
-    --drum-unit: min(5.5cqh, 4.6cqw);
+    --drum-unit: min(4.8cqh, 4.6cqw);
   }
   .drums-grid.count-2 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(3.8cqh, 2.3cqw);
+    --drum-unit: min(3.8cqh, 2.4cqw);
   }
   .drums-grid.count-3 {
     grid-template-columns: repeat(2, auto);

@@ -44,14 +44,21 @@ export const alfaia = {
     }
   ],
   sounds: {
-    golpe: (d) => playNoise(0.08, 1800, state.currentTiltVolume * 0.5),
-    aro: (d) => {
-      playMembrane(190 * d.pitchMult, 0.18, 1.2, true);
-      playNoise(0.1, 1200, state.currentTiltVolume * 0.7);
+    golpe: (d, velocity = 0.85) => {
+      // Extremely deep, booming mallet hit on a loose skin head (around 52Hz)
+      playMembrane(52 * d.pitchMult, 0.85, 1.4, false, velocity, 0.0);
+      playAttackClick(0.015, 800, 0.3 * velocity);
     },
-    stick_on_stick_hoop_rimshot: (d) => {
-      playMembrane(190 * d.pitchMult, 0.18, 1.2, true);
-      playNoise(0.1, 1200, state.currentTiltVolume * 0.7);
+    aro: (d, velocity = 0.8) => {
+      // Striking the wooden rim (aro) produces a dry, woody clack
+      playMembrane(450 * d.pitchMult, 0.08, 1.0, true, velocity, 0.0);
+      playAttackClick(0.012, 2800, 0.4 * velocity);
+    },
+    stick_on_stick_hoop_rimshot: (d, velocity = 0.9) => {
+      // A massive cracking wood-on-wood rimshot: higher pitch, rapid click and sharp decay
+      playMembrane(580 * d.pitchMult, 0.05, 1.0, true, velocity, 0.0);
+      playAttackClick(0.008, 3800, 0.7 * velocity);
+      playNoise(0.04, 3200, velocity * 0.4, 'highpass');
     }
   },
   touches: [

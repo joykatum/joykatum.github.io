@@ -125,7 +125,10 @@ export function playPatternStep() {
 
   const instDef = drumTypes[inst] || drumTypes.conga;
 
-  const triggerHit = (drumIdx, soundType) => {
+  const stepCount = pattern.stepCount || 16;
+  const step = state.currentPatternStep % stepCount;
+
+  const triggerHit = (drumIdx, soundType, hit) => {
     let d;
     if (inst === 'conga') {
       if (drumIdx === 1) {
@@ -156,20 +159,38 @@ export function playPatternStep() {
         finalDrumId = `${d.id}_${drumIdx === 1 ? 'high' : 'low'}`;
       }
 
-      instDef.sounds[soundType](virtualDrum);
+      // Calculate dynamic velocity
+      let finalVelocity = hit.velocity || (hit.accent ? 1.0 : 0.8);
+
+      // If no explicit velocity is in the pattern, apply automatic musical phrasing/groove:
+      if (!hit.velocity) {
+        const isDownbeat = step % 4 === 0;
+        const isSyncopated = step % 2 !== 0;
+
+        if (isDownbeat) {
+          finalVelocity = 0.95;
+        } else if (isSyncopated) {
+          finalVelocity = 0.68; // Softer off-beats for natural lift and groove
+        } else {
+          finalVelocity = 0.82;
+        }
+      }
+
+      // Add subtle organic humanization (slight volume/velocity fluctuations)
+      const humanization = (Math.random() - 0.5) * 0.08;
+      finalVelocity = Math.max(0.15, Math.min(1.0, finalVelocity + humanization));
+
+      instDef.sounds[soundType](virtualDrum, finalVelocity);
       if (onStepTriggeredCallback) {
         onStepTriggeredCallback(finalDrumId, soundType);
       }
     }
   };
 
-  const stepCount = pattern.stepCount || 16;
-  const step = state.currentPatternStep % stepCount;
-
   const currentStepHits = pattern.steps[step];
   if (currentStepHits) {
     currentStepHits.forEach((hit) => {
-      triggerHit(hit.drum, hit.sound);
+      triggerHit(hit.drum, hit.sound, hit);
     });
   }
 

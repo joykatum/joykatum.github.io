@@ -6,13 +6,22 @@ export default {
     stepCount: 16,
     steps: {
       // The most widespread rhythm in Bomba; highly syncopated and driving
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       3: [{ drum: 1, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       6: [{ drum: 0, sound: 'abierto' }],
       8: [{ drum: 1, sound: 'abierto' }],
       11: [{ drum: 1, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       14: [{ drum: 0, sound: 'abierto' }]
     }
   },
@@ -21,9 +30,15 @@ export default {
     stepCount: 12,
     steps: {
       // Traditionally an emotional, spiritual cadence used for older, graceful dance styles
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       2: [{ drum: 1, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       6: [{ drum: 1, sound: 'abierto' }],
       8: [{ drum: 1, sound: 'cu' }],
       10: [{ drum: 0, sound: 'abierto' }]
@@ -34,14 +49,29 @@ export default {
     stepCount: 16,
     steps: {
       // Originating from the western region (Mayagüez), fast, energetic, and explosive
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       2: [{ drum: 1, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      4: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       6: [{ drum: 1, sound: 'cu' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       10: [{ drum: 1, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
-      14: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }]
+      12: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
+      14: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ]
     }
   },
   cuembe_sensual: {
@@ -51,11 +81,17 @@ export default {
       // Characterized by its rolling movement, emphasizing hips and playful steps
       0: [{ drum: 1, sound: 'abierto' }],
       2: [{ drum: 0, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       6: [{ drum: 0, sound: 'cu' }],
       8: [{ drum: 1, sound: 'abierto' }],
       10: [{ drum: 0, sound: 'abierto' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       14: [{ drum: 1, sound: 'cu' }]
     }
   },
@@ -64,13 +100,19 @@ export default {
     stepCount: 16,
     steps: {
       // Displays clear migratory structural influences from neighboring islands
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       3: [{ drum: 1, sound: 'cu' }],
       4: [{ drum: 1, sound: 'abierto' }],
       7: [{ drum: 0, sound: 'cu' }],
       8: [{ drum: 1, sound: 'abierto' }],
       11: [{ drum: 1, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       15: [{ drum: 0, sound: 'cu' }]
     }
   },
@@ -80,7 +122,10 @@ export default {
     steps: {
       // A unique ternary rhythm native to the northern Afro-Puerto Rican enclave of Loíza Aldea
       0: [{ drum: 1, sound: 'abierto' }],
-      2: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      2: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       4: [{ drum: 1, sound: 'abierto' }],
       6: [{ drum: 0, sound: 'abierto' }],
       8: [{ drum: 1, sound: 'cu' }],
@@ -92,11 +137,17 @@ export default {
     stepCount: 16,
     steps: {
       // From the southern Ponce region; steady, heavy, and very deliberate accenting
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       4: [{ drum: 1, sound: 'cu' }],
       6: [{ drum: 0, sound: 'cu' }],
       8: [{ drum: 1, sound: 'abierto' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       14: [{ drum: 1, sound: 'cu' }]
     }
   },
@@ -105,11 +156,17 @@ export default {
     stepCount: 16,
     steps: {
       // Features sudden stops and dynamic shifts designed to test a dancer's balance
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       2: [{ drum: 1, sound: 'cu' }],
       4: [{ drum: 0, sound: 'abierto' }],
       6: [{ drum: 1, sound: 'cu' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       10: [{ drum: 1, sound: 'cu' }],
       12: [{ drum: 0, sound: 'abierto' }],
       14: [{ drum: 0, sound: 'cu' }]
@@ -120,7 +177,10 @@ export default {
     stepCount: 8,
     steps: {
       // Hyper-speed variation from Loíza, relying heavily on immediate rolling accents
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       2: [{ drum: 1, sound: 'cu' }],
       3: [{ drum: 0, sound: 'cu' }],
       4: [{ drum: 1, sound: 'abierto' }],
@@ -135,12 +195,21 @@ export default {
       // A specialized northern style featuring delayed accents on the open tones
       0: [{ drum: 1, sound: 'abierto' }],
       2: [{ drum: 0, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       6: [{ drum: 1, sound: 'abierto' }],
-      8: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      8: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       10: [{ drum: 0, sound: 'abierto' }],
       12: [{ drum: 1, sound: 'abierto' }],
-      14: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }]
+      14: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ]
     }
   },
   bomba_marianda: {
@@ -148,13 +217,19 @@ export default {
     stepCount: 16,
     steps: {
       // Upbeat, lighter celebratory cadence traditionally used to close out community dances
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       3: [{ drum: 0, sound: 'cu' }],
       4: [{ drum: 1, sound: 'cu' }],
       6: [{ drum: 0, sound: 'abierto' }],
       8: [{ drum: 1, sound: 'abierto' }],
       11: [{ drum: 0, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       14: [{ drum: 1, sound: 'cu' }]
     }
   },
@@ -163,11 +238,17 @@ export default {
     stepCount: 12,
     steps: {
       // A rare, sliding 12/8 rhythm with deep polyrhythmic phrasing between the two barrels
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       2: [{ drum: 1, sound: 'cu' }],
       4: [{ drum: 0, sound: 'abierto' }],
       6: [{ drum: 1, sound: 'abierto' }],
-      8: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      8: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       10: [{ drum: 0, sound: 'abierto' }]
     }
   },
@@ -176,15 +257,27 @@ export default {
     stepCount: 16,
     steps: {
       // Simulates a lead Subidor throwing erratic accents to track a solo dancer\'s footwork
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       2: [{ drum: 0, sound: 'cu' }],
       3: [{ drum: 0, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       6: [{ drum: 0, sound: 'abierto' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       10: [{ drum: 0, sound: 'abierto' }],
       11: [{ drum: 0, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       14: [{ drum: 0, sound: 'cu' }]
     }
   },
@@ -193,14 +286,26 @@ export default {
     stepCount: 16,
     steps: {
       // Represents the Subidor mimicking a dancer doing rapid, continuous heel-toe transitions
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'cu' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'cu' }
+      ],
       2: [{ drum: 0, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       6: [{ drum: 0, sound: 'cu' }],
       7: [{ drum: 0, sound: 'cu' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       10: [{ drum: 0, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       14: [{ drum: 0, sound: 'cu' }],
       15: [{ drum: 0, sound: 'cu' }]
     }
@@ -211,9 +316,18 @@ export default {
     steps: {
       // Modern Urban Afro-Caribbean fusion blending Bomba anchors with Roots Reggae structures
       0: [{ drum: 1, sound: 'abierto' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }]
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ]
     }
   },
   bomba_salsa_timba_break: {
@@ -221,13 +335,22 @@ export default {
     stepCount: 16,
     steps: {
       // Modern implementation showing how contemporary orchestras drop Bomba patterns into high-energy Salsa sections
-      0: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      0: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       2: [{ drum: 0, sound: 'cu' }],
-      4: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'cu' }],
+      4: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'cu' }
+      ],
       6: [{ drum: 1, sound: 'abierto' }],
       8: [{ drum: 0, sound: 'abierto' }],
       10: [{ drum: 1, sound: 'cu' }],
-      12: [{ drum: 1, sound: 'cu' }, { drum: 0, sound: 'abierto' }],
+      12: [
+        { drum: 1, sound: 'cu' },
+        { drum: 0, sound: 'abierto' }
+      ],
       14: [{ drum: 0, sound: 'cu' }]
     }
   },
@@ -240,7 +363,10 @@ export default {
       2: [{ drum: 1, sound: 'cu' }],
       4: [{ drum: 0, sound: 'cu' }],
       6: [{ drum: 1, sound: 'abierto' }],
-      8: [{ drum: 1, sound: 'abierto' }, { drum: 0, sound: 'abierto' }],
+      8: [
+        { drum: 1, sound: 'abierto' },
+        { drum: 0, sound: 'abierto' }
+      ],
       10: [{ drum: 1, sound: 'cu' }],
       12: [{ drum: 0, sound: 'cu' }],
       14: [{ drum: 1, sound: 'cu' }]

@@ -39,10 +39,20 @@ export const timpani = {
     }
   ],
   sounds: {
-    beating_spot_strike: (d) => playTablaSlideUp(120 * d.pitchMult, 50 * d.pitchMult, 1.2),
-    pedal_glissando_bend: (d) => playTablaSlideUp(120 * d.pitchMult, 50 * d.pitchMult, 1.2),
-    damping_touch: (d) => playMembrane(60 * d.pitchMult, 1.8, 1.05),
-    stick_shaft_rim_shot: (d) => playTablaSlideUp(120 * d.pitchMult, 50 * d.pitchMult, 1.2)
+    beating_spot_strike: (d, velocity = 0.85) => {
+      playMembrane(90 * d.pitchMult, 1.6, 1.02, false, velocity, 0.0);
+      playAttackClick(0.015, 1200, 0.35 * velocity);
+    },
+    pedal_glissando_bend: (d, velocity = 0.85) => {
+      playTablaSlideUp(75 * d.pitchMult, 125 * d.pitchMult, 1.5, velocity, 0.0);
+    },
+    damping_touch: (d, velocity = 0.6) => {
+      playMembrane(90 * d.pitchMult, 0.12, 1.0, false, velocity, 0.0);
+    },
+    stick_shaft_rim_shot: (d, velocity = 0.9) => {
+      playMembrane(380 * d.pitchMult, 0.18, 1.0, true, velocity, 0.0);
+      playNoise(0.2, 3800, 0.5 * velocity, 'highpass');
+    }
   },
   touches: [
     {

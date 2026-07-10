@@ -29,14 +29,34 @@ export const candombe = {
     }
   ],
   sounds: {
-    mano: (d) => {
-      const f = (d.id === 0 ? 320 : d.id === 1 ? 220 : 150) * d.pitchMult;
-      playMembrane(f, 0.12, 1.0, true);
-      playNoise(0.08, d.id === 0 ? 2500 : 1800, state.currentTiltVolume * 0.9);
+    mano: (d, velocity = 0.8) => {
+      // Warm hand strike (slap/open/muffled hybrid)
+      const f = (d.id === 0 ? 320 : d.id === 1 ? 200 : 120) * d.pitchMult;
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      const decay = d.id === 2 ? 0.28 : 0.12;
+      playMembrane(f, decay, 1.1, true, velocity, pan);
+      playNoise(0.04, d.id === 0 ? 2600 : 1600, velocity * 0.4, d.id === 0 ? 'highpass' : 'bandpass');
     },
-    palo: (d) => playMembrane((d.id === 0 ? 140 : d.id === 1 ? 90 : 55) * d.pitchMult, 0.6, 1.4, false),
-    trigro_madera: (d) => playMembrane((d.id === 0 ? 140 : d.id === 1 ? 90 : 55) * d.pitchMult, 0.6, 1.4, false),
-    cu_stave_rake: (d) => playMembrane((d.id === 0 ? 220 : d.id === 1 ? 150 : 90) * d.pitchMult, 0.1, 1.0, false)
+    palo: (d, velocity = 0.85) => {
+      // Sharp, loud stick strike directly on the head. Produces a very bright resonance.
+      const f = (d.id === 0 ? 450 : d.id === 1 ? 300 : 160) * d.pitchMult;
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      const decay = d.id === 2 ? 0.45 : d.id === 1 ? 0.25 : 0.14;
+      playMembrane(f, decay, 1.35, false, velocity, pan);
+      playAttackClick(0.012, 4200, 0.7 * velocity);
+    },
+    trigro_madera: (d, velocity = 0.75) => {
+      // Wood stick cracking against the wooden barrel body (madera)
+      // Highly dry, bright, wooden acoustic block click (approx 620Hz)
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      playMembrane(620 * d.pitchMult, 0.04, 1.0, true, velocity, pan);
+      playAttackClick(0.008, 3500, 0.65 * velocity);
+    },
+    cu_stave_rake: (d, velocity = 0.7) => {
+      // Raspy stick rub/rake across the side seams of the barrel staves
+      const pan = d.id === 0 ? -0.35 : d.id === 1 ? 0.0 : 0.35;
+      playNoise(0.18, 1250, velocity * 0.8, 'bandpass', 3.0);
+    }
   },
   touches: [
     {

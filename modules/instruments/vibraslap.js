@@ -15,10 +15,37 @@ export const vibraslap = {
     }
   ],
   sounds: {
-    ball_palm_strike: (d) => playNoise(0.5, 1800, state.currentTiltVolume * 0.7),
-    soundbox_strike: (d) => playNoise(1.2, 2200, state.currentTiltVolume * 1.4),
-    wire_twang: (d) => playMembrane(220 * d.pitchMult, 0.25, 0.8, false),
-    short_buzz: (d) => playNoise(0.15, 2000, state.currentTiltVolume * 0.5)
+    ball_palm_strike: (d, velocity = 0.95) => {
+      // Wood-ball-on-palm strike clack
+      playMembrane(280 * d.pitchMult, 0.08, 1.0, true, velocity);
+      playAttackClick(0.01, 3000, 0.6 * velocity);
+
+      // Decaying teeth-chattering rattle: series of decaying clicks that slightly slow down
+      for (let i = 0; i < 15; i++) {
+        const delay = Math.pow(i, 1.22) * 45; // slightly slowing rate
+        const vol = velocity * Math.pow(0.83, i) * 1.3;
+        setTimeout(() => {
+          playNoise(0.02, 2800 + i * 50, vol, 'highpass', 4.0);
+        }, delay);
+      }
+    },
+    soundbox_strike: (d, velocity = 0.85) => {
+      // Dry hollow wood-block pop
+      playMembrane(450 * d.pitchMult, 0.08, 1.0, true, velocity);
+      playAttackClick(0.012, 3500, 0.6 * velocity);
+    },
+    wire_twang: (d, velocity = 0.8) => {
+      // Springy sliding metal twang
+      playTablaSlideUp(150 * d.pitchMult, 260 * d.pitchMult, 0.35, velocity);
+    },
+    short_buzz: (d, velocity = 0.7) => {
+      // Quick, short teeth-chattering rattle
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          playNoise(0.015, 2400, velocity * Math.pow(0.8, i), 'highpass');
+        }, i * 35);
+      }
+    }
   },
   touches: [
     {

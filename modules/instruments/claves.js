@@ -32,13 +32,21 @@ export const claves = {
     }
   ],
   sounds: {
-    strike: (d) => playMembrane(1300 * d.pitchMult, 0.04, 1.0),
-    end_tap: (d) => {
-      playMembrane(1650 * d.pitchMult, 0.02, 1.0, true);
-      playNoise(0.01, 5000, state.currentTiltVolume * 0.4);
+    strike: (d, velocity = 0.85) => {
+      playMembrane(1300 * d.pitchMult, 0.04, 1.0, false, velocity);
+      playAttackClick(0.008, 4000, 0.4 * velocity);
     },
-    wooden_rub: (d) => playNoise(0.12, 1200, state.currentTiltVolume * 0.5),
-    cup_strike: (d) => playMembrane(950 * d.pitchMult, 0.06, 1.2, false)
+    end_tap: (d, velocity = 0.75) => {
+      playMembrane(1650 * d.pitchMult, 0.02, 1.0, true, velocity);
+      playNoise(0.01, 5000, velocity * 0.3, 'highpass');
+    },
+    wooden_rub: (d, velocity = 0.6) => {
+      playNoise(0.2, 1000, velocity * 0.6, 'bandpass', 4.0);
+    },
+    cup_strike: (d, velocity = 0.8) => {
+      playMembrane(950 * d.pitchMult, 0.06, 1.2, false, velocity);
+      playAttackClick(0.01, 3500, 0.3 * velocity);
+    }
   },
   touches: [
     {

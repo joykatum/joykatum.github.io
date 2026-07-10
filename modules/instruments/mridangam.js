@@ -1,4 +1,4 @@
-import { playMembrane, playNoise } from '../audio.js';
+import { playMembrane, playNoise, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
 
 export const mridangam = {
@@ -15,43 +15,70 @@ export const mridangam = {
     }
   ],
   sounds: {
-    tha: (d) => {
+    tha: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(110 * d.pitchMult, 0.35, 1.1, false);
-      else {
-        playMembrane(175 * d.pitchMult, 0.62, 0.95, false);
-        playMembrane(350 * d.pitchMult, 0.42, 0.95, false);
-      }
-    },
-    thom: (d) => {
-      const baseId = parseInt(d.id);
+      const pan = baseId === 0 ? -0.3 : 0.3;
       if (baseId === 0) {
-        playMembrane(140 * d.pitchMult, 0.12, 1.0, true);
+        // Wet, flat hand slap on the bass head (Thoppi)
+        playMembrane(95 * d.pitchMult, 0.12, 1.1, true, velocity, pan);
+        playNoise(0.04, 800, velocity * 0.4, 'lowpass');
       } else {
-        playMembrane(270 * d.pitchMult, 0.11, 0.98, true);
-        playNoise(0.03, 2600, state.currentTiltVolume * 0.65);
+        // Bright resonant strike on the rim of the treble head (Valanthalai)
+        playMembrane(165 * d.pitchMult, 0.45, 1.0, false, velocity, pan);
+        playMembrane(330 * d.pitchMult, 0.35, 0.9, false, velocity * 0.7, pan);
+        playAttackClick(0.01, 3500, 0.4 * velocity);
       }
     },
-    nam: (d) => {
+    thom: (d, velocity = 0.85) => {
       const baseId = parseInt(d.id);
+      const pan = baseId === 0 ? -0.3 : 0.3;
       if (baseId === 0) {
-        playMembrane(140 * d.pitchMult, 0.12, 1.0, true);
+        // Deep, beautiful open bass note of Thoppi (around 68Hz)
+        playMembrane(68 * d.pitchMult, 0.65, 1.3, false, velocity, pan);
+        playAttackClick(0.015, 600, 0.3 * velocity);
       } else {
-        playMembrane(270 * d.pitchMult, 0.11, 0.98, true);
-        playNoise(0.03, 2600, state.currentTiltVolume * 0.65);
+        // Open treble ring on Valanthalai
+        playMembrane(220 * d.pitchMult, 0.4, 0.98, false, velocity, pan);
+        playMembrane(440 * d.pitchMult, 0.25, 0.95, false, velocity * 0.5, pan);
       }
     },
-    dhi_thei: (d) => {
+    nam: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(100 * d.pitchMult, 0.08, 1.0, false);
-      else playMembrane(125 * d.pitchMult, 0.07, 1.0, false);
+      const pan = baseId === 0 ? -0.3 : 0.3;
+      if (baseId === 0) {
+        // Soft bass tap
+        playMembrane(120 * d.pitchMult, 0.1, 1.0, true, velocity * 0.6, pan);
+      } else {
+        // Bright metallic ringing treble edge strike on Valanthalai
+        playMembrane(220 * d.pitchMult, 0.5, 0.98, false, velocity, pan);
+        playMembrane(440 * d.pitchMult, 0.32, 0.95, false, velocity * 0.6, pan);
+        playAttackClick(0.008, 4500, 0.5 * velocity);
+      }
     },
-    chapu: (d) => {
+    dhi_thei: (d, velocity = 0.7) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(110 * d.pitchMult, 0.35, 1.1, false);
-      else {
-        playMembrane(175 * d.pitchMult, 0.62, 0.95, false);
-        playMembrane(350 * d.pitchMult, 0.42, 0.95, false);
+      const pan = baseId === 0 ? -0.3 : 0.3;
+      if (baseId === 0) {
+        // Muted slap on Thoppi
+        playMembrane(90 * d.pitchMult, 0.05, 1.0, true, velocity, pan);
+      } else {
+        // Muted finger slap in the center syahi of Valanthalai
+        playMembrane(150 * d.pitchMult, 0.06, 1.0, true, velocity, pan);
+        playNoise(0.02, 1800, velocity * 0.5, 'highpass');
+        playAttackClick(0.008, 2500, 0.4 * velocity);
+      }
+    },
+    chapu: (d, velocity = 0.9) => {
+      const baseId = parseInt(d.id);
+      const pan = baseId === 0 ? -0.3 : 0.3;
+      if (baseId === 0) {
+        // Resonant slap on Thoppi
+        playMembrane(95 * d.pitchMult, 0.35, 1.1, false, velocity, pan);
+      } else {
+        // Iconic, singing bell-like treble ring of Mridangam Chapu
+        playMembrane(165 * d.pitchMult, 0.65, 1.0, false, velocity, pan);
+        playMembrane(330 * d.pitchMult, 0.5, 0.95, false, velocity * 0.8, pan);
+        playAttackClick(0.012, 3800, 0.65 * velocity);
       }
     }
   },

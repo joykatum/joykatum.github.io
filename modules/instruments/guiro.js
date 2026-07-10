@@ -15,10 +15,23 @@ export const guiro = {
     }
   ],
   sounds: {
-    largo: (d) => playNoise(0.06, 2200, state.currentTiltVolume * 1.2),
-    corto: (d) => playNoise(0.12, 1500, state.currentTiltVolume * 0.8),
-    shell_tap: (d) => playNoise(0.12, 1500, state.currentTiltVolume * 0.8),
-    end_hole_pop: (d) => playNoise(0.06, 2200, state.currentTiltVolume * 1.2)
+    largo: (d, velocity = 0.8) => {
+      // Long dragging scrape with a raspy gourd texture
+      playNoise(0.5, 1250, velocity * 0.95, 'bandpass', 3.0);
+    },
+    corto: (d, velocity = 0.8) => {
+      // Crisp, short accent flick
+      playNoise(0.12, 1650, velocity * 0.85, 'highpass');
+    },
+    shell_tap: (d, velocity = 0.75) => {
+      // Dry hollow wood-block tone
+      playMembrane(650 * d.pitchMult, 0.08, 1.0, true, velocity);
+    },
+    end_hole_pop: (d, velocity = 0.9) => {
+      // Deep hollow air-pop thud with low-frequency rumble
+      playMembrane(90 * d.pitchMult, 0.15, 1.25, false, velocity);
+      playNoise(0.12, 180, velocity * 0.45, 'lowpass');
+    }
   },
   touches: [
     {
