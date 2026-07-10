@@ -92,7 +92,8 @@ export function renderPatternCreatorGrid() {
     sounds.forEach((sound, sIdx) => {
       const touches = instrumentTouches[inst] || [];
       const touch = touches.find((t) => t.id === sound);
-      const soundDisplayName = touch ? touch.label : sound.charAt(0).toUpperCase() + sound.slice(1).replace(/_/g, ' ');
+      const rawDisplayName = touch ? touch.label : sound.charAt(0).toUpperCase() + sound.slice(1).replace(/_/g, ' ');
+      const soundDisplayName = rawDisplayName.replace(/\s*\(.*?\)/g, '').trim();
 
       html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">`;
 
@@ -773,11 +774,12 @@ export function triggerHitEffect(drumId, hitType) {
   const textEl = document.createElement('div');
   textEl.className = 'floating-hit-text';
 
-  // Resolve custom shortName from instrumentTouches or format hitType nicely (no underscores, friendly heel/toe)
+  // Resolve custom label from instrumentTouches or format hitType nicely (no underscores, friendly heel/toe, no parentheses)
   const inst = state.currentInstrument;
   const touches = instrumentTouches[inst] || instrumentTouches.conga || [];
   const touch = touches.find((t) => t.id === hitType);
-  let displayText = touch ? touch.shortName : hitType;
+  let rawDisplayText = touch ? touch.label : hitType;
+  let displayText = rawDisplayText.replace(/\s*\(.*?\)/g, '').trim();
   displayText = displayText.replace(/_/g, ' ').replace('heeltoe', 'heel/toe').toUpperCase();
 
   textEl.innerText = displayText;
@@ -1334,25 +1336,17 @@ export function updateControllerCheatSheet() {
 
     const dirs = ['up', 'down', 'left', 'right'];
     dirs.forEach((dir) => {
-      let dirText = '';
       const normalVal = getDirectionLabel(mapping, dir, touches);
       if (normalVal && normalVal.trim() !== '') {
-        dirText += `<span style="color: #10b981; font-weight: bold;">${syms[dir]}</span>&nbsp;${normalVal}`;
+        allItems.push(`<span style="color: #10b981; font-weight: bold;">${syms[dir]}</span>&nbsp;${normalVal}`);
       }
 
       const longKey = dir + 'Long';
       if (mapping[longKey] && mapping[longKey] !== mapping[dir]) {
         const longVal = getDirectionLabel(mapping, longKey, touches);
         if (longVal && longVal.trim() !== '') {
-          if (dirText.length > 0) {
-            dirText += ' * ';
-          }
-          dirText += `<span style="color: #de6b48; font-weight: bold;">HOLD ${syms[dir]}</span>&nbsp;${longVal}`;
+          allItems.push(`<span style="color: #de6b48; font-weight: bold;">HOLD ${syms[dir]}</span>&nbsp;${longVal}`);
         }
-      }
-      
-      if (dirText.length > 0) {
-        allItems.push(dirText);
       }
     });
 

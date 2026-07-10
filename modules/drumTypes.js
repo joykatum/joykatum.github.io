@@ -1486,38 +1486,38 @@ const customTouches = {
   conga: [
     {
       id: 'bajo',
-      label: 'Bajo (Bass)',
+      label: 'Bass',
       shortName: 'Bass',
       description: 'A deep bass strike with the palm of the hand near the center of the head.'
     },
     {
       id: 'abierto',
-      label: 'Abierto (Open)',
+      label: 'Open',
       shortName: 'Open',
       description: 'A clear, resonant open tone struck with the fingers on the rim.'
     },
-    { id: 'seco', label: 'Seco (Slap)', shortName: 'Slap', description: 'A sharp, high-pitched cracking slap tone.' },
+    { id: 'seco', label: 'Slap', shortName: 'Slap', description: 'A sharp, high-pitched cracking slap tone.' },
     {
       id: 'tapado',
-      label: 'Tapado (Muffled)',
+      label: 'Muffled',
       shortName: 'Muff',
       description: 'A muffled slap where fingers remain pressed on the head.'
     },
     {
       id: 'toque_tapado',
-      label: 'Toque Tapado (Closed)',
+      label: 'Closed',
       shortName: 'Closed',
       description: 'A light closed tap on the drumhead.'
     },
     {
       id: 'manoteo',
-      label: 'Manoteo (Heel-Toe)',
+      label: 'Heel-Toe',
       shortName: 'Heel-Toe',
       description: 'Alternating heel-and-toe movements with the palm and fingers.'
     },
     {
       id: 'golpe_de_casco',
-      label: 'Golpe de Casco',
+      label: 'Shell Strike',
       shortName: 'Shell',
       description: 'Striking the wooden shell of the conga directly.'
     }
@@ -1536,7 +1536,7 @@ const customTouches = {
   bongo: [
     {
       id: 'martillo',
-      label: 'Martillo (Hammer)',
+      label: 'Hammer',
       shortName: 'Hammer',
       description: 'The standard heel-and-toe hammer finger stroke.'
     },
@@ -1556,27 +1556,27 @@ const customTouches = {
     }
   ],
   mridangam: [
-    { id: 'tha', label: 'Tha (Open Bass)', shortName: 'Tha', description: 'A deep resonant bass stroke.' },
-    { id: 'thom', label: 'Thom (Muffled Bass)', shortName: 'Thom', description: 'A muffled bass stroke.' },
-    { id: 'nam', label: 'Nam (Treble Open)', shortName: 'Nam', description: 'A high-pitched open stroke.' },
+    { id: 'tha', label: 'Open Bass', shortName: 'Tha', description: 'A deep resonant bass stroke.' },
+    { id: 'thom', label: 'Muffled Bass', shortName: 'Thom', description: 'A muffled bass stroke.' },
+    { id: 'nam', label: 'Treble Open', shortName: 'Nam', description: 'A high-pitched open stroke.' },
     {
       id: 'dhi_thei',
-      label: 'Dhi / Thei (Treble Closed)',
+      label: 'Treble Closed',
       shortName: 'Dhi',
       description: 'A sharp closed treble stroke.'
     },
-    { id: 'chapu', label: 'Chapu (Slap)', shortName: 'Chapu', description: 'A cracking ringing slap.' }
+    { id: 'chapu', label: 'Slap', shortName: 'Chapu', description: 'A cracking ringing slap.' }
   ],
   dhol: [
     {
       id: 'dagga',
-      label: 'Dagga (Bass Stick)',
+      label: 'Bass Stick',
       shortName: 'Dagga',
       description: 'A heavy bass strike using the curved Dagga stick.'
     },
     {
       id: 'tilli',
-      label: 'Tilli (Treble Stick)',
+      label: 'Treble Stick',
       shortName: 'Tilli',
       description: 'A sharp slap using the thin Tilli stick.'
     },
@@ -1634,7 +1634,7 @@ const customTouches = {
     },
     {
       id: 'tapado',
-      label: 'Tapado (Muffled)',
+      label: 'Muffled',
       shortName: 'Muff',
       description: 'A quiet muffled strike on the front plate.'
     },
@@ -1696,8 +1696,8 @@ const customMappings = {
       right: 'seco',
       upLong: 'tapado',
       downLong: 'toque_tapado',
-      leftLong: '',
-      rightLong: '',
+      leftLong: 'golpe_de_casco',
+      rightLong: 'golpe_de_casco',
       trigger: 'abierto'
     },
     right: {
@@ -1707,8 +1707,8 @@ const customMappings = {
       right: 'seco',
       upLong: 'tapado',
       downLong: 'toque_tapado',
-      leftLong: '',
-      rightLong: '',
+      leftLong: 'golpe_de_casco',
+      rightLong: 'golpe_de_casco',
       trigger: 'seco'
     }
   },
@@ -1942,6 +1942,17 @@ export async function ensureInstrumentLoaded(instrumentName) {
             };
           });
         }
+      }
+
+      // Safeguard: Ensure ALL touches have a non-empty description
+      if (instData.touches) {
+        instData.touches.forEach((touch) => {
+          if (!touch.description || touch.description.trim() === '') {
+            const label = touch.label || touch.id || 'Tone';
+            const capitalized = label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' ');
+            touch.description = `${capitalized} technique and tone production.`;
+          }
+        });
       }
 
       // Ensure mappings is populated

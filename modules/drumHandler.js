@@ -399,12 +399,17 @@ export function buildDrumWrapper(d) {
   nameSpan.className = 'drum-name';
 
   const visibleDrums = getVisibleDrums();
-  if (visibleDrums && visibleDrums.length > 1) {
-    nameSpan.innerText = d.label;
-    nameSpan.classList.remove('hidden');
-  } else {
+  const inseparableInstruments = ['janggu', 'mridangam', 'handpan', 'log_drum', 'dhol', 'agogo', 'tabla', 'bongo'];
+  const isSingleOrInseparable = visibleDrums.length <= 1 || inseparableInstruments.includes(instrument);
+
+  if (isSingleOrInseparable) {
     nameSpan.innerText = '';
     nameSpan.classList.add('hidden');
+    labelContainer.style.display = 'none';
+  } else {
+    nameSpan.innerText = d.label || '';
+    nameSpan.classList.remove('hidden');
+    labelContainer.style.display = '';
   }
 
   labelContainer.appendChild(nameSpan);

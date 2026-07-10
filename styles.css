@@ -105,7 +105,7 @@ header p {
   justify-content: center;
   box-sizing: border-box;
   container-type: size;
-  padding: 60px 24px 75px 24px;
+  padding: 60px 24px 100px 24px;
 }
 
 /* Drums Layout Grid */
@@ -136,36 +136,36 @@ header p {
 
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
-    --drum-unit: min(3.5cqh, 3cqw);
+    --drum-unit: min(4.6cqh, 4.6cqw);
   }
   .drums-grid.count-2 {
-    --drum-unit: min(3.5cqh, 2cqw);
+    --drum-unit: min(4.5cqh, 3.2cqw);
   }
   .drums-grid.count-3 {
-    --drum-unit: min(3.5cqh, 1.3cqw);
+    --drum-unit: min(4.4cqh, 2.2cqw);
   }
   .drums-grid.count-4 {
-    --drum-unit: min(3cqh, 1cqw);
+    --drum-unit: min(4.3cqh, 1.7cqw);
   }
   .drums-grid.count-5 {
-    --drum-unit: min(2.8cqh, 0.8cqw);
+    --drum-unit: min(4.2cqh, 1.4cqw);
   }
 
   /* Specific sizes for horizontal layout of Two-Sided drums */
   .drums-grid.two-sided-drum.count-1 {
-    --drum-unit: min(3cqh, 1.6cqw);
+    --drum-unit: min(4.3cqh, 2.8cqw);
   }
   .drums-grid.two-sided-drum.count-2 {
-    --drum-unit: min(2cqh, 0.8cqw);
+    --drum-unit: min(3.5cqh, 1.7cqw);
   }
   .drums-grid.two-sided-drum.count-3 {
-    --drum-unit: min(1.5cqh, 0.5cqw);
+    --drum-unit: min(2.8cqh, 1.2cqw);
   }
   .drums-grid.two-sided-drum.count-4 {
-    --drum-unit: min(1.2cqh, 0.4cqw);
+    --drum-unit: min(2.4cqh, 0.9cqw);
   }
   .drums-grid.two-sided-drum.count-5 {
-    --drum-unit: min(1cqh, 0.3cqw);
+    --drum-unit: min(2cqh, 0.7cqw);
   }
 }
 
@@ -188,19 +188,19 @@ header p {
   }
 
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-1 {
-    --drum-unit: min(1.3cqh, 2cqw);
+    --drum-unit: min(2cqh, 3.2cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-2 {
-    --drum-unit: min(0.7cqh, 1.5cqw);
+    --drum-unit: min(1.2cqh, 2.2cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-3 {
-    --drum-unit: min(0.5cqh, 1.2cqw);
+    --drum-unit: min(1cqh, 1.8cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-4 {
-    --drum-unit: min(0.35cqh, 1cqw);
+    --drum-unit: min(0.8cqh, 1.5cqw);
   }
   .drums-grid.two-sided-drum:not(.two-sided-bongo).count-5 {
-    --drum-unit: min(0.3cqh, 0.8cqw);
+    --drum-unit: min(0.7cqh, 1.2cqw);
   }
 
   /* Specific horizontal layout and scaling for bongo in portrait mode */
@@ -210,19 +210,19 @@ header p {
     gap: 4cqh;
   }
   .drums-grid.two-sided-bongo.count-1 {
-    --drum-unit: min(2.5cqh, 1.4cqw);
+    --drum-unit: min(3.8cqh, 2.4cqw);
   }
   .drums-grid.two-sided-bongo.count-2 {
-    --drum-unit: min(2cqh, 1.1cqw);
+    --drum-unit: min(3.2cqh, 2cqw);
   }
   .drums-grid.two-sided-bongo.count-3 {
-    --drum-unit: min(1.6cqh, 0.9cqw);
+    --drum-unit: min(2.6cqh, 1.6cqw);
   }
   .drums-grid.two-sided-bongo.count-4 {
-    --drum-unit: min(1.3cqh, 0.7cqw);
+    --drum-unit: min(2.2cqh, 1.3cqw);
   }
   .drums-grid.two-sided-bongo.count-5 {
-    --drum-unit: min(1.1cqh, 0.6cqw);
+    --drum-unit: min(1.8cqh, 1cqw);
   }
 
   /* Force Conga and Tumba to be next to each other in 2-column grid */
@@ -246,23 +246,23 @@ header p {
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
     grid-template-columns: repeat(1, auto);
-    --drum-unit: min(3.8cqh, 4.5cqw);
+    --drum-unit: min(5.5cqh, 4.6cqw);
   }
   .drums-grid.count-2 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(2.5cqh, 2.2cqw);
+    --drum-unit: min(3.8cqh, 2.3cqw);
   }
   .drums-grid.count-3 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(2cqh, 2.1cqw);
+    --drum-unit: min(3.2cqh, 2.1cqw);
   }
   .drums-grid.count-4 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(1.7cqh, 1.8cqw);
+    --drum-unit: min(2.8cqh, 1.9cqw);
   }
   .drums-grid.count-5 {
     grid-template-columns: repeat(2, auto);
-    --drum-unit: min(1.4cqh, 1.5cqw);
+    --drum-unit: min(2.4cqh, 1.6cqw);
   }
 }
 
@@ -406,20 +406,27 @@ header p {
 /* Labels & Mappings next to drum name */
 .drum-label-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
-  gap: 4px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .drum-name {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #94a3b8;
+  color: #302217;
+  background-color: #fdfbf7;
+  padding: 4px 10px;
+  border: 2px solid #302217;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #302217;
+  white-space: nowrap;
 }
 
 .drum-mapping {
@@ -584,7 +591,7 @@ header p {
   }
 
   .stage-container {
-    padding: 24px 24px 75px 24px !important;
+    padding: 24px 24px 100px 24px !important;
   }
 
   .bottom-bar {
@@ -622,19 +629,50 @@ header p {
 
   /* Audio Lab Sidebar removed to let it be a centered maximized modal */
 }
-.bottom-bar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Always-visible scrollbars styling for scrollable elements */
+.footer-scroll-wrapper,
+.settings-content,
+.effects-controls-grid,
+#info-body-content {
+  scrollbar-width: thin !important;
+  scrollbar-color: #302217 rgba(48, 34, 23, 0.1) !important;
 }
-.bottom-bar::-webkit-scrollbar-track {
-  background: transparent;
+
+.cheat-sheet-footer:not(.collapsed) .footer-scroll-wrapper {
+  overflow-y: scroll !important;
 }
-.bottom-bar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+
+.footer-scroll-wrapper::-webkit-scrollbar,
+.settings-content::-webkit-scrollbar,
+.effects-controls-grid::-webkit-scrollbar,
+#info-body-content::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  display: block !important;
 }
-.bottom-bar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+
+.footer-scroll-wrapper::-webkit-scrollbar-track,
+.settings-content::-webkit-scrollbar-track,
+.effects-controls-grid::-webkit-scrollbar-track,
+#info-body-content::-webkit-scrollbar-track {
+  background: rgba(48, 34, 23, 0.1) !important;
+  border-radius: 5px !important;
+}
+
+.footer-scroll-wrapper::-webkit-scrollbar-thumb,
+.settings-content::-webkit-scrollbar-thumb,
+.effects-controls-grid::-webkit-scrollbar-thumb,
+#info-body-content::-webkit-scrollbar-thumb {
+  background: #302217 !important;
+  border: 1px solid #eedfca !important;
+  border-radius: 5px !important;
+}
+
+.footer-scroll-wrapper::-webkit-scrollbar-thumb:hover,
+.settings-content::-webkit-scrollbar-thumb:hover,
+.effects-controls-grid::-webkit-scrollbar-thumb:hover,
+#info-body-content::-webkit-scrollbar-thumb:hover {
+  background: #de6b48 !important;
 }
 
 .bottom-section {
@@ -823,16 +861,19 @@ header p {
   background: #de6b48 !important; /* Retro orange */
   color: #fdfbf7 !important; /* Cream text */
   border: 2px solid #302217 !important;
-  font-size: 0.72rem !important;
-  font-weight: 800 !important;
-  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+  font-weight: 900 !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
   border-radius: 8px !important; /* Unified 8px radius */
   cursor: pointer !important;
   transition: all 0.1s ease !important;
   z-index: 100 !important; /* Always on top of header */
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
   box-shadow: 2px 2px 0px #302217 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .dialog-back-btn:hover {
@@ -842,17 +883,20 @@ header p {
 }
 
 .effects-dialog::-webkit-scrollbar {
-  width: 5px;
+  width: 10px !important;
+  display: block !important;
 }
 .effects-dialog::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(48, 34, 23, 0.1) !important;
+  border-radius: 5px !important;
 }
 .effects-dialog::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  background: #302217 !important;
+  border: 1px solid #eedfca !important;
+  border-radius: 5px !important;
 }
 .effects-dialog::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #de6b48 !important;
 }
 
 .effects-dialog-titles {
@@ -1083,15 +1127,15 @@ header p {
   left: 0;
   right: 0;
   height: auto;
-  min-height: 80px;
+  min-height: 48px;
   background-color: #eedfca !important; /* Warm beige page background */
   border-top: 10px solid #302217 !important; /* Thicker solid dark-brown divider line */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
-  padding: 24px 16px 16px 16px !important;
+  gap: 8px;
+  padding: 18px 12px 10px 12px !important;
   z-index: 1005;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1099,11 +1143,36 @@ header p {
   backdrop-filter: none !important;
 }
 
+.footer-bottom-section {
+  width: calc(100% + 24px) !important;
+  background-color: #dfcfb6 !important; /* Lightly darker warm beige than #eedfca */
+  border-top: 2px solid #302217 !important;
+  margin-left: -12px !important;
+  margin-right: -12px !important;
+  margin-bottom: -10px !important;
+  margin-top: 6px !important;
+  padding: 10px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
 .cheat-sheet-footer.collapsed {
   min-height: auto !important;
-  padding: 32px 16px 15px 16px !important;
-  background-color: #eedfca !important;
+  padding: 24px 12px 10px 12px !important;
+  background-color: #dfcfb6 !important; /* Match the slightly darker warm beige */
   border-top: 10px solid #302217 !important;
+}
+
+.cheat-sheet-footer.collapsed .footer-bottom-section {
+  border-top: none !important;
+  margin-top: -24px !important;
+  margin-bottom: -10px !important;
+  padding-top: 24px !important;
+  padding-bottom: 10px !important;
+  background-color: transparent !important;
 }
 
 .cheat-sheet-footer.collapsed .footer-controls-row {
@@ -1158,6 +1227,19 @@ header p {
 
 .cheat-sheet-footer.collapsed .footer-toggle-btn {
   top: -21px !important;
+}
+
+/* Hide drum name on the toggle button in expanded mode */
+.cheat-sheet-footer:not(.collapsed) #footer-selected-drum {
+  display: none !important;
+}
+
+/* Compact toggle button in expanded mode */
+.cheat-sheet-footer:not(.collapsed) .footer-toggle-btn {
+  min-width: 38px !important;
+  width: 38px !important;
+  padding: 0 !important;
+  gap: 0 !important;
 }
 
 /* Mobile, Tablet, and Desktop Unified Comic Layout */
@@ -1250,7 +1332,13 @@ header p {
   border: 2px solid #302217 !important;
   color: #302217 !important;
   border-radius: 8px !important;
-  width: 36px !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  flex-shrink: 0 !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1876,17 +1964,7 @@ header p {
   transition: opacity 0.3s ease;
 }
 
-/* Custom Scrollbar for FX Grid */
-.effects-controls-grid::-webkit-scrollbar {
-  width: 4px;
-}
-.effects-controls-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
-.effects-controls-grid::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-}
+/* Custom Scrollbar for FX Grid (handled by global scrollbar rules) */
 
 .fx-control-card {
   background: #eedfca !important; /* Warm beige background */
@@ -2128,13 +2206,25 @@ header p {
     font-size: 0.8rem;
   }
 
-  .bottom-bar {
-    padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-    gap: 8px !important;
+  .cheat-sheet-footer:not(.collapsed) {
+    padding: 0 !important;
+    gap: 0 !important;
     max-height: 85vh !important;
+    overflow: visible !important;
   }
 
-  .bottom-section {
+  .cheat-sheet-footer:not(.collapsed) .footer-scroll-wrapper {
+    overflow-y: scroll !important;
+    flex: 1 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+
+  .footer-bottom-section {
     padding: 8px 10px !important;
     border-radius: 10px !important;
   }
@@ -2177,6 +2267,88 @@ header p {
 }
 .effects-section {
   gap: 10px !important;
+}
+
+@media (max-width: 1023px) and (orientation: landscape) {
+  .cheat-sheet-footer:not(.collapsed) {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+    display: flex !important;
+    z-index: 1006 !important; /* Ensure it stands above other content when expanded */
+  }
+
+  .cheat-sheet-footer:not(.collapsed) .footer-scroll-wrapper {
+    overflow-y: scroll !important;
+    flex: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 60px 20px calc(20px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+
+  .cheat-sheet-footer:not(.collapsed) .footer-toggle-btn {
+    position: fixed !important;
+    top: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 1007 !important;
+    box-shadow: 0px 4px 0px #302217 !important;
+  }
+
+  /* Make sure the dialogs (Settings panel) render well when sideways, small, and expanded */
+  .drum-dialog,
+  .effects-dialog,
+  .info-dialog {
+    padding: 12px 18px !important;
+    max-height: 94vh !important;
+    width: 600px !important;
+    max-width: 95vw !important;
+    border-width: 2px !important;
+    border-radius: 12px !important;
+    box-shadow: 4px 4px 0px #302217 !important;
+  }
+
+  .brand-and-title {
+    margin-bottom: 6px !important;
+    gap: 1px !important;
+  }
+
+  .dialog-back-btn {
+    top: 6px !important;
+    right: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Make settings tags and layout inside drum settings panel extra compact and clean */
+  .settings-content {
+    gap: 6px !important;
+  }
+
+  /* Adjust tag scroll row wrap & padding for space efficiency in landscape */
+  .tag-scroll-row {
+    padding: 4px 6px !important;
+    gap: 4px !important;
+  }
 }
 
 @media (min-width: 480px) and (max-width: 1023px) and (orientation: landscape) {
@@ -2374,6 +2546,22 @@ header p {
   color: #302217 !important;
   font-weight: 800 !important;
   font-size: 0.75rem !important;
+  border-bottom: 2px solid #302217 !important;
+}
+
+#pattern-grid-container td {
+  color: #302217 !important;
+  font-weight: 700 !important;
+  font-size: 0.72rem !important;
+  border-bottom: 1px solid rgba(48, 34, 23, 0.15) !important;
+}
+
+#pattern-grid-container td[rowspan] {
+  color: #302217 !important;
+  font-weight: 900 !important;
+  font-size: 0.65rem !important;
+  border-right: 2px solid #302217 !important;
+  background: rgba(48, 34, 23, 0.08) !important;
 }
 
 /* Grid Cells styling */
@@ -2550,8 +2738,62 @@ header p {
 }
 
 @media (max-width: 768px), (orientation: portrait) {
+  /* Standalone Audio Effects & Pattern Creator Dialog full screen takeover on smaller screens */
+  .effects-dialog-backdrop,
+  #pattern-creator-backdrop {
+    padding: 0 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+
+  .effects-dialog,
+  #pattern-creator-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 24px 16px 16px 16px !important;
+  }
+
+  .effects-section,
+  #pattern-creator-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    gap: 12px !important;
+  }
+
   .effects-controls-grid {
     grid-template-columns: 1fr !important;
+    flex: 1 !important;
+    width: 100% !important;
+    overflow-y: auto !important;
+    padding-right: 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Make pattern cells larger for much easier touch targets on small screens */
+  .pattern-cell {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  #pattern-grid-container {
+    padding: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Optimize custom pattern inputs for mobile layout */
+  .pattern-creator-controls {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
   }
 }
 
@@ -2622,7 +2864,12 @@ header p {
   align-items: center !important;
   justify-content: center !important;
   width: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
   height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  flex-shrink: 0 !important;
   padding: 0 !important;
   cursor: pointer !important;
   transition: all 0.1s ease !important;
@@ -2677,7 +2924,7 @@ header p {
 
 /* Subtle, transparent drum bottom padding */
 .drum-label-container {
-  margin-top: 10px !important;
+  margin-top: 6px !important;
   margin-bottom: 0 !important;
   padding: 0 !important;
   background: transparent !important;
@@ -2686,11 +2933,12 @@ header p {
   pointer-events: none !important;
   z-index: 15 !important;
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
   width: auto !important;
-  gap: 4px !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
 }
 
 .two-sided-label {

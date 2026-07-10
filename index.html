@@ -23,8 +23,8 @@
       <!-- Standalone Audio Effects Dialog Backdrop (Modal) -->
       <div class="retro-dialog-backdrop effects-dialog-backdrop" id="effects-dialog-backdrop">
         <div class="retro-dialog effects-dialog" id="effects-dialog">
-          <!-- Back Button (replaces x close button) -->
-          <button id="effects-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+          <!-- Close Button -->
+          <button id="effects-close-btn" class="dialog-back-btn" title="Close">X</button>
 
           <!-- Audio Effects Section (Dialog Layout) -->
           <div class="brand-and-title">
@@ -299,7 +299,7 @@
       <div class="retro-dialog-backdrop info-dialog-backdrop" id="info-dialog-backdrop">
         <div class="retro-dialog info-dialog" id="info-dialog">
           <!-- Close Button -->
-          <button id="info-close-btn" class="dialog-back-btn" title="Close Info">← BACK</button>
+          <button id="info-close-btn" class="dialog-back-btn" title="Close Info">X</button>
 
           <!-- Info Section -->
           <div class="brand-and-title">
@@ -321,8 +321,8 @@
       <!-- Standalone Drum & Control Dialog Backdrop (Modal Popup) -->
       <div class="retro-dialog-backdrop drum-dialog-backdrop" id="drum-panel-backdrop">
         <div class="retro-dialog drum-dialog" id="drum-panel">
-          <!-- Back Button (replaces x close button) -->
-          <button id="settings-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+          <!-- Close Button -->
+          <button id="settings-close-btn" class="dialog-back-btn" title="Close">X</button>
 
           <div class="brand-and-title">
             <span class="section-title">DRUM FILTERS</span>
@@ -366,8 +366,8 @@
       <!-- Standalone Custom Pattern Creator Dialog Backdrop (Modal Popup) -->
       <div class="retro-dialog-backdrop drum-dialog-backdrop" id="pattern-creator-backdrop">
         <div class="retro-dialog drum-dialog" id="pattern-creator-panel">
-          <!-- Back Button -->
-          <button id="pattern-creator-close-btn" class="dialog-back-btn" title="Back">← BACK</button>
+          <!-- Close Button -->
+          <button id="pattern-creator-close-btn" class="dialog-back-btn" title="Close">X</button>
 
           <div class="brand-and-title">
             <span class="section-title">CUSTOM PATTERN CREATOR</span>
@@ -504,25 +504,189 @@
         <span id="footer-toggle-icon" class="toggle-icon">▼</span>
       </button>
 
-      <!-- Footer Interactive Control Bar -->
-      <div class="footer-controls-row" id="footer-controls-row">
-        <!-- Drum Instrument Information -->
-        <div class="footer-control-group drum-group">
-          <span class="footer-control-label">DRUM:</span>
-          <div
-            class="footer-group-controls"
-            id="drum-dropdowns-row"
-            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
-          >
-            <select
-              id="drum-instrument"
-              class="footer-select"
-              style="flex: 1 1 0px; min-width: 0; font-weight: 700; color: #10b981"
+      <!-- Scroll wrapper to prevent fixed toggle buttons from getting cut off or scrolled away in landscape -->
+      <div class="footer-scroll-wrapper" id="footer-scroll-wrapper">
+        <!-- Footer Interactive Control Bar -->
+        <div class="footer-controls-row" id="footer-controls-row">
+          <!-- Drum Instrument Information -->
+          <div class="footer-control-group drum-group">
+            <span class="footer-control-label">DRUM:</span>
+            <div
+              class="footer-group-controls"
+              id="drum-dropdowns-row"
+              style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
             >
-              <option value="conga">Congas</option>
-            </select>
+              <select
+                id="drum-instrument"
+                class="footer-select"
+                style="flex: 1 1 0px; min-width: 0; font-weight: 700; color: #10b981"
+              >
+                <option value="conga">Congas</option>
+              </select>
 
-            <button id="footer-drum-info-btn" class="footer-icon-btn" title="Drum Info" style="margin: 0">
+              <button id="footer-drum-info-btn" class="footer-icon-btn" title="Drum Info" style="margin: 0">
+                <span
+                  style="
+                    font-size: 1.15rem;
+                    font-weight: 900;
+                    font-family: Georgia, serif;
+                    font-style: italic;
+                    line-height: 1;
+                  "
+                  >i</span
+                >
+              </button>
+
+              <!-- Filter Button -->
+              <button
+                id="settings-toggle-btn"
+                class="footer-icon-btn filter-btn"
+                title="Open Drum Filters Panel"
+                style="margin: 0"
+              >
+                <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
+                  <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm5 7h8v-2H8v2z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pick Drums Block -->
+          <div id="drum-selection-container" style="display: none; width: 100%; flex-wrap: wrap; gap: 8px"></div>
+
+          <!-- Play-along / Pattern Selection Mode -->
+          <div
+            class="footer-control-group play-along-group"
+            style="flex-direction: column !important; align-items: stretch !important; gap: 8px !important; width: 100%"
+          >
+            <!-- Pattern selection row -->
+            <div
+              class="footer-group-controls"
+              id="pattern-dropdowns-row"
+              style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
+            >
+              <span class="footer-control-label">PATTERN:</span>
+              <select id="pattern-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
+                <option value="none">Off</option>
+              </select>
+              <button id="pattern-play-btn" class="footer-icon-btn" title="Play/Stop Pattern" style="margin: 0">
+                <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+              <button
+                id="pattern-creator-toggle-btn"
+                class="footer-icon-btn pattern-btn"
+                title="Toggle Custom Pattern Creator"
+                style="margin: 0; flex-shrink: 0"
+              >
+                <svg viewBox="0 0 24 24" class="pattern-icon" style="width: 14px; height: 14px; fill: currentColor">
+                  <path
+                    d="M4 4h16v16H4V4zm2 2v3h3V6H6zm5 0v3h3V6h-3zm5 0v3h3V6h-3zM6 11v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3zM6 16v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- BPM tempo row -->
+            <div
+              class="footer-group-controls"
+              id="pattern-bpm-row"
+              style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
+            >
+              <span class="footer-control-label"></span>
+              <div
+                class="footer-bpm-wrapper"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  flex: 1 1 0px;
+                  min-width: 120px;
+                  margin: 0;
+                  border-left: none !important;
+                  padding-left: 0 !important;
+                  background: transparent !important;
+                  box-shadow: none !important;
+                  border: none !important;
+                "
+              >
+                <span class="footer-bpm-label" style="flex-shrink: 0; white-space: nowrap"
+                  >BPM: <span id="pattern-bpm-val" style="color: #000000; font-weight: 900">100</span></span
+                >
+                <input
+                  type="range"
+                  id="pattern-bpm"
+                  min="60"
+                  max="180"
+                  value="100"
+                  class="footer-bpm-slider"
+                  style="flex: 1 1 0px; min-width: 0; width: auto !important"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Copy of Effects Selection with Lab Button -->
+          <div class="footer-control-group fx-group">
+            <span class="footer-control-label">EFFECT:</span>
+            <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
+              <select id="footer-fx-preset-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
+                <option value="none">No Effects (Bypass)</option>
+              </select>
+              <button
+                id="effects-toggle-btn"
+                class="footer-icon-btn fx-btn"
+                title="Toggle Audio Effects Lab"
+                style="margin: 0"
+              >
+                <svg viewBox="0 0 24 24" class="fx-icon" style="width: 14px; height: 14px; fill: currentColor">
+                  <path
+                    d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Combined Recorder & Format Group -->
+          <div class="footer-control-group record-group">
+            <span class="footer-control-label">RECORDER:</span>
+            <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
+              <select
+                id="record-format-select"
+                class="footer-select"
+                style="font-weight: 700; flex: 1 1 0px; min-width: 0"
+              >
+                <option value="audio/webm">WebM</option>
+              </select>
+              <button id="record-btn" class="footer-icon-btn record-btn" title="Record Audio" style="margin: 0">
+                <svg viewBox="0 0 24 24" class="record-icon" id="record-icon-svg" style="width: 14px; height: 14px">
+                  <circle cx="12" cy="12" r="8"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom-section">
+          <div
+            class="cheat-row hands-row"
+            id="footer-hands-row"
+            style="
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              gap: 12px;
+              flex-wrap: nowrap;
+              width: 100%;
+            "
+          >
+            <span class="cheat-item" id="cheat-left-hand"><b>LEFT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
+            <span class="cheat-divider" id="cheat-divider-hands">|</span>
+            <span class="cheat-item" id="cheat-right-hand"><b>RIGHT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
+            <button id="footer-taps-info-btn" class="footer-icon-btn" title="View Tap Details" style="margin: 0">
               <span
                 style="
                   font-size: 1.15rem;
@@ -534,198 +698,39 @@
                 >i</span
               >
             </button>
-
-            <!-- Filter Button -->
-            <button
-              id="settings-toggle-btn"
-              class="footer-icon-btn filter-btn"
-              title="Open Drum Filters Panel"
-              style="margin: 0"
-            >
-              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
-                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm5 7h8v-2H8v2z" />
-              </svg>
-            </button>
           </div>
-        </div>
 
-        <!-- Pick Drums Block -->
-        <div id="drum-selection-container" style="display: none; width: 100%; flex-wrap: wrap; gap: 8px"></div>
-
-        <!-- Play-along / Pattern Selection Mode -->
-        <div
-          class="footer-control-group play-along-group"
-          style="flex-direction: column !important; align-items: stretch !important; gap: 8px !important; width: 100%"
-        >
-          <!-- Pattern selection row -->
           <div
-            class="footer-group-controls"
-            id="pattern-dropdowns-row"
-            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
-          >
-            <span class="footer-control-label">PATTERN:</span>
-            <select id="pattern-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
-              <option value="none">Off</option>
-            </select>
-            <button id="pattern-play-btn" class="footer-icon-btn" title="Play/Stop Pattern" style="margin: 0">
-              <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
-            <button
-              id="pattern-creator-toggle-btn"
-              class="footer-icon-btn pattern-btn"
-              title="Toggle Custom Pattern Creator"
-              style="margin: 0; flex-shrink: 0"
-            >
-              <svg viewBox="0 0 24 24" class="pattern-icon" style="width: 14px; height: 14px; fill: currentColor">
-                <path
-                  d="M4 4h16v16H4V4zm2 2v3h3V6H6zm5 0v3h3V6h-3zm5 0v3h3V6h-3zM6 11v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3zM6 16v3h3v-3H6zm5 0v3h3v-3h-3zm5 0v3h3v-3h-3z"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <!-- BPM tempo row -->
-          <div
-            class="footer-group-controls"
-            id="pattern-bpm-row"
-            style="display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%"
-          >
-            <span class="footer-control-label"></span>
-            <div
-              class="footer-bpm-wrapper"
-              style="
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                flex: 1 1 0px;
-                min-width: 120px;
-                margin: 0;
-                border-left: none !important;
-                padding-left: 0 !important;
-                background: transparent !important;
-                box-shadow: none !important;
-                border: none !important;
-              "
-            >
-              <span class="footer-bpm-label" style="flex-shrink: 0; white-space: nowrap"
-                >BPM: <span id="pattern-bpm-val" style="color: #000000; font-weight: 900">100</span></span
-              >
-              <input
-                type="range"
-                id="pattern-bpm"
-                min="60"
-                max="180"
-                value="100"
-                class="footer-bpm-slider"
-                style="flex: 1 1 0px; min-width: 0; width: auto !important"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Copy of Effects Selection with Lab Button -->
-        <div class="footer-control-group fx-group">
-          <span class="footer-control-label">EFFECT:</span>
-          <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
-            <select id="footer-fx-preset-select" class="footer-select" style="flex: 1 1 0px; min-width: 0">
-              <option value="none">No Effects (Bypass)</option>
-            </select>
-            <button
-              id="effects-toggle-btn"
-              class="footer-icon-btn fx-btn"
-              title="Toggle Audio Effects Lab"
-              style="margin: 0"
-            >
-              <svg viewBox="0 0 24 24" class="fx-icon" style="width: 14px; height: 14px; fill: currentColor">
-                <path
-                  d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Combined Recorder & Format Group -->
-        <div class="footer-control-group record-group">
-          <span class="footer-control-label">RECORDER:</span>
-          <div class="footer-group-controls" style="display: flex; flex-direction: row; gap: 8px; width: 100%">
-            <select
-              id="record-format-select"
-              class="footer-select"
-              style="font-weight: 700; flex: 1 1 0px; min-width: 0"
-            >
-              <option value="audio/webm">WebM</option>
-            </select>
-            <button id="record-btn" class="footer-icon-btn record-btn" title="Record Audio" style="margin: 0">
-              <svg viewBox="0 0 24 24" class="record-icon" id="record-icon-svg" style="width: 14px; height: 14px">
-                <circle cx="12" cy="12" r="8"></circle>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="cheat-row hands-row"
-        id="footer-hands-row"
-        style="
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          flex-wrap: nowrap;
-          width: 100%;
-        "
-      >
-        <span class="cheat-item" id="cheat-left-hand"><b>LEFT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
-        <span class="cheat-divider" id="cheat-divider-hands">|</span>
-        <span class="cheat-item" id="cheat-right-hand"><b>RIGHT</b> ↑Bass | ↓Slap | ←Heel/Toe | →Open</span>
-        <button id="footer-taps-info-btn" class="footer-icon-btn" title="View Tap Details" style="margin: 0">
-          <span
+            id="author-footer"
             style="
-              font-size: 1.15rem;
-              font-weight: 900;
-              font-family: Georgia, serif;
-              font-style: italic;
-              line-height: 1;
+              text-align: center;
+              font-size: 0.65rem;
+              color: #302217;
+              background-color: #dbebe6;
+              border: 1.5px solid #77a195;
+              border-radius: 8px;
+              margin-top: 6px;
+              padding: 6px 16px;
+              display: inline-flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              gap: 8px;
+              box-shadow: 1px 1px 0px rgba(48, 34, 23, 0.1);
             "
-            >i</span
           >
-        </button>
-      </div>
-
-      <div
-        id="author-footer"
-        style="
-          text-align: center;
-          font-size: 0.65rem;
-          color: #302217;
-          background-color: #dbebe6;
-          border: 1.5px solid #77a195;
-          border-radius: 8px;
-          margin-top: 6px;
-          padding: 6px 16px;
-          display: inline-flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          gap: 8px;
-          box-shadow: 1px 1px 0px rgba(48, 34, 23, 0.1);
-        "
-      >
-        <span style="font-weight: 800; letter-spacing: 0.02em">JoyKaTum</span>
-        <span style="opacity: 0.4">|</span>
-        <span style="font-weight: 600">Made with ❤️ in Salem OR</span>
-        <span style="opacity: 0.4">|</span>
-        <a
-          href="https://github.com/joykatum/joykatum.github.io"
-          target="_blank"
-          style="color: #216d54; text-decoration: underline; font-weight: 800"
-          >Source</a
-        >
+            <span style="font-weight: 800; letter-spacing: 0.02em">JoyKaTum</span>
+            <span style="opacity: 0.4">|</span>
+            <span style="font-weight: 600">Made with ❤️ in Salem OR</span>
+            <span style="opacity: 0.4">|</span>
+            <a
+              href="https://github.com/joykatum/joykatum.github.io"
+              target="_blank"
+              style="color: #216d54; text-decoration: underline; font-weight: 800"
+              >Source</a
+            >
+          </div>
+        </div>
       </div>
     </div>
     <script type="module" src="modules/main.js"></script>

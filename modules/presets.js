@@ -543,7 +543,7 @@ export function populatePresetsDropdown(activeName) {
     sortedDefaults.forEach((p) => {
       const opt = document.createElement('option');
       opt.value = p.name;
-      opt.innerText = p.name;
+      opt.innerText = p.name.replace(/^[\s\p{Emoji}\p{Extended_Pictographic}\u200d\u200b]+\s*/gu, '').trim();
       sel.appendChild(opt);
     });
 
@@ -555,7 +555,7 @@ export function populatePresetsDropdown(activeName) {
       sortedCustom.forEach((p) => {
         const opt = document.createElement('option');
         opt.value = p.name;
-        opt.innerText = p.name;
+        opt.innerText = p.name.replace(/^[\s\p{Emoji}\p{Extended_Pictographic}\u200d\u200b]+\s*/gu, '').trim();
         group.appendChild(opt);
       });
       sel.appendChild(group);
