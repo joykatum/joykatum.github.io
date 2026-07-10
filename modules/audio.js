@@ -617,8 +617,11 @@ export function adjustDecayForSustain(baseDecay) {
 }
 
 // Helper to play a short high-frequency attack crackle using the shared noise buffer
-export function playAttackClick(decay, filterFreq = 2500, vol = 0.5) {
+export function playAttackClick(decay = 0.015, filterFreq = 2500, vol = 0.5) {
   if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  // An omitted or invalid duration would make the AudioParam ramp time NaN.
+  const safeDecay = Number.isFinite(decay) && decay > 0 ? decay : 0.015;
 
   const noise = audioCtx.createBufferSource();
   noise.buffer = getSharedNoiseBuffer();
@@ -629,18 +632,18 @@ export function playAttackClick(decay, filterFreq = 2500, vol = 0.5) {
 
   const gain = audioCtx.createGain();
   gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + safeDecay);
 
   noise.connect(filter);
   filter.connect(gain);
   gain.connect(getAudioDestination());
 
-  const maxStartOffset = 2.0 - decay - 0.05;
+  const maxStartOffset = 2.0 - safeDecay - 0.05;
   const startOffset = Math.max(0, Math.random() * maxStartOffset);
   noise.start(0, startOffset);
 
   const voice = { sources: [noise], gain: gain };
-  registerVoice(voice, decay);
+  registerVoice(voice, safeDecay);
 }
 
 // Sound Synthesis Functions
