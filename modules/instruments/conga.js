@@ -1,4 +1,4 @@
-import { playMembrane, playNoise } from './audio.js';
+import { playMembrane, playNoise } from '../audio.js';
 
 // Helper function to extract stereo panning coordinates based on drum index mapping
 // Map ID 0 (Requinto) -> -0.45 (Left), ID 2 (Conga) -> 0.0 (Center), ID 4 (Super Tumba) -> +0.45 (Right)
@@ -86,4 +86,9 @@ export const conga = {
       playMembrane(90 * d.pitchMult, 0.12, 1.0, false, velocity, pan);
     },
     // 7. Golpe de Casco (Rim shot / hardware shell contact sound)
-    golpe
+    golpe_de_casco: (d, velocity = 0.7) => {
+      const pan = getCongaPan(d.id);
+      playMembrane(400 * d.pitchMult, 0.04, 1.0, false, velocity, pan);
+    }
+  }
+};
