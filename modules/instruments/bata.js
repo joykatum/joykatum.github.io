@@ -170,17 +170,6 @@ export const bata = {
   ],
   mappings: {
     left: {
-      up: 'chacha_abierto',
-      down: 'chacha_tapado',
-      left: '',
-      right: '',
-      upLong: '',
-      downLong: '',
-      leftLong: '',
-      rightLong: '',
-      trigger: 'chacha_tapado'
-    },
-    right: {
       up: 'enu_abierto',
       down: 'enu_tapado',
       left: 'enu_muff',
@@ -189,7 +178,18 @@ export const bata = {
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'enu_abierto'
+      trigger: ''
+    },
+    right: {
+      up: 'chacha_abierto',
+      down: 'chacha_tapado',
+      left: '',
+      right: '',
+      upLong: '',
+      downLong: '',
+      leftLong: '',
+      rightLong: '',
+      trigger: ''
     }
   },
   generateSVG: (id, colorType) => {

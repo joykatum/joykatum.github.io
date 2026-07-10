@@ -44,7 +44,7 @@ export function createSectorOverlays(body, drum, headType = 'default') {
       if (mapping) {
         let sideMap = mapping.left; // Default left
         if (inst === 'bata') {
-          sideMap = headType === 'enu' ? mapping.right : mapping.left;
+          sideMap = headType === 'enu' ? mapping.left : mapping.right;
         } else if (inst === 'bongo') {
           sideMap = headType === 'macho' ? mapping.left : mapping.right;
         } else if (inst === 'agogo') {
