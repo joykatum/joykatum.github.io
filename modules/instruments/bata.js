@@ -1,6 +1,17 @@
 import { playMembrane, playNoise } from '../audio.js';
 import { state } from '../state.js';
 
+// Stereo Panning Strategy for Batá Ensemble
+// Real-world performance layout (from audience perspective):
+// Itótele (Medium, ID 1) -> Left (-0.35)
+// Iyá (Large/Lead, ID 2) -> Center (0.0)
+// Okónkolo (Small, ID 0) -> Right (+0.35)
+const getBataPan = (id) => {
+  if (id === 1) return -0.35; // Itótele
+  if (id === 0) return 0.35;  // Okónkolo
+  return 0.0;                 // Iyá (Center anchor)
+};
+
 export const bata = {
   name: 'Bata',
   defaultLeft: 1, // Itótele default
@@ -33,87 +44,95 @@ export const bata = {
     // ENÚ HEAD SOUNDS (Large Bass Head)
     // ==========================================
     
-    enu_abierto: (d) => {
+    enu_abierto: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
-      // Base frequencies tuned to standard akpwon (lead singer) ranges
+      const pan = getBataPan(d.id);
+      
       let f = baseId === 0 ? 190 : baseId === 1 ? 130 : 90;
       f *= d.pitchMult;
 
-      // Real-World Optimization 1: Fardela Inertia Drop
-      // Drums with tuning paste (Iyá & Itótele) exhibit a slight drop in frequency
-      // over the course of the strike due to the physical weight of the center resin.
+      // Real-World Optimization 1: Fardela Inertia Drop + Velocity Bloom
       if (baseId > 0) {
-        playMembrane(f * 1.04, 0.38, 1.0, false);
+        const dynamicDecay = 0.35 + velocity * 0.12;
+        playMembrane(f * 1.04, dynamicDecay, 1.0, false, velocity, pan);
+        
         // Secondary lingering bass wave modeling the internal air column ring
-        setTimeout(() => playMembrane(f * 0.96, 0.22, 0.4, false), 15);
+        setTimeout(() => {
+          playMembrane(f * 0.96, dynamicDecay * 0.6, 0.4, false, velocity * 0.7, pan);
+        }, 15);
       } else {
         // Okónkolo has no paste; crisp, clean open fundamental ring
-        playMembrane(f, 0.32, 1.0, false);
+        playMembrane(f, 0.32, 1.0, false, velocity, pan);
       }
     },
 
-    enu_tapado: (d) => {
+    enu_tapado: (d, velocity = 0.85) => {
       const baseId = parseInt(d.id);
+      const pan = getBataPan(d.id);
+      
       let f = baseId === 0 ? 240 : baseId === 1 ? 165 : 120;
       f *= d.pitchMult;
 
-      // Real-World Optimization 2: High Slap Transient Layer
-      // A hand slapping the large leather head generates a rapid, high-velocity friction pop
-      // alongside the immediate localized shell tone suppression.
-      playMembrane(f * 1.15, 0.07, 1.2, false);
-      playMembrane(f * 0.85, 0.05, 0.5, true); // Suppressed anti-node pitch layer
+      // Real-World Optimization 2: High Slap Transient Layer with Velocity Crack
+      playMembrane(f * 1.15, 0.07, 1.2, false, velocity, pan);
+      playMembrane(f * 0.85, 0.05, 0.5, true, velocity * 0.5, pan);
+      
+      // Leather slap friction pop on strong strikes
+      if (velocity > 0.6) {
+        playNoise(0.02 * velocity, 2800, velocity * 0.25, 'highpass');
+      }
     },
 
-    enu_muff: (d) => {
+    enu_muff: (d, velocity = 0.7) => {
       const baseId = parseInt(d.id);
+      const pan = getBataPan(d.id);
+      
       let f = baseId === 0 ? 140 : baseId === 1 ? 95 : 70;
       f *= d.pitchMult;
 
       // Real-World Optimization 3: Pure Mass Dampening
-      // Heel of the hand deadens the primary hide membrane instantly, truncating sustain.
-      playMembrane(f, 0.04, 0.7, false);
+      playMembrane(f, 0.04, 0.7, false, velocity, pan);
     },
 
     // ==========================================
     // CHACHÁ HEAD SOUNDS (Small Treble Head)
     // ==========================================
     
-    chacha_abierto: (d) => {
+    chacha_abierto: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
+      const pan = getBataPan(d.id);
+      
       let f = baseId === 0 ? 440 : baseId === 1 ? 320 : 240;
       f *= d.pitchMult;
 
       // Sharp high treble ring
-      playMembrane(f, 0.14, 0.9, true);
+      playMembrane(f, 0.14, 0.9, true, velocity, pan);
 
       // Real-World Optimization 4: Sympathetic Chamber Resonance
-      // Bouncing energy off the small head pushes an internal air pocket back through
-      // the chamber, creating a microscopic ghost rumble on the opposite large Enú head.
       const lowResonanceFreq = baseId === 0 ? 190 : baseId === 1 ? 130 : 90;
       setTimeout(() => {
-        playMembrane(lowResonanceFreq * d.pitchMult, 0.08, 0.25, false);
+        playMembrane(lowResonanceFreq * d.pitchMult, 0.08, 0.25, false, velocity * 0.3, pan);
       }, 8);
     },
 
-    chacha_tapado: (d) => {
+    chacha_tapado: (d, velocity = 0.9) => {
       const baseId = parseInt(d.id);
+      const pan = getBataPan(d.id);
+      
       let f = baseId === 0 ? 520 : baseId === 1 ? 380 : 290;
       f *= d.pitchMult;
 
       // Whip-crack dry snap
-      playMembrane(f, 0.03, 1.3, true);
+      playMembrane(f, 0.03, 1.3, true, velocity, pan);
 
-      // Real-World Optimization 5: Iyá Choncho/Rattle Texture
-      // Sacred ceremonial Iyá drums traditionally feature an external band of small brass bells
-      // or heavy metallic hardware ("Choncho") wrapping the rim that registers high-register
-      // acoustic noise whenever the drumhead is sharply snapped.
+      // Real-World Optimization 5: Iyá Choncho/Rattle Metallic Texture
+      const tiltMod = state.currentTiltVolume || 1;
       if (baseId === 2) {
-        const tiltMod = state.currentTiltVolume || 1;
-        playNoise(0.06, 4200, tiltMod * 0.45); // High metallic frame rattle
-        playNoise(0.04, 2100, tiltMod * 0.20); // Mid-frequency skin friction
+        playNoise(0.06, 4200, tiltMod * velocity * 0.5, 'highpass'); // High metallic chacha ring hardware
+        playNoise(0.04, 2100, tiltMod * velocity * 0.25, 'bandpass', 2.0); // Mid hide friction
       } else {
-        // Okónkolo and Itótele chachá heads ring out perfectly dry and clear
-        playNoise(0.02, 3500, 0.15);
+        // Okónkolo and Itótele chachá heads ring out dry with subtle skin pop
+        playNoise(0.02, 3500, velocity * 0.15, 'highpass');
       }
     }
   },
