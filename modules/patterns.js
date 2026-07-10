@@ -510,6 +510,73 @@ export const instrumentPatterns = {
           }
         ]
       }
+    },
+    rumba_columbia: {
+      name: '🥁 Rumba Columbia (Fast 6/8 Traditional)',
+      stepCount: 12,
+      steps: {
+        0: [{ drum: 3, sound: 'bajo' }],
+        2: [{ drum: 2, sound: 'seco' }],
+        4: [{ drum: 2, sound: 'abierto' }],
+        5: [{ drum: 3, sound: 'abierto' }],
+        7: [{ drum: 2, sound: 'seco' }],
+        9: [{ drum: 2, sound: 'abierto' }],
+        10: [{ drum: 2, sound: 'abierto' }]
+      }
+    },
+    conga_de_comparsa: {
+      name: '🥁 Conga de Comparsa (Havana/Santiago Carnival)',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 2, sound: 'manoteo' }],
+        2: [{ drum: 3, sound: 'bajo' }],
+        4: [{ drum: 2, sound: 'seco' }],
+        7: [{ drum: 2, sound: 'abierto' }],
+        8: [{ drum: 3, sound: 'abierto' }],
+        11: [{ drum: 2, sound: 'seco' }],
+        12: [{ drum: 2, sound: 'abierto' }],
+        14: [{ drum: 2, sound: 'abierto' }]
+      }
+    },
+    abakua_nongo: {
+      name: '🥁 Abakuá (Sacred Nongo 6/8 Adaptation)',
+      stepCount: 12,
+      steps: {
+        0: [{ drum: 2, sound: 'manoteo' }],
+        2: [{ drum: 2, sound: 'seco' }],
+        3: [{ drum: 3, sound: 'abierto' }],
+        5: [{ drum: 2, sound: 'abierto' }],
+        6: [{ drum: 2, sound: 'manoteo' }],
+        8: [{ drum: 2, sound: 'seco' }],
+        9: [{ drum: 3, sound: 'abierto' }],
+        11: [{ drum: 2, sound: 'abierto' }]
+      }
+    },
+    bomba_holandes: {
+      name: '🥁 Bomba Holandés (Fast Puerto Rican Buledador)',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 3, sound: 'abierto' }],
+        2: [{ drum: 2, sound: 'seco' }],
+        4: [{ drum: 3, sound: 'abierto' }],
+        6: [{ drum: 2, sound: 'seco' }],
+        8: [{ drum: 3, sound: 'abierto' }],
+        10: [{ drum: 2, sound: 'seco' }],
+        12: [{ drum: 2, sound: 'abierto' }],
+        14: [{ drum: 2, sound: 'abierto' }]
+      }
+    },
+    makuta_traditional: {
+      name: '🥁 Makuta (Ancient Bantu Pre-Rumba)',
+      stepCount: 16,
+      steps: {
+        0: [{ drum: 2, sound: 'golpe_de_casco' }, { drum: 3, sound: 'bajo' }],
+        4: [{ drum: 2, sound: 'golpe_de_casco' }],
+        6: [{ drum: 2, sound: 'abierto' }],
+        8: [{ drum: 2, sound: 'golpe_de_casco' }, { drum: 3, sound: 'abierto' }],
+        12: [{ drum: 2, sound: 'golpe_de_casco' }],
+        14: [{ drum: 2, sound: 'seco' }]
+      }
     }
   },
   djembe: {
