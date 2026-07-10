@@ -15,6 +15,7 @@ import {
 import { startPattern, stopPattern, setOnStepTriggered } from './sequencer.js';
 import { initAudio } from './audio.js';
 import { initVisualizer } from './visualizer.js';
+import { ensurePatternsLoaded } from './patterns.js';
 
 // Base Instrument Class for OO management of instrument behaviors
 class BaseInstrument {
@@ -53,7 +54,7 @@ class Orchestrator {
 
   async init() {
     // Resolve initial instrument
-    await ensureInstrumentLoaded(state.currentInstrument);
+    await Promise.all([ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)]);
     this.updateInstrument(state.currentInstrument);
 
     // Set up step triggers for sequencer

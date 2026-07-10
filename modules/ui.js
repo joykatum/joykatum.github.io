@@ -34,7 +34,7 @@ import {
   syncEffectsFromUI
 } from './presets.js';
 import { startPattern, stopPattern } from './sequencer.js';
-import { instrumentPatterns } from './patterns.js';
+import { ensurePatternsLoaded, instrumentPatterns } from './patterns.js';
 import { drumInfo, patternInfo, drumTags } from './drumInfo.js';
 
 function getStoredFilter(key) {
@@ -1198,8 +1198,8 @@ export function updateActiveDrumsForVisible() {
 
 export async function handleInstrumentChange(newInst) {
   initAudio();
-  // Dynamically load the active instrument spec, sounds, touches, and mappings
-  await ensureInstrumentLoaded(newInst);
+  // Dynamically load the active instrument spec and its rhythm patterns together.
+  await Promise.all([ensureInstrumentLoaded(newInst), ensurePatternsLoaded(newInst)]);
   state.currentInstrument = newInst;
   localStorage.setItem('currentInstrument', state.currentInstrument);
 
