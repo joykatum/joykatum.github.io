@@ -76,14 +76,6 @@ export const initAudio = () => {
     initEffectsChain();
     audioCtx.resume().then(() => {
       state.audioInitialized = true;
-      // Preload SoundFonts in the background
-      import('./sf2Loader.js')
-        .then(({ preloadSoundFonts }) => {
-          preloadSoundFonts();
-        })
-        .catch((err) => {
-          console.error('Failed to load sf2Loader:', err);
-        });
     });
   }
 };
@@ -577,6 +569,53 @@ function getSoftClipCurve() {
 
 // Register voice helper for polyphonic voice-robbing/limiting and automatic cleanup
 export function registerVoice(voice, decay) {
+  if (state.currentPlayContext) {
+    voice.playContext = { ...state.currentPlayContext };
+  }
+
+  // Handle invisible damping and voice choking for the same drum / instrument
+  if (voice.playContext) {
+    const { instrument, drumId, sound } = voice.playContext;
+    const now = audioCtx.currentTime;
+
+    const isMutedSound =
+      sound.includes('damp') ||
+      sound.includes('choke') ||
+      sound.includes('slap') ||
+      sound.includes('seco') ||
+      sound.includes('tapado') ||
+      sound.includes('mute') ||
+      sound.includes('closed') ||
+      sound.includes('stop');
+
+    state.currentNodes.forEach((oldNode) => {
+      if (
+        oldNode !== voice &&
+        oldNode.playContext &&
+        oldNode.playContext.instrument === instrument &&
+        oldNode.playContext.drumId === drumId &&
+        !oldNode.choked
+      ) {
+        oldNode.choked = true;
+        const chokeTime = isMutedSound ? 0.015 : 0.035;
+        try {
+          if (oldNode.gain) {
+            oldNode.gain.cancelScheduledValues(now);
+            oldNode.gain.setValueAtTime(oldNode.gain.value || 1.0, now);
+            oldNode.gain.linearRampToValueAtTime(0.0001, now + chokeTime);
+          }
+          if (oldNode.sources) {
+            oldNode.sources.forEach((src) => {
+              try {
+                src.stop(now + chokeTime);
+              } catch (err) {}
+            });
+          }
+        } catch (err) {}
+      }
+    });
+  }
+
   state.currentNodes.push(voice);
 
   // Auto-prune state.currentNodes to keep voice count within bounds (voice robbing)

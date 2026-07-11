@@ -1928,6 +1928,28 @@ export async function ensureInstrumentLoaded(instrumentName) {
     if (instData) {
       loadedInstruments[name] = instData;
 
+      // Wrap sounds with play context tracking
+      if (instData.sounds) {
+        const originalSounds = { ...instData.sounds };
+        for (const soundKey in originalSounds) {
+          const originalFn = originalSounds[soundKey];
+          if (typeof originalFn === 'function') {
+            instData.sounds[soundKey] = (drum, velocity, ...args) => {
+              state.currentPlayContext = {
+                instrument: name,
+                drumId: drum ? drum.id : 0,
+                sound: soundKey
+              };
+              try {
+                return originalFn(drum, velocity, ...args);
+              } finally {
+                state.currentPlayContext = null;
+              }
+            };
+          }
+        }
+      }
+
       // Populate drumInfo dynamically using centralized metadata in the instrument file
       drumInfo[name] = {
         name: drumTypes[name]?.name || name.charAt(0).toUpperCase() + name.slice(1),

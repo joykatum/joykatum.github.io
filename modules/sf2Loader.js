@@ -165,10 +165,10 @@ export async function loadSoundFont(name, url) {
 
 /**
  * Proactively trigger background loading of all available SoundFonts
+ * Note: Now optimized to do nothing, as samples are loaded purely on demand.
  */
 export function preloadSoundFonts() {
-  loadSoundFont('agogo', '/media/agogo.sf2');
-  loadSoundFont('conga', '/media/conga.sf2');
+  // SoundFonts are loaded purely on-demand to optimize bandwidth and memory.
 }
 
 /**

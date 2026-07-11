@@ -129,56 +129,54 @@ export function playPatternStep() {
   const step = state.currentPatternStep % stepCount;
 
   const triggerHit = (drumIdx, soundType, hit) => {
-    let d;
-    if (inst === 'conga') {
-      if (drumIdx === 1) {
-        // Tumba
-        d = visibleDrums.find((dr) => dr.label === 'Tumba');
-      } else if (drumIdx === 2) {
-        // Conga
-        d = visibleDrums.find((dr) => dr.label === 'Conga');
-      }
-    }
+    const numDrumIdx = Number(drumIdx);
+    let d = visibleDrums.find((dr) => dr.id === numDrumIdx);
     if (!d) {
-      d = visibleDrums[drumIdx % visibleDrums.length];
+      d = visibleDrums[numDrumIdx % visibleDrums.length];
     }
     if (d && instDef.sounds[soundType]) {
       let virtualDrum = d;
       let finalDrumId = d.id;
       if (inst === 'bongo') {
         virtualDrum = Object.assign({}, d, {
-          id: drumIdx === 0 ? 0 : 1,
-          pitchMult: drumIdx === 0 ? 1.4 : 0.9
+          id: numDrumIdx === 0 ? 0 : 1,
+          pitchMult: numDrumIdx === 0 ? 1.4 : 0.9
         });
-        finalDrumId = `${d.id}_${drumIdx === 0 ? 'macho' : 'hembra'}`;
+        finalDrumId = `${d.id}_${numDrumIdx === 0 ? 'macho' : 'hembra'}`;
       } else if (inst === 'agogo') {
         virtualDrum = Object.assign({}, d, {
-          id: drumIdx === 1 ? 1 : 0,
-          pitchMult: drumIdx === 1 ? 1.35 : 1.0
+          id: numDrumIdx === 1 ? 1 : 0,
+          pitchMult: numDrumIdx === 1 ? 1.35 : 1.0
         });
-        finalDrumId = `${d.id}_${drumIdx === 1 ? 'high' : 'low'}`;
+        finalDrumId = `${d.id}_${numDrumIdx === 1 ? 'high' : 'low'}`;
       }
 
       // Calculate dynamic velocity
-      let finalVelocity = hit.velocity || (hit.accent ? 1.0 : 0.8);
+      let finalVelocity = hit.velocity;
 
-      // If no explicit velocity is in the pattern, apply automatic musical phrasing/groove:
-      if (!hit.velocity) {
-        const isDownbeat = step % 4 === 0;
-        const isSyncopated = step % 2 !== 0;
-
-        if (isDownbeat) {
-          finalVelocity = 0.95;
-        } else if (isSyncopated) {
-          finalVelocity = 0.68; // Softer off-beats for natural lift and groove
+      if (finalVelocity === undefined) {
+        if (hit.accent === true) {
+          finalVelocity = 1.0; // Strong accented strike
+        } else if (hit.accent === false) {
+          finalVelocity = 0.58; // Softer ghost stroke
         } else {
-          finalVelocity = 0.82;
+          // If no explicit velocity or accent is in the pattern, apply automatic musical phrasing/groove:
+          const isDownbeat = step % 4 === 0;
+          const isSyncopated = step % 2 !== 0;
+
+          if (isDownbeat) {
+            finalVelocity = 0.95;
+          } else if (isSyncopated) {
+            finalVelocity = 0.68; // Softer off-beats for natural lift and groove
+          } else {
+            finalVelocity = 0.82;
+          }
         }
       }
 
       // Add subtle organic humanization (slight volume/velocity fluctuations)
       const humanization = (Math.random() - 0.5) * 0.08;
-      finalVelocity = Math.max(0.15, Math.min(1.0, finalVelocity + humanization));
+      finalVelocity = Math.max(0.12, Math.min(1.0, finalVelocity + humanization));
 
       instDef.sounds[soundType](virtualDrum, finalVelocity);
       if (onStepTriggeredCallback) {

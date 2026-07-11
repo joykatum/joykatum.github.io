@@ -2598,6 +2598,12 @@ header p {
   box-shadow: 1px 1px 0px #302217 !important;
 }
 
+.pattern-cell.active.accent {
+  background: #10b981 !important; /* Emerald green active accent */
+  border: 2px solid #302217 !important;
+  box-shadow: 1px 1px 0px #302217 !important;
+}
+
 /* Custom Pattern Creator buttons styling */
 #pattern-preview-btn,
 #pattern-clear-btn,
@@ -3036,4 +3042,71 @@ header p {
   box-sizing: border-box !important;
   padding: 6px 12px !important;
   font-size: 0.85rem !important;
+}
+
+/* Drum Loading Screen Overlay */
+.drum-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(48, 34, 23, 0.95); /* Dark warm cocoa background */
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  color: #eedfca; /* Warm cream text */
+  font-family: inherit;
+  border: 3px solid #302217;
+  border-radius: 12px;
+}
+
+.drum-loading-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drum-loading-spinner {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.drum-loading-ring {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin: 7px;
+  border: 4px solid #de6b48; /* Clay orange */
+  border-radius: 50%;
+  animation: drum-ring-spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #de6b48 transparent transparent transparent;
+}
+
+.drum-loading-ring:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.drum-loading-ring:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.drum-loading-ring:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes drum-ring-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

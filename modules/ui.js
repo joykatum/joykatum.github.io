@@ -3,7 +3,7 @@ import { setupXYPad } from './ui-xypad.js';
 import { generateDrumheadSVG, ensureInstrumentLoaded } from './ui-svg.js';
 import { buildDrumWrapper } from './drumHandler.js';
 import { compareStrings, toTitleCase } from './utils.js';
-import { loadingStates } from './sf2Loader.js';
+import { loadingStates, loadSoundFont } from './sf2Loader.js';
 // UI Rendering, Animations, SVG Drums, XY Pad and Controls Module
 import { state } from './state.js';
 import {
@@ -106,24 +106,29 @@ export function renderPatternCreatorGrid() {
 
       for (let s = 0; s < stepCount; s++) {
         const stepHits = currentEditingPattern.steps[s] || [];
-        const isHit = stepHits.some((hit) => hit.drum === drum.id && hit.sound === sound);
+        const hitObj = stepHits.find((hit) => Number(hit.drum) === drum.id && hit.sound === sound);
+        const isHit = !!hitObj;
+        const isAccent = hitObj && hitObj.accent === true;
 
         const isBeatStart = s % 4 === 0;
-        const cellBg = isHit
-          ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-          : isBeatStart
-            ? 'rgba(255,255,255,0.04)'
-            : 'rgba(0,0,0,0.15)';
-        const cellBorder = isHit ? '1px solid #34d399' : '1px solid rgba(255,255,255,0.05)';
-        const shadow = isHit ? 'box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);' : '';
+        const cellBg = isAccent
+          ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' // Emerald Green Accent
+          : isHit
+            ? 'linear-gradient(135deg, #de6b48 0%, #b84c2a 100%)' // Orange Normal
+            : isBeatStart
+              ? 'rgba(255,255,255,0.04)'
+              : 'rgba(0,0,0,0.15)';
+        const cellBorder = isHit ? '2px solid #302217' : '1px solid rgba(255,255,255,0.05)';
+        const shadow = isHit ? 'box-shadow: 1px 1px 0px #302217;' : '';
+        const activeClass = isAccent ? 'active accent' : isHit ? 'active' : '';
 
         html += `<td style="padding: 3px; text-align: center;">
           <button 
-            class="pattern-cell ${isHit ? 'active' : ''}" 
+            class="pattern-cell ${activeClass}" 
             data-drum="${drum.id}" 
             data-sound="${sound}" 
             data-step="${s}" 
-            style="width: 20px; height: 20px; border-radius: 4px; background: ${cellBg}; border: ${cellBorder}; cursor: pointer; transition: all 0.1s ease; outline: none; ${shadow}"
+            style="width: 22px; height: 22px; border-radius: 4px; background: ${cellBg}; border: ${cellBorder}; cursor: pointer; transition: all 0.1s ease; outline: none; ${shadow}"
           ></button>
         </td>`;
       }
@@ -147,20 +152,30 @@ export function renderPatternCreatorGrid() {
       }
 
       const existingIndex = currentEditingPattern.steps[step].findIndex(
-        (hit) => hit.drum === drumId && hit.sound === sound
+        (hit) => Number(hit.drum) === drumId && hit.sound === sound
       );
 
       if (existingIndex >= 0) {
-        currentEditingPattern.steps[step].splice(existingIndex, 1);
-        if (currentEditingPattern.steps[step].length === 0) {
-          delete currentEditingPattern.steps[step];
+        const hit = currentEditingPattern.steps[step][existingIndex];
+        if (hit.accent === undefined || hit.accent === false) {
+          hit.accent = true;
+
+          const targetDrumObj = drums.find((d) => d.id === drumId);
+          if (targetDrumObj && instDef.sounds[sound]) {
+            instDef.sounds[sound](targetDrumObj, 1.0);
+          }
+        } else {
+          currentEditingPattern.steps[step].splice(existingIndex, 1);
+          if (currentEditingPattern.steps[step].length === 0) {
+            delete currentEditingPattern.steps[step];
+          }
         }
       } else {
-        currentEditingPattern.steps[step].push({ drum: drumId, sound: sound });
+        currentEditingPattern.steps[step].push({ drum: drumId, sound: sound, accent: false });
 
         const targetDrumObj = drums.find((d) => d.id === drumId);
         if (targetDrumObj && instDef.sounds[sound]) {
-          instDef.sounds[sound](targetDrumObj);
+          instDef.sounds[sound](targetDrumObj, 0.58);
         }
       }
 
@@ -181,6 +196,91 @@ export function setupPatternCreator() {
   const nameInput = document.getElementById('new-pattern-name');
   const statusDiv = document.getElementById('pattern-creator-status');
   const previewBtn = document.getElementById('pattern-preview-btn');
+
+  const cloneBtn = document.getElementById('pattern-template-load-btn');
+  const templateSelect = document.getElementById('pattern-template-select');
+  if (cloneBtn && templateSelect) {
+    cloneBtn.addEventListener('click', () => {
+      const chosenVal = templateSelect.value;
+      if (!chosenVal) {
+        if (statusDiv) {
+          statusDiv.innerText = '❌ Please select a pattern template first!';
+          statusDiv.style.color = '#ef4444';
+          setTimeout(() => {
+            statusDiv.innerText = '';
+          }, 2000);
+        }
+        return;
+      }
+
+      const inst = state.currentInstrument;
+      let selectedPatternObj = null;
+
+      if (chosenVal.startsWith('builtin_')) {
+        const builtinId = chosenVal.substring('builtin_'.length);
+        const instPatterns = instrumentPatterns[inst] || {};
+        selectedPatternObj = instPatterns[builtinId];
+      } else if (chosenVal.startsWith('custom_')) {
+        const customId = chosenVal.substring('custom_'.length);
+        const customPatternsRaw = localStorage.getItem('customPatterns');
+        if (customPatternsRaw) {
+          try {
+            const customPatterns = JSON.parse(customPatternsRaw);
+            const instCustom = customPatterns[inst] || {};
+            selectedPatternObj = instCustom[customId];
+          } catch (e) {
+            console.error('Error loading custom template:', e);
+          }
+        }
+      }
+
+      if (!selectedPatternObj) {
+        if (statusDiv) {
+          statusDiv.innerText = '❌ Failed to find the selected template pattern!';
+          statusDiv.style.color = '#ef4444';
+          setTimeout(() => {
+            statusDiv.innerText = '';
+          }, 2000);
+        }
+        return;
+      }
+
+      // Perform deep copy/clone of steps
+      try {
+        const clonedSteps = JSON.parse(JSON.stringify(selectedPatternObj.steps || {}));
+        const clonedStepCount = selectedPatternObj.stepCount || 16;
+        const cleanName = selectedPatternObj.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
+
+        currentEditingPattern.steps = clonedSteps;
+        currentEditingPattern.stepCount = clonedStepCount;
+        state.currentEditingPattern = currentEditingPattern;
+
+        // Update the form inputs
+        if (nameInput) {
+          nameInput.value = `${cleanName} Clone`;
+        }
+        if (stepSelect) {
+          stepSelect.value = clonedStepCount.toString();
+        }
+
+        renderPatternCreatorGrid();
+
+        if (statusDiv) {
+          statusDiv.innerText = `📋 Cloned "${cleanName}" (${clonedStepCount} steps) into grid!`;
+          statusDiv.style.color = '#10b981';
+          setTimeout(() => {
+            statusDiv.innerText = '';
+          }, 3000);
+        }
+      } catch (err) {
+        console.error('Error cloning pattern:', err);
+        if (statusDiv) {
+          statusDiv.innerText = '❌ Error during cloning!';
+          statusDiv.style.color = '#ef4444';
+        }
+      }
+    });
+  }
 
   if (previewBtn) {
     previewBtn.addEventListener('click', () => {
@@ -1199,8 +1299,45 @@ export function updateActiveDrumsForVisible() {
 
 export async function handleInstrumentChange(newInst) {
   initAudio();
-  // Dynamically load the active instrument spec and its rhythm patterns together.
-  await Promise.all([ensureInstrumentLoaded(newInst), ensurePatternsLoaded(newInst)]);
+
+  // Show beautiful waiting/loading screen overlay
+  showDrumLoadingScreen(newInst);
+
+  // Stop any playing pattern to avoid audio confusion
+  stopPattern();
+
+  const sfUrls = {
+    conga: '/media/conga.sf2',
+    agogo: '/media/agogo.sf2'
+  };
+
+  // Determine if this instrument needs a SoundFont
+  let relevantSF = null;
+  if (newInst === 'conga' || newInst === 'bongo' || newInst === 'djembe' || newInst === 'cajon' || newInst === 'bata') {
+    relevantSF = 'conga';
+  } else if (newInst === 'agogo') {
+    relevantSF = 'agogo';
+  }
+
+  const promises = [ensureInstrumentLoaded(newInst), ensurePatternsLoaded(newInst)];
+
+  if (relevantSF) {
+    updateDrumLoadingStatus('Fetching HD SoundFont samples...');
+    promises.push(loadSoundFont(relevantSF, sfUrls[relevantSF]));
+  } else {
+    updateDrumLoadingStatus('Initializing synthesized audio...');
+    // Introduce a short elegant delay so the load screen is visible and polished
+    promises.push(new Promise((resolve) => setTimeout(resolve, 250)));
+  }
+
+  try {
+    await Promise.all(promises);
+  } catch (err) {
+    console.error('Failed to load instrument or SoundFont:', err);
+    updateDrumLoadingStatus('Error loading sounds. Using fallback.');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
   state.currentInstrument = newInst;
   localStorage.setItem('currentInstrument', state.currentInstrument);
 
@@ -1223,15 +1360,13 @@ export async function handleInstrumentChange(newInst) {
   // Populate test playback buttons
   populateTryEffectsPills();
 
-  // Stop any playing pattern to avoid audio confusion
-  stopPattern();
-
   // Populate correct patterns list and update controller mappings
   populatePatternSelectOptions();
   updateControllerCheatSheet();
 
   // Reset current editing pattern steps for the new instrument
   currentEditingPattern = { name: '', stepCount: 16, steps: {} };
+  state.currentEditingPattern = currentEditingPattern;
   const nameInput = document.getElementById('new-pattern-name');
   if (nameInput) nameInput.value = '';
   renderPatternCreatorGrid();
@@ -1239,6 +1374,12 @@ export async function handleInstrumentChange(newInst) {
   renderDrums();
   updateFooterSelectedDrumName();
   updateSoundFontStatusUI();
+
+  // Gentle delay for full completeness and polished feel
+  updateDrumLoadingStatus('Fully Ready!');
+  setTimeout(() => {
+    hideDrumLoadingScreen();
+  }, 150);
 }
 
 export function populatePatternSelectOptions() {
@@ -1298,6 +1439,64 @@ export function populatePatternSelectOptions() {
   }
 
   updatePatternInfoBtnVisibility();
+  populatePatternTemplateSelectOptions();
+}
+
+export function populatePatternTemplateSelectOptions() {
+  const select = document.getElementById('pattern-template-select');
+  if (!select) return;
+
+  select.innerHTML = '';
+
+  // Default empty option
+  const defaultOpt = document.createElement('option');
+  defaultOpt.value = '';
+  defaultOpt.innerText = '-- Choose a Pattern to Clone / Start From --';
+  select.appendChild(defaultOpt);
+
+  const inst = state.currentInstrument;
+  const instPatterns = instrumentPatterns[inst] || {};
+  const sortedEntries = Object.entries(instPatterns).sort((a, b) => compareStrings(a[1].name, b[1].name));
+
+  if (sortedEntries.length > 0) {
+    const headerBuiltin = document.createElement('option');
+    headerBuiltin.disabled = true;
+    headerBuiltin.innerText = '─── BUILT-IN RHYTHMS ───';
+    select.appendChild(headerBuiltin);
+
+    sortedEntries.forEach(([patternId, pattern]) => {
+      const opt = document.createElement('option');
+      opt.value = `builtin_${patternId}`;
+      opt.innerText = pattern.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
+      select.appendChild(opt);
+    });
+  }
+
+  // Load custom patterns from localStorage
+  const customPatternsRaw = localStorage.getItem('customPatterns');
+  if (customPatternsRaw) {
+    try {
+      const customPatterns = JSON.parse(customPatternsRaw);
+      const instCustom = customPatterns[inst] || {};
+      const sortedCustom = Object.entries(instCustom).sort((a, b) => compareStrings(a[1].name, b[1].name));
+
+      if (sortedCustom.length > 0) {
+        const headerOpt = document.createElement('option');
+        headerOpt.disabled = true;
+        headerOpt.innerText = '─── CUSTOM RHYTHMS ───';
+        select.appendChild(headerOpt);
+
+        sortedCustom.forEach(([patternId, pattern]) => {
+          const opt = document.createElement('option');
+          opt.value = `custom_${patternId}`;
+          opt.innerText = pattern.name.replace(/^[^a-zA-Z0-9]+/, '').trim();
+          select.appendChild(opt);
+        });
+      }
+    } catch (err) {
+      console.error('Error parsing custom patterns for template:', err);
+    }
+  }
 }
 
 export function updatePatternInfoBtnVisibility() {
@@ -1846,3 +2045,30 @@ export function updateSoundFontStatusUI() {
 
 // Keep badge updated as states change asynchronously
 setInterval(updateSoundFontStatusUI, 300);
+
+export function showDrumLoadingScreen(instrumentKey) {
+  const overlay = document.getElementById('drum-loading-overlay');
+  const title = document.getElementById('drum-loading-title');
+  const status = document.getElementById('drum-loading-status');
+  if (!overlay) return;
+
+  const instName = (drumTypes[instrumentKey] && drumTypes[instrumentKey].name) || instrumentKey;
+  if (title) title.textContent = `LOADING ${instName.toUpperCase()}`;
+  if (status) status.textContent = 'Initializing Instrument...';
+
+  overlay.classList.add('show');
+}
+
+export function updateDrumLoadingStatus(message) {
+  const status = document.getElementById('drum-loading-status');
+  if (status) {
+    status.textContent = message.toUpperCase();
+  }
+}
+
+export function hideDrumLoadingScreen() {
+  const overlay = document.getElementById('drum-loading-overlay');
+  if (overlay) {
+    overlay.classList.remove('show');
+  }
+}

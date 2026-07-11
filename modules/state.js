@@ -31,6 +31,7 @@ export const state = {
   currentPatternStep: 0,
   patternBpm: 100,
   isPatternPlaying: false,
+  currentPlayContext: null,
 
   // Gamepad & WebHID states
   lastLeftHit: 'None',

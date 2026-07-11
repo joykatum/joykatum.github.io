@@ -10,13 +10,16 @@ import {
   triggerHitEffect,
   updateActiveDrumsForVisible,
   updatePatternInfoBtnVisibility,
-  updateActiveDrumUI
+  updateActiveDrumUI,
+  showDrumLoadingScreen,
+  updateDrumLoadingStatus,
+  hideDrumLoadingScreen
 } from './ui.js';
 import { startPattern, stopPattern, setOnStepTriggered } from './sequencer.js';
 import { initAudio } from './audio.js';
 import { initVisualizer } from './visualizer.js';
 import { ensurePatternsLoaded } from './patterns.js';
-import { preloadSoundFonts } from './sf2Loader.js';
+import { loadSoundFont } from './sf2Loader.js';
 
 // Base Instrument Class for OO management of instrument behaviors
 class BaseInstrument {
@@ -54,11 +57,43 @@ class Orchestrator {
   }
 
   async init() {
-    // Proactively preload SoundFonts in the background
-    preloadSoundFonts();
+    // Show beautiful loading overlay for initial instrument on startup
+    showDrumLoadingScreen(state.currentInstrument);
 
-    // Resolve initial instrument
-    await Promise.all([ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)]);
+    const sfUrls = {
+      conga: '/media/conga.sf2',
+      agogo: '/media/agogo.sf2'
+    };
+
+    let relevantSF = null;
+    const current = state.currentInstrument;
+    if (
+      current === 'conga' ||
+      current === 'bongo' ||
+      current === 'djembe' ||
+      current === 'cajon' ||
+      current === 'bata'
+    ) {
+      relevantSF = 'conga';
+    } else if (current === 'agogo') {
+      relevantSF = 'agogo';
+    }
+
+    const promises = [ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)];
+
+    if (relevantSF) {
+      updateDrumLoadingStatus('Fetching HD SoundFont samples...');
+      promises.push(loadSoundFont(relevantSF, sfUrls[relevantSF]));
+    } else {
+      updateDrumLoadingStatus('Initializing synthesized audio...');
+    }
+
+    try {
+      await Promise.all(promises);
+    } catch (err) {
+      console.error('Failed to load initial instrument/SoundFont:', err);
+    }
+
     this.updateInstrument(state.currentInstrument);
 
     // Set up step triggers for sequencer
@@ -68,6 +103,12 @@ class Orchestrator {
 
     this.setupUIBindings();
     this.runInitializers();
+
+    // Gentle delay before hiding the initial loader to make the entrance smooth
+    updateDrumLoadingStatus('Fully Ready!');
+    setTimeout(() => {
+      hideDrumLoadingScreen();
+    }, 150);
   }
 
   updateInstrument(key) {

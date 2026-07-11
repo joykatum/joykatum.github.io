@@ -13,7 +13,41 @@
     <div class="app-container" id="app-container">
       <div class="main-content">
         <!-- Congas Stage Grid -->
-        <div class="stage-container">
+        <div class="stage-container" style="position: relative">
+          <!-- Drum Loading Screen -->
+          <div class="drum-loading-overlay" id="drum-loading-overlay">
+            <div class="drum-loading-spinner">
+              <div class="drum-loading-ring"></div>
+              <div class="drum-loading-ring"></div>
+              <div class="drum-loading-ring"></div>
+            </div>
+            <h3
+              id="drum-loading-title"
+              style="
+                margin: 0 0 8px 0;
+                font-size: 1.2rem;
+                font-weight: 900;
+                letter-spacing: 0.05em;
+                color: #de6b48;
+                text-transform: uppercase;
+              "
+            >
+              LOADING INSTRUMENT
+            </h3>
+            <div
+              id="drum-loading-status"
+              style="
+                font-size: 0.8rem;
+                color: #10b981;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+              "
+            >
+              PREPARING...
+            </div>
+          </div>
+
           <div class="drums-grid" id="drums-stage">
             <!-- Dynamically populated via JS -->
           </div>
@@ -383,6 +417,66 @@
               Design your own rhythm by clicking on the grid. Custom patterns are saved in local storage.
             </p>
 
+            <!-- Clone Pattern Template Section -->
+            <div
+              id="pattern-template-container"
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                margin-bottom: 16px;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px dashed rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+              "
+            >
+              <label
+                for="pattern-template-select"
+                class="info-section-title"
+                style="
+                  font-size: 0.75rem;
+                  color: #de6b48;
+                  font-weight: 900;
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                  display: block;
+                "
+                >Start from an existing pattern:</label
+              >
+              <div style="display: flex; gap: 8px; width: 100%; align-items: center">
+                <select
+                  id="pattern-template-select"
+                  style="
+                    flex: 1;
+                    height: 32px;
+                    box-sizing: border-box;
+                    padding: 0 10px;
+                    font-size: 0.8rem;
+                    outline: none;
+                    background: #fdfbf7;
+                    border: 2px solid #302217;
+                    border-radius: 8px;
+                    color: #302217;
+                    font-weight: 700;
+                    font-family: inherit;
+                    box-shadow: 2px 2px 0px #302217;
+                    cursor: pointer;
+                  "
+                >
+                  <option value="">-- Choose a Pattern to Clone / Start From --</option>
+                </select>
+                <button
+                  id="pattern-template-load-btn"
+                  class="preset-nav-btn"
+                  title="Clone the selected pattern as a custom template"
+                  style="margin: 0; white-space: nowrap; font-size: 0.7rem !important; height: 32px !important"
+                >
+                  CLONE PATTERN
+                </button>
+              </div>
+            </div>
+
             <div
               class="pattern-creator-controls"
               style="display: flex; flex-wrap: nowrap; gap: 12px; margin-bottom: 12px"
@@ -407,10 +501,24 @@
                   type="text"
                   id="new-pattern-name"
                   placeholder="My Custom Rhythm"
-                  style="padding: 6px 12px; font-size: 0.85rem; outline: none; width: 100%; box-sizing: border-box"
+                  style="
+                    height: 32px;
+                    box-sizing: border-box;
+                    padding: 0 10px;
+                    font-size: 0.8rem;
+                    outline: none;
+                    background: #fdfbf7;
+                    border: 2px solid #302217;
+                    border-radius: 8px;
+                    color: #302217;
+                    font-weight: 700;
+                    font-family: inherit;
+                    box-shadow: 2px 2px 0px #302217;
+                    width: 100%;
+                  "
                 />
               </div>
-              <div style="width: 110px; display: flex; flex-direction: column; gap: 4px">
+              <div style="width: 130px; display: flex; flex-direction: column; gap: 4px">
                 <label
                   for="new-pattern-steps"
                   class="info-section-title"
@@ -426,9 +534,29 @@
                   "
                   >STEPS:</label
                 >
-                <select id="new-pattern-steps" style="padding: 6px; font-size: 0.85rem; outline: none; width: 100%">
+                <select
+                  id="new-pattern-steps"
+                  style="
+                    height: 32px;
+                    box-sizing: border-box;
+                    padding: 0 10px;
+                    font-size: 0.8rem;
+                    outline: none;
+                    background: #fdfbf7;
+                    border: 2px solid #302217;
+                    border-radius: 8px;
+                    color: #302217;
+                    font-weight: 700;
+                    font-family: inherit;
+                    box-shadow: 2px 2px 0px #302217;
+                    cursor: pointer;
+                    width: 100%;
+                  "
+                >
                   <option value="12">12 (6/8)</option>
                   <option value="16">16 (4/4)</option>
+                  <option value="24">24 (6/8 Double)</option>
+                  <option value="32">32 (4/4 Double)</option>
                 </select>
               </div>
             </div>

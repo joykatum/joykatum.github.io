@@ -109,6 +109,76 @@ const patternLoaders = {
 
 const pendingLoads = {};
 
+function enhancePatternsWithAccents(patterns, instrumentName) {
+  if (!patterns) return;
+  for (const patternId in patterns) {
+    const pattern = patterns[patternId];
+    if (!pattern || !pattern.steps) continue;
+
+    for (const step in pattern.steps) {
+      const stepHits = pattern.steps[step];
+      if (!Array.isArray(stepHits)) continue;
+
+      stepHits.forEach((hit) => {
+        if (hit.accent !== undefined || hit.velocity !== undefined) return;
+
+        const sound = (hit.sound || '').toLowerCase();
+
+        // Sound characteristics for authentic, concept-driven accents
+        const isSlapOrSharp =
+          sound.includes('slap') ||
+          sound.includes('seco') ||
+          sound.includes('choc') ||
+          sound.includes('snap') ||
+          sound.includes('whip') ||
+          sound.includes('rim') ||
+          sound.includes('crack') ||
+          sound.includes('accent') ||
+          sound.includes('sharp');
+
+        const isOpenOrMelodic =
+          sound.includes('abierto') ||
+          sound.includes('open') ||
+          sound.includes('tone') ||
+          sound.includes('bell') ||
+          sound.includes('dha') ||
+          sound.includes('dhin') ||
+          sound.includes('high') ||
+          sound.includes('strike') ||
+          sound.includes('hit') ||
+          sound.includes('bass') ||
+          sound.includes('bajo') ||
+          sound.includes('pulse') ||
+          sound.includes('bombo') ||
+          sound.includes('dum');
+
+        const isGhostOrSubtle =
+          sound.includes('manoteo') ||
+          sound.includes('tapado') ||
+          sound.includes('toe') ||
+          sound.includes('heel') ||
+          sound.includes('tap') ||
+          sound.includes('touch') ||
+          sound.includes('mute') ||
+          sound.includes('muff') ||
+          sound.includes('closed') ||
+          sound.includes('roll') ||
+          sound.includes('buzz') ||
+          sound.includes('slide') ||
+          sound.includes('glissando');
+
+        if (isSlapOrSharp) {
+          hit.accent = true;
+        } else if (isGhostOrSubtle) {
+          hit.accent = false;
+        } else if (isOpenOrMelodic) {
+          hit.accent = true;
+        }
+      });
+    }
+  }
+}
+
 export async function ensurePatternsLoaded(instrumentName) {
   if (instrumentPatterns[instrumentName]) {
     return instrumentPatterns[instrumentName];
@@ -120,6 +190,7 @@ export async function ensurePatternsLoaded(instrumentName) {
   }
 
   pendingLoads[instrumentName] ||= loadPatterns().then(({ default: patterns }) => {
+    enhancePatternsWithAccents(patterns, instrumentName);
     instrumentPatterns[instrumentName] = patterns;
     return patterns;
   });
