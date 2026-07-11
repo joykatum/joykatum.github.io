@@ -2,9 +2,41 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const pandero = {
+  origin: 'Puerto Rico',
+  description:
+    'The pandero represents the family of hand-held frame drums used in Puerto Rican Plena. These untuned drums, traditionally named Primo, Seguidor, and Requinto, are struck with fingers and palms to play high-energy, syncopated rhythms that tell local neighborhood stories.',
+  performers: [
+    {
+      name: 'Mon Rivera',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Viento de Agua',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: "Aña Pa' Mi Tambor",
+      artist: 'Mon Rivera',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Plena Carnival Reverb',
+      artist: 'Puerto Rican Folk Ensemble',
+      desc: 'A dense, wide spring reverb captures the high-pitched clacks of the Requinto frame drum, separating its high notes from the driving percussion ensemble.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Pandero',
   defaultLeft: 1,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

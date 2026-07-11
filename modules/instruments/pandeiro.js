@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const pandeiro = {
+  origin: 'Brazil',
+  description:
+    "The pandeiro is a Brazilian frame drum closely resembling the tambourine. It can be tuned dynamically and features cupped metal jingles ('platinelas') that produce a drier, crisper chime than European tambourines. By alternating strikes with the thumb, fingertips, and heel of the hand, players reproduce an entire drum kit's patterns on a single frame.",
+  performers: [
+    {
+      name: 'Marcos Suzano',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Samba de Pandeiro',
+      artist: 'Marcos Suzano',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Choro No. 1',
+      artist: 'Acoustic Choro Group',
+      desc: 'The pandeiro is treated with short stereo spring reverb to amplify the mechanical clatter of the platinelas, reinforcing the vintage acoustic warmth.',
+      url: 'https://open.spotify.com/track/4jVlC05tDsz0I7Rof9Obe1',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Pandeiro',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

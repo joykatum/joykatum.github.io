@@ -1,10 +1,53 @@
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
+import { playSoundFontSample } from '../sf2Loader.js';
 
 export const bongo = {
+  origin: 'Cuba (Oriente Province)',
+  description:
+    "The bongos consist of two small, open-bottomed drums of different sizes joined by a wooden block. The smaller drum is the 'macho' (male, high pitch) and the larger is the 'hembra' (female, lower pitch). Played primarily with fingers and palms, they emerged in Eastern Cuba in the late 19th century and became central to the Cuban 'Son' style.",
+  performers: [
+    {
+      name: 'Armando Peraza',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Roberto Roena',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Jack Costanzo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Manteca',
+      artist: 'Dizzy Gillespie & Chano Pozo',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Llorarás',
+      artist: "Oscar D'León",
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'King Tubby Meets Rockers Uptown',
+      artist: 'Augustus Pablo & King Tubby',
+      desc: 'Bongo slaps are chopped up, filtered, and fed into high-feedback spring reverbs and ping-pong delays to create a dynamic, echoing soundscape.',
+      url: 'https://open.spotify.com/track/4jVlC05tDsz0I7Rof9Obe1',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Bongos',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,
@@ -17,32 +60,60 @@ export const bongo = {
   sounds: {
     martillo: (d, velocity = 0.8) => {
       const pan = d.id === 0 ? -0.25 : 0.25;
-      const f = (d.id === 0 ? 340 : 170) * d.pitchMult;
-      playMembrane(f, 0.06, 1.0, true, velocity, pan);
-      playAttackClick(0.008, 3800, 0.45 * velocity);
+      const sampleName = Math.random() > 0.5 ? 'conga heel' : 'conga tip';
+      const success = playSoundFontSample('conga', sampleName, d.pitchMult * (d.id === 0 ? 1.5 : 1.1), velocity, pan);
+      if (!success) {
+        const f = (d.id === 0 ? 340 : 170) * d.pitchMult;
+        playMembrane(f, 0.06, 1.0, true, velocity, pan);
+        playAttackClick(0.008, 3800, 0.45 * velocity);
+      }
     },
     open_tone: (d, velocity = 0.8) => {
       const pan = d.id === 0 ? -0.25 : 0.25;
-      const f = (d.id === 0 ? 390 : 195) * d.pitchMult;
-      playMembrane(f, 0.22, 1.0, false, velocity, pan);
+      const success = playSoundFontSample('conga', 'conga tone', d.pitchMult * (d.id === 0 ? 1.6 : 1.2), velocity, pan);
+      if (!success) {
+        const f = (d.id === 0 ? 390 : 195) * d.pitchMult;
+        playMembrane(f, 0.22, 1.0, false, velocity, pan);
+      }
     },
     slap: (d, velocity = 0.95) => {
       const pan = d.id === 0 ? -0.25 : 0.25;
-      const f = (d.id === 0 ? 580 : 330) * d.pitchMult;
-      playMembrane(f, 0.07, 1.1, true, velocity, pan);
-      playNoise(0.05, d.id === 0 ? 3200 : 2200, velocity * 1.3, 'highpass');
-      playAttackClick(0.007, 4500, 0.6 * velocity);
+      const success = playSoundFontSample(
+        'conga',
+        'congaclosedslap',
+        d.pitchMult * (d.id === 0 ? 1.8 : 1.4),
+        velocity,
+        pan
+      );
+      if (!success) {
+        const f = (d.id === 0 ? 580 : 330) * d.pitchMult;
+        playMembrane(f, 0.07, 1.1, true, velocity, pan);
+        playNoise(0.05, d.id === 0 ? 3200 : 2200, velocity * 1.3, 'highpass');
+        playAttackClick(0.007, 4500, 0.6 * velocity);
+      }
     },
     mute_tap: (d, velocity = 0.55) => {
       const pan = d.id === 0 ? -0.25 : 0.25;
-      const f = (d.id === 0 ? 330 : 165) * d.pitchMult;
-      playMembrane(f, 0.04, 1.0, true, velocity, pan);
+      const success = playSoundFontSample('conga', 'conga mute', d.pitchMult * (d.id === 0 ? 1.5 : 1.1), velocity, pan);
+      if (!success) {
+        const f = (d.id === 0 ? 330 : 165) * d.pitchMult;
+        playMembrane(f, 0.04, 1.0, true, velocity, pan);
+      }
     },
     glissando_de_dedo: (d, velocity = 0.75) => {
       const pan = d.id === 0 ? -0.25 : 0.25;
-      const startFreq = (d.id === 0 ? 350 : 175) * d.pitchMult;
-      const endFreq = (d.id === 0 ? 550 : 275) * d.pitchMult;
-      playTablaSlideUp(startFreq, endFreq, 0.28, velocity, pan);
+      const success = playSoundFontSample(
+        'conga',
+        'congaattackslide',
+        d.pitchMult * (d.id === 0 ? 1.4 : 1.0),
+        velocity,
+        pan
+      );
+      if (!success) {
+        const startFreq = (d.id === 0 ? 350 : 175) * d.pitchMult;
+        const endFreq = (d.id === 0 ? 550 : 275) * d.pitchMult;
+        playTablaSlideUp(startFreq, endFreq, 0.28, velocity, pan);
+      }
     }
   },
   generateSVG: (id, colorType) => {

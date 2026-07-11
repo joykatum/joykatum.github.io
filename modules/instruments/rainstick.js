@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const rainstick = {
+  origin: 'South America (Andean Tradition)',
+  description:
+    'The Rainstick is a long, hollow tube made of dried cactus or bamboo. Internal thorns or wooden pegs are driven in a spiral pattern along its inner walls, and the tube is filled with tiny pebbles, seeds, or sand. When tilted, the internal contents slowly cascade downward, striking the thorns to produce a continuous, watery trickle. Interesting fact: the Rainstick was invented by ancient Andean tribes, including the Diaguita, who used the calming instrument in sacred rain-making ceremonies to ask the gods for water in arid mountain valleys. In modern recording, it is a premier tool for generating soothing, white-noise ambient textures.',
+  performers: [
+    {
+      name: 'Naná Vasconcelos',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Trilok Gurtu',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Rain Forest Echoes',
+      artist: 'Naná Vasconcelos',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Andean Drizzle',
+      artist: 'Naná Vasconcelos',
+      desc: 'The soft, trickling seeds are run through a high-decay cosmic plate reverb and stereo phase shifters to create an immersive, dreamlike downpour effect.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Rainstick',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

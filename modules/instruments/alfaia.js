@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const alfaia = {
+  origin: 'Northeastern Brazil (Pernambuco)',
+  description:
+    'The Alfaia is a large, heavy wooden drum tuned with thick ropes, central to the Maracatu parade rhythms of Pernambuco. Handcrafted from local wood and goatskin, it is worn over the shoulder and struck with heavy wooden mallets. Interesting fact: the Alfaia is unique because it is tuned extremely low, producing a deep, wet, muddy bass thud that resembles an acoustic heartbeat. It represents Afro-Brazilian spiritual resilience, traditionally played during sacred ceremonies and festive street processions to invoke the spirits of ancestral kings and queens.',
+  performers: [
+    {
+      name: 'Naná Vasconcelos',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Chico Science',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Maracatu Misterioso',
+      artist: 'Naná Vasconcelos',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Da Lama Ao Caos',
+      artist: 'Chico Science',
+      desc: 'The booming Alfaia hits are enhanced with sub-bass synthesizers and transient shapers, giving the traditional drum a modern, heavy metal punch in studio mixes.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -32,8 +65,6 @@ export const alfaia = {
             </g>
   `,
   name: 'Alfaia',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

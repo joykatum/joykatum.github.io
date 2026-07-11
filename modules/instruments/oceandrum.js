@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const oceandrum = {
+  origin: 'Global / Sound Therapy',
+  description:
+    'The Ocean Drum is a double-headed frame drum containing small metal beads. By tilting the drum slowly, the beads roll over the skin, perfectly mimicking the soothing, washing sound of ocean waves.',
+  performers: [
+    {
+      name: 'Wah!',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ocean Meditation',
+      artist: 'Wah!',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ambient Sea Wash Filter',
+      artist: 'Sound Healing Project',
+      desc: 'A slow-sweeping lowpass filter is applied to the bead rolling noise, intensifying the sensation of receding tides.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Ocean Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

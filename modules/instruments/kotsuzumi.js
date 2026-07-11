@@ -2,6 +2,25 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const kotsuzumi = {
+  origin: 'Japan (Noh & Kabuki Theater)',
+  description:
+    'The Kotsuzumi is a traditional Japanese hour-glass-shaped double-headed drum prominent in Noh and Kabuki theater. Unlike most drums, it is played on the right shoulder and the player adjusts the pitch in real-time by squeezing or loosening the decorative orange silk cords (shirabeo) wrapping the drum heads. This produces a haunting, vocal-like pitch slide. It is accompanied by stylized vocal calls (kakegoe) from the player to structure theater movements.',
+  performers: [
+    {
+      name: 'Tosha Roei',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Kabuki Hayashi Suite',
+      artist: 'Tosha Roei Ensemble',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -20,8 +39,6 @@ export const kotsuzumi = {
             <circle cx="50" cy="50" r="3" fill="#ea580c"/>
   `,
   name: 'Kotsuzumi',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

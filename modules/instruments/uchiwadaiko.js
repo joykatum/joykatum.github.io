@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const uchiwadaiko = {
+  origin: 'Japan',
+  description:
+    'The Uchiwa-daiko is a Japanese fan-drum shaped like a flat paddle. Played with a single stick, it produces a dry, cracking tone used historically in Buddhist chanting, kabuki theatre, and traditional matsuri festivals.',
+  performers: [
+    {
+      name: 'Kodo Ensemble',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Matsuri Rythms',
+      artist: 'Kodo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Kabuki Snap Distortion',
+      artist: 'Tokyo Theatre Sound',
+      desc: 'Mild bitcrushing and drive are added to the fan-drum snap to elevate its dramatic stage presence.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <rect x="47" y="45" width="6" height="50" rx="2" fill="url(#skin-${id})" stroke="#271305" stroke-width="1" filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.5))"/>
             <circle cx="50" cy="40" r="39" fill="url(#skin-${id})" filter="brightness(1.3)" stroke="#18181b" stroke-width="2.2" filter="drop-shadow(0px 2px 2.5px rgba(0,0,0,0.4))"/>
@@ -9,8 +37,6 @@ export const uchiwadaiko = {
             <circle cx="50" cy="40" r="38" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Uchiwa-daiko',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

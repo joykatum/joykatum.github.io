@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const davul = {
+  origin: 'Middle East',
+  description:
+    'The Davul is a large double-headed bass drum played with a heavy curved mallet on one side and a thin cane stick on the other. It delivers heavy, thumping bass beats accompanied by high-pitched snaps.',
+  performers: [
+    {
+      name: 'Middle Eastern Folk Ensembles',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Folk Halay Dance',
+      artist: 'Turkish Traditional Ensemble',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Epic Dual Mallet Compression',
+      artist: 'Istanbul Folk Group',
+      desc: 'Heavy parallel compression blends the deep tree-trunk bass thumps with the bright stick snaps for a huge cinematic sound.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -38,8 +66,6 @@ export const davul = {
             </g>
   `,
   name: 'Davul',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

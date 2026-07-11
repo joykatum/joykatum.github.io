@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bendir = {
+  origin: 'North Africa',
+  description:
+    'The Bendir is a North African frame drum featuring snare strings made of gut stretched across the underside of the head. When struck, the strings vibrate, producing a distinctive buzzing, snare-like sustain.',
+  performers: [
+    {
+      name: 'Karim Ziad',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Gnawa Fusion',
+      artist: 'Karim Ziad',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Snare Buzz Spring Reverb',
+      artist: 'Morocco Fusion Group',
+      desc: 'Gut snare vibrations are routed into a vintage spring reverb, accentuating the dusty, historic character of Gnawa rhythms.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="49" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -24,8 +52,6 @@ export const bendir = {
             <circle cx="50" cy="50" r="46.5" fill="url(#overlay-${id})"/>
   `,
   name: 'Bendir',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

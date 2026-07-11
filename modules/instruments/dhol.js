@@ -2,9 +2,31 @@ import { playMembrane, playNoise } from '../audio.js';
 import { state } from '../state.js';
 
 export const dhol = {
+  origin: 'India (Punjab Folk Roots)',
+  description:
+    'The Dhol is a high-volume, double-sided barrel drum played across South Asia, most famously in Punjab. It features a heavy wooden shell played horizontally with two distinct sticks: a thick, curved wooden stick called a dagga for the heavy bass head, and a thin, supple cane stick called a tilli for the crisp treble head. Crucial to Bhangra music and harvest celebrations (Vaisakhi), its thumping, syncopated drive represents the ultimate energy of North Indian festive folk culture.',
+  performers: [
+    {
+      name: 'Dhad Sarangi',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Johnny Kalsi',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Bhangra Punjab Da',
+      artist: 'The Dhol Foundation',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+
   name: 'Dhol',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

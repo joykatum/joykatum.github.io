@@ -1,5 +1,6 @@
 // Drum Specifications and Instruments Configuration Module
 import { state } from './state.js';
+import { drumInfo } from './drumInfo.js';
 
 // Lightweight registry of all instruments with names and drum setups (no heavy sound functions or SVG code)
 export const drumTypes = {
@@ -1927,6 +1928,17 @@ export async function ensureInstrumentLoaded(instrumentName) {
     if (instData) {
       loadedInstruments[name] = instData;
 
+      // Populate drumInfo dynamically using centralized metadata in the instrument file
+      drumInfo[name] = {
+        name: drumTypes[name]?.name || name.charAt(0).toUpperCase() + name.slice(1),
+        origin: instData.origin || 'Traditional / Regional',
+        description:
+          instData.description || 'A traditional percussion instrument used in regional musical practices worldwide.',
+        performers: instData.performers || [],
+        songs: instData.songs || [],
+        effectsSongs: instData.effectsSongs || []
+      };
+
       // Ensure touches is populated
       if (!instData.touches) {
         if (customTouches[name]) {
@@ -1993,12 +2005,8 @@ export async function ensureInstrumentLoaded(instrumentName) {
       instrumentTouches[name] = instData.touches;
       instrumentMappings[name] = instData.mappings;
 
-      if (instData.defaultLeft !== undefined) {
-        drumTypes[name].defaultLeft = instData.defaultLeft;
-      }
-      if (instData.defaultRight !== undefined) {
-        drumTypes[name].defaultRight = instData.defaultRight;
-      }
+      drumTypes[name].defaultLeft = instData.defaultLeft !== undefined ? instData.defaultLeft : 0;
+      drumTypes[name].defaultRight = instData.defaultRight !== undefined ? instData.defaultRight : 0;
 
       // For sub-variants like agogo_high, bongo_macho, etc., also populate them
       if (instrumentName !== name) {

@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const ratchet = {
+  origin: 'Europe (Classical Concert Tradition)',
+  description:
+    "The Ratchet is a wooden or metal gear-and-spring noise maker. Swinging its handle causes a flexible wooden slat to scrape over the gear teeth in rapid succession, generating a loud, continuous, mechanical crackling noise. Interesting fact: historically used as danger warnings on ships and in medieval cities, it was integrated into classical music by composers like Richard Strauss in 'Till Eulenspiegel'. It provides an energetic, mechanical clatter used to signify frantic comedic tension, alarm, or chaotic percussive details in modern cinematic scoring.",
+  performers: [
+    {
+      name: 'Evelyn Glennie',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Mechanical Clatter Suite',
+      artist: 'Evelyn Glennie',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Strauss Clatter',
+      artist: 'Evelyn Glennie',
+      desc: 'The intense wooden clicks are treated with high-frequency saturation and bitcrushing, transforming the organic gear rattle into a gritty, lo-fi mechanical loop.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Ratchet',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

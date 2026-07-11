@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const daf = {
+  origin: 'Iran / Kurdistan',
+  description:
+    'The Daf is a large Persian frame drum with numerous small metal chains or rings attached inside. When played, the chains clash against the skin, adding a rustling, sweeping texture that drives spiritual Sufi music.',
+  performers: [
+    {
+      name: 'Pezhman Hadadi',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Sufi Trance Beats',
+      artist: 'Pezhman Hadadi',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Spiritual Chain Delay',
+      artist: 'Persian Folk Project',
+      desc: 'The rustling of the metal chains is captured with a stereo expander and tape delay, creating a beautiful continuous sweep.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51" r="49" fill="#020617" opacity="0.6" filter="blur(2px)"/>
             <circle cx="50" cy="50" r="48" fill="none" stroke="#78350f" stroke-width="3"/>
@@ -10,8 +38,6 @@ export const daf = {
             <circle cx="50" cy="50" r="45" fill="url(#overlay-${id})"/>
   `,
   name: 'Daf',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

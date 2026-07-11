@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tamborim = {
+  origin: 'Brazil',
+  description:
+    'The Tamborim is a small, high-pitched Brazilian frame drum played with a flexible plastic stick (baqueta). It is flipped rapidly in the hand, driving the intense, syncopated upper-register loops in samba.',
+  performers: [
+    {
+      name: 'Monobloco Ensemble',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Samba Tamborim Loops',
+      artist: 'Monobloco',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'High Pitch Baqueta Gate',
+      artist: 'Samba School Beats',
+      desc: 'Tightly gated compression is applied to the tamborim sticks to ensure the rapid-fire rolls remain clear and sharp over the massive baterias.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Tamborim',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

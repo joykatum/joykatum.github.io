@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const handpan = {
+  origin: 'Switzerland / Global',
+  description:
+    'The Handpan is a steel dome-shaped instrument with several tuned tone fields. Struck gently with fingers, it emits an exceptionally pure, melodic, and resonant sound, perfect for meditative and acoustic music.',
+  performers: [
+    {
+      name: 'Hang Massive',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Daniel Waples',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Once Again',
+      artist: 'Hang Massive',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ethereal Space Cathedral Reverb',
+      artist: 'Hang Massive Studio',
+      desc: 'Every ring of the handpan is processed through an extra-long cavernous reverb, turning gentle strikes into lush melodic pads.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.7" filter="blur(2.5px)"/>
             <circle cx="50" cy="50" r="48" fill="url(#skin-${id})"/>
@@ -15,7 +48,6 @@ export const handpan = {
             <circle cx="50" cy="50" r="48" fill="url(#overlay-${id})" opacity="1.3"/>
   `,
   name: 'Handpan',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

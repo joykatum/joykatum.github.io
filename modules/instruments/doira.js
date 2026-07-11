@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const doira = {
+  origin: 'Central Asia',
+  description:
+    'The Doira is a classic frame drum of Uzbekistan, Tajikistan, and other Central Asian countries. It features metal rings attached inside the wooden frame, which clash and chime as the drum is struck, creating a glittering texture.',
+  performers: [
+    {
+      name: 'Abbos Kosimov',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Doira Solo',
+      artist: 'Abbos Kosimov',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Silk Road Shimmer Delay',
+      artist: 'Tashkent Ensemble',
+      desc: 'The ring jingles are treated with high-pass flanging and ping-pong delays, generating a shining cloud of sound.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Doira',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

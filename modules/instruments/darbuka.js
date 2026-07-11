@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const darbuka = {
+  origin: 'Middle East / North Africa',
+  description:
+    "The darbuka (or goblet drum) is a single-headed hand drum with a goblet-shaped body, popular in Middle Eastern, North African, and Balkan music. Historically made of clay or wood with fish skin, modern darbukas are often aluminum with synthetic heads, producing sharp, high-pitched 'tek' rim shots and deep, resonant 'dum' center tones.",
+  performers: [
+    {
+      name: 'Hossam Ramzy',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Misirli Ahmet',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Sabla Tolo',
+      artist: 'Hossam Ramzy',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Habibi Ya Nour El Ain',
+      artist: 'Amr Diab',
+      desc: 'The darbuka is compressed tightly and sweetened with high-frequency exciters to make the rapid-fire rolls punch cleanly through the Arabic-pop arrangement.',
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Darbuka',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

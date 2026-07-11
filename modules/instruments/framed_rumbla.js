@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const framed_rumbla = {
+  origin: 'Caribbean / Hybrid',
+  description:
+    'The Framed Rumbla is an innovative, contemporary hybrid frame drum designed to merge the ancient acoustic properties of the Middle Eastern bendir with the crisp, modern snare crack of a studio drum kit. It features adjustable internal guitar string snares or snare wires pressed against the synthetic drumhead. This allows percussionists to produce a warm, dry bass tone at the center alongside a razor-sharp snare slap at the rim. Interesting fact: it was popularized by frame drum pioneers who wanted a single, travel-friendly instrument that could emulate both hand percussion and electronic backbeats in acoustic world-music configurations.',
+  performers: [
+    {
+      name: 'Glen Velez',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Yousif Sheronick',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Internal Resonance',
+      artist: 'Glen Velez',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Rhythm of the Spheres',
+      artist: 'Glen Velez',
+      desc: "The Framed Rumbla's complex frequencies are processed with multi-tap stereo delays and low-pass filter sweeps, creating a shifting, spacey electronic groove.",
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Framed Rumbla',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

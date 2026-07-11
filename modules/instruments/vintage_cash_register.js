@@ -36,8 +36,6 @@ export const vintage_cash_register = {
             <circle cx="95" cy="65" r="4.5" fill="#b45309" stroke="#451a03" stroke-width="1"/>
   `,
   name: '💵 Cash Register',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

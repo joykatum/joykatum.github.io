@@ -2,6 +2,30 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const timpani = {
+  origin: 'Europe (Orchestral / Military Roots)',
+  description:
+    'The Timpani, also known as kettledrums, are professional tuned percussion instruments used in symphonic orchestras. They consist of a large copper or fiberglass bowl wrapped with a synthetic or calfskin head, tuned precisely via a foot pedal that adjusts the head tension in real-time. Originating from ancient military drums in the Middle East and introduced to Europe in the 15th century, they transitioned from cavalry signaling to become the primary pitched percussion of classical music.',
+  performers: [
+    {
+      name: 'Vic Firth',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Cloyd Duff',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Also Sprach Zarathustra (Timpani Opening)',
+      artist: 'Richard Strauss',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Copper bowl kettle reflection shadow -->
             <circle cx="50" cy="52" r="48" fill="#1e1b18" opacity="0.8" filter="blur(2.5px)"/>
@@ -27,8 +51,6 @@ export const timpani = {
             <path d="M 92.5 72 L 86 67.5 M 92 68 L 88 71.5" stroke="url(#chrome-${id})" stroke-width="1.8" stroke-linecap="round"/>
   `,
   name: 'Timpani',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const kanjira = {
+  origin: 'Southern India (Carnatic Tradition)',
+  description:
+    "The Kanjira is a small but incredibly dynamic frame drum used in South Indian Carnatic classical music. Historically covered with the skin of the endangered Bengal monitor lizard (now replaced with goat or synthetic skins for conservation), it features a single pair of small brass bells or coins as jingles. Though it looks simple, playing the Kanjira requires virtuoso finger dexterity. The player holds the drum in one hand and strikes with the other, using the fingers of the holding hand to squeeze the drum's edge from the inside, dynamically shifting the pitch. An interesting fact: despite its tiny 7-inch diameter, a master player can extract deep, sliding bass tones and crisp, high-frequency slaps that rival a full drum set.",
+  performers: [
+    {
+      name: 'V. Selvaganesh',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'G. Harishankar',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Kanjira Solo',
+      artist: 'V. Selvaganesh',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Laya Vinyas',
+      artist: 'V. Selvaganesh',
+      desc: 'In modern recordings, Kanjira pitch slides are highlighted using short digital delays and pristine room reverbs, preserving the organic texture of the hand slaps.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="49" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -28,8 +61,6 @@ export const kanjira = {
             <circle cx="50" cy="50" r="45.5" fill="url(#overlay-${id})"/>
   `,
   name: 'Kanjira',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const talkingdrum = {
+  origin: 'West Africa (Senegal / Mali)',
+  description:
+    'The talking drum is an hourglass-shaped drum with two drumheads connected by leather tension cords. Squeezed under the armpit during play, the tension cords tighten, increasing the pitch of the skin to mimic the inflections, tones, and patterns of human speech. Historically used as a communication tool across villages.',
+  performers: [
+    {
+      name: 'Massamba Diop',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'King Sunny Adé',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ja Funmi',
+      artist: 'King Sunny Adé',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Wakanda',
+      artist: 'Ludwig Göransson (Black Panther Score)',
+      desc: 'Talking drums are highly compressed and saturated, then fed into wide stereo delays to create a soaring, modern cinematic chase sequence.',
+      url: 'https://open.spotify.com/track/4jVlC05tDsz0I7Rof9Obe1',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -29,8 +62,6 @@ export const talkingdrum = {
             </g>
   `,
   name: 'Talking Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

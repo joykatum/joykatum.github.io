@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const frog_rasp = {
+  origin: 'Southeast Asia (Thailand)',
+  description:
+    'The Frog Rasp is a traditional wooden frog idiophone hand-carved in Thailand. It features a ridged spine running down its back. By scraping a wooden stick up and down along these ridges, it produces a hollow, croaking sound that realistically mimics a frog or a cricket. Interesting fact: in Southeast Asian folklore, the frog is a rainmaker, and playing the Frog Rasp during dry seasons is believed to summon rain. Today, it is highly sought after by sound effects artists (foley) and ambient musicians looking to inject organic, bio-acoustic realism into their soundscapes.',
+  performers: [
+    {
+      name: 'Stomu Yamashta',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Forest Whispers',
+      artist: 'Stomu Yamashta',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Bio-Acoustic Rain',
+      artist: 'Stomu Yamashta',
+      desc: 'The hollow frog croaks are treated with a reverse digital reverb and subtle pitch modulation, blending the acoustic frogs into a mystical, fluid soundscape.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <path d="M 28 52 C 28 22, 72 22, 72 52 C 72 72, 28 72, 28 52 Z" fill="#020617" opacity="0.6" filter="blur(3px)"/>
@@ -40,8 +73,6 @@ export const frog_rasp = {
             <path d="M 30 50 C 30 20, 70 20, 70 50 C 70 74, 58 78, 50 78 C 42 78, 30 74, 30 50 Z" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Frog Rasp',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

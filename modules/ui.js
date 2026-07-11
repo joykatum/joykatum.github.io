@@ -3,6 +3,7 @@ import { setupXYPad } from './ui-xypad.js';
 import { generateDrumheadSVG, ensureInstrumentLoaded } from './ui-svg.js';
 import { buildDrumWrapper } from './drumHandler.js';
 import { compareStrings, toTitleCase } from './utils.js';
+import { loadingStates } from './sf2Loader.js';
 // UI Rendering, Animations, SVG Drums, XY Pad and Controls Module
 import { state } from './state.js';
 import {
@@ -1237,6 +1238,7 @@ export async function handleInstrumentChange(newInst) {
 
   renderDrums();
   updateFooterSelectedDrumName();
+  updateSoundFontStatusUI();
 }
 
 export function populatePatternSelectOptions() {
@@ -1795,3 +1797,52 @@ export function updateFooterSelectedDrumName() {
     selectedDrumLabel.textContent = drumDef ? drumDef.name.replace(/^[^a-zA-Z0-9]+/, '').trim() : '';
   }
 }
+
+export function updateSoundFontStatusUI() {
+  const badge = document.getElementById('sf2-status-badge');
+  if (!badge) return;
+
+  const current = state.currentInstrument;
+
+  // Decide which SoundFont is relevant for this instrument
+  let relevantSF = null;
+  if (current === 'conga' || current === 'bongo' || current === 'djembe' || current === 'cajon' || current === 'bata') {
+    relevantSF = 'conga';
+  } else if (current === 'agogo') {
+    relevantSF = 'agogo';
+  }
+
+  if (!relevantSF) {
+    badge.style.display = 'none';
+    return;
+  }
+
+  const loadState = loadingStates[relevantSF] || 'idle';
+  badge.style.display = 'inline-flex';
+
+  if (loadState === 'loading') {
+    badge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#eab308; box-shadow:0 0 4px #eab308; animation: pulse-red 1s infinite;"></span><span style="color:#eab308; margin-left:4px;">SF2 LOADING</span>`;
+    badge.title = 'High-quality SoundFont is loading in the background...';
+    badge.style.borderColor = '#eab308';
+    badge.style.background = 'rgba(234, 179, 8, 0.05)';
+  } else if (loadState === 'loaded') {
+    badge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981; box-shadow:0 0 4px #10b981;"></span><span style="color:#10b981; margin-left:4px;">SF2 HD</span>`;
+    badge.title = 'High-quality SoundFont samples are active!';
+    badge.style.borderColor = '#10b981';
+    badge.style.background = 'rgba(16, 185, 129, 0.05)';
+  } else if (loadState === 'error') {
+    badge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#ef4444; box-shadow:0 0 4px #ef4444;"></span><span style="color:#ef4444; margin-left:4px;">SF2 ERROR</span>`;
+    badge.title = 'Failed to load SoundFont. Falling back to synthesized modeling.';
+    badge.style.borderColor = '#ef4444';
+    badge.style.background = 'rgba(239, 68, 68, 0.05)';
+  } else {
+    // idle / ready
+    badge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#64748b; box-shadow:0 0 4px #64748b;"></span><span style="color:#64748b; margin-left:4px;">SF2 READY</span>`;
+    badge.title = 'SoundFont is ready to load on first click or touch!';
+    badge.style.borderColor = '#64748b';
+    badge.style.background = 'rgba(100, 116, 139, 0.05)';
+  }
+}
+
+// Keep badge updated as states change asynchronously
+setInterval(updateSoundFontStatusUI, 300);

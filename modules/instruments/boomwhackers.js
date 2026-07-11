@@ -2,8 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const boomwhackers = {
+  origin: 'Modern Educational / Experimental',
+  description:
+    'Boomwhackers are lightweight, hollow, color-coded plastic tubes tuned to specific musical pitches by length. Striking them against hands, legs, or any hard surface produces a resonant, plastic hollow pop sound. Interesting fact: they were invented in 1995 by Craig Ramsell, who noticed that cutting cardboard tubes to different lengths produced distinct musical pitches. They became a global educational phenomenon in music classrooms. In professional performance, advanced ensembles arrange hundreds of tubes in complex racks to play incredibly fast, syncopated polyrhythms with a highly unique, modern acoustic aesthetic.',
+  performers: [
+    {
+      name: 'Harvard THUD',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Blue Man Group',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Plastic Pop Suite',
+      artist: 'Harvard THUD',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Tuned Plastic Grooves',
+      artist: 'Harvard THUD',
+      desc: 'The hollow plastic pops are processed through a lush stereo chorus and dynamic low-pass filters, transforming the tubes into a bouncy, synth-like percussive melody.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Boomwhackers',
-  defaultLeft: 0,
   defaultRight: 2,
   drums: [
     {

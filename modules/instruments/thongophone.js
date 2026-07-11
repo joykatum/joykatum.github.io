@@ -2,8 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const thongophone = {
+  origin: 'Modern Experimental / Performance Art',
+  description:
+    'The Thongophone is an experimental acoustic instrument made of multiple PVC pipes of graduated lengths arranged on a framework. It is played by slapping the open pipe openings with flat rubber paddles (historically made from rubber thongs or sandals). This creates a dry, extremely punchy, bass-heavy plosive pop sound. Interesting fact: it was popularized globally by theatrical performance ensembles like the Blue Man Group. Since the pitch is entirely determined by the length of the pipe, players can perform rapid, melodic basslines with an incredibly satisfying tactile and acoustic punch.',
+  performers: [
+    {
+      name: 'Blue Man Group',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Snubby J',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Rods and Cones',
+      artist: 'Blue Man Group',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'PVC Pipe Melodies',
+      artist: 'Blue Man Group',
+      desc: 'The punchy pops are compressed with rapid transient attacks and fed through high-pass filters and stereo delays to construct an energetic industrial hook.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Thongophone',
-  defaultLeft: 0,
   defaultRight: 2,
   drums: [
     {

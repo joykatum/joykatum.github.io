@@ -2,9 +2,40 @@ import { playMembrane, playNoise, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
 
 export const mridangam = {
+  origin: 'South India',
+  description:
+    'The Mridangam is the primary rhythmic instrument of South Indian Carnatic music. A double-headed barrel drum, it features a unique central black paste patch on the treble skin, producing highly melodic, pitched ringing tones.',
+  performers: [
+    {
+      name: 'Karaikudi Mani',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Umayalpuram K. Sivaraman',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Carnatic Tala Solo',
+      artist: 'Karaikudi Mani',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Carnatic Resonance Modulator',
+      artist: 'Madras Rhythm Studio',
+      desc: 'The pitched rings of the mridangam are treated with a narrow bandpass filter, highlighting the pure melodic vocal-like qualities of the drum.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Mridangam',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

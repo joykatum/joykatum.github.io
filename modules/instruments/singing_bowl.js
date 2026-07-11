@@ -25,8 +25,6 @@ export const singing_bowl = {
             <rect x="63" y="10" width="12" height="20" rx="1.5" fill="#f43f5e" stroke="#be185d" stroke-width="0.8" transform="rotate(35, 69, 40)"/>
   `,
   name: '🥣 Singing Bowl',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const spoons_bones = {
+  origin: 'Europe / North America',
+  description:
+    'Spoons and Rhythm Bones are simple folk percussion instruments with ancient roots. Spoons consist of two regular metal or wooden spoons held back-to-back in one hand, while Bones are curved ribs of wood or bone. By tapping them against the fingers, thighs, and hands, players generate rapid-fire claps and rolling triplets. Interesting fact: Spoons became a central percussive fixture in American bluegrass, Appalachian folk, and traditional Irish music. Because they can be played with incredible speed and syncopation using everyday objects, they represent the ultimate democratic folk percussion tradition.',
+  performers: [
+    {
+      name: 'Abby the Spoon Lady',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Dom Flemons',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Angeline the Baker',
+      artist: 'Abby the Spoon Lady',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Spoon River Triplets',
+      artist: 'Abby the Spoon Lady',
+      desc: 'The clattering spoon claps are processed with stereo room simulation and a high-frequency exciter to make the rapid triplets sound crisp and metallic.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -29,8 +62,6 @@ export const spoons_bones = {
             </g>
   `,
   name: 'Spoons',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

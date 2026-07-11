@@ -29,8 +29,6 @@ export const talk_box = {
             <circle cx="91" cy="65" r="4.5" fill="#ef4444" stroke="#b91c1c" stroke-width="1" filter="drop-shadow(1px 1px 2px rgba(0,0,0,0.4))"/>
   `,
   name: '🗣️ Talk Box Toy',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

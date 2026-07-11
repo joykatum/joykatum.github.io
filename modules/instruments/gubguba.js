@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const gubguba = {
+  origin: 'Eastern India (Bengal)',
+  description:
+    "The Gubguba is a traditional Indian friction chordophone used by the wandering Baul spiritual musicians of Bengal. It consists of a hollow wooden or gourd cylinder wrapped with animal skin on one end. A string is attached to the center of the skin, pulled through the open end, and tied to a brass weight held in the player's hand. By plucking the string with a plectrum while squeezing and pulling the string to shift its tension, the player produces highly elastic, vocal-like pitch bends and rhythmic slides. Interesting fact: its bouncy, sliding acoustic signature is central to Baul mystical songs, reflecting the spiritual philosophy of ecstatic joy.",
+  performers: [
+    {
+      name: 'Purna Das Baul',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Sanatan Das Baul',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Baul Songs of Bengal',
+      artist: 'Purna Das Baul',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Mystic Baul Strings',
+      artist: 'Purna Das Baul',
+      desc: 'The sliding twangs of the Gubguba are sweetened with vintage tube saturation and tape-echo, emphasizing the vocal-like sliding pitch sweeps.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="52" r="48" fill="#020617" opacity="0.6" filter="blur(2.5px)"/>
             <circle cx="50" cy="50" r="48" fill="url(#skin-${id})"/>
@@ -13,8 +46,6 @@ export const gubguba = {
             <circle cx="50" cy="50" r="40" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Gubguba',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

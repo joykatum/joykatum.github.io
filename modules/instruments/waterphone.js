@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const waterphone = {
+  origin: 'USA / Sound Therapy',
+  description:
+    'The Waterphone is a stainless steel basin containing water with a bronze rod neck and several metal rods. Played with a bow or mallet, tilting the basin causes the water to shift, modulating eerie, haunting, sci-fi echoes.',
+  performers: [
+    {
+      name: 'Richard Waters',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'The Matrix Soundscapes',
+      artist: 'Richard Waters',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Sci-Fi Haunted Space Echo',
+      artist: 'Cinematic Foley Project',
+      desc: 'The haunting metal resonance is fed into a extreme-sized space reverb with feedback loops, evoking a sense of deep void.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Waterphone',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const mark_tree = {
+  origin: 'Modern Studio Percussion',
+  description:
+    'The Mark Tree (commonly called wind chimes in studio settings) consists of a row of solid metal cylinders of graduated lengths suspended horizontally from a wooden bar. Sweeping a finger or mallet across the rods releases a shimmering, bright, high-frequency metallic cascade with a long decay. Interesting fact: it was invented in 1967 by studio percussionist Mark Stevens, who wanted a highly controllable, non-tangling wind chime for recording sessions. It is the premier percussive effect used in film and pop music to signify magical, dreamlike, or nostalgic transitions.',
+  performers: [
+    {
+      name: 'Steve Weiss',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Dream State Transitions',
+      artist: 'Steve Weiss',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Shimmering Transitions',
+      artist: 'Steve Weiss',
+      desc: 'The bright chimes are treated with a lush stereo chorus and long digital delay, resulting in a shimmering percussive texture that floats across the speakers.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Mark Tree',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

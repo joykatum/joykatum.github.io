@@ -1,6 +1,44 @@
 import { playMembrane, playTablaSlideUp, playAttackClick } from '../audio.js';
 
 export const tabla = {
+  origin: 'India',
+  description:
+    "The tabla is the premier percussion instrument of North Indian classical music. It consists of a pair of single-headed drums: the smaller wooden 'Dayan' (or Tabla, played with the right hand) and the larger, metallic or clay bass drum 'Bayan' (played with the left heel of the palm). The black spot of iron filings in the center allows for melodic overtones and pitch slides.",
+  performers: [
+    {
+      name: 'Zakir Hussain',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Alla Rakha',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Karsh Kale',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Making Music',
+      artist: 'Zakir Hussain',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Anokha: Soundz of the Asian Underground',
+      artist: 'Talvin Singh',
+      desc: "The Tabla is routed through stereo digital delay lines and resonance sweeps, creating the iconic 'Tabla and Bass' electronic sound of the late 90s.",
+      url: 'https://open.spotify.com/track/0Y4tH9YtP8mBvVqS5gN0Y2',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Tabla',
   defaultLeft: 0, // Bayan
   defaultRight: 1, // Dayan

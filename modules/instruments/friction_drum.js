@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const friction_drum = {
+  origin: 'Europe / Central Africa',
+  description:
+    'The Friction Drum is a family of drums (including the Spanish zambomba, German brummtopf, and Italian caccavella) that produces sound via friction rather than striking. A wooden stick or heavy cord is inserted into the center of the drumhead. Rubbing the stick with a wet cloth or resin-coated hand transmits intense friction vibrations directly to the skin, producing deep, groaning sweeps, sliding sighs, and rhythmic grunts. Interesting fact: in Europe, these drums have been played for centuries during winter carnivals, street parades, and Christmas carol sessions to drive away evil winter spirits with their spooky, animal-like growls.',
+  performers: [
+    {
+      name: 'Alfio Antico',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Coetus Ensemble',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Friction Dance',
+      artist: 'Alfio Antico',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Carnival Rumbles',
+      artist: 'Alfio Antico',
+      desc: 'The friction groans are run through sub-bass harmonizers and a dark, large cathedral reverb, turning the acoustic grunts into deep cinematic rumbles.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -22,8 +55,6 @@ export const friction_drum = {
             <circle cx="50" cy="50" r="44.5" fill="url(#overlay-${id})"/>
   `,
   name: 'Friction Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

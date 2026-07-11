@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tank_drum = {
+  origin: 'Modern Recycled Idiophone',
+  description:
+    'The Tank Drum (or Steel Tongue Drum) is a beautiful, modern musical instrument handcrafted from recycled steel propane tanks. Tuned slots (or tongues) are cut into the steel shell, each radiating a highly resonant, pure sine tone with long-lasting metallic sustain and rich overtones when struck with mallets. Interesting fact: the Tank Drum was inspired by the Whale Drum and the Hang. Because it is tuned pentatonically or modally, every combination of notes sounds beautifully harmonious, making it incredibly popular for meditation, therapeutic healing sessions, and modern cinematic ambient textures.',
+  performers: [
+    {
+      name: 'Felle Vega',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Yuki Koshimoto',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Metallic Ripples',
+      artist: 'Felle Vega',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Steel Tongue Waves',
+      artist: 'Felle Vega',
+      desc: 'The metallic chimes are drenched in a massive digital hall reverb and a slow sweep phaser, creating an ethereal, floating cathedral-like atmosphere.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.7" filter="blur(2.5px)"/>
@@ -34,7 +67,6 @@ export const tank_drum = {
             <circle cx="50" cy="50" r="48" fill="url(#overlay-${id})" opacity="1.4"/>
   `,
   name: 'Tank Drum',
-  defaultLeft: 0,
   defaultRight: 2,
   drums: [
     {

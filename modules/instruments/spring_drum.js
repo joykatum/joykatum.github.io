@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const spring_drum = {
+  origin: 'Modern Experimental',
+  description:
+    'The Spring Drum consists of a lightweight cardboard or plastic cylinder with a long, thin steel spring attached directly to the drumhead. When the drum is shaken or the spring is struck, the spring vibrates and transmits eerie, thunder-like metallic acoustic waves into the resonant cylinder. Interesting fact: the Spring Drum was popularized in the 20th century as a sound effects tool for radio plays and classic science fiction movies, as it can realistically replicate everything from rolling thunder to laser beams and spooky, space-age laser blasts when manipulated with different hand techniques.',
+  performers: [
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Richard Waters',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Spooky Vibrations',
+      artist: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Sci-Fi Thunderstorm',
+      artist: 'Emil Richards',
+      desc: 'The metallic springs are run through stereo chorus, analog bucket-brigade delays, and pitch shifters to expand the eerie rumbles into cosmic sound effects.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Spring Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const jaw_harp = {
+  origin: 'Eurasia (Ancient Tribal Roots)',
+  description:
+    "The Jaw Harp (or Jew's Harp) is one of the world's oldest musical instruments, featuring a small metal or bamboo frame held firmly against the player's teeth. The player plucks the central metal tongue with their finger while modulating the shape of their mouth, throat, and breath to shift the resonant harmonics. This produces a highly unique, twangy, rhythmic bouncing glide. Interesting fact: it was played by indigenous tribes across Siberia, Central Asia, and Europe for spiritual trance states and courtship, using the oral cavity as a living acoustic synthesizer to generate complex harmonic overtones.",
+  performers: [
+    {
+      name: 'John Wright',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Albin Paulus',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Twangy Harmonics',
+      artist: 'John Wright',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Siberian Shamanic Twang',
+      artist: 'John Wright',
+      desc: 'The twangy mouth harmonics are routed through an automatic envelope sweep filter (auto-wah) and a warm analog delay, creating a trippy, rhythmic synthesizer sound.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -15,8 +48,6 @@ export const jaw_harp = {
             </g>
   `,
   name: 'Jaw Harp',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

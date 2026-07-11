@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const gome = {
+  origin: 'West Africa (Ghana)',
+  description:
+    'The Gome is a large, box-shaped drum from Ghana, covered with goatskin on one side. The drummer sits directly on top of the wooden box, using their heels to press against the skin from below to dynamically alter the pitch while playing the skin with bare hands. Interesting fact: the Gome was introduced to Ghana in the 19th century by returning freed slaves from the Caribbean. It was originally played as a secret instrument of resistance. Sitting on the drum allows the performer to feel the low-frequency vibrations throughout their entire body, making it a highly energetic and physically engaging box-drum tradition.',
+  performers: [
+    {
+      name: 'Mustapha Tettey Addy',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Obo Addy',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Gome Rhythm Suite',
+      artist: 'Mustapha Tettey Addy',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ga Celebration Beats',
+      artist: 'Mustapha Tettey Addy',
+      desc: 'The deep, heel-modulated Gome hits are processed with dynamic pitch-tracking envelope filters and stereo delay loops, creating a bouncy, electronic-funk groove.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <rect x="2" y="3" width="96" height="96" rx="6" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -25,8 +58,6 @@ export const gome = {
             <rect x="12" y="12" width="76" height="76" rx="4" fill="url(#overlay-${id})"/>
   `,
   name: 'Gome',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -38,8 +38,6 @@ export const hydraulic_piston = {
             <path d="M 52 18 C 56 14, 58 8, 54 4 C 50 0, 46 2, 44 6 C 42 10, 38 12, 40 16" fill="none" stroke="#e2e8f0" stroke-width="1.2" opacity="0.3" stroke-linecap="round" filter="blur(0.8px)"/>
   `,
   name: '⚙️ Hydraulic Piston',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

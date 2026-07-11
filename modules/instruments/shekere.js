@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const shekere = {
+  origin: 'West Africa',
+  description:
+    'The Shekere is a percussion instrument consisting of a dried gourd covered with a woven net of beads. Shaking, tapping, and striking the bottom of the gourd produces sharp rattling sounds and deep bass resonances.',
+  performers: [
+    {
+      name: 'Babatunde Olatunji',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Rattle and Beat',
+      artist: 'Babatunde Olatunji',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Beaded Gourd Stereo Delay',
+      artist: 'Tribal Beats Project',
+      desc: 'Shaker rattles are widened across the stereo image with dynamic delays, providing a spacious organic groove.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="52" r="46" fill="#020617" opacity="0.6" filter="blur(2.5px)"/>
@@ -34,8 +62,6 @@ export const shekere = {
             <circle cx="50" cy="50" r="45" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Shekere',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -40,8 +40,6 @@ export const newtons_cradle = {
             <rect x="16" y="69" width="68" height="2" fill="#64748b" opacity="0.4"/>
   `,
   name: '🖲️ Newton Cradle',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

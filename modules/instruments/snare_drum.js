@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const snare_drum = {
+  origin: 'Europe / Orchestral',
+  description:
+    'The Snare Drum is a cylindrical drum with metal wires (snares) stretched across the bottom head. Struck with wooden drumsticks, it produces a sharp, cracking, buzzy sound foundational to military, orchestral, and modern pop/rock.',
+  performers: [
+    {
+      name: 'Buddy Rich',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Sing Sing Sing',
+      artist: 'Benny Goodman',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Orchestral Hall Reverb Snare',
+      artist: 'Symphony Sound Group',
+      desc: 'A huge plate reverb is added to the snare hits, mimicking the epic acoustics of modern philharmonic halls.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -50,8 +78,6 @@ export const snare_drum = {
             </g>
   `,
   name: 'Snare Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

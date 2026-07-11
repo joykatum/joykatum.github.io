@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const ghatam = {
+  origin: 'South India',
+  description:
+    'The Ghatam is a South Indian clay pot percussion instrument, specifically baked with iron filings to produce high-pitched, metallic ringing tones. Struck with fingers, heels of the hands, and even the player’s chest.',
+  performers: [
+    {
+      name: 'Vikku Vinayakram',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'A Jhumpa Tala',
+      artist: 'Vikku Vinayakram',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Clay Resonance Expander',
+      artist: 'South Indian Percussion Group',
+      desc: 'The clay taps are treated with a short room ambiance reverb and narrow frequency bandpass, clarifying the bright acoustic ring.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="54" r="45" fill="#020617" opacity="0.6" filter="blur(3px)"/>
@@ -20,8 +48,6 @@ export const ghatam = {
             <ellipse cx="32" cy="32" rx="5" ry="10" fill="#ffffff" opacity="0.15" transform="rotate(-30, 32, 32)"/>
   `,
   name: 'Ghatam',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

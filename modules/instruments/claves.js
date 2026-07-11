@@ -2,6 +2,30 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const claves = {
+  origin: 'Cuba (West African Shipping Roots)',
+  description:
+    'Claves consist of two solid wooden dowels, traditionally made of dense tropical hardwoods like rosewood or ebony. The player cups one hand to form a hollow acoustic soundbox (clave) while striking it with the other dowel. This produces an extremely bright, piercing click. Developed in the shipyards of Havana, Cuba, where wooden ship pegs were struck as improvised instruments, the repeating "clave pattern" is the rhythmic key holding all salsa, rumba, and Afro-Cuban music together.',
+  performers: [
+    {
+      name: 'Chano Pozo',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ran Kan Kan',
+      artist: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -20,8 +44,6 @@ export const claves = {
             </g>
   `,
   name: 'Claves',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

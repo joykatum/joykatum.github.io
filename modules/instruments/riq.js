@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const riq = {
+  origin: 'Middle East / Egypt',
+  description:
+    'The riq is the traditional tambourine of Arabic classical and folk music. It features a lightweight wooden frame, traditionally covered in fish or goat skin, and five double-sets of heavy brass jingles. By striking the head, the jingles, and shaking the frame, masters can produce an incredibly rich, complex orchestral accompaniment.',
+  performers: [
+    {
+      name: 'Adel Shams El-Din',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Riq Solo',
+      artist: 'Adel Shams El-Din',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Desert Mirage',
+      artist: 'Dead Can Dance',
+      desc: "The riq's brass jingles are fed into long cathedral reverbs and synchronized delays, creating an ancient, shimmering metallic atmosphere.",
+      url: 'https://open.spotify.com/track/6296NiaAEvY3MOnZunD3s1',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Riq',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

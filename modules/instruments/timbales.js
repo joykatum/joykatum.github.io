@@ -2,6 +2,44 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const timbales = {
+  origin: 'Cuba',
+  description:
+    'Timbales are shallow, single-headed metal-shelled drums played with sticks, crucial in salsa, Latin jazz, and mambo. They are usually paired with a cowbell, woodblock, and cymbal. Striking the metal shells (paila) produces a characteristic metallic clatter.',
+  performers: [
+    {
+      name: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Changuito',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Orestes Vilató',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ran Kan Kan',
+      artist: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ran Kan Kan Timbal Rimshot Delay',
+      artist: 'Tito Puente Orchestra',
+      desc: 'Crisp rimshots are accentuated with high-pass filters and dynamic stereo delays to build tension during horn solos.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -24,7 +62,6 @@ export const timbales = {
             ${lugsHtml}
   `,
   name: 'Timbales',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

@@ -33,8 +33,6 @@ export const bop_it = {
             <circle cx="40" cy="52" r="1.2" fill="#334155" transform="rotate(-15, 50, 50)"/>
   `,
   name: '🔴 Bop It!',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const zabumba = {
+  origin: 'Brazil (Northeast)',
+  description:
+    'The Zabumba is a flat, deep bass drum crucial in Northeastern Brazilian music genres like Forró and Baião. Played with a mallet on the top skin and a thin stick (bacalhau) on the bottom, it creates a bouncing syncopated groove.',
+  performers: [
+    {
+      name: 'Luiz Gonzaga',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Hermeto Pascoal',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Asa Branca',
+      artist: 'Luiz Gonzaga',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Forro Bass Boom Enhancer',
+      artist: 'Northeast Beats',
+      desc: 'Sub-bass harmonic addition is used on the primary mallet beats, resulting in a rich, modern dancefloor pulse.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -38,8 +71,6 @@ export const zabumba = {
             </g>
   `,
   name: 'Zabumba',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

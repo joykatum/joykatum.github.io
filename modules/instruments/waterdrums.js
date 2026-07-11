@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const waterdrums = {
+  origin: 'West Africa / Native America',
+  description:
+    'Water Drums consist of hollowed gourds floating upside down in basins of water. Struck with a mallet or hand, the water acts as a natural dampener and resonator, producing a warm, organic, liquid bass beat.',
+  performers: [
+    {
+      name: 'Baka Forest People',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Forest Water Beats',
+      artist: 'Baka Forest People',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Liquid Ripple Resonance',
+      artist: 'Rainforest Field Records',
+      desc: 'Water thumps are routed through a resonator tuned to water frequencies, producing a sparkling, organic splash texture.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="48" fill="#0f172a" stroke="#475569" stroke-width="2" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.5))"/>
             <circle cx="50" cy="50" r="45.5" fill="#0369a1" filter="brightness(0.6)"/>
@@ -11,8 +39,6 @@ export const waterdrums = {
             <circle cx="50" cy="50" r="20" fill="url(#overlay-${id})" opacity="1.3"/>
   `,
   name: 'Water Drums',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

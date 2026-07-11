@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const slide_whistle = {
+  origin: 'Europe / Vaudeville Tradition',
+  description:
+    'The Slide Whistle (or Swanee Whistle) is a unique wind instrument featuring an internal piston rod. Pushing and pulling the rod slidingly alters the internal air column length, creating continuous glissando whistle sweeps from deep low to piercing high. Interesting fact: the Slide Whistle was a central sound effects tool in 1920s Vaudeville theatre and classic slapstick cartoons (like Looney Tunes). It is prized by sound designers and experimental musicians because it can translate fluid, comical body movements into highly expressive, swooping acoustic pitch sweeps.',
+  performers: [
+    {
+      name: 'Fred Newman',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Spike Jones',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Cartoon Glissando Effects',
+      artist: 'Fred Newman',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Slapstick Sweeps',
+      artist: 'Fred Newman',
+      desc: 'The swooping whistle sweeps are processed with a rotary speaker simulator (Leslie cabinet) and tape echo, creating a vintage, warbly cartoon aesthetic.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -16,8 +49,6 @@ export const slide_whistle = {
             </g>
   `,
   name: 'Slide Whistle',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

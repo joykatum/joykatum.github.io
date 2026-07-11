@@ -29,8 +29,6 @@ export const quijada = {
             <ellipse cx="80" cy="48" rx="3" ry="5" fill="#44403c" transform="rotate(-15, 80, 48)"/>
   `,
   name: '💀 Quijada',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

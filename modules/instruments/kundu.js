@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const kundu = {
+  origin: 'Papua New Guinea',
+  description:
+    'The Kundu is an hourglass-shaped drum from Papua New Guinea, hand-carved from a single log and covered with snake or monitor lizard skin. Often featuring a carved handle in the center and decorated with elaborate tribal motifs, it is struck with a bare hand. Interesting fact: the Kundu is a sacred instrument of PNG, central to cultural sing-sing festivals. The drumhead is traditionally glued using honey and tree sap, and the player places small dollops of beeswax on the center of the skin to perfectly tune its resonant, woody pop tone, which has accompanied ancestral dances and spiritual chants for centuries.',
+  performers: [
+    {
+      name: 'Singsing Percussionists',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Airi Ingram',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Cultural Sing-Sing Chant',
+      artist: 'Singsing Percussionists',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Tribal Sing-Sing Resonance',
+      artist: 'Singsing Percussionists',
+      desc: 'The dry, woody popping sound of the Kundu is treated with a lush, dark plate reverb and subtle stereo delays, giving it a spacious, ritualistic tone.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.5" filter="blur(2px)"/>
             <path d="M 12 25 C 2 30, 2 70, 12 75 Z" fill="url(#skin-${id})" stroke="#271305" stroke-width="1.5"/>
@@ -11,8 +44,6 @@ export const kundu = {
             <circle cx="50" cy="50" r="39" fill="none" stroke="#4a3628" stroke-width="1.5" stroke-dasharray="3, 4" opacity="0.6"/>
   `,
   name: 'Kundu',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

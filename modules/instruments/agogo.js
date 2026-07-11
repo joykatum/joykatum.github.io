@@ -1,10 +1,28 @@
 import { playMembrane, playNoise, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
+import { playSoundFontSample } from '../sf2Loader.js';
 
 export const agogo = {
+  origin: 'West Africa / Brazil (Yoruba & Samba Roots)',
+  description:
+    'The Agogô is a high-contrast double or triple bell made of metal or wood, held in one hand and struck with a wooden stick. Originating from Yoruba iron bells in West Africa, it travelled to Brazil where it became the rhythmic leader of samba batucadas, capoeira, and Afoxé rituals. The player can squeeze the two bell handles together to click them, adding a muted percussion accent between high and low metallic strikes.',
+  performers: [
+    {
+      name: 'Naná Vasconcelos',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Samba Batucada',
+      artist: 'Rio Escola de Samba',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+
   name: 'Agogô',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,
@@ -16,25 +34,46 @@ export const agogo = {
   ],
   sounds: {
     high_strike: (d, velocity = 0.8) => {
-      playMembrane(480 * d.pitchMult, 0.35, 1.0, false, velocity, -0.25);
-      playAttackClick(0.015, 4500, 0.5 * velocity);
+      const success = playSoundFontSample('agogo', 'high agogo(l)', d.pitchMult * 1.05, velocity, -0.25);
+      if (!success) {
+        playMembrane(480 * d.pitchMult, 0.35, 1.0, false, velocity, -0.25);
+        playAttackClick(0.015, 4500, 0.5 * velocity);
+      }
     },
     low_strike: (d, velocity = 0.8) => {
-      playMembrane(380 * d.pitchMult, 0.48, 1.0, false, velocity, 0.25);
-      playAttackClick(0.015, 3800, 0.45 * velocity);
+      const success = playSoundFontSample('agogo', 'high agogo(r)', d.pitchMult * 0.83, velocity, 0.25);
+      if (!success) {
+        playMembrane(380 * d.pitchMult, 0.48, 1.0, false, velocity, 0.25);
+        playAttackClick(0.015, 3800, 0.45 * velocity);
+      }
     },
-    clap: (d, velocity = 0.85) => playMembrane(650 * d.pitchMult, 0.08, 1.05, true, velocity, 0.0),
+    clap: (d, velocity = 0.85) => {
+      const success = playSoundFontSample('agogo', 'high agogo(l)', d.pitchMult * 1.2, velocity, 0.0, 0.08);
+      if (!success) {
+        playMembrane(650 * d.pitchMult, 0.08, 1.05, true, velocity, 0.0);
+      }
+    },
     stick_drag: (d, velocity = 0.7) => {
-      playMembrane(600 * d.pitchMult, 0.03, 1.0, true, velocity * 0.8, -0.2);
-      playNoise(0.04, 2500, velocity * 0.5, 'highpass');
-      setTimeout(() => {
-        playMembrane(650 * d.pitchMult, 0.03, 1.0, true, velocity * 0.7, -0.1);
-        playNoise(0.03, 2800, velocity * 0.4, 'highpass');
-      }, 50);
-      setTimeout(() => {
-        playMembrane(700 * d.pitchMult, 0.04, 1.0, true, velocity * 0.6, 0.1);
-        playNoise(0.03, 3000, velocity * 0.3, 'highpass');
-      }, 100);
+      const success = playSoundFontSample('agogo', 'high agogo(r)', d.pitchMult * 1.2, velocity * 0.8, -0.2, 0.03);
+      if (success) {
+        setTimeout(() => {
+          playSoundFontSample('agogo', 'high agogo(l)', d.pitchMult * 1.3, velocity * 0.7, -0.1, 0.03);
+        }, 50);
+        setTimeout(() => {
+          playSoundFontSample('agogo', 'high agogo(r)', d.pitchMult * 1.4, velocity * 0.6, 0.1, 0.04);
+        }, 100);
+      } else {
+        playMembrane(600 * d.pitchMult, 0.03, 1.0, true, velocity * 0.8, -0.2);
+        playNoise(0.04, 2500, velocity * 0.5, 'highpass');
+        setTimeout(() => {
+          playMembrane(650 * d.pitchMult, 0.03, 1.0, true, velocity * 0.7, -0.1);
+          playNoise(0.03, 2800, velocity * 0.4, 'highpass');
+        }, 50);
+        setTimeout(() => {
+          playMembrane(700 * d.pitchMult, 0.04, 1.0, true, velocity * 0.6, 0.1);
+          playNoise(0.03, 3000, velocity * 0.3, 'highpass');
+        }, 100);
+      }
     }
   },
   generateSVG: (id, colorType) => {

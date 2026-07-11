@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const lions_roar = {
+  origin: 'East Asia (China) / Europe',
+  description:
+    "The Lion's Roar is a highly unusual friction drum that produces a realistic, spine-chilling sound resembling the roar of a wild lion. It consists of a single-headed cylindrical drum with a sturdy cord or rope threaded through the center of the skin, secured by a knot. To play it, the performer holds a piece of wet leather or resin-coated cloth and slides it firmly along the cord. The resulting friction transmits intense vibrations directly to the drumhead, which acts as a powerful acoustic resonator. Interesting fact: it is used in classical orchestral works like Edgar Varèse's 'Hyperprism' and in traditional Chinese theatrical sound effects to signify supernatural occurrences or epic battles.",
+  performers: [
+    {
+      name: 'Jean-Pierre Drouet',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Friction Waves',
+      artist: 'Jean-Pierre Drouet',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Hyperprism Rumbles',
+      artist: 'Jean-Pierre Drouet',
+      desc: "The eerie growling sweeps of the Lion's Roar are processed through extreme ring modulators and deep stereo phasers, enhancing their spectral, otherworldly texture.",
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
             <circle cx="50" cy="50" r="47.5" fill="none" stroke="#5c4033" stroke-width="3"/>
@@ -12,8 +45,6 @@ export const lions_roar = {
             <circle cx="50" cy="50" r="44.5" fill="url(#overlay-${id})" opacity="0.5"/>
   `,
   name: "Lion's Roar",
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -33,8 +33,6 @@ export const binzasara = {
             <circle cx="90" cy="42" r="1.5" fill="#fef08a" opacity="0.9"/>
   `,
   name: '🎋 Binzasara',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

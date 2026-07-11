@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const chocalho = {
+  origin: 'Brazil (Samba Carnaval Tradition)',
+  description:
+    'The Chocalho is a high-octane Brazilian metal shaker consisting of an aluminum frame lined with several rows of small, loose metal jingles (called platinelas). Held with both hands and shaken with a rapid, piston-like horizontal motion, it produces a piercing, wall-of-sound metallic clatter. Interesting fact: it is the primary instrument responsible for maintaining the driving upper frequencies of Rio Carnival samba schools. Because its acoustic volume is so intense, it easily cuts through hundreds of booming bass drums, driving the energy of dancers in crowded parades.',
+  performers: [
+    {
+      name: 'Mestre Marçal',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Carlinhos Brown',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Samba de Enredo Percussion',
+      artist: 'Mestre Marçal',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Carnaval Beats',
+      artist: 'Mestre Marçal',
+      desc: 'The bright clatter is treated with stereo flangers and brickwall limiters to create a continuous, sparkling percussive sheen that sits beautifully above deep bass elements.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Chocalho',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

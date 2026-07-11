@@ -30,8 +30,6 @@ export const slime_plop_box = {
             <rect x="32" y="14" width="36" height="2" fill="#5eead4" opacity="0.6"/>
   `,
   name: '🧪 Slime Plop Box',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

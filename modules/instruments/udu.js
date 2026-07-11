@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const udu = {
+  origin: 'Nigeria (Igbo)',
+  description:
+    'The Udu is a clay pot drum originating from Igbo women in Nigeria. It features a side hole alongside the main opening. By striking the holes and skin, players produce hollow, liquid bass drops and ceramic taps.',
+  performers: [
+    {
+      name: 'Jamey Haddad',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Clay Beats',
+      artist: 'Jamey Haddad',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Liquid Clay Pitch Slide',
+      artist: 'World Percussion Project',
+      desc: 'A dynamic formant filter is applied to the side-hole bass hits, emphasizing the watery, sweeping vocal-like tones.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="56" r="44" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>
@@ -28,8 +56,6 @@ export const udu = {
             <path d="M 50 16 Q 22 25, 22 58 Q 22 92, 50 92 Q 78 92, 78 58 Q 78 25, 50 16 Z" fill="url(#overlay-${id})" opacity="0.9"/>
   `,
   name: 'Udu',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

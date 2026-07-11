@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const kokiriko = {
+  origin: 'Japan (Toyama Prefecture)',
+  description:
+    "The Kokiriko is an ancient Japanese percussive clapper made of dozens of thin, flat wooden slats bound together by a sturdy leather cord. The player holds the handles at each end and waves their hands in a slow, rolling motion, causing the wooden slats to cascade into one another in rapid succession, producing a sharp, clattering clack. Interesting fact: it is featured in the 'Kokiriko Bushi', which is recognized as Japan's oldest surviving folk song, dating back over 1,400 years to ancient agricultural festival dances thanking the gods for a bountiful harvest.",
+  performers: [
+    {
+      name: 'Kodo Taiko Drummers',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Yamato Drummers',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Kokiriko Bushi',
+      artist: 'Kodo Taiko Drummers',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ancient Harvest Claps',
+      artist: 'Kodo Taiko Drummers',
+      desc: 'The rapid-fire wooden slaps of the Kokiriko are sweetened with stereo micro-delays and a slapback echo, creating a highly articulated and punchy clack track.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Kokiriko',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

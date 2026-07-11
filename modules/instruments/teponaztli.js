@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const teponaztli = {
+  origin: 'Mesoamerica (Mexico / Aztec)',
+  description:
+    'The Teponaztli is a sacred Mesoamerican slit-drum made from a hollowed hardwood log. Two tongues of different thicknesses are carved on the top, producing two distinct, haunting pitches when struck with rubber-headed mallets. Used in religious rituals and battle calls by the Aztecs, it represents the voice of ancient deities.',
+  performers: [
+    {
+      name: 'Xavier Quijas Yxayotl',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Aztec Battle Call',
+      artist: 'Xavier Quijas Yxayotl',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ancient Rituals',
+      artist: 'Yxayotl Ensembles',
+      desc: 'The dual wooden tongues are enveloped in extreme, high-decay cave reverb and tape echo, evoking the mystical aura of ancient rainforest ceremonies.',
+      url: 'https://open.spotify.com/track/4jVlC05tDsz0I7Rof9Obe1',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <rect x="10" y="24" width="80" height="54" rx="10" fill="#020617" opacity="0.65" filter="blur(2.5px)"/>
@@ -26,8 +54,6 @@ export const teponaztli = {
             <rect x="12" y="22" width="76" height="50" rx="10" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Teponaztli',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bombo = {
+  origin: 'Argentina',
+  description:
+    "The Bombo Legüero is an Argentine bass drum made from a hollowed tree trunk and sheep/goat skin. The name 'Legüero' signifies that its deep, low-frequency pulse can be heard a league ('legua') away in the open Pampas plains. Its rim and skin are struck with mallets to drive folk dances like the Chacarera.",
+  performers: [
+    {
+      name: 'Mercedes Sosa',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Entre a Mi Pago Sin Golpear',
+      artist: 'Mercedes Sosa',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Chacarera Sessions',
+      artist: 'Traditional Folk Ensembles',
+      desc: 'Placing a dynamic microphone inside the bombo and blending a clean skin click with a sub-bass expander yields a deep, chest-thumping heartbeat on modern stages.',
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Bombo',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

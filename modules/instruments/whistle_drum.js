@@ -23,8 +23,6 @@ export const whistle_drum = {
             <path d="M 30 68 Q 42 71, 50 68 T 70 68" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
   `,
   name: '🦆 Whistle-Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -76,6 +76,14 @@ export const initAudio = () => {
     initEffectsChain();
     audioCtx.resume().then(() => {
       state.audioInitialized = true;
+      // Preload SoundFonts in the background
+      import('./sf2Loader.js')
+        .then(({ preloadSoundFonts }) => {
+          preloadSoundFonts();
+        })
+        .catch((err) => {
+          console.error('Failed to load sf2Loader:', err);
+        });
     });
   }
 };

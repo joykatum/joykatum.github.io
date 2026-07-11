@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const washboard = {
+  origin: 'North America (New Orleans Zydeco)',
+  description:
+    'The Washboard (or frottoir in Zydeco) is a corrugated metal washing board turned musical instrument. Worn like a vest over the chest, musicians rub and tap its ridges using metal thimbles or spoons worn on their fingers, producing a continuous, bright, scratching clatter. Interesting fact: the instrument was invented in Louisiana in 1946 by Creole musician Clifton Chenier, who commissioned a local blacksmith to build a wearable metal board. It became the signature sound of Zydeco, early jazz, and jug bands, providing a highly syncopated and driving metal groove that is completely unique.',
+  performers: [
+    {
+      name: 'Newman Taylor Baker',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Washboard Chaz',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Washboard Boogie',
+      artist: 'Newman Taylor Baker',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Bayou Metal Scrape',
+      artist: 'Newman Taylor Baker',
+      desc: 'The intense washboard scratches are run through tape saturation and a rapid stereo gate, giving the metal clicks a sharp, modern pop-acoustic bite.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Washboard',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

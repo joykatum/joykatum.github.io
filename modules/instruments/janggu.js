@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const janggu = {
+  origin: 'Korea',
+  description:
+    'The Janggu is an hourglass-shaped double-headed drum central to Korean traditional music (Samulnori). Struck with a mallet on the bass side and a thin bamboo stick on the treble side, it represents the harmony of yin and yang.',
+  performers: [
+    {
+      name: 'Kim Duk-soo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Samulnori Suite',
+      artist: 'Kim Duk-soo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Korean Folk Phasing Echo',
+      artist: 'Seoul Traditional Ensemble',
+      desc: 'A phasing effect on the high-pitched bamboo stick hits enhances the dynamic syncopations of Korean courtyard music.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -29,7 +57,6 @@ export const janggu = {
             <rect x="44" y="47" width="12" height="6" rx="1.5" fill="#18181b" stroke="#27272a" stroke-width="0.5"/>
   `,
   name: 'Janggu',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

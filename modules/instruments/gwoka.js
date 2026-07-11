@@ -2,9 +2,41 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const gwoka = {
+  origin: 'Guadeloupe',
+  description:
+    'The Gwo Ka consists of seven traditional barrel drums from Guadeloupe. The larger drum, the Boula, provides the foundational tempo, while the smaller, higher-pitched Markeur improvises on top of intricate rhythms like Lewoz.',
+  performers: [
+    {
+      name: 'Guy Conquète',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Vélo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Gwo Ka Folk Beats',
+      artist: 'Guy Conquète',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Caribbean Barrel Tape Delay',
+      artist: 'Guadeloupe Folk Project',
+      desc: 'Traditional barrel hits are modulated with an analog tape delay emulator, creating a deep, warming warmth that matches Guadeloupe’s shores.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Gwo Ka',
   defaultLeft: 1,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

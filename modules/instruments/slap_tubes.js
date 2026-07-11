@@ -32,8 +32,6 @@ export const slap_tubes = {
             <line x1="14" y1="42" x2="33" y2="46" stroke="#94a3b8" stroke-width="1"/>
   `,
   name: '🌬️ Slap Tubes',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

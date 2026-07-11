@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bodhran = {
+  origin: 'Ireland',
+  description:
+    "The bodhrán is an Irish frame drum, played with a double-headed wooden stick called a tipper or beater. The player's non-striking hand is placed inside against the goat skin to modulate the pitch, timber, and dampening, creating a warm, thumpy bass melody that supports fast Celtic jigs and reels.",
+  performers: [
+    {
+      name: 'John Joe Kelly',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Christy Moore',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'The Gravel Walks',
+      artist: 'Altan',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Traditional Jigs Live',
+      artist: 'The Chieftains',
+      desc: 'Fast tipper rolls are processed through light compression and optical gate effects to maintain punch and reduce mid-frequency muddiness in acoustic folk sets.',
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <svg viewBox="0 0 100 100" width="100%" height="100%">
       <circle cx="50" cy="51" r="49" fill="#020617" opacity="0.4"/>
@@ -17,8 +50,6 @@ export const bodhran = {
     </svg>
   `,
   name: 'Bodhrán',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

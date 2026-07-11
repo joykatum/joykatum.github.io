@@ -30,7 +30,6 @@ export const pakhavaj = {
             <ellipse cx="86" cy="50" rx="3.5" ry="6.5" fill="#18181b" stroke="#27272a" stroke-width="0.8"/>
   `,
   name: '🥁 Pakhavaj',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

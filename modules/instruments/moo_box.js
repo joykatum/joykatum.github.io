@@ -31,8 +31,6 @@ export const moo_box = {
             <ellipse cx="50" cy="78" rx="32" ry="10" fill="url(#chrome-${id})" stroke="#0f172a" stroke-width="1"/>
   `,
   name: '🐮 Moo Box',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

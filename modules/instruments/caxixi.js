@@ -25,8 +25,6 @@ export const caxixi = {
             <path d="M 50 26 Q 50 5, 58 5 T 65 24 Q 58 24, 50 26" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
   `,
   name: '🌾 Caxixi',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

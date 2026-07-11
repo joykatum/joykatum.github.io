@@ -2,9 +2,41 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const barril = {
+  origin: 'Puerto Rico',
+  description:
+    "The barril de bomba is a traditional barrel drum used in Puerto Rican Bomba music. Made from rum barrels, it features a single head. The higher-pitched 'Subidor' drum improvises in response to the dancer's moves, while the lower 'Buleador' holds a steady rhythm.",
+  performers: [
+    {
+      name: 'Modesto Cepeda',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Hermanos Ayala',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Bomba Te Traigo Yo',
+      artist: 'Ismael Rivera',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Bomba Drum Gated Compression',
+      artist: 'Afro-Puerto Rican Beats',
+      desc: 'Hard, fast gated compression is applied to the barrel strikes to keep the high-frequency slaps crisp and powerful against the background vocals.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Barril',
   defaultLeft: 1,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

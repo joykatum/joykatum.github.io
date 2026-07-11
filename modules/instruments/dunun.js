@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const dunun = {
+  origin: 'West Africa',
+  description:
+    'Dunun drums, comprising the Dununba, Sangban, and Kenkeni, are a family of double-headed cylindrical bass drums from West Africa. Played with heavy wooden mallets and often integrated with hand-struck iron bells, they provide the deep, polyrhythmic, melodic foundation for traditional djembe drum ensembles. The conversational interlocking of these three distinct drum voices drives the energy and pulse of West African social and ritual dances.',
+  performers: [
+    {
+      name: 'Famoudou Konaté',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Dunun Ensemble',
+      artist: 'Famoudou Konaté',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Melodic West African Low End',
+      artist: 'Guinea Tribal Beats',
+      desc: 'Sub-bass expansion is applied to the Dununba hits, making the ground shake during intense dance circles.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -33,7 +61,6 @@ export const dunun = {
             </g>
   `,
   name: 'Dunun',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

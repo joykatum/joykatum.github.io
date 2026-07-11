@@ -1,5 +1,6 @@
 import { playMembrane, playNoise } from '../audio.js';
 import { state } from '../state.js';
+import { playSoundFontSample } from '../sf2Loader.js';
 
 // Stereo Panning Strategy for Batá Ensemble
 // Real-world performance layout (from audience perspective):
@@ -13,6 +14,39 @@ const getBataPan = (id) => {
 };
 
 export const bata = {
+  origin: 'Yorubaland (Nigeria / Cuba)',
+  description:
+    'Bata drums are a family of three double-headed, hourglass-shaped drums used historically in Yoruba sacred ceremonies and expanded into Afro-Cuban secular music. The three sizes—Iyá (the mother, largest, lowest pitch), Itótele (middle), and Okónkolo (smallest, highest)—engage in an intricate, highly syncopated musical conversation that mimics spoken language.',
+  performers: [
+    {
+      name: 'Pedrito Martinez',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Milton Cardona',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'La Habana',
+      artist: 'Pedrito Martinez',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Sacred Beats',
+      artist: 'Pedrito Martinez',
+      desc: 'Bata tracks are enveloped in short, dense room reverbs to create a sense of being recorded in a ritual space, emphasizing their complex acoustic interaction.',
+      url: 'https://open.spotify.com/track/2v6K1N8uU8mBvVqS5gN0Y2',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Bata',
   defaultLeft: 1, // Itótele default
   defaultRight: 1, // Itótele default
@@ -48,6 +82,12 @@ export const bata = {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
 
+      // Try SoundFont
+      const sfName = baseId === 2 ? 'conga bass tone' : 'conga tone';
+      const sfPitch = d.pitchMult * (baseId === 2 ? 0.9 : baseId === 1 ? 0.9 : 1.35);
+      const success = playSoundFontSample('conga', sfName, sfPitch, velocity, pan);
+      if (success) return;
+
       let f = baseId === 0 ? 190 : baseId === 1 ? 130 : 90;
       f *= d.pitchMult;
 
@@ -70,6 +110,16 @@ export const bata = {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
 
+      // Try SoundFont
+      const success = playSoundFontSample(
+        'conga',
+        'congafngmuteslap',
+        d.pitchMult * (baseId === 0 ? 1.4 : baseId === 1 ? 1.1 : 0.85),
+        velocity,
+        pan
+      );
+      if (success) return;
+
       let f = baseId === 0 ? 240 : baseId === 1 ? 165 : 120;
       f *= d.pitchMult;
 
@@ -87,6 +137,16 @@ export const bata = {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
 
+      // Try SoundFont
+      const success = playSoundFontSample(
+        'conga',
+        'conga mute',
+        d.pitchMult * (baseId === 0 ? 1.4 : baseId === 1 ? 1.1 : 0.8),
+        velocity,
+        pan
+      );
+      if (success) return;
+
       let f = baseId === 0 ? 140 : baseId === 1 ? 95 : 70;
       f *= d.pitchMult;
 
@@ -101,6 +161,16 @@ export const bata = {
     chacha_abierto: (d, velocity = 0.8) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
+
+      // Try SoundFont
+      const success = playSoundFontSample(
+        'conga',
+        'conga rim',
+        d.pitchMult * (baseId === 0 ? 1.8 : baseId === 1 ? 1.4 : 1.1),
+        velocity,
+        pan
+      );
+      if (success) return;
 
       let f = baseId === 0 ? 440 : baseId === 1 ? 320 : 240;
       f *= d.pitchMult;
@@ -118,6 +188,16 @@ export const bata = {
     chacha_tapado: (d, velocity = 0.9) => {
       const baseId = parseInt(d.id);
       const pan = getBataPan(d.id);
+
+      // Try SoundFont
+      const success = playSoundFontSample(
+        'conga',
+        'congaclosedslap',
+        d.pitchMult * (baseId === 0 ? 2.0 : baseId === 1 ? 1.6 : 1.2),
+        velocity,
+        pan
+      );
+      if (success) return;
 
       let f = baseId === 0 ? 520 : baseId === 1 ? 380 : 290;
       f *= d.pitchMult;

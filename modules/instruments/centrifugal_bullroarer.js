@@ -20,8 +20,6 @@ export const centrifugal_bullroarer = {
             </g>
   `,
   name: '🌀 Bullroarer',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const vibraslap = {
+  origin: 'USA (Latin Percussion)',
+  description:
+    'The Vibraslap is an instrument consisting of a wire handle connecting a wooden ball to a hollow box containing metal teeth. Striking the ball causes the teeth to rattle inside the box, producing a long, buzzing chatter.',
+  performers: [
+    {
+      name: 'Harvey Mason',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Sweet Emotion',
+      artist: 'Aerosmith',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Buzzing Chatter Saturation',
+      artist: 'Classic Rock Project',
+      desc: 'The rattling chatter is treated with tape saturation and high-frequency gain, making the buzz sit perfectly in modern rock mixes.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Vibraslap',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

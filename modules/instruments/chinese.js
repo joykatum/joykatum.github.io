@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const chinese = {
+  origin: 'China',
+  description:
+    'Chinese drums comprise the massive, deep-toned Dagu (great drum) and the barrel-shaped Tanggu. Played with heavy wooden sticks, they deliver majestic, thunderous beats traditionally used in festivals, temple rituals, and opera.',
+  performers: [
+    {
+      name: 'Zhao Cong',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Festive Drumming',
+      artist: 'Zhao Cong',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Temple Drum Giant Reverb',
+      artist: 'Beijing Folk Ensemble',
+      desc: 'The massive decay of the Dagu is amplified using sub-frequency harmonic enhancers, shaking the room with every strike.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Dagu & Tanggu',
   defaultLeft: 2,
   defaultRight: 1,

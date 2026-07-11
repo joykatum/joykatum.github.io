@@ -35,8 +35,6 @@ export const geiger_counter = {
             <path d="M 48 9 L 52 9 L 50 12 Z M 46 13 L 48 11 L 51 13 Z" fill="#000000"/>
   `,
   name: '☢️ Geiger Counter',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

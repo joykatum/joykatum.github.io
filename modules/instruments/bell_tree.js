@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bell_tree = {
+  origin: 'Europe / Modern Studio Percussion',
+  description:
+    'The Bell Tree consists of a vertical pole lined with a stack of nested, bowl-shaped brass bells of graduated sizes. Striking or sweeping a metal rod up and down the stack produces a dazzling, high-frequency cascading brass chime. Interesting fact: it was originally designed to perform bell parts in early orchestral music, but quickly became a staple in 1970s soul, funk, and cinematic soundtracks. Its shimmering sweeps are often used to mark key moments of transition or magical revelations in commercial arrangements.',
+  performers: [
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Steve Weiss',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Cascading Brass Sweeps',
+      artist: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Golden Cascade',
+      artist: 'Emil Richards',
+      desc: 'The high-pitched brass shimmers are enhanced with stereo exciter filters and a slow, deep flanger, creating a glistening curtain of metallic sound.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Bell Tree',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

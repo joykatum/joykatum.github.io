@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tanbou = {
+  origin: 'Haiti',
+  description:
+    'The Haitian Tanbou is a barrel-shaped wooden drum with a single head, central to Vodou ceremonies and folk music styles like Compas. Struck with a mallet or bare hand, it produces deep, spiritually resonant tones.',
+  performers: [
+    {
+      name: 'Frisner Augustin',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Boukman Eksperyans',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Haitian Vodou Beats',
+      artist: 'Frisner Augustin',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Vodou Chamber Reverb',
+      artist: 'Haiti Percussion Group',
+      desc: 'Deep open-head hits are treated with long cathedral room reverbs, recreating the mystical acoustic resonance of ritual drums.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Tanbou',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

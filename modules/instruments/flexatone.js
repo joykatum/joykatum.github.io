@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const flexatone = {
+  origin: 'Global / Orchestral',
+  description:
+    'The Flexatone is a steel sheet metal blade with wooden beaters attached. By shaking the handle and using the thumb to bend the blade, the player produces a highly unique, sliding, high-pitched metallic wobble.',
+  performers: [
+    {
+      name: 'Pierre Boulez',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Modernist Wobble',
+      artist: 'Pierre Boulez',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Ethereal Slide Chorus',
+      artist: 'Sci-Fi Soundtrack Group',
+      desc: 'The metallic sweeps are blended with a thick stereo chorus and light delay, crafting an eerie extraterrestrial aura.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Subtle backdrop/glow -->
             <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
@@ -24,8 +52,6 @@ export const flexatone = {
             <path d="M 50 15 L 25 75 L 75 75 Z" fill="url(#overlay-${id})" opacity="0.5"/>
   `,
   name: 'Flexatone',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

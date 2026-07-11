@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const cabasa = {
+  origin: 'West Africa / Brazil',
+  description:
+    "The Cabasa is a popular Latin percussion instrument evolved from the African 'Afoxé' (a bead-wrapped gourd). The modern version consists of a wooden cylinder wrapped in a corrugated metal sheet, surrounded by loops of steel ball chains. The player grasps the metal chains in one hand while twisting the wooden handle with the other, producing dry, metallic, scraping rhythms. Interesting fact: the Cabasa is a staple in salsa, bossa nova, and Latin jazz. It is beloved by studio producers because its crisp, high-frequency transients lock perfectly with hi-hats, adding an organic metallic shimmer to any groove.",
+  performers: [
+    {
+      name: 'Airto Moreira',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Paulinho da Costa',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Misturada',
+      artist: 'Airto Moreira',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Bossa Nova Shimmer',
+      artist: 'Airto Moreira',
+      desc: 'The sharp metal scrapes are treated with high-pass EQ and automatic stereo panning, creating a wide, sparkling percussive element that dances across the speakers.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Cabasa',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const daiko = {
+  origin: 'Japan',
+  description:
+    "Taiko refers to a broad range of Japanese percussion instruments. Played with large wooden drumsticks called 'bachi', they were historically used in warfare to command formations, in Shinto religious ceremonies, and in traditional village festivals (matsuri). The heavy, thunderous roar of the massive Nagado-daiko dominates modern kumi-daiko (ensemble taiko) performances.",
+  performers: [
+    {
+      name: 'Kodo',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Yamato',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Miyake',
+      artist: 'Kodo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Inception Trailer Theme',
+      artist: 'Hans Zimmer',
+      desc: "Taiko ensembles are processed with intense distortion, hard clipping, and massive dark plate reverbs to create the iconic cinematic 'BOOM' hits.",
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Taiko',
   defaultLeft: 2,
   defaultRight: 1,

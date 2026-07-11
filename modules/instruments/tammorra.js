@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tammorra = {
+  origin: 'Southern Italy (Campania)',
+  description:
+    "The Tammorra is a large, sacred Italian frame drum decorated with multiple sets of handmade tin-plate jingles. It is the rhythmic heartbeat of Campania folk heritage, traditionally accompanying the ecstatic, spinning agrarian dance known as the 'Tammurriata'. The drum is played with a unique, rolling thumb-finger technique that creates a continuous, hypnotic rumble representing the volcanic fire of Mount Vesuvius. Interesting fact: traditionally, the drumheads are stretched over sieves used for sifting flour, symbolizing abundance and the earth's fertility. Today, performers utilize this drum to bridge traditional folk storytelling with modern world fusion.",
+  performers: [
+    {
+      name: 'Alfio Antico',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Tullio De Piscopo',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Tammurriata',
+      artist: 'Alfio Antico',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Sila',
+      artist: 'Alfio Antico',
+      desc: "The tammorra's deep resonance is captured with vintage stereo ribbon mics and fed through warm analog spring reverbs to emphasize its haunting, raw energy.",
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Tammorra',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const candombe = {
+  origin: 'Uruguay',
+  description:
+    'Candombe drums (Chico, Repique, and Piano) form the heartbeat of Afro-Uruguayan music. Played with a stick in one hand and the bare hand on the other, they engage in a rapid dialogue of syncopations and wooden clicks recognized by UNESCO.',
+  performers: [
+    {
+      name: 'Ruben Rada',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Hugo Fattoruso',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Candombe Para Gardel',
+      artist: 'Ruben Rada',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Uruguayan Carnival Spacey Slap',
+      artist: 'Ruben Rada Ensemble',
+      desc: 'Woodblock clicks and shell slaps are treated with a touch of chorus and long delays, placing the traditional carnival street parade in a modern space.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Candombe',
   defaultLeft: 2,
   defaultRight: 1,

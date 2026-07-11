@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const ashiko = {
+  origin: 'Yorubaland',
+  description:
+    'The Ashiko is a cone-shaped single-headed drum played with bare hands. Originating in Nigeria, it is known as a cousin of the djembe, bridging the gap between the djembe and conga with its rich mid-range tones.',
+  performers: [
+    {
+      name: 'Babatunde Olatunji',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Yoruba Rhythms',
+      artist: 'Babatunde Olatunji',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Conical Chamber EQ Sweeps',
+      artist: 'Afro-Beat Project',
+      desc: 'Mid-range sweeps accentuate the wooden resonance of the cone shell, distinguishing its voice from standard hand drums.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Ashiko',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -39,8 +39,6 @@ export const synsonics_drums = {
             <rect x="48" y="54" width="4" height="2.5" rx="0.5" fill="#f97316"/>
   `,
   name: '🎛️ Synsonics Drums',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

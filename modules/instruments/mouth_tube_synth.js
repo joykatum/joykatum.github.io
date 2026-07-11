@@ -30,8 +30,6 @@ export const mouth_tube_synth = {
             <circle cx="67" cy="56" r="1.5" fill="#334155"/>
   `,
   name: '🖲️ Mouth Synth',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

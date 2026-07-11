@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const surdo = {
+  origin: 'Brazil (Rio de Janeiro & Bahia)',
+  description:
+    'The surdo is a large, deep double-headed bass drum. It forms the rhythmic floor of the Samba school parades (Batucada) in Rio de Janeiro and Bahia. It is played with a soft mallet in one hand while the other hand dampens or accents the skin, driving the heavy syncopation and marking the pulse of the carnival.',
+  performers: [
+    {
+      name: 'Monobloco',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Olodum',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: "They Don't Care About Us",
+      artist: 'Michael Jackson ft. Olodum',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Samba Reggae Beats',
+      artist: 'Olodum',
+      desc: 'Sub-harmonic bass synthesizers are triggered by Surdo strikes, making the low-end hits rumble seismically in deep club and stadium settings.',
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -40,8 +73,6 @@ export const surdo = {
             </g>
   `,
   name: 'Surdo',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

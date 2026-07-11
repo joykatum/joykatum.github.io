@@ -2,9 +2,35 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const thunderdrum = {
+  origin: 'Global / Sound Therapy',
+  description:
+    'The Thunder Drum, or spring drum, consists of a cylinder with a long, thin metal spring attached to the drumhead. When shaken, the spring vibrates and resonates inside the chamber, producing a chillingly realistic thunder sound.',
+  performers: [
+    {
+      name: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Thunder Soundscapes',
+      artist: 'Emil Richards',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Cinematic Storm Flanger',
+      artist: 'Hollywood Foley Group',
+      desc: 'The rumbling thunder tail is treated with a slow flanger, recreating the moving wind and lightning crackle of a storm.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Thunder Drum',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

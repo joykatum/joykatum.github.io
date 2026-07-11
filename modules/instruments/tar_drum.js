@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tar_drum = {
+  origin: 'North Africa / Middle East',
+  description:
+    'The Tar is a large, thin, and deep North African frame drum without jingles, producing an incredibly pure, warm, open bass tone alongside crisp edge taps. Historically played by female priestesses in spiritual ceremonies, its deep, pure acoustic resonance is highly therapeutic and meditative. Interesting fact: the Tar is the ancestor of many modern frame drums. Playing it involves resting the drum on the knee or holding it high, using subtle finger taps and thumb rolls to create intricate rhythmic cycles (Talas) that guide chanting, trances, and devotional world fusion music.',
+  performers: [
+    {
+      name: 'Layne Redmond',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Glen Velez',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ritual Drumming',
+      artist: 'Layne Redmond',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Seven Heaven',
+      artist: 'Layne Redmond',
+      desc: "The Tar's meditative low-end is enhanced with multiband compression and a wide stereo delay, wrapping the listener in a warm, pulsing blanket of sound.",
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="49" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -20,8 +53,6 @@ export const tar_drum = {
             <circle cx="50" cy="50" r="47.5" fill="url(#overlay-${id})"/>
   `,
   name: 'Tar',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

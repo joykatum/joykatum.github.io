@@ -16,6 +16,7 @@ import { startPattern, stopPattern, setOnStepTriggered } from './sequencer.js';
 import { initAudio } from './audio.js';
 import { initVisualizer } from './visualizer.js';
 import { ensurePatternsLoaded } from './patterns.js';
+import { preloadSoundFonts } from './sf2Loader.js';
 
 // Base Instrument Class for OO management of instrument behaviors
 class BaseInstrument {
@@ -53,6 +54,9 @@ class Orchestrator {
   }
 
   async init() {
+    // Proactively preload SoundFonts in the background
+    preloadSoundFonts();
+
     // Resolve initial instrument
     await Promise.all([ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)]);
     this.updateInstrument(state.currentInstrument);

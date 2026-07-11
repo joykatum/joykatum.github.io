@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const cuica = {
+  origin: 'Brazil (Bantu / Central African roots)',
+  description:
+    'The cuíca is a highly distinctive friction drum. A thin bamboo stick is attached to the center of the drumhead, extending inside. The player rubs the stick with a wet cloth, producing high-pitched squeaks and animal-like grunts, while the other hand presses the drumhead from the outside to modulate the pitch. Essential in Samba school arrangements.',
+  performers: [
+    {
+      name: 'Osvaldinho da Cuíca',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Taj Mahal',
+      artist: 'Jorge Ben Jor',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Meia Sola',
+      artist: 'Paulinho da Viola',
+      desc: 'Squeaks from the cuíca are modulated with a mild phaser, accentuating the rubbery, sliding pitch sweeps that cut through the acoustic samba ensemble.',
+      url: 'https://open.spotify.com/track/2SshH0PzGgR8RoxU2pQpP6',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -23,8 +51,6 @@ export const cuica = {
             ${lugsHtml}
   `,
   name: 'Cuíca',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -17,7 +17,8 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.sf2': 'application/octet-stream'
 };
 
 const ALLOWED_STATIC_FILES = ['/index.html', '/styles.css', '/icon.jpg', '/favicon.ico', '/manifest.json'];
@@ -38,7 +39,9 @@ const server = http.createServer((req, res) => {
 
   // Security check: Only allow specific static assets
   const isAllowed =
-    ALLOWED_STATIC_FILES.includes(safeUrl) || (safeUrl.startsWith('/modules/') && safeUrl.endsWith('.js'));
+    ALLOWED_STATIC_FILES.includes(safeUrl) ||
+    (safeUrl.startsWith('/modules/') && safeUrl.endsWith('.js')) ||
+    (safeUrl.startsWith('/media/') && safeUrl.endsWith('.sf2'));
 
   if (!isAllowed) {
     res.writeHead(404, { 'Content-Type': 'text/plain' });

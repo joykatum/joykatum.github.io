@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const temple_blocks = {
+  origin: 'East Asia (China / Japan)',
+  description:
+    "Temple Blocks are hollow wooden idiophones shaped like bulbous fish heads, historically derived from the Chinese 'Muyu' (wooden fish) used in Buddhist and Taoist chanting. Played in sets of tuned blocks mounted on a stand, they are struck with hard wood or rubber mallets to produce clean, hollow, highly distinct wooden clicks. Interesting fact: the fish shape is symbolic because fish never close their eyes, representing the wakefulness and mindfulness required in Buddhist practice. In modern music, they are a beloved orchestral color used to add whimsical percussive ticks and rhythmic details.",
+  performers: [
+    {
+      name: 'Keiko Abe',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Evelyn Glennie',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Wooden Resonance Suite',
+      artist: 'Keiko Abe',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Zen Wood Resonance',
+      artist: 'Keiko Abe',
+      desc: 'The sharp, dry ticks of the blocks are processed through shimmering granular delays and long spatialized reverbs to create a floating, ambient texture.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <path d="M 20 52 C 20 22, 80 22, 80 52 C 80 82, 20 82, 20 52 Z" fill="#020617" opacity="0.7" filter="blur(3px)"/>
@@ -29,7 +62,6 @@ export const temple_blocks = {
             <path d="M 22 50 C 22 24, 78 24, 78 50 C 78 74, 58 78, 50 78 C 42 78, 22 74, 22 50 Z" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Temple Blocks',
-  defaultLeft: 0,
   defaultRight: 2,
   drums: [
     {

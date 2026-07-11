@@ -66,8 +66,6 @@ export const mechanical_keyboard = {
             <circle cx="92" cy="24" r="0.8" fill="#64748b"/>
   `,
   name: '⌨️ Mechanical Keyboard',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const log_drum = {
+  origin: 'Mesoamerica / Central Africa',
+  description:
+    'The Log Drum, or Slit Drum, is an ancient percussive idiophone crafted by hollowing out a solid wooden log and carving horizontal H-shaped slits into its shell. This creates wooden tongues of varying thicknesses, each vibrating at a distinct, warm, resonant pitch when struck with rubber mallets. Interesting fact: Log Drums are among the earliest percussive communication devices, historically used by tribes to transmit complex acoustic messages across miles of dense tropical jungle, as well as in Aztec rituals and African tribal ceremonies.',
+  performers: [
+    {
+      name: 'Xavier Quijas Yxayotl',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Brent Lewis',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Mayan Rituality',
+      artist: 'Xavier Quijas Yxayotl',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Jungle Message Echoes',
+      artist: 'Xavier Quijas Yxayotl',
+      desc: 'The hollow, woody knocks of the Log Drum are treated with tape ping-pong delays and lush room reverbs, simulating an ancient communication echo.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <rect x="8" y="28" width="84" height="48" rx="8" fill="#020617" opacity="0.65" filter="blur(3px)"/>
@@ -30,7 +63,6 @@ export const log_drum = {
             <rect x="12" y="24" width="76" height="44" rx="10" fill="url(#overlay-${id})" opacity="0.6"/>
   `,
   name: 'Log Drum',
-  defaultLeft: 0,
   defaultRight: 1,
   drums: [
     {

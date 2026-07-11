@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const repinique = {
+  origin: 'Brazil',
+  description:
+    'The Repinique is a high-pitched metal-shell double-headed drum in Brazilian Samba. Played with one stick and one bare hand, it acts as the lead instrument of the samba baterias, initiating calls and solos.',
+  performers: [
+    {
+      name: 'Monobloco Solos',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Batucada Call',
+      artist: 'Monobloco',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Metallic Shell Compression',
+      artist: 'Rio Carnival Sound',
+      desc: 'The bright metal ring of the shells is captured with a dedicated dynamic microphone and highlighted with high-frequency exciters.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -37,8 +65,6 @@ export const repinique = {
             </g>
   `,
   name: 'Repinique',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

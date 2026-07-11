@@ -2,6 +2,34 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const gran_cassa = {
+  origin: 'Europe (Classical Concert Tradition)',
+  description:
+    'The Gran Cassa is the grand orchestral bass drum, famous for its colossal size and deep, tectonic frequencies. Historically evolved from Ottoman military marching bands (Mehter), it was integrated into Western classical orchestras by the late 18th century. Typically suspended in a large rolling steel frame, it is struck with massive, heavily padded felt-covered wooden mallets. Interesting fact: the Gran Cassa does not produce a definite pitch; instead, it generates a massive wave of low-frequency air pressure that is felt in the chest as much as it is heard by the ears, making it the ultimate tool for dramatic symphonic climaxes and modern cinematic tension.',
+  performers: [
+    {
+      name: 'Evelyn Glennie',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Symphony No. 9 Bass Drum Movement',
+      artist: 'Evelyn Glennie',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Cinematic Low End',
+      artist: 'Evelyn Glennie',
+      desc: 'In cinematic mixes, the Gran Cassa is treated with sub-harmonic synthesis and massive digital hall reverbs, turning single strokes into earth-shattering impact effects.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="50" r="47" fill="#1e293b" opacity="0.08"/>
             
@@ -40,8 +68,6 @@ export const gran_cassa = {
             </g>
   `,
   name: 'Gran Cassa',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

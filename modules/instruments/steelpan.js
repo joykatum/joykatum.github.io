@@ -2,6 +2,39 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const steelpan = {
+  origin: 'Trinidad and Tobago',
+  description:
+    'The steelpan is a chromatic tuned percussion instrument made from industrial oil barrels. Developed in Trinidad in the 1930s by lower-class urban youth who were banned from street drumming, it represents an extraordinary acoustic feat where hammered indentations create perfectly tuned individual notes. It is the national instrument of Trinidad and Tobago.',
+  performers: [
+    {
+      name: 'Liam Teague',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Ellie Mannette',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'St. Thomas',
+      artist: 'Sonny Rollins',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: "I Know There's Gonna Be (Good Times)",
+      artist: 'Jamie xx',
+      desc: 'Bright steelpan riffs are treated with chorus, lush stereo delay, and room reverb to construct an open-air, summery, festival-ready electronic hook.',
+      url: 'https://open.spotify.com/track/4jVlC05tDsz0I7Rof9Obe1',
+      platform: 'Spotify'
+    }
+  ],
+
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
             <circle cx="50" cy="50" r="48" fill="url(#skin-${id})"/>
@@ -16,8 +49,6 @@ export const steelpan = {
             <circle cx="50" cy="50" r="47.5" fill="url(#overlay-${id})" opacity="1.2"/>
   `,
   name: 'Steelpan',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

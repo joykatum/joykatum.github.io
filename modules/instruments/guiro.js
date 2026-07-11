@@ -2,9 +2,40 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const guiro = {
+  origin: 'Puerto Rico / Cuba',
+  description:
+    "The Güiro is a Latin American percussive scraper crafted from a hollowed-out gourd with parallel notches carved along its side. It is played by holding the gourd in one hand and scraping a thin wooden stick or metal comb along the notches. This produces a highly distinct, rasping 'scrp-up' sound. Interesting fact: the Güiro's percussive sweep is the rhythmic engine of salsa, cumbia, and son music. It provides a dense, syncopated upper-register drive that perfectly glues the drum kit with the bassline, making it an indispensable ornament in Caribbean music.",
+  performers: [
+    {
+      name: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    },
+    {
+      name: 'Ray Barretto',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  songs: [
+    {
+      name: 'Ran Kan Kan',
+      artist: 'Tito Puente',
+      spotify: 'true',
+      apple: 'true'
+    }
+  ],
+  effectsSongs: [
+    {
+      name: 'Salsa Scraper Groove',
+      artist: 'Tito Puente',
+      desc: 'The dry, rasping scrapes are compressed heavily and processed with bandpass filter sweeps, giving the Güiro a bright, driving modern club presence.',
+      url: '',
+      platform: 'Spotify'
+    }
+  ],
+
   name: 'Güiro',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,

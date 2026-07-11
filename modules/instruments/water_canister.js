@@ -24,8 +24,6 @@ export const water_canister = {
             <rect x="42" y="17" width="16" height="3" fill="#f43f5e" stroke="#9f1239" stroke-width="0.5"/>
   `,
   name: '💧 Water Canister',
-  defaultLeft: 0,
-  defaultRight: 0,
   drums: [
     {
       id: 0,
