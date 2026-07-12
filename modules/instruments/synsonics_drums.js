@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const synsonics_drums = {
+  origin: 'Mattel Toys (1981)',
+  description:
+    'The Synsonics Drum is an early consumer-grade electronic drum set released by Mattel in 1981. It featured four rubber pads, built-in pads for fingers, and stereo RCA outputs. It generated primitive, charmingly lo-fi analog synthesized snare snaps, white-noise crashes, and booming electronic tom-toms, epitomizing the classic retro-arcade drum aesthetic.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Retro console shadow -->
             <rect x="8" y="16" width="84" height="68" rx="10" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>

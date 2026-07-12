@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const newtons_cradle = {
+  origin: 'Physics Classroom',
+  description:
+    "Newton's Cradle is a classic physics desktop device named after Sir Isaac Newton, demonstrating the conservation of momentum and energy via a series of suspended, swinging steel spheres. This digital instrument captures the extremely crisp, instantaneous, microsecond metal-on-metal collision clicks and string-tangle friction noises, forming a highly clinical percussive texture.",
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Shadow for spheres -->
             <ellipse cx="50" cy="80" rx="36" ry="6" fill="#020617" opacity="0.65" filter="blur(3px)"/>

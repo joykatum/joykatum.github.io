@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const slap_tubes = {
+  origin: 'Blue Man Group Innovation / Modern buskers',
+  description:
+    'Slap tubes are an innovative modern percussion instrument made of varying lengths of industrial PVC pipes. When struck on the open end with a flat, padded paddle or flip-flop, the air inside vibrates to produce highly compressed, punchy, acoustic bass tones. The longer the pipe, the deeper the fundamental frequency, creating a booming modern sound.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Shadow -->
             <ellipse cx="50" cy="82" rx="34" ry="10" fill="#020617" opacity="0.6" filter="blur(3px)"/>

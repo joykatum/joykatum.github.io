@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const mechanical_keyboard = {
+  origin: 'Modern Digital Workspace',
+  description:
+    'The mechanical computer keyboard, featuring specialized tactile switches (like Cherry MX Blues or Browns), is beloved by typists and programmers for its distinct auditory feedback. This layout organizes the satisfying, crisp tactile clicks, spacebar clacks, and keycap bottom-outs into a highly rhythmic, ultra-modern percussive office soundscape.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Keyboard casing shadow -->
             <rect x="6" y="24" width="88" height="54" rx="6" fill="#020617" opacity="0.75" filter="blur(3px)"/>

@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const centrifugal_bullroarer = {
+  origin: 'Ancient Global Indigenous Roots',
+  description:
+    'The bullroarer, or rhombos, is an ancient ritual musical instrument and device historically used for long-distance communication and religious ceremonies by indigenous cultures across Australia, North America, and Europe. It consists of a carved wooden slat attached to a cord. When swung in a large circle, it spins and slices the air, generating a deep, haunting, low-frequency vibrato hum or ghostly roar.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Swirling shadow trail -->
             <path d="M 10 50 Q 30 15, 50 50 T 90 50" fill="none" stroke="#020617" stroke-width="8" opacity="0.45" stroke-linecap="round" filter="blur(4px)"/>

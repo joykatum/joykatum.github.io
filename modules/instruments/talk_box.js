@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const talk_box = {
+  origin: 'Vintage Toy Box',
+  description:
+    'Inspired by retro pull-string talking toys and vintage talk-box vocal effects. This instrument recreates the mechanical, winding spin-up click of a spring-loaded pull cord combined with vocal formant-modulated analog synthesized sweeps. It produces classic mechanical whirrs, voice-box vowels, and retro speech-synthesis effects.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Floor shadow -->
             <ellipse cx="50" cy="80" rx="34" ry="11" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>

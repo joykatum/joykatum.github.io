@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const hydraulic_piston = {
+  origin: 'Industrial Machine Shop',
+  description:
+    'An artistic sound recreation of a heavy-duty hydraulic actuator from an industrial machinery setting. It produces compressed, high-pressure steam releases, sliding metallic friction hums, and deep magnetic solenoid clunks. This experimental instrument brings the heavy mechanical heartbeat of steam-punk factories directly to your rhythm section.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom industrial shadow -->
             <rect x="22" y="10" width="56" height="84" rx="8" fill="#020617" opacity="0.7" filter="blur(4px)"/>

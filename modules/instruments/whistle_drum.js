@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const whistle_drum = {
+  origin: 'Carnival / Festival Parade',
+  description:
+    'The Whistle Drum (or apito-drum) combines a traditional hand-held clay or wooden pot drum with a tri-tone Samba whistle. It is designed for high-energy carnival parades, allowing the performer to maintain a driving, earthy center thump while injecting piercing, multi-tonal samba signals to lead dance formations.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Flat bottom shadow -->
             <ellipse cx="50" cy="82" rx="28" ry="10" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>

@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const caxixi = {
+  origin: 'West Africa / Brazil',
+  description:
+    'The caxixi is a wicker basket shaker percussion instrument filled with seeds or small pebbles, traditionally made of reed or straw with a flat gourd-skin base. In Brazil, it is held in the same hand as the coin or stone that strikes the berimbau in Capoeira ensembles, offering a crisp, high-frequency rattling contrast to the deep resonance of the bow.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Soft flat bottom shadow -->
             <ellipse cx="50" cy="84" rx="24" ry="7.5" fill="#020617" opacity="0.6" filter="blur(2.5px)"/>

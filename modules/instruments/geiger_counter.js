@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const geiger_counter = {
+  origin: 'Diagnostic Laboratory',
+  description:
+    'A Geiger-Müller counter is an instrument used for detecting and measuring ionizing radiation. Its iconic, unpredictable static clicks and high-pitched piezo alarms are here transformed into an experimental rhythmic sequencer. The random, crackling textures of radioactivity provide a highly stylized, industrial soundboard for avant-garde rhythm design.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <rect x="18" y="74" width="64" height="12" rx="4" fill="#020617" opacity="0.65" filter="blur(3px)"/>

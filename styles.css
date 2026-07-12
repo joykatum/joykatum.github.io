@@ -1150,7 +1150,7 @@ header p {
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-  padding: 18px 12px 10px 12px !important;
+  padding: 12px 12px 8px 12px !important;
   z-index: 1005;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1159,24 +1159,24 @@ header p {
 }
 
 .footer-bottom-section {
-  width: calc(100% + 24px) !important;
-  background-color: #dfcfb6 !important; /* Lightly darker warm beige than #eedfca */
-  border-top: 2px solid #302217 !important;
-  margin-left: -12px !important;
-  margin-right: -12px !important;
-  margin-bottom: -10px !important;
-  margin-top: 6px !important;
-  padding: 10px 12px !important;
+  width: 100% !important;
+  background: transparent !important;
+  border-top: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 4px !important;
+  padding: 4px 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 6px !important;
+  gap: 4px !important;
   align-items: center !important;
   box-sizing: border-box !important;
 }
 
 .cheat-sheet-footer.collapsed {
   min-height: auto !important;
-  padding: 24px 12px 10px 12px !important;
+  padding: 16px 12px 8px 12px !important;
   background-color: #dfcfb6 !important; /* Match the slightly darker warm beige */
   border-top: 10px solid #302217 !important;
 }

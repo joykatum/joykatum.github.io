@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const water_canister = {
+  origin: 'Improvised Street Percussion',
+  description:
+    'An improvised, organic percussion instrument made by striking a heavy, half-filled plastic water canister. By sloshing and swirling the water inside while drumming on the exterior walls, the player compresses the internal air cavity, creating dynamic, bubbly, shifting-frequency thuds and organic liquid pitch-bends.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy flat bottom shadow -->
             <ellipse cx="50" cy="82" rx="32" ry="9" fill="#020617" opacity="0.65" filter="blur(3px)"/>

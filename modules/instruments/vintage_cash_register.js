@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const vintage_cash_register = {
+  origin: '1920s Department Store',
+  description:
+    'An authentic mechanical recreation of a vintage 1920s brass cash register (such as a classic National Cash Register). It captures the heavy physical clank of price keys, the mechanical winding gear pull, the sliding drawer drawer friction, and the signature, high-frequency, bell-like brass "DING" that signifies a sale.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Ground shadow -->
             <ellipse cx="50" cy="78" rx="36" ry="10" fill="#020617" opacity="0.75" filter="blur(4px)"/>

@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const binzasara = {
+  origin: 'Japan',
+  description:
+    'The binzasara is a traditional Japanese percussion instrument used in folk songs, kabuki theatre, and Shinto ceremonies (Dengaku dance). It is made of numerous small wooden slats strung together with a cord, terminating in handles at both ends. By bowing or rippling the handles, the slats strike each other in rapid succession, producing a sharp, cascading clatter or domino-like rolling sound.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Flowing wavy bottom shadow -->
             <path d="M 12 56 Q 30 20, 50 56 T 88 56" fill="none" stroke="#020617" stroke-width="12" opacity="0.55" stroke-linecap="round" filter="blur(3.5px)"/>

@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const mouth_tube_synth = {
+  origin: 'Acoustic Physics Lab',
+  description:
+    "A unique vocal-modulation synthesizer concept that channels electronic audio waves through an acoustic tube manipulated by the player's mouth cavity. By altering the shape of the oral tract (throat, lips, tongue), the performer modulates formants and resonant peaks, turning electronic carrier waves into expressive, speech-like sub-bass throbs and synthetic growls.",
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <rect x="18" y="74" width="64" height="12" rx="4" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>

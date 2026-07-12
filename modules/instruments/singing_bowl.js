@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const singing_bowl = {
+  origin: 'Tibet / Nepal',
+  description:
+    'A Tibetan singing bowl is a type of bell or standing inverted bowl that vibrates to produce a rich, deep, peaceful tone when struck or rubbed with a wooden mallet. Beloved in mindfulness practices, yoga, and sound meditation, its lingering, pure harmonic vibrations and acoustic "beating" cycles promote deep relaxation and mental clarity.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Ground shadow -->
             <ellipse cx="50" cy="80" rx="38" ry="12" fill="#020617" opacity="0.7" filter="blur(4px)"/>

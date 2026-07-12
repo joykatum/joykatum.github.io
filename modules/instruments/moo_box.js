@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const moo_box = {
+  origin: 'France / Germany',
+  description:
+    'The moo box, or boite à meuh, is a classic novelty toy that has been popular in Europe since the early 20th century. It consists of a cylinder containing a metal reed, a heavy lead piston, and a bellows. When turned upside down and right-side up again, gravity pulls the piston down, forcing air through the reed to produce a comical, elongated "moo" or lowing cow sound.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <ellipse cx="50" cy="80" rx="36" ry="12" fill="#020617" opacity="0.65" filter="blur(3.5px)"/>

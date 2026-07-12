@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const quijada = {
+  origin: 'Afro-Peruvian Tradition',
+  description:
+    'The quijada, or jawbone of a donkey, horse, or mule, is a unique traditional percussion instrument used in Afro-Peruvian, Mexican, and Latin American folk music. The jawbone is cured so that the teeth loosen in their sockets. When struck with a closed fist, the teeth rattle collectively, creating a long, dry, buzzy chatter, complemented by scraping the teeth with a stick.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Floating shadow -->
             <path d="M 15 78 C 30 78, 50 68, 85 78 C 50 86, 30 82, 15 78 Z" fill="#020617" opacity="0.55" filter="blur(3.5px)"/>

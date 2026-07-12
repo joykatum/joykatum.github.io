@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bop_it = {
+  origin: 'Modern Toy Lab (USA)',
+  description:
+    'The Bop It is an interactive handheld electronic game first released in 1996. It challenges players to rapidly execute random commands—"Bop it!", "Pull it!", "Twist it!"—in a syncopated rhythm. This recreation translates those classic toy-box commands and mechanical sound effects into a highly unique, modern lo-fi soundboard instrument.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Drop Shadow -->
             <path d="M 12 55 L 45 42 L 55 42 L 88 55 L 75 80 L 25 80 Z" fill="#020617" opacity="0.6" filter="blur(5px)"/>

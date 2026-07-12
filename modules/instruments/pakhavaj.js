@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const pakhavaj = {
+  origin: 'India',
+  description:
+    'The Pakhavaj is a double-headed, barrel-shaped drum from Northern India, and the primary percussion instrument of the ancient Dhrupad vocal style. The larger bass head (bayan) is coated with a temporary wheat-dough paste for a deep, sliding, resonant bass tone, while the treble head (dayan) is struck with fingertips to produce clear, ringing, high-pitched percussive syllables.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Bottom shadow -->
             <path d="M 10 52 Q 50 82, 90 52" fill="#020617" opacity="0.7" filter="blur(3.5px)"/>

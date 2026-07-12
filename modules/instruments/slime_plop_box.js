@@ -2,6 +2,9 @@ import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const slime_plop_box = {
+  origin: 'ASMR Studio',
+  description:
+    'An experimental, highly tactile instrument designed to replicate the squishy, wet, vacuum-release sounds of thick polymer slime, putty, or play-dough. It captures the satisfying pops, bubbles, and squishes of pulling, folding, and kneading textured gel materials, providing a highly immersive ASMR auditory experience.',
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Drip pool shadow -->
             <ellipse cx="50" cy="82" rx="30" ry="10" fill="#020617" opacity="0.6" filter="blur(3px)"/>

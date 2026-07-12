@@ -1698,7 +1698,7 @@ const customMappings = {
       upLong: 'tapado',
       downLong: 'toque_tapado',
       leftLong: 'golpe_de_casco',
-      rightLong: 'golpe_de_casco',
+      rightLong: '',
       trigger: 'abierto'
     },
     right: {
@@ -1709,7 +1709,7 @@ const customMappings = {
       upLong: 'tapado',
       downLong: 'toque_tapado',
       leftLong: 'golpe_de_casco',
-      rightLong: 'golpe_de_casco',
+      rightLong: '',
       trigger: 'seco'
     }
   },
@@ -1790,7 +1790,7 @@ const customMappings = {
       up: 'dagga',
       down: 'tilli',
       left: 'stick_slide_glissando',
-      right: 'dagga',
+      right: '',
       upLong: '',
       downLong: '',
       leftLong: '',
@@ -1801,7 +1801,7 @@ const customMappings = {
       up: 'dagga',
       down: 'tilli',
       left: 'stick_slide_glissando',
-      right: 'dagga',
+      right: '',
       upLong: '',
       downLong: '',
       leftLong: '',
