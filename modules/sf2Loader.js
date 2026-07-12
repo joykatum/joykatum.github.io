@@ -3,12 +3,18 @@ import { state } from './state.js';
 
 export const loadedSoundFonts = {
   agogo: null,
-  conga: null
+  conga: null,
+  cajon: null,
+  timpani: null,
+  gran_cassa: null
 };
 
 export const loadingStates = {
   agogo: 'idle', // 'idle' | 'loading' | 'loaded' | 'error'
-  conga: 'idle'
+  conga: 'idle',
+  cajon: 'idle',
+  timpani: 'idle',
+  gran_cassa: 'idle'
 };
 
 /**

@@ -136,7 +136,10 @@ header p {
 
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
-    --drum-unit: min(4.8cqh, 5.2cqw);
+    --drum-unit: min(
+      3.8cqh,
+      4.2cqw
+    ); /* Slightly smaller so single drums (e.g. Cajon) have comfortable breathing room */
   }
   .drums-grid.count-2 {
     --drum-unit: min(3.6cqh, 2.3cqw);
@@ -246,7 +249,10 @@ header p {
   /* Universal maximized sizes that stay constant regardless of settings toggling */
   .drums-grid.count-1 {
     grid-template-columns: repeat(1, auto);
-    --drum-unit: min(5.8cqh, 5.6cqw);
+    --drum-unit: min(
+      4.5cqh,
+      3.8cqw
+    ); /* Slightly smaller so single drums (e.g. Cajon) have comfortable breathing room in portrait */
   }
   .drums-grid.count-2 {
     grid-template-columns: repeat(2, auto);
@@ -1176,17 +1182,17 @@ header p {
 
 .cheat-sheet-footer.collapsed {
   min-height: auto !important;
-  padding: 16px 12px 8px 12px !important;
+  padding: 24px 12px 14px 12px !important; /* Elegant, spacious top and bottom padding */
   background-color: #dfcfb6 !important; /* Match the slightly darker warm beige */
   border-top: 10px solid #302217 !important;
 }
 
 .cheat-sheet-footer.collapsed .footer-bottom-section {
   border-top: none !important;
-  margin-top: -24px !important;
-  margin-bottom: -10px !important;
-  padding-top: 24px !important;
-  padding-bottom: 10px !important;
+  margin-top: 4px !important; /* No negative margin to prevent overlap with floating button */
+  margin-bottom: 0 !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
   background-color: transparent !important;
 }
 
@@ -1526,6 +1532,8 @@ header p {
   color: #302217 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
+  line-height: 1.5 !important; /* Spacious line-height to look beautiful when wrapped */
+  text-align: center !important; /* Centered layout for responsive wrapping */
 }
 
 .cheat-item b {

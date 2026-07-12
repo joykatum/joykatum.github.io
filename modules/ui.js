@@ -1308,15 +1308,24 @@ export async function handleInstrumentChange(newInst) {
 
   const sfUrls = {
     conga: '/media/conga.sf2',
-    agogo: '/media/agogo.sf2'
+    agogo: '/media/agogo.sf2',
+    cajon: '/media/cajon.sf2',
+    timpani: '/media/timpani.sf2',
+    gran_cassa: '/media/gran%20cassa.sf2'
   };
 
   // Determine if this instrument needs a SoundFont
   let relevantSF = null;
-  if (newInst === 'conga' || newInst === 'bongo' || newInst === 'djembe' || newInst === 'cajon' || newInst === 'bata') {
+  if (newInst === 'conga' || newInst === 'bongo' || newInst === 'djembe' || newInst === 'bata') {
     relevantSF = 'conga';
+  } else if (newInst === 'cajon') {
+    relevantSF = 'cajon';
   } else if (newInst === 'agogo') {
     relevantSF = 'agogo';
+  } else if (newInst === 'timpani') {
+    relevantSF = 'timpani';
+  } else if (newInst === 'gran_cassa') {
+    relevantSF = 'gran_cassa';
   }
 
   const promises = [ensureInstrumentLoaded(newInst), ensurePatternsLoaded(newInst)];

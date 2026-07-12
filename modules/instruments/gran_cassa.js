@@ -1,5 +1,6 @@
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playSoundFontSample } from '../sf2Loader.js';
 
 export const gran_cassa = {
   origin: 'Europe (Classical Concert Tradition)',
@@ -78,18 +79,33 @@ export const gran_cassa = {
     }
   ],
   sounds: {
-    glancing_arc_blow: (d) => {
-      playMembrane(35 * d.pitchMult, 1.4, 1.8, false);
-      playMembrane(70 * d.pitchMult, 0.8, 1.5, false);
+    glancing_arc_blow: (d, velocity = 0.85) => {
+      const sample = velocity >= 0.7 ? 'bass_drum-f' : 'bass_drum-p';
+      const success = playSoundFontSample('gran_cassa', sample, d.pitchMult, velocity, 0.0);
+      if (!success) {
+        playMembrane(35 * d.pitchMult, 1.4, 1.8, false, velocity);
+        playMembrane(70 * d.pitchMult, 0.8, 1.5, false, velocity);
+      }
     },
-    secco_hit: (d) => playMembrane(45 * d.pitchMult, 0.25, 1.3, false),
-    hand_damping: (d) => {
-      playMembrane(40 * d.pitchMult, 1.1, 1.6, false);
-      playMembrane(80 * d.pitchMult, 0.6, 1.4, false);
+    secco_hit: (d, velocity = 0.85) => {
+      const success = playSoundFontSample('gran_cassa', 'bass_drum-f', d.pitchMult, velocity, 0.0, 0.35);
+      if (!success) {
+        playMembrane(45 * d.pitchMult, 0.25, 1.3, false, velocity);
+      }
     },
-    shell_knock: (d) => {
-      playMembrane(40 * d.pitchMult, 1.1, 1.6, false);
-      playMembrane(80 * d.pitchMult, 0.6, 1.4, false);
+    hand_damping: (d, velocity = 0.6) => {
+      const success = playSoundFontSample('gran_cassa', 'bass_drum-p', d.pitchMult, velocity, 0.0, 0.2);
+      if (!success) {
+        playMembrane(40 * d.pitchMult, 1.1, 1.6, false, velocity);
+        playMembrane(80 * d.pitchMult, 0.6, 1.4, false, velocity);
+      }
+    },
+    shell_knock: (d, velocity = 0.85) => {
+      const success = playSoundFontSample('gran_cassa', 'bass_drum-p', d.pitchMult * 2.8, velocity, 0.0, 0.15);
+      if (!success) {
+        playMembrane(40 * d.pitchMult, 1.1, 1.6, false, velocity);
+        playMembrane(80 * d.pitchMult, 0.6, 1.4, false, velocity);
+      }
     }
   },
   touches: [

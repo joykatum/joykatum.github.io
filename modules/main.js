@@ -62,21 +62,24 @@ class Orchestrator {
 
     const sfUrls = {
       conga: '/media/conga.sf2',
-      agogo: '/media/agogo.sf2'
+      agogo: '/media/agogo.sf2',
+      cajon: '/media/cajon.sf2',
+      timpani: '/media/timpani.sf2',
+      gran_cassa: '/media/gran%20cassa.sf2'
     };
 
     let relevantSF = null;
     const current = state.currentInstrument;
-    if (
-      current === 'conga' ||
-      current === 'bongo' ||
-      current === 'djembe' ||
-      current === 'cajon' ||
-      current === 'bata'
-    ) {
+    if (current === 'conga' || current === 'bongo' || current === 'djembe' || current === 'bata') {
       relevantSF = 'conga';
+    } else if (current === 'cajon') {
+      relevantSF = 'cajon';
     } else if (current === 'agogo') {
       relevantSF = 'agogo';
+    } else if (current === 'timpani') {
+      relevantSF = 'timpani';
+    } else if (current === 'gran_cassa') {
+      relevantSF = 'gran_cassa';
     }
 
     const promises = [ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)];

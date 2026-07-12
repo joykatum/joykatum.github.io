@@ -48,42 +48,42 @@ export const cajon = {
   ],
   sounds: {
     bass_tone: (d, velocity = 0.85) => {
-      const success = playSoundFontSample('conga', 'conga bass tone', d.pitchMult * 0.9, velocity);
+      const success = playSoundFontSample('cajon', 'Bass', d.pitchMult * 0.9, velocity);
       if (!success) {
         playMembrane(55 * d.pitchMult, 0.45, 1.4, false, velocity); // deep boom
         playNoise(0.04, 700, velocity * 0.25); // slight snare rattle
       }
     },
     corner_slap: (d, velocity = 0.9) => {
-      const success = playSoundFontSample('conga', 'congaclosedslap', d.pitchMult * 1.1, velocity);
+      const success = playSoundFontSample('cajon', 'Slap', d.pitchMult * 1.1, velocity);
       if (!success) {
         playMembrane(140 * d.pitchMult, 0.15, 1.0, true, velocity);
         playNoise(0.15, 2400, velocity * 1.1, 'highpass'); // strong snare rattle
       }
     },
     high_finger_snap: (d, velocity = 0.6) => {
-      const success = playSoundFontSample('conga', 'conga mute', d.pitchMult * 1.4, velocity);
+      const success = playSoundFontSample('cajon', 'Finger', d.pitchMult * 1.4, velocity);
       if (!success) {
         playMembrane(380 * d.pitchMult, 0.06, 1.0, true, velocity * 0.5);
         playNoise(0.04, 2000, velocity * 0.4, 'highpass');
       }
     },
     tapado: (d, velocity = 0.8) => {
-      const success = playSoundFontSample('conga', 'congafngmuteslap', d.pitchMult * 1.2, velocity);
+      const success = playSoundFontSample('cajon', 'Tip', d.pitchMult * 1.2, velocity);
       if (!success) {
         playMembrane(180 * d.pitchMult, 0.04, 1.0, true, velocity * 0.8);
         playNoise(0.02, 1200, velocity * 0.3, 'bandpass', 3.0);
       }
     },
     side_knock: (d, velocity = 0.8) => {
-      const success = playSoundFontSample('conga', 'conga rim', d.pitchMult * 0.95, velocity);
+      const success = playSoundFontSample('cajon', 'Tip', d.pitchMult * 0.95, velocity);
       if (!success) {
         playMembrane(220 * d.pitchMult, 0.12, 1.0, false, velocity);
         playAttackClick(0.012, 1500, 0.45 * velocity);
       }
     },
     heel_slide_pitch_bend: (d, velocity = 0.8) => {
-      const success = playSoundFontSample('conga', 'congaattackslide', d.pitchMult * 0.85, velocity);
+      const success = playSoundFontSample('cajon', 'Bass', d.pitchMult * 0.85, velocity);
       if (!success) {
         playTablaSlideUp(75 * d.pitchMult, 150 * d.pitchMult, 0.6, velocity);
       }

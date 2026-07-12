@@ -1255,18 +1255,6 @@ export const drumTypes = {
       }
     ]
   },
-  hydraulic_piston: {
-    name: 'Hydraulic Piston',
-    drums: [
-      {
-        id: 0,
-        label: 'Piston Chamber',
-        pitchMult: 1,
-        color: 'silver',
-        sizeValue: 22
-      }
-    ]
-  },
   bop_it: {
     name: 'Bop It!',
     drums: [
@@ -1276,18 +1264,6 @@ export const drumTypes = {
         pitchMult: 1,
         color: 'purple',
         sizeValue: 18
-      }
-    ]
-  },
-  moo_box: {
-    name: 'Moo Box',
-    drums: [
-      {
-        id: 0,
-        label: 'Tin Oid',
-        pitchMult: 1,
-        color: 'silver',
-        sizeValue: 15
       }
     ]
   },
@@ -1382,42 +1358,7 @@ export const drumTypes = {
       }
     ]
   },
-  water_canister: {
-    name: 'Water Canister',
-    drums: [
-      {
-        id: 0,
-        label: 'Hydro Canister',
-        pitchMult: 1,
-        color: 'aquamarine',
-        sizeValue: 22
-      }
-    ]
-  },
-  vintage_cash_register: {
-    name: 'Cash Register',
-    drums: [
-      {
-        id: 0,
-        label: 'Brass Register',
-        pitchMult: 1,
-        color: 'silver',
-        sizeValue: 20
-      }
-    ]
-  },
-  geiger_counter: {
-    name: 'Geiger Counter',
-    drums: [
-      {
-        id: 0,
-        label: 'Geiger Grid',
-        pitchMult: 1,
-        color: 'dark',
-        sizeValue: 18
-      }
-    ]
-  },
+
   centrifugal_bullroarer: {
     name: 'Bullroarer',
     drums: [
@@ -1427,54 +1368,6 @@ export const drumTypes = {
         pitchMult: 1,
         color: 'wood',
         sizeValue: 22
-      }
-    ]
-  },
-  newtons_cradle: {
-    name: 'Newton Cradle',
-    drums: [
-      {
-        id: 0,
-        label: 'Newton Cradle',
-        pitchMult: 1,
-        color: 'silver',
-        sizeValue: 19
-      }
-    ]
-  },
-  slime_plop_box: {
-    name: 'Slime Plop Box',
-    drums: [
-      {
-        id: 0,
-        label: 'Slime Jar',
-        pitchMult: 1,
-        color: 'teal',
-        sizeValue: 20
-      }
-    ]
-  },
-  talk_box: {
-    name: 'Talk Box Toy',
-    drums: [
-      {
-        id: 0,
-        label: 'Retro Pull-Toy',
-        pitchMult: 1,
-        color: 'caramel',
-        sizeValue: 20
-      }
-    ]
-  },
-  mouth_tube_synth: {
-    name: 'Mouth Synth',
-    drums: [
-      {
-        id: 0,
-        label: 'Mouth Synth',
-        pitchMult: 1,
-        color: 'teal',
-        sizeValue: 19
       }
     ]
   }

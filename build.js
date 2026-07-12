@@ -33,7 +33,13 @@ try {
   console.log('Copying static assets from root to /dist...');
   fs.copyFileSync(path.join(__dirname, 'index.html'), path.join(destDir, 'index.html'));
   fs.copyFileSync(path.join(__dirname, 'styles.css'), path.join(destDir, 'styles.css'));
-  fs.copyFileSync(path.join(__dirname, 'icon.jpg'), path.join(destDir, 'icon.jpg'));
+  fs.copyFileSync(path.join(__dirname, 'apple-touch-icon.png'), path.join(destDir, 'apple-touch-icon.png'));
+  fs.copyFileSync(
+    path.join(__dirname, 'apple-touch-icon-180x180.png'),
+    path.join(destDir, 'apple-touch-icon-180x180.png')
+  );
+  fs.copyFileSync(path.join(__dirname, 'icon-192x192.png'), path.join(destDir, 'icon-192x192.png'));
+  fs.copyFileSync(path.join(__dirname, 'icon-512x512.png'), path.join(destDir, 'icon-512x512.png'));
   fs.copyFileSync(path.join(__dirname, 'favicon.ico'), path.join(destDir, 'favicon.ico'));
   fs.copyFileSync(path.join(__dirname, 'manifest.json'), path.join(destDir, 'manifest.json'));
   copyRecursive(path.join(__dirname, 'modules'), path.join(destDir, 'modules'));

@@ -21,7 +21,16 @@ const MIME_TYPES = {
   '.sf2': 'application/octet-stream'
 };
 
-const ALLOWED_STATIC_FILES = ['/index.html', '/styles.css', '/icon.jpg', '/favicon.ico', '/manifest.json'];
+const ALLOWED_STATIC_FILES = [
+  '/index.html',
+  '/styles.css',
+  '/apple-touch-icon.png',
+  '/apple-touch-icon-180x180.png',
+  '/icon-192x192.png',
+  '/icon-512x512.png',
+  '/favicon.ico',
+  '/manifest.json'
+];
 
 const server = http.createServer((req, res) => {
   // Sanitize request path and default to index.html

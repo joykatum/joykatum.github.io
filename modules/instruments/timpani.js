@@ -1,5 +1,6 @@
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playSoundFontSample } from '../sf2Loader.js';
 
 export const timpani = {
   origin: 'Europe (Orchestral / Military Roots)',
@@ -62,18 +63,31 @@ export const timpani = {
   ],
   sounds: {
     beating_spot_strike: (d, velocity = 0.85) => {
-      playMembrane(90 * d.pitchMult, 1.6, 1.02, false, velocity, 0.0);
-      playAttackClick(0.015, 1200, 0.35 * velocity);
+      const sample = velocity >= 0.7 ? 'timpani-f' : 'timpani-p';
+      const success = playSoundFontSample('timpani', sample, d.pitchMult, velocity, 0.0);
+      if (!success) {
+        playMembrane(90 * d.pitchMult, 1.6, 1.02, false, velocity, 0.0);
+        playAttackClick(0.015, 1200, 0.35 * velocity);
+      }
     },
     pedal_glissando_bend: (d, velocity = 0.85) => {
-      playTablaSlideUp(75 * d.pitchMult, 125 * d.pitchMult, 1.5, velocity, 0.0);
+      const success = playSoundFontSample('timpani', 'timpani-roll', d.pitchMult, velocity, 0.0);
+      if (!success) {
+        playTablaSlideUp(75 * d.pitchMult, 125 * d.pitchMult, 1.5, velocity, 0.0);
+      }
     },
     damping_touch: (d, velocity = 0.6) => {
-      playMembrane(90 * d.pitchMult, 0.12, 1.0, false, velocity, 0.0);
+      const success = playSoundFontSample('timpani', 'timpani-p', d.pitchMult, velocity, 0.0, 0.2);
+      if (!success) {
+        playMembrane(90 * d.pitchMult, 0.12, 1.0, false, velocity, 0.0);
+      }
     },
     stick_shaft_rim_shot: (d, velocity = 0.9) => {
-      playMembrane(380 * d.pitchMult, 0.18, 1.0, true, velocity, 0.0);
-      playNoise(0.2, 3800, 0.5 * velocity, 'highpass');
+      const success = playSoundFontSample('timpani', 'timpani-f', d.pitchMult * 1.5, velocity, 0.0, 0.3);
+      if (!success) {
+        playMembrane(380 * d.pitchMult, 0.18, 1.0, true, velocity, 0.0);
+        playNoise(0.2, 3800, 0.5 * velocity, 'highpass');
+      }
     }
   },
   touches: [
