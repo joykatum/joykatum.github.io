@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playBell, playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const singing_bowl = {
   origin: 'Tibet / Nepal',
@@ -38,26 +38,26 @@ export const singing_bowl = {
     }
   ],
   sounds: {
-    deep_rim_gong: (d) => playMembrane(220 * d.pitchMult, 1.8, 1.0),
+    deep_rim_gong: (d) => playBell(220 * d.pitchMult, 1.8, 1.0, 0, false),
     suede_hum: (d) => {
-      playMembrane(220 * d.pitchMult, 1.2, 1.0);
+      playBell(220 * d.pitchMult, 1.2, 0.8, 0, false);
       playNoise(1.0, 440 * d.pitchMult, 0.3 * state.currentTiltVolume, 'bandpass', 12.0);
     },
     wood_click: (d) => {
       playAttackClick(0.03, 1500, 0.8 * state.currentTiltVolume);
-      playMembrane(800 * d.pitchMult, 0.04, 1.0);
+      playBell(800 * d.pitchMult, 0.04, 1.0, 0, true);
     },
-    palm_damped: (d) => playMembrane(330 * d.pitchMult, 0.12, 1.0, true),
-    harmonic_ping: (d) => playMembrane(660 * d.pitchMult, 1.2, 1.0),
+    palm_damped: (d) => playBell(330 * d.pitchMult, 0.12, 1.0, 0, true),
+    harmonic_ping: (d) => playBell(660 * d.pitchMult, 1.2, 1.0, 0, false),
     water_ripple: (d) => {
-      playMembrane(220 * d.pitchMult, 1.4, 1.0);
+      playBell(220 * d.pitchMult, 1.4, 1.0, 0, false);
       playNoise(0.5, 1200, 0.25 * state.currentTiltVolume, 'bandpass', 3.5);
     },
-    swirling_decay: (d) => playMembrane(220 * d.pitchMult, 1.8, 1.0),
+    swirling_decay: (d) => playBell(220 * d.pitchMult, 1.8, 1.0, 0, false),
     double_strike: (d) => {
-      playMembrane(220 * d.pitchMult, 1.6, 1.0);
+      playBell(220 * d.pitchMult, 1.6, 1.0, -0.2, false);
       setTimeout(() => {
-        playMembrane(330 * d.pitchMult, 1.4, 1.0);
+        playBell(330 * d.pitchMult, 1.4, 1.0, 0.2, false);
       }, 40);
     }
   },

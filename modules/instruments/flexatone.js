@@ -1,5 +1,13 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import {
+  playMembrane,
+  playNoise,
+  playTablaSlideUp,
+  playAttackClick,
+  speakPhrase,
+  playWavSample,
+  playBell
+} from '../audio.js';
 
 export const flexatone = {
   origin: 'Global / Orchestral',
@@ -63,7 +71,12 @@ export const flexatone = {
   ],
   sounds: {
     handle_shake_roll: (d) => playTablaSlideUp(440 * d.pitchMult, 880 * d.pitchMult, 0.5),
-    thumb_pitch_bend: (d) => playTablaSlideUp(250 * d.pitchMult, 750 * d.pitchMult, 0.8),
+    thumb_pitch_bend: (d) => {
+      const success = playWavSample('/media/flexatone_bend.wav', d.pitchMult, 1.0, 0.0);
+      if (!success) {
+        playTablaSlideUp(250 * d.pitchMult, 750 * d.pitchMult, 0.8);
+      }
+    },
     frame_knock: (d) => playMembrane(950 * d.pitchMult, 0.04, 1.2, true),
     blade_flick_down: (d) => playTablaSlideUp(880 * d.pitchMult, 330 * d.pitchMult, 0.6)
   },

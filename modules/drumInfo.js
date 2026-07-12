@@ -257,7 +257,6 @@ export const drumTags = {
   kanjira: { region: 'Asia', type: 'Hand', features: ['Frame', 'Tuned'] },
   tammorra: { region: 'Europe', type: 'Hand', features: ['Frame', 'Folk'] },
   framed_rumbla: { region: 'Modern', type: 'Hand', features: ['Frame', 'Effects'] },
-  gran_cassa: { region: 'Europe', type: 'Stick', features: ['Metal'] },
   lions_roar: { region: 'Asia', type: 'Hand', features: ['Effects'] },
   chocalho: { region: 'South America', type: 'Hand', features: ['Metal', 'Shaker'] },
   alfaia: { region: 'South America', type: 'Stick', features: ['Wood', 'Folk'] },

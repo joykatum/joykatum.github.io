@@ -64,8 +64,7 @@ class Orchestrator {
       conga: '/media/conga.sf2',
       agogo: '/media/agogo.sf2',
       cajon: '/media/cajon.sf2',
-      timpani: '/media/timpani.sf2',
-      gran_cassa: '/media/gran%20cassa.sf2'
+      timpani: '/media/timpani.sf2'
     };
 
     let relevantSF = null;
@@ -78,8 +77,6 @@ class Orchestrator {
       relevantSF = 'agogo';
     } else if (current === 'timpani') {
       relevantSF = 'timpani';
-    } else if (current === 'gran_cassa') {
-      relevantSF = 'gran_cassa';
     }
 
     const promises = [ensureInstrumentLoaded(state.currentInstrument), ensurePatternsLoaded(state.currentInstrument)];
@@ -126,17 +123,17 @@ class Orchestrator {
     const drumInstrumentSelect = document.getElementById('drum-instrument');
     if (drumInstrumentSelect) {
       drumInstrumentSelect.value = state.currentInstrument;
-      drumInstrumentSelect.addEventListener('change', (e) => {
+      drumInstrumentSelect.addEventListener('change', async (e) => {
         this.updateInstrument(e.target.value);
-        handleInstrumentChange(e.target.value);
+        await handleInstrumentChange(e.target.value);
       });
     }
 
     // Drum selection select element binding
     const drumSelectionSelect = document.getElementById('drum-selection');
     if (drumSelectionSelect) {
-      drumSelectionSelect.addEventListener('change', (e) => {
-        initAudio();
+      drumSelectionSelect.addEventListener('change', async (e) => {
+        await initAudio();
         state.drumSelection = e.target.value;
         localStorage.setItem('drumSelection', state.drumSelection);
         updateActiveDrumsForVisible();
@@ -166,8 +163,8 @@ class Orchestrator {
     // Play/Stop Button binding
     const patternPlayBtn = document.getElementById('pattern-play-btn');
     if (patternPlayBtn) {
-      patternPlayBtn.addEventListener('click', () => {
-        initAudio();
+      patternPlayBtn.addEventListener('click', async () => {
+        await initAudio();
         if (state.isPatternPlaying) {
           stopPattern();
         } else {

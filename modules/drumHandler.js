@@ -83,7 +83,7 @@ export function createSectorOverlays(body, drum, headType = 'default') {
 
     const triggerPlay = (soundType) => {
       const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
-      if (instDef.sounds[soundType]) {
+      if (instDef && instDef.sounds && instDef.sounds[soundType]) {
         let virtualDrum = drum;
         if (state.currentInstrument === 'bongo') {
           virtualDrum = Object.assign({}, drum, {
@@ -122,9 +122,9 @@ export function createSectorOverlays(body, drum, headType = 'default') {
       return drum.id;
     };
 
-    const handlePressStart = (e) => {
+    const handlePressStart = async (e) => {
       e.preventDefault();
-      initAudio();
+      await initAudio();
       pressStart = Date.now();
       isHolding = true;
 
@@ -148,13 +148,14 @@ export function createSectorOverlays(body, drum, headType = 'default') {
       }
     };
 
-    const handlePressEnd = (e) => {
+    const handlePressEnd = async (e) => {
       e.preventDefault();
       if (hasLongPress()) {
         clearTimeout(pressTimer);
         if (isHolding) {
           const sound = getTouchSound(false);
           if (sound) {
+            await initAudio();
             triggerPlay(sound);
             triggerHitEffect(getHitEffectId(), sound);
           }

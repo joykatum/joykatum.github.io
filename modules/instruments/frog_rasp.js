@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playMembrane, playNoise, playScrape, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const frog_rasp = {
   origin: 'Southeast Asia (Thailand)',
@@ -83,9 +83,9 @@ export const frog_rasp = {
     }
   ],
   sounds: {
-    spine_scrape: (d) => playNoise(0.15, 800, state.currentTiltVolume * 0.8),
-    mouth_poke: (d) => playNoise(0.03, 500, state.currentTiltVolume * 0.4),
-    stick_tip_tap: (d) => playNoise(0.03, 500, state.currentTiltVolume * 0.4)
+    spine_scrape: (d) => playScrape(0.2, 25, 800, state.currentTiltVolume * 0.8, true),
+    mouth_poke: (d) => playMembrane(400 * d.pitchMult, 0.05, 1.0, true, state.currentTiltVolume * 0.4),
+    stick_tip_tap: (d) => playAttackClick(0.04, 800, state.currentTiltVolume * 0.4)
   },
   touches: [
     {

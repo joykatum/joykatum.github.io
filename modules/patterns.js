@@ -59,7 +59,6 @@ const patternLoaders = {
   friction_drum: () => import('./patterns/friction_drum.js'),
   frog_rasp: () => import('./patterns/frog_rasp.js'),
   gome: () => import('./patterns/gome.js'),
-  gran_cassa: () => import('./patterns/gran_cassa.js'),
   gubguba: () => import('./patterns/gubguba.js'),
   guiro: () => import('./patterns/guiro.js'),
   jaw_harp: () => import('./patterns/jaw_harp.js'),

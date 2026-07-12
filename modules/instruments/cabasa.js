@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playMembrane, playNoise, playScrape, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const cabasa = {
   origin: 'West Africa / Brazil',
@@ -46,9 +46,9 @@ export const cabasa = {
     }
   ],
   sounds: {
-    cylinder_twist: (d) => playNoise(0.12, 1800, state.currentTiltVolume * 1.1),
+    cylinder_twist: (d) => playScrape(0.12, 35, 1800, state.currentTiltVolume * 1.1, false),
     hand_tap: (d) => playNoise(0.04, 3200, state.currentTiltVolume * 1.3),
-    linear_shaft_tap: (d) => playNoise(0.25, 2000, state.currentTiltVolume * 0.7)
+    linear_shaft_tap: (d) => playAttackClick(0.08, 1200, state.currentTiltVolume * 0.8)
   },
   touches: [
     {

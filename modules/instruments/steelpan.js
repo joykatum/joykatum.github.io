@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playBell, playNoise, playAttackClick, speakPhrase, playWavSample } from '../audio.js';
 
 export const steelpan = {
   origin: 'Trinidad and Tobago',
@@ -34,7 +34,6 @@ export const steelpan = {
       platform: 'Spotify'
     }
   ],
-
   generateSVG: (id, colorType, lugsHtml) => `
     <circle cx="50" cy="51.5" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
             <circle cx="50" cy="50" r="48" fill="url(#skin-${id})"/>
@@ -61,30 +60,35 @@ export const steelpan = {
   sounds: {
     indentation_strike: (d, velocity = 0.85) => {
       // Tuned convex note strike with rubber-tipped mallet
-      playMembrane(440 * d.pitchMult, 0.6, 1.05, false, velocity);
-      playAttackClick(0.015, 3200, 0.3 * velocity);
+      const success = playWavSample('/media/steelpan_strike.wav', d.pitchMult, velocity, 0.0);
+      if (!success) {
+        playBell(440 * d.pitchMult, 0.8, velocity, 0.0, false);
+      }
     },
     rapid_chordal_roll: (d, velocity = 0.8) => {
       // Arpeggiated sweeping melodic chord roll across the pan in stereo
-      playMembrane(440 * d.pitchMult, 0.18, 1.0, false, velocity, -0.15);
-      playAttackClick(0.01, 3200, 0.25 * velocity);
-      setTimeout(() => {
-        playMembrane(554 * d.pitchMult, 0.15, 1.0, false, velocity * 0.9, 0.15);
-        playAttackClick(0.01, 3200, 0.2 * velocity);
-      }, 45);
-      setTimeout(() => {
-        playMembrane(659 * d.pitchMult, 0.12, 1.0, false, velocity * 0.8, 0.0);
-        playAttackClick(0.01, 3200, 0.15 * velocity);
-      }, 90);
+      const success = playWavSample('/media/steelpan_strike.wav', d.pitchMult, velocity, -0.15);
+      if (success) {
+        setTimeout(() => playWavSample('/media/steelpan_strike.wav', d.pitchMult * 1.259, velocity * 0.9, 0.15), 45);
+        setTimeout(() => playWavSample('/media/steelpan_strike.wav', d.pitchMult * 1.498, velocity * 0.8, 0.0), 90);
+      } else {
+        playBell(440 * d.pitchMult, 0.4, velocity, -0.15, false);
+        setTimeout(() => {
+          playBell(554 * d.pitchMult, 0.4, velocity * 0.9, 0.15, false);
+        }, 45);
+        setTimeout(() => {
+          playBell(659 * d.pitchMult, 0.4, velocity * 0.8, 0.0, false);
+        }, 90);
+      }
     },
     rim_ring: (d, velocity = 0.8) => {
       // Bright, industrial untuned metallic chrome skirt ring
-      playMembrane(920 * d.pitchMult, 0.7, 1.0, true, velocity);
+      playBell(920 * d.pitchMult, 0.7, velocity, 0.0, false);
       playNoise(0.4, 4500, velocity * 0.5, 'highpass');
     },
     mute_slap: (d, velocity = 0.75) => {
       // Dry choked hand slap
-      playMembrane(330 * d.pitchMult, 0.05, 0.9, true, velocity);
+      playBell(330 * d.pitchMult, 0.05, velocity, 0.0, true);
     }
   },
   touches: [

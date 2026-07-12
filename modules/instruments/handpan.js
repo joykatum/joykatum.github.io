@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playBell, playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const handpan = {
   origin: 'Switzerland / Global',
@@ -66,10 +66,10 @@ export const handpan = {
     }
   ],
   sounds: {
-    ding: (d) => playMembrane(120 * d.pitchMult, 0.6, 1.25, false),
-    gu: (d) => playMembrane(120 * d.pitchMult, 0.6, 1.25, false),
-    tone_field_tap: (d) => playMembrane(240 * d.pitchMult, 1.3, 1.0, false),
-    interstitial_tap: (d) => playMembrane(85 * d.pitchMult, 1.5, 1.1, false)
+    ding: (d) => playBell(120 * d.pitchMult, 1.2, 1.0, 0, false),
+    gu: (d) => playBell(120 * d.pitchMult, 0.8, 1.0, 0, false),
+    tone_field_tap: (d) => playBell(240 * d.pitchMult, 1.8, 1.0, 0, false),
+    interstitial_tap: (d) => playBell(85 * d.pitchMult, 1.5, 0.5, 0, true)
   },
   touches: [
     {

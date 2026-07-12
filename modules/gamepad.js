@@ -138,7 +138,7 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
 
   const triggerPlay = (drumDef, type) => {
     const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
-    if (instDef.sounds[type]) {
+    if (instDef && instDef.sounds && instDef.sounds[type]) {
       let virtualDrum = drumDef;
       if (state.currentInstrument === 'bongo') {
         virtualDrum = Object.assign({}, drumDef, {

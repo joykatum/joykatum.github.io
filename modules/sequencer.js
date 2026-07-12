@@ -134,7 +134,7 @@ export function playPatternStep() {
     if (!d) {
       d = visibleDrums[numDrumIdx % visibleDrums.length];
     }
-    if (d && instDef.sounds[soundType]) {
+    if (d && instDef && instDef.sounds && instDef.sounds[soundType]) {
       let virtualDrum = d;
       let finalDrumId = d.id;
       if (inst === 'bongo') {

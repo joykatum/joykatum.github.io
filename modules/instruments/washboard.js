@@ -1,5 +1,13 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import {
+  playBell,
+  playMembrane,
+  playNoise,
+  playScrape,
+  playTablaSlideUp,
+  playAttackClick,
+  speakPhrase
+} from '../audio.js';
 
 export const washboard = {
   origin: 'North America (New Orleans Zydeco)',
@@ -47,11 +55,12 @@ export const washboard = {
   ],
   sounds: {
     thimble_ridge_scrape: (d) => {
-      playMembrane(550 * d.pitchMult, 0.06, 1.0, true);
-      playNoise(0.04, 4000, state.currentTiltVolume * 1.1);
+      playScrape(0.12, 30, 2200, state.currentTiltVolume * 1.1, false);
     },
-    mounted_accessory_tap: (d) => playNoise(0.2, 3000, state.currentTiltVolume * 0.8),
-    spoon_click_clatter: (d) => playNoise(0.2, 3000, state.currentTiltVolume * 0.8)
+    mounted_accessory_tap: (d) => playBell(1200 * d.pitchMult, 0.4, state.currentTiltVolume * 0.8, 0, false),
+    spoon_click_clatter: (d) => {
+      playScrape(0.08, 15, 3000, state.currentTiltVolume * 0.8, false);
+    }
   },
   touches: [
     {

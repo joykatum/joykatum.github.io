@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playBell, playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const tank_drum = {
   origin: 'Modern Recycled Idiophone',
@@ -92,12 +92,12 @@ export const tank_drum = {
     }
   ],
   sounds: {
-    tongue_bounce: (d) => playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 1.2, 1.0, false),
+    tongue_bounce: (d) => playBell((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 1.4, 1.0, 0, false),
     finger_slap: (d) => {
-      playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.7, 1.1, false);
+      playBell((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.8, 1.1, 0, false);
       playNoise(0.02, 5000, state.currentTiltVolume * 0.3);
     },
-    muted_tap: (d) => playMembrane((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.2, 0.8, true),
+    muted_tap: (d) => playBell((d.id === 0 ? 147 : d.id === 1 ? 196 : 294) * d.pitchMult, 0.2, 0.8, 0, true),
     shell_strike: (d) => playMembrane(800 * d.pitchMult, 0.1, 1.0, true)
   },
   touches: [

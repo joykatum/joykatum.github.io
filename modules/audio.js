@@ -68,15 +68,14 @@ export let bitCrusherShaper = null;
 export let streamDestination = null;
 
 // Initialize audio context on first user interaction
-export const initAudio = () => {
+export const initAudio = async () => {
   if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
+    await audioCtx.resume();
   }
   if (!state.audioInitialized) {
     initEffectsChain();
-    audioCtx.resume().then(() => {
-      state.audioInitialized = true;
-    });
+    await audioCtx.resume();
+    state.audioInitialized = true;
   }
 };
 
@@ -704,151 +703,191 @@ export function playMembrane(freq, decay, pitchDrop, isSlap = false, velocity = 
   const factor = Math.pow(2, state.pitchShiftSemitones / 12);
   freq *= factor;
 
-  // Fundamental tone
-  const osc = audioCtx.createOscillator();
-  osc.type = 'sine';
+  // SOTA Modal Synthesis for Circular Membrane (Bessel Roots)
+  // Ratios: f11 (1.0), f21 (1.593), f31 (2.135), f12 (2.295), f41 (2.653), f22 (2.917)
+  const modes = [
+    { ratio: 1.0, gainScale: isSlap ? 0.2 : 1.0, decayScale: isSlap ? 0.2 : 1.0, type: 'sine' },
+    { ratio: 1.593, gainScale: isSlap ? 0.6 : 0.4, decayScale: 0.8, type: 'sine' },
+    { ratio: 2.135, gainScale: isSlap ? 0.8 : 0.2, decayScale: 0.6, type: 'triangle' },
+    { ratio: 2.295, gainScale: isSlap ? 0.9 : 0.15, decayScale: 0.5, type: 'sine' },
+    { ratio: 2.653, gainScale: isSlap ? 0.7 : 0.1, decayScale: 0.4, type: 'triangle' },
+    { ratio: 2.917, gainScale: isSlap ? 1.0 : 0.05, decayScale: 0.3, type: 'sine' }
+  ];
 
-  // Overtones for membrane
-  const osc2 = audioCtx.createOscillator();
-  osc2.type = 'triangle';
+  // Shell Modes (Wood body resonance)
+  const shellModes = [
+    { ratio: 0.75, gainScale: isSlap ? 0.1 : 0.4, decayScale: 1.4 },
+    { ratio: 1.25, gainScale: isSlap ? 0.1 : 0.2, decayScale: 1.1 }
+  ];
 
-  // Complex enharmonics for more authentic drum skin sound
-  const osc3 = audioCtx.createOscillator();
-  osc3.type = 'sine';
-
-  // 1. Physical Wood Shell Resonator emulation
-  const shellOsc = audioCtx.createOscillator();
-  shellOsc.type = 'sine';
-  // Shell fixed bloom resonates deep within the wood shell dimensions (~75% of fundamental)
-  shellOsc.frequency.setValueAtTime(freq * 0.75, audioCtx.currentTime);
-
-  const gain = audioCtx.createGain();
-  const gain2 = audioCtx.createGain();
-  const gain3 = audioCtx.createGain();
-  const shellGain = audioCtx.createGain();
   const masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
 
-  // Subtle natural detuning to create rich, organic acoustic bloom and beating
-  osc2.detune.setValueAtTime(3.5, audioCtx.currentTime);
-  osc3.detune.setValueAtTime(-5.0, audioCtx.currentTime);
+  const voices = [];
 
-  osc.connect(gain);
-  osc2.connect(gain2);
-  osc3.connect(gain3);
-  shellOsc.connect(shellGain);
+  // Velocity affects the higher overtones much more than fundamental
+  const velocityCurve = (baseGain, index) => {
+    return baseGain * Math.pow(velocity, 1.0 + index * 0.3);
+  };
 
-  gain.connect(masterGain);
-  gain2.connect(masterGain);
-  gain3.connect(masterGain);
-  shellGain.connect(masterGain);
+  // Create modes
+  modes.forEach((mode, i) => {
+    const osc = audioCtx.createOscillator();
+    osc.type = mode.type;
+
+    // Slight random detuning to mimic uneven skin tension (inharmonicity)
+    const detuneRatio = mode.ratio + (Math.random() * 0.04 - 0.02);
+
+    const modeGain = audioCtx.createGain();
+
+    // Slap choke logic: pitch bends up if slap, down if open
+    let startFreq = freq * detuneRatio;
+    let endFreq = startFreq;
+
+    if (isSlap) {
+      startFreq *= 1.15; // starts higher and snaps down/up
+      osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(startFreq * 0.9, audioCtx.currentTime + 0.05);
+    } else {
+      osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+      if (pitchDrop > 0) {
+        endFreq = Math.max(20, startFreq / pitchDrop);
+        osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + decay * mode.decayScale);
+      }
+    }
+
+    osc.connect(modeGain);
+    modeGain.connect(masterGain);
+
+    const modeDecay = decay * mode.decayScale;
+    const modeVol = velocityCurve(mode.gainScale, i);
+
+    modeGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    modeGain.gain.exponentialRampToValueAtTime(modeVol, audioCtx.currentTime + 0.005);
+    modeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + modeDecay);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + modeDecay);
+    voices.push(osc);
+  });
+
+  // Create Shell Resonance (Deeper, warmer bloom)
+  shellModes.forEach((mode) => {
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq * mode.ratio, audioCtx.currentTime);
+
+    const modeGain = audioCtx.createGain();
+    osc.connect(modeGain);
+    modeGain.connect(masterGain);
+
+    const modeDecay = decay * mode.decayScale;
+    const modeVol = mode.gainScale * velocity;
+
+    modeGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    modeGain.gain.linearRampToValueAtTime(modeVol, audioCtx.currentTime + 0.03); // Shell blooms slower
+    modeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + modeDecay);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + modeDecay);
+    voices.push(osc);
+  });
+
+  // FM Noise Attack (Thud/Snap) for extreme realism
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = getSharedNoiseBuffer();
+
+  const noiseFilter = audioCtx.createBiquadFilter();
+  noiseFilter.type = isSlap ? 'bandpass' : 'lowpass';
+  noiseFilter.frequency.setValueAtTime(isSlap ? 3000 : 800, audioCtx.currentTime);
+  noiseFilter.Q.setValueAtTime(isSlap ? 2.0 : 0.5, audioCtx.currentTime);
+
+  const noiseGain = audioCtx.createGain();
+  const noiseVol = isSlap ? 1.5 * velocity : 0.3 * velocity;
+  noiseGain.gain.setValueAtTime(noiseVol, audioCtx.currentTime);
+  noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + (isSlap ? 0.08 : 0.04));
+
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(masterGain);
+
+  const startOffset = Math.random() * 0.05;
+  noise.start(0, startOffset);
+  noise.stop(audioCtx.currentTime + 0.1);
+  voices.push(noise);
 
   // Route through master saturator for warm physical shell and skin emulation
   const saturator = audioCtx.createWaveShaper();
-  saturator.curve = getSoftClipCurve();
+
+  // Dynamic saturation based on velocity
+  if (velocity > 0.7) {
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) {
+      const x = (i * 2) / 255 - 1;
+      curve[i] = Math.tanh(x * (1 + (velocity - 0.7) * 3));
+    }
+    saturator.curve = curve;
+  } else {
+    saturator.curve = getSoftClipCurve();
+  }
+
   masterGain.connect(saturator);
 
-  // 4. True Stereo Spatial Positioning via individual static panning nodes
+  // True Stereo Spatial Positioning via individual static panning nodes
   const spatialPanNode = audioCtx.createStereoPanner();
   spatialPanNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
   saturator.connect(spatialPanNode);
 
   // Apply a dynamic low-shelf EQ boost for authentic low-end warmth on deep drums (<150Hz)
-  if (freq < 150) {
+  if (freq < 150 && !isSlap) {
     const bassEQ = audioCtx.createBiquadFilter();
     bassEQ.type = 'lowshelf';
-    bassEQ.frequency.setValueAtTime(120, audioCtx.currentTime);
-    const dbBoost = Math.max(1, 4.5 - ((freq - 50) / 100) * 3.5); // Warm +1dB to +4.5dB boost
-    bassEQ.gain.setValueAtTime(dbBoost, audioCtx.currentTime);
+    bassEQ.frequency.setValueAtTime(140, audioCtx.currentTime);
+    const dbBoost = Math.max(1, 6.0 - ((freq - 50) / 100) * 4.0); // Warm +2dB to +6.0dB boost
+    bassEQ.gain.setValueAtTime(dbBoost * velocity, audioCtx.currentTime);
     spatialPanNode.connect(bassEQ);
     bassEQ.connect(getAudioDestination());
   } else {
     spatialPanNode.connect(getAudioDestination());
   }
 
-  // 3. Emulate Hand Damping (Slap micro pitch tightening)
-  if (isSlap) {
-    // Slaps snap upward momentarily as skin is choked/pinched by hand
-    osc.frequency.setValueAtTime(freq * 1.12, audioCtx.currentTime);
-    osc.frequency.linearRampToValueAtTime(freq * 1.15, audioCtx.currentTime + 0.015);
-    osc.frequency.exponentialRampToValueAtTime(freq, audioCtx.currentTime + decay);
-  } else {
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    if (pitchDrop > 0) {
-      osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq / pitchDrop), audioCtx.currentTime + decay);
-    }
+  // Master Envelope & Transient Attack Design
+  const attackTime = 0.003;
+  let punch = 1.0;
+  if (state.transientAttack > 0) {
+    punch = 1.0 + (state.transientAttack / 100) * 1.5;
+    const clickVol = (state.transientAttack / 100) * 0.3 * velocity;
+    playAttackClick(0.01, isSlap ? 4000 : 2500, clickVol);
   }
 
-  // Real drum-head vibrational ratios
-  const ratio2 = 1.587 + (Math.random() * 0.008 - 0.004);
-  const ratio3 = 2.242 + (Math.random() * 0.016 - 0.008);
-  osc2.frequency.setValueAtTime(freq * ratio2, audioCtx.currentTime);
-  osc3.frequency.setValueAtTime(freq * ratio3, audioCtx.currentTime);
+  masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+  masterGain.gain.exponentialRampToValueAtTime(punch, audioCtx.currentTime + attackTime);
+  masterGain.gain.exponentialRampToValueAtTime(1.0, audioCtx.currentTime + attackTime + 0.02);
 
-  if (!isSlap && pitchDrop > 0) {
-    osc2.frequency.exponentialRampToValueAtTime(
-      Math.max(20, (freq * ratio2) / pitchDrop),
-      audioCtx.currentTime + decay * 0.8
-    );
-    osc3.frequency.exponentialRampToValueAtTime(
-      Math.max(20, (freq * ratio3) / pitchDrop),
-      audioCtx.currentTime + decay * 0.6
-    );
-  }
+  const voice = { sources: voices, gain: masterGain };
+  registerVoice(voice, decay * 1.4);
+}
 
-  // Apply Transient Designer Attack
-  const attackTime = 0.005;
-  if (state.transientAttack < 0) {
-    const fadeTime = (-state.transientAttack / 100) * 0.04 + attackTime; // up to 40ms of attack fade
-    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(velocity, audioCtx.currentTime + fadeTime);
-    masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
-  } else {
-    // Punchy attack
-    let punch = 1.0;
-    if (state.transientAttack > 0) {
-      punch = 1.0 + (state.transientAttack / 100) * 1.2;
-      const clickVol = (state.transientAttack / 100) * 0.3 * velocity;
-      playAttackClick(0.015, 2800, clickVol);
-    }
-    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    masterGain.gain.exponentialRampToValueAtTime(velocity * punch, audioCtx.currentTime + attackTime);
-    masterGain.gain.exponentialRampToValueAtTime(velocity, audioCtx.currentTime + attackTime + 0.03);
-    masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
-  }
+// Simulated scraping instrument sound (Guiro, Cabasa, etc)
+export function playScrape(duration, rate = 20, baseFreq = 1500, vol = 1.0, isWooden = true) {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 
-  gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
+  const numRidges = Math.floor(duration * rate);
+  const ridgeDuration = duration / numRidges;
 
-  // 2. Velocity-Sensitive Overtone Timbre scaling
-  const overtoneScale = 0.4 + velocity * 0.6; // Harder hits excite overtones drastically
-  gain2.gain.setValueAtTime((isSlap ? 0.8 : 0.3) * overtoneScale, audioCtx.currentTime);
-  gain3.gain.setValueAtTime((isSlap ? 0.4 : 0.15) * overtoneScale, audioCtx.currentTime);
-
-  // Shell resonance gain is independent, blooming outwards gently
-  shellGain.gain.setValueAtTime(0.18 * velocity, audioCtx.currentTime);
-
-  // Harmonics decay faster
-  gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + decay * 0.6);
-  gain3.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + decay * 0.4);
-  shellGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay * 1.35); // Rings inside body slightly longer
-
-  osc.start();
-  osc2.start();
-  osc3.start();
-  shellOsc.start();
-
-  osc.stop(audioCtx.currentTime + decay);
-  osc2.stop(audioCtx.currentTime + decay);
-  osc3.stop(audioCtx.currentTime + decay);
-  shellOsc.stop(audioCtx.currentTime + decay * 1.35);
-
-  const voice = { sources: [osc, osc2, osc3, shellOsc], gain: masterGain };
-  registerVoice(voice, decay);
-
-  if (isSlap) {
-    playNoise(0.12, 1000, velocity);
-  } else {
-    // subtle skin noise attack
-    playNoise(0.04, 2500, velocity * 0.15);
+  for (let i = 0; i < numRidges; i++) {
+    const timeOffset = i * ridgeDuration;
+    setTimeout(() => {
+      // Alternate frequencies slightly for a rough scrape texture
+      const freqVar = baseFreq + (Math.random() - 0.5) * (isWooden ? 400 : 1200);
+      playNoise(
+        isWooden ? 0.05 : 0.08,
+        freqVar,
+        vol * (0.8 + Math.random() * 0.4),
+        isWooden ? 'bandpass' : 'highpass',
+        isWooden ? 2.5 : 1.0
+      );
+    }, timeOffset * 1000);
   }
 }
 
@@ -908,41 +947,95 @@ export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0, panV
   startFreq *= factor;
   endFreq *= factor;
 
+  // The Bayan has a heavy center paste (Syahi) which alters the harmonics
+  // Ratios: 1.0 (sine), 1.45 (sine), 2.05 (triangle)
   const osc = audioCtx.createOscillator();
   osc.type = 'sine';
 
   const osc2 = audioCtx.createOscillator();
-  osc2.type = 'triangle';
+  osc2.type = 'sine';
   osc2.detune.setValueAtTime(6, audioCtx.currentTime); // Subtle chorus beating
+
+  const osc3 = audioCtx.createOscillator();
+  osc3.type = 'triangle';
+  osc3.detune.setValueAtTime(-4, audioCtx.currentTime);
 
   const gain = audioCtx.createGain();
   const gain2 = audioCtx.createGain();
+  const gain3 = audioCtx.createGain();
   const masterGain = audioCtx.createGain();
 
   osc.connect(gain);
   osc2.connect(gain2);
+  osc3.connect(gain3);
+
   gain.connect(masterGain);
   gain2.connect(masterGain);
+  gain3.connect(masterGain);
 
   // Route through master saturator for warm physical body emulation
   const saturator = audioCtx.createWaveShaper();
-  saturator.curve = getSoftClipCurve();
+  if (velocity > 0.6) {
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) {
+      const x = (i * 2) / 255 - 1;
+      curve[i] = Math.tanh(x * (1 + (velocity - 0.6) * 2.5));
+    }
+    saturator.curve = curve;
+  } else {
+    saturator.curve = getSoftClipCurve();
+  }
+
   masterGain.connect(saturator);
 
   const spatialPanNode = audioCtx.createStereoPanner();
   spatialPanNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
-  saturator.connect(spatialPanNode);
-  spatialPanNode.connect(getAudioDestination());
 
+  // Add sub-bass EQ for the huge tabla bottom end
+  const bassEQ = audioCtx.createBiquadFilter();
+  bassEQ.type = 'lowshelf';
+  bassEQ.frequency.setValueAtTime(100, audioCtx.currentTime);
+  bassEQ.gain.setValueAtTime(8.0 * velocity, audioCtx.currentTime); // +8dB sub boost
+
+  saturator.connect(spatialPanNode);
+  spatialPanNode.connect(bassEQ);
+  bassEQ.connect(getAudioDestination());
+
+  // Slide curves
   osc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + decay * 0.85);
 
-  osc2.frequency.setValueAtTime(startFreq * 1.5, audioCtx.currentTime);
-  osc2.frequency.exponentialRampToValueAtTime(endFreq * 1.5, audioCtx.currentTime + decay * 0.75);
+  osc2.frequency.setValueAtTime(startFreq * 1.45, audioCtx.currentTime);
+  osc2.frequency.exponentialRampToValueAtTime(endFreq * 1.45, audioCtx.currentTime + decay * 0.75);
 
+  osc3.frequency.setValueAtTime(startFreq * 2.05, audioCtx.currentTime);
+  osc3.frequency.exponentialRampToValueAtTime(endFreq * 2.05, audioCtx.currentTime + decay * 0.65);
+
+  // Velocity affects harmonic content
   gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
-  gain2.gain.setValueAtTime(0.18, audioCtx.currentTime);
-  gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay * 0.4);
+  gain2.gain.setValueAtTime(0.3 * velocity, audioCtx.currentTime);
+  gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay * 0.5);
+  gain3.gain.setValueAtTime(0.15 * velocity, audioCtx.currentTime);
+  gain3.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay * 0.4);
+
+  // Attack Thwack (Fingertip striking the skin)
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = getSharedNoiseBuffer();
+  const noiseFilter = audioCtx.createBiquadFilter();
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.setValueAtTime(1200 + velocity * 1000, audioCtx.currentTime);
+  noiseFilter.Q.setValueAtTime(1.0, audioCtx.currentTime);
+
+  const noiseGain = audioCtx.createGain();
+  noiseGain.gain.setValueAtTime(0.8 * velocity, audioCtx.currentTime);
+  noiseGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(masterGain);
+
+  noise.start(0, Math.random() * 0.02);
+  noise.stop(audioCtx.currentTime + 0.1);
 
   if (state.transientAttack < 0) {
     const fadeTime = (-state.transientAttack / 100) * 0.04;
@@ -952,7 +1045,6 @@ export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0, panV
   } else {
     masterGain.gain.setValueAtTime(velocity, audioCtx.currentTime);
     masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
-
     if (state.transientAttack > 0) {
       const clickVol = (state.transientAttack / 100) * 0.4 * velocity;
       playAttackClick(0.015, 2800, clickVol);
@@ -961,11 +1053,82 @@ export function playTablaSlideUp(startFreq, endFreq, decay, velocity = 1.0, panV
 
   osc.start();
   osc2.start();
+  osc3.start();
+
   osc.stop(audioCtx.currentTime + decay);
   osc2.stop(audioCtx.currentTime + decay);
+  osc3.stop(audioCtx.currentTime + decay);
 
-  const voice = { sources: [osc, osc2], gain: masterGain };
+  const voice = { sources: [osc, osc2, osc3, noise], gain: masterGain };
   registerVoice(voice, decay);
+}
+
+// Inharmonic FM/Additive synthesis for bells, cowbells, and metal percussion
+export function playBell(freq, decay, velocity = 1.0, panValue = 0.0, isMuted = false) {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  decay = adjustDecayForSustain(decay);
+
+  const factor = Math.pow(2, state.pitchShiftSemitones / 12);
+  freq *= factor;
+
+  // Typical cowbell/agogo inharmonic modes
+  const modes = [
+    { ratio: 1.0, gainScale: 1.0, decayScale: 1.0 },
+    { ratio: 1.45, gainScale: 0.8, decayScale: 0.8 },
+    { ratio: 1.9, gainScale: 0.6, decayScale: 0.6 },
+    { ratio: 2.3, gainScale: 0.4, decayScale: 0.4 },
+    { ratio: 3.2, gainScale: 0.3, decayScale: 0.3 },
+    { ratio: 4.1, gainScale: 0.2, decayScale: 0.2 }
+  ];
+
+  const masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  const sources = [];
+
+  modes.forEach((mode) => {
+    const osc = audioCtx.createOscillator();
+    // Mostly sine waves for bells, but the fundamental can be a triangle for bite
+    osc.type = mode.ratio === 1.0 ? 'triangle' : 'sine';
+
+    // Add slight random detuning for authentic metal clash
+    const detune = (Math.random() - 0.5) * 15;
+    osc.detune.setValueAtTime(detune, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(freq * mode.ratio, audioCtx.currentTime);
+
+    const modeGain = audioCtx.createGain();
+    const modeDecay = isMuted ? 0.05 : decay * mode.decayScale;
+
+    modeGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    // Fast attack
+    modeGain.gain.linearRampToValueAtTime(mode.gainScale * velocity, audioCtx.currentTime + 0.005);
+    modeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + modeDecay);
+
+    osc.connect(modeGain);
+    modeGain.connect(masterGain);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + modeDecay);
+    sources.push(osc);
+  });
+
+  const panner = audioCtx.createStereoPanner();
+  panner.pan.setValueAtTime(panValue, audioCtx.currentTime);
+
+  // Bandpass filter to remove muddy lows and extreme highs
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(freq * 1.5, audioCtx.currentTime);
+  filter.Q.setValueAtTime(1.5, audioCtx.currentTime);
+
+  masterGain.connect(filter);
+  filter.connect(panner);
+  panner.connect(getAudioDestination());
+
+  // Initial metal clank attack
+  playAttackClick(0.02, freq * 2, velocity * 0.8);
+
+  const voice = { sources: sources, gain: masterGain };
+  registerVoice(voice, isMuted ? 0.1 : decay);
 }
 
 // Speech Synthesis for toy, fx, and authentic voice instruments
@@ -997,3 +1160,54 @@ export function speakPhrase(text, pitch = 1.0, rate = 1.0, volume = 0.8) {
 // Listeners to initialize context on click/touch
 window.addEventListener('click', initAudio);
 window.addEventListener('touchstart', initAudio);
+
+const wavCache = {};
+
+export async function loadWavSample(url) {
+  if (wavCache[url]) return wavCache[url];
+  try {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+    wavCache[url] = audioBuffer;
+    return audioBuffer;
+  } catch (err) {
+    console.error('Failed to load wav: ' + url, err);
+    return null;
+  }
+}
+
+export function playWavSample(url, pitchMult = 1.0, velocity = 1.0, panValue = 0.0) {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const audioBuffer = wavCache[url];
+  if (!audioBuffer) {
+    loadWavSample(url); // Trigger load for next time
+    return false;
+  }
+  const source = audioCtx.createBufferSource();
+  source.buffer = audioBuffer;
+
+  const pitchShiftFactor = Math.pow(2, state.pitchShiftSemitones / 12);
+  let finalPlaybackRate = pitchMult * pitchShiftFactor;
+  source.playbackRate.setValueAtTime(finalPlaybackRate, audioCtx.currentTime);
+
+  const gainNode = audioCtx.createGain();
+  const pannerNode = audioCtx.createStereoPanner();
+  pannerNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
+
+  source.connect(gainNode);
+  gainNode.connect(pannerNode);
+  pannerNode.connect(getAudioDestination());
+
+  gainNode.gain.setValueAtTime(velocity, audioCtx.currentTime);
+
+  const decayScale = 1.0 + (state.transientSustain / 100) * 1.5;
+  const duration = (audioBuffer.duration / finalPlaybackRate) * decayScale;
+
+  source.start(0);
+  source.stop(audioCtx.currentTime + duration);
+
+  const voice = { sources: [source], gain: gainNode };
+  registerVoice(voice, duration);
+  return true;
+}

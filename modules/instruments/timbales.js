@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playMembrane, playNoise, playBell, playAttackClick, speakPhrase } from '../audio.js';
 
 export const timbales = {
   origin: 'Cuba',
@@ -39,7 +39,6 @@ export const timbales = {
       platform: 'Spotify'
     }
   ],
-
   generateSVG: (id, colorType, lugsHtml) => `
     <!-- Heavy bottom shadow -->
             <circle cx="50" cy="51" r="48" fill="#020617" opacity="0.6" filter="blur(2px)"/>
@@ -86,13 +85,11 @@ export const timbales = {
       playNoise(0.08, d.id === 0 ? 2500 : 2000, state.currentTiltVolume * 1.1);
     },
     paila: (d) => {
-      playMembrane(800 * d.pitchMult, 0.05, 1.0, false);
-      playNoise(0.03, 3500, state.currentTiltVolume * 0.5);
+      playBell(800 * d.pitchMult, 0.05, 1.0, d.id === 0 ? -0.1 : 0.1, true);
     },
     timbales_muff: (d) => playMembrane((d.id === 0 ? 350 : 250) * d.pitchMult, 0.1, 1.0, false),
     bell: (d) => {
-      playMembrane(1200 * d.pitchMult, 0.15, 1.0, false); // synthetic cowbell ping
-      playNoise(0.05, 4000, state.currentTiltVolume * 0.6);
+      playBell(600 * d.pitchMult, 0.3, 1.0, 0, false); // synthetic cowbell
     }
   },
   touches: [

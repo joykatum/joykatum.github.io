@@ -758,18 +758,6 @@ export const drumTypes = {
       }
     ]
   },
-  gran_cassa: {
-    name: 'Gran Cassa',
-    drums: [
-      {
-        id: 0,
-        label: 'Gran Cassa',
-        pitchMult: 1,
-        color: 'dark',
-        sizeValue: 28
-      }
-    ]
-  },
   lions_roar: {
     name: "Lion's Roar",
     drums: [
@@ -1800,6 +1788,38 @@ const customMappings = {
   }
 };
 
+function sanitizeHandMapping(handMap, availableTouches) {
+  const directions = ['up', 'down', 'left', 'right', 'upLong', 'downLong', 'leftLong', 'rightLong'];
+  const mappedTouches = new Set();
+  const sanitized = {};
+
+  // First, initialize directions with empty values
+  directions.forEach((dir) => (sanitized[dir] = ''));
+  sanitized.trigger = handMap.trigger || '';
+
+  // First pass: keep unique, valid touch mappings from the original map
+  directions.forEach((dir) => {
+    const val = handMap[dir];
+    if (val && availableTouches.includes(val) && !mappedTouches.has(val)) {
+      sanitized[dir] = val;
+      mappedTouches.add(val);
+    }
+  });
+
+  // Second pass: if we have available touches that are NOT mapped, put them in empty directions
+  const unmappedTouches = availableTouches.filter((t) => !mappedTouches.has(t));
+  const emptyDirs = directions.filter((dir) => !sanitized[dir]);
+
+  unmappedTouches.forEach((touch, index) => {
+    if (index < emptyDirs.length) {
+      sanitized[emptyDirs[index]] = touch;
+      mappedTouches.add(touch);
+    }
+  });
+
+  return sanitized;
+}
+
 const loadedInstruments = {};
 
 export async function ensureInstrumentLoaded(instrumentName) {
@@ -1885,33 +1905,45 @@ export async function ensureInstrumentLoaded(instrumentName) {
       // Ensure mappings is populated
       if (!instData.mappings) {
         if (customMappings[name]) {
-          instData.mappings = customMappings[name];
+          // Deep clone to prevent mutating shared customMappings dictionary
+          instData.mappings = JSON.parse(JSON.stringify(customMappings[name]));
         } else {
           const soundKeys = Object.keys(instData.sounds || {});
           instData.mappings = {
             left: {
               up: soundKeys[0] || '',
-              down: soundKeys[1] || soundKeys[0] || '',
-              left: soundKeys[2] || soundKeys[0] || '',
-              right: soundKeys[3] || soundKeys[0] || '',
+              down: soundKeys[1] || '',
+              left: soundKeys[2] || '',
+              right: soundKeys[3] || '',
               upLong: soundKeys[4] || '',
               downLong: soundKeys[5] || '',
-              leftLong: '',
-              rightLong: '',
+              leftLong: soundKeys[6] || '',
+              rightLong: soundKeys[7] || '',
               trigger: soundKeys[0] || ''
             },
             right: {
               up: soundKeys[0] || '',
-              down: soundKeys[1] || soundKeys[0] || '',
-              left: soundKeys[2] || soundKeys[0] || '',
-              right: soundKeys[3] || soundKeys[0] || '',
+              down: soundKeys[1] || '',
+              left: soundKeys[2] || '',
+              right: soundKeys[3] || '',
               upLong: soundKeys[4] || '',
               downLong: soundKeys[5] || '',
-              leftLong: '',
-              rightLong: '',
+              leftLong: soundKeys[6] || '',
+              rightLong: soundKeys[7] || '',
               trigger: soundKeys[1] || soundKeys[0] || ''
             }
           };
+        }
+      }
+
+      // Sanitize mappings to prevent duplicates and ensure all touches are mapped
+      if (instData.mappings && instData.touches) {
+        const availableTouchIds = instData.touches.map((t) => t.id);
+        if (instData.mappings.left) {
+          instData.mappings.left = sanitizeHandMapping(instData.mappings.left, availableTouchIds);
+        }
+        if (instData.mappings.right) {
+          instData.mappings.right = sanitizeHandMapping(instData.mappings.right, availableTouchIds);
         }
       }
 

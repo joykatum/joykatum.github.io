@@ -1,5 +1,5 @@
 import { state } from '../state.js';
-import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
+import { playMembrane, playNoise, playScrape, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
 export const guiro = {
   origin: 'Puerto Rico / Cuba',
@@ -48,11 +48,11 @@ export const guiro = {
   sounds: {
     largo: (d, velocity = 0.8) => {
       // Long dragging scrape with a raspy gourd texture
-      playNoise(0.5, 1250, velocity * 0.95, 'bandpass', 3.0);
+      playScrape(0.4, 30, 1250, velocity * 0.95, true);
     },
     corto: (d, velocity = 0.8) => {
       // Crisp, short accent flick
-      playNoise(0.12, 1650, velocity * 0.85, 'highpass');
+      playScrape(0.1, 40, 1650, velocity * 0.85, true);
     },
     shell_tap: (d, velocity = 0.75) => {
       // Dry hollow wood-block tone

@@ -5,16 +5,14 @@ export const loadedSoundFonts = {
   agogo: null,
   conga: null,
   cajon: null,
-  timpani: null,
-  gran_cassa: null
+  timpani: null
 };
 
 export const loadingStates = {
   agogo: 'idle', // 'idle' | 'loading' | 'loaded' | 'error'
   conga: 'idle',
   cajon: 'idle',
-  timpani: 'idle',
-  gran_cassa: 'idle'
+  timpani: 'idle'
 };
 
 /**
@@ -133,40 +131,50 @@ function parseSoundFont(arrayBuffer) {
   return samples;
 }
 
+const loadingPromises = {};
+
 /**
  * Fetch and parse a SoundFont from URL
  */
 export async function loadSoundFont(name, url) {
-  if (loadingStates[name] === 'loading' || loadingStates[name] === 'loaded') {
+  if (loadedSoundFonts[name]) {
     return loadedSoundFonts[name];
   }
-
-  loadingStates[name] = 'loading';
-  console.log(`[SF2Loader] Fetching SoundFont: ${name} from ${url}`);
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const arrayBuffer = await response.arrayBuffer();
-    const samples = parseSoundFont(arrayBuffer);
-
-    // Store samples indexed by lowercase name for easy mapping
-    const sampleMap = {};
-    samples.forEach((s) => {
-      sampleMap[s.name.toLowerCase()] = s;
-    });
-
-    loadedSoundFonts[name] = sampleMap;
-    loadingStates[name] = 'loaded';
-    console.log(`[SF2Loader] Successfully loaded SoundFont: ${name} (${samples.length} samples)`);
-    return sampleMap;
-  } catch (error) {
-    loadingStates[name] = 'error';
-    console.error(`[SF2Loader] Failed to load SoundFont: ${name}`, error);
-    return null;
+  if (loadingPromises[name]) {
+    return loadingPromises[name];
   }
+
+  loadingPromises[name] = (async () => {
+    loadingStates[name] = 'loading';
+    console.log(`[SF2Loader] Fetching SoundFont: ${name} from ${url}`);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      const samples = parseSoundFont(arrayBuffer);
+
+      // Store samples indexed by lowercase name for easy mapping
+      const sampleMap = {};
+      samples.forEach((s) => {
+        sampleMap[s.name.toLowerCase()] = s;
+      });
+
+      loadedSoundFonts[name] = sampleMap;
+      loadingStates[name] = 'loaded';
+      console.log(`[SF2Loader] Successfully loaded SoundFont: ${name} (${samples.length} samples)`);
+      return sampleMap;
+    } catch (error) {
+      loadingStates[name] = 'error';
+      console.error(`[SF2Loader] Failed to load SoundFont: ${name}`, error);
+      delete loadingPromises[name]; // Allow retry on failure
+      return null;
+    }
+  })();
+
+  return loadingPromises[name];
 }
 
 /**
@@ -217,31 +225,59 @@ export function playSoundFontSample(
   const pitchShiftFactor = Math.pow(2, state.pitchShiftSemitones / 12);
   let finalPlaybackRate = pitchMult * pitchShiftFactor;
 
-  // Anti-machine-gun micro-pitch humanization (+/- 12 cents) to prevent static repetitions
-  const humanizeCents = (Math.random() - 0.5) * 12;
-  const humanizeFactor = Math.pow(2, humanizeCents / 1200);
-  finalPlaybackRate *= humanizeFactor;
+  // SOTA Anti-machine-gun:
+  // 1. Velocity influences pitch slightly (harder hits tighten the skin, raising pitch by up to 25 cents)
+  const velocityPitchCents = (velocity - 0.5) * 25;
+  // 2. Micro-pitch humanization (+/- 10 cents)
+  const humanizeCents = (Math.random() - 0.5) * 20;
 
-  // Account for the original sample pitch:
-  // If the sample was recorded at pitch C4 (MIDI 60), but we want to play it at pitch C4, rate is 1.0.
-  // If we wanted to shift relative to original pitch, we can use:
-  // finalPlaybackRate *= Math.pow(2, (targetMidiNote - sample.originalPitch) / 12)
-  // For percussion, we usually want to trigger the sample at its native pitch or scaled by pitchMult
+  const totalCentsShift = velocityPitchCents + humanizeCents;
+  const shiftFactor = Math.pow(2, totalCentsShift / 1200);
+  finalPlaybackRate *= shiftFactor;
+
   source.playbackRate.setValueAtTime(finalPlaybackRate, audioCtx.currentTime);
+
+  // SOTA: Velocity-sensitive Filter Envelope
+  // Hard hits are bright initially and decay quickly. Soft hits are dark.
+  const filterNode = audioCtx.createBiquadFilter();
+  filterNode.type = 'lowpass';
+
+  // Base cutoff scales non-linearly with velocity
+  const baseCutoff = 800 + Math.pow(velocity, 2.0) * 16000;
+  // Attack transient adds an extra "snap" for high velocities
+  const transientCutoff = baseCutoff + (velocity > 0.6 ? 4000 * (velocity - 0.6) : 0);
+
+  filterNode.frequency.setValueAtTime(Math.min(22000, transientCutoff), audioCtx.currentTime);
+  // Filter closes down very rapidly, mimicking high-frequency damping in drum skin
+  filterNode.frequency.exponentialRampToValueAtTime(Math.max(400, baseCutoff * 0.4), audioCtx.currentTime + 0.1);
+  filterNode.frequency.exponentialRampToValueAtTime(Math.max(100, baseCutoff * 0.1), audioCtx.currentTime + 0.5);
+
+  // Filter Resonance (Q) increases slightly with harder hits to give "bark"
+  filterNode.Q.setValueAtTime(0.5 + velocity * 1.5, audioCtx.currentTime);
 
   const gainNode = audioCtx.createGain();
   const pannerNode = audioCtx.createStereoPanner();
   pannerNode.pan.setValueAtTime(panValue, audioCtx.currentTime);
 
-  // Dynamic velocity-sensitive low-pass filter (simulating skin damping on softer hits)
-  const filterNode = audioCtx.createBiquadFilter();
-  filterNode.type = 'lowpass';
-  const cutoffFreq = 1200 + Math.pow(Math.min(1.0, velocity), 1.5) * 18800;
-  filterNode.frequency.setValueAtTime(cutoffFreq, audioCtx.currentTime);
+  // Optional subtle saturation/distortion on hard hits for organic warmth
+  const saturator = audioCtx.createWaveShaper();
+  if (velocity > 0.8) {
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) {
+      const x = (i * 2) / 255 - 1;
+      // Soft saturation curve
+      curve[i] = Math.tanh(x * (1 + (velocity - 0.8) * 2));
+    }
+    saturator.curve = curve;
+  } else {
+    // Linear pass-through if not hit hard
+    saturator.curve = new Float32Array([-1, 1]);
+  }
 
   // Connection routing
   source.connect(filterNode);
-  filterNode.connect(gainNode);
+  filterNode.connect(saturator);
+  saturator.connect(gainNode);
   gainNode.connect(pannerNode);
   pannerNode.connect(getAudioDestination());
 
@@ -250,21 +286,27 @@ export function playSoundFontSample(
   const duration = (audioBuffer.duration / finalPlaybackRate) * decayScale;
   const decay = customDecay !== null ? customDecay : duration;
 
+  // Humanize velocity volume slightly (+/- 3%)
+  const humanizedVelocity = Math.max(0.01, Math.min(1.0, velocity * (0.97 + Math.random() * 0.06)));
+
   // Transient attack design
-  const attackTime = 0.005;
+  const attackTime = 0.003 + Math.random() * 0.002; // 3-5ms attack for variation
   let punch = 1.0;
   if (state.transientAttack > 0) {
-    punch = 1.0 + (state.transientAttack / 100) * 1.2;
+    punch = 1.0 + (state.transientAttack / 100) * 1.5;
   }
 
   gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(velocity * punch, audioCtx.currentTime + attackTime);
-  gainNode.gain.exponentialRampToValueAtTime(velocity, audioCtx.currentTime + attackTime + 0.03);
-  gainNode.gain.setValueAtTime(velocity, audioCtx.currentTime + Math.max(0.01, decay - 0.05));
+  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity * punch, audioCtx.currentTime + attackTime);
+  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity, audioCtx.currentTime + attackTime + 0.035);
+  gainNode.gain.setValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.max(0.01, decay - 0.08));
   gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
 
+  // Anti-machine-gun: Start sample slightly offset randomly (0-3ms)
+  const startOffset = Math.random() * 0.003;
+
   // Trigger playback
-  source.start();
+  source.start(0, startOffset);
   source.stop(audioCtx.currentTime + decay);
 
   // Register voice in the master pool

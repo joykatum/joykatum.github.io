@@ -389,8 +389,7 @@ function checkTypeMatch(key, item, tags) {
       'kotsuzumi',
       'repinique',
       'talkingdrum',
-      'daiko',
-      'gran_cassa'
+      'daiko'
     ].includes(key);
   }
   if (item === 'Not Really a Drum') {
@@ -1298,7 +1297,7 @@ export function updateActiveDrumsForVisible() {
 }
 
 export async function handleInstrumentChange(newInst) {
-  initAudio();
+  await initAudio();
 
   // Show beautiful waiting/loading screen overlay
   showDrumLoadingScreen(newInst);
@@ -1310,8 +1309,7 @@ export async function handleInstrumentChange(newInst) {
     conga: '/media/conga.sf2',
     agogo: '/media/agogo.sf2',
     cajon: '/media/cajon.sf2',
-    timpani: '/media/timpani.sf2',
-    gran_cassa: '/media/gran%20cassa.sf2'
+    timpani: '/media/timpani.sf2'
   };
 
   // Determine if this instrument needs a SoundFont
@@ -1324,8 +1322,6 @@ export async function handleInstrumentChange(newInst) {
     relevantSF = 'agogo';
   } else if (newInst === 'timpani') {
     relevantSF = 'timpani';
-  } else if (newInst === 'gran_cassa') {
-    relevantSF = 'gran_cassa';
   }
 
   const promises = [ensureInstrumentLoaded(newInst), ensurePatternsLoaded(newInst)];
