@@ -1,3 +1,4 @@
+import { getPlayingSurface } from './playingSurface.js';
 import { state } from './state.js';
 import { drumTypes, instrumentMappings, getVisibleDrums } from './drumTypes.js';
 import { initAudio } from './audio.js';
@@ -68,7 +69,7 @@ export function createSectorOverlays(body, drum, headType = 'default') {
       if (!mapping) return false;
       let sideMap = mapping.left;
       if (inst === 'bata') {
-        sideMap = headType === 'enu' ? mapping.right : mapping.left;
+        sideMap = headType === 'enu' ? mapping.left : mapping.right;
       } else if (inst === 'bongo') {
         sideMap = headType === 'macho' ? mapping.left : mapping.right;
       } else if (inst === 'agogo') {
@@ -84,33 +85,7 @@ export function createSectorOverlays(body, drum, headType = 'default') {
     const triggerPlay = (soundType) => {
       const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
       if (instDef && instDef.sounds && instDef.sounds[soundType]) {
-        let virtualDrum = drum;
-        if (state.currentInstrument === 'bongo') {
-          virtualDrum = Object.assign({}, drum, {
-            id: headType === 'macho' ? 0 : 1,
-            pitchMult: headType === 'macho' ? 1.0 : 0.7
-          });
-        } else if (state.currentInstrument === 'bata') {
-          virtualDrum = Object.assign({}, drum, {
-            id: headType === 'chacha' ? 1 : 0,
-            pitchMult: headType === 'chacha' ? 1.4 : 0.9
-          });
-        } else if (state.currentInstrument === 'mridangam') {
-          virtualDrum = Object.assign({}, drum, {
-            id: headType === 'thoppi' ? 0 : 1,
-            pitchMult: headType === 'thoppi' ? 0.8 : 1.4
-          });
-        } else if (state.currentInstrument === 'dhol') {
-          virtualDrum = Object.assign({}, drum, {
-            id: headType === 'dagga' ? 0 : 1,
-            pitchMult: headType === 'dagga' ? 0.8 : 1.25
-          });
-        } else if (state.currentInstrument === 'agogo') {
-          virtualDrum = Object.assign({}, drum, {
-            id: headType === 'high' ? 1 : 0,
-            pitchMult: headType === 'high' ? 1.35 : 1.0
-          });
-        }
+        const virtualDrum = getPlayingSurface(state.currentInstrument, drum, headType);
         instDef.sounds[soundType](virtualDrum);
       }
     };

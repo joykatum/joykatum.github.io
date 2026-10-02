@@ -52,14 +52,14 @@ export const synsonics_drums = {
     }
   ],
   sounds: {
-    retro_kick: (d) => playMembrane(55 * d.pitchMult, 0.3, 4.5),
-    noise_snare: (d) => {
-      playMembrane(180 * d.pitchMult, 0.08, 1.0, true);
-      playNoise(0.18, 900, 0.9 * state.currentTiltVolume);
+    retro_kick: (d, velocity = 1) => playMembrane(55 * d.pitchMult, 0.3, 4.5, false, velocity),
+    noise_snare: (d, velocity = 1) => {
+      playMembrane(180 * d.pitchMult, 0.08, 1.0, true, velocity);
+      playNoise(0.18, 900, (0.9 * state.currentTiltVolume) * velocity);
     },
-    tom_low: (d) => playMembrane(120 * d.pitchMult, 0.4, 4.0),
-    tom_high: (d) => playMembrane(220 * d.pitchMult, 0.3, 4.0),
-    lofi_cymbal: (d) => playNoise(0.35, 4000, 0.6 * state.currentTiltVolume)
+    tom_low: (d, velocity = 1) => playMembrane(120 * d.pitchMult, 0.4, 4.0, false, velocity),
+    tom_high: (d, velocity = 1) => playMembrane(220 * d.pitchMult, 0.3, 4.0, false, velocity),
+    lofi_cymbal: (d, velocity = 1) => playNoise(0.35, 4000, (0.6 * state.currentTiltVolume) * velocity)
   },
   touches: [
     {

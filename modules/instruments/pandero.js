@@ -61,15 +61,15 @@ export const pandero = {
     }
   ],
   sounds: {
-    open_edge_tone: (d) => playMembrane((d.id === 0 ? 280 : d.id === 1 ? 180 : 100) * d.pitchMult, 0.4, 1.0, false),
-    choke_center_strike: (d) =>
-      playMembrane((d.id === 0 ? 280 : d.id === 1 ? 180 : 120) * d.pitchMult, 0.1, 1.0, false),
-    rim_jingle_strike: (d) => playMembrane((d.id === 0 ? 300 : d.id === 1 ? 200 : 140) * d.pitchMult, 0.08, 1.0, false),
-    sub_bass_hand_cup: (d) => playMembrane((d.id === 0 ? 180 : d.id === 1 ? 120 : 70) * d.pitchMult, 0.5, 1.3, false),
-    thigh_slap_pop: (d) => {
+    open_edge_tone: (d, velocity = 1) => playMembrane((d.id === 0 ? 280 : d.id === 1 ? 180 : 100) * d.pitchMult, 0.4, 1.0, false, velocity),
+    choke_center_strike: (d, velocity = 1) =>
+      playMembrane((d.id === 0 ? 280 : d.id === 1 ? 180 : 120) * d.pitchMult, 0.1, 1.0, false, velocity),
+    rim_jingle_strike: (d, velocity = 1) => playMembrane((d.id === 0 ? 300 : d.id === 1 ? 200 : 140) * d.pitchMult, 0.08, 1.0, false, velocity),
+    sub_bass_hand_cup: (d, velocity = 1) => playMembrane((d.id === 0 ? 180 : d.id === 1 ? 120 : 70) * d.pitchMult, 0.5, 1.3, false, velocity),
+    thigh_slap_pop: (d, velocity = 1) => {
       const f = d.id === 0 ? 350 : d.id === 1 ? 220 : 150;
-      playMembrane(f * d.pitchMult, 0.12, 1.1, true);
-      playNoise(0.06, 1800, state.currentTiltVolume * 0.9);
+      playMembrane(f * d.pitchMult, 0.12, 1.1, true, velocity);
+      playNoise(0.06, 1800, (state.currentTiltVolume * 0.9) * velocity);
     }
   },
   touches: [

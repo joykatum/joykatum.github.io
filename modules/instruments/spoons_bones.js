@@ -72,14 +72,14 @@ export const spoons_bones = {
     }
   ],
   sounds: {
-    finger_rake_roll: (d) => {
-      playMembrane(600 * d.pitchMult, 0.04, 1.0, false);
-      playNoise(0.02, 3500, state.currentTiltVolume * 0.4);
+    finger_rake_roll: (d, velocity = 1) => {
+      playMembrane(600 * d.pitchMult, 0.04, 1.0, false, velocity);
+      playNoise(0.02, 3500, (state.currentTiltVolume * 0.4) * velocity);
     },
-    thigh_to_hand_bounce: (d) => playMembrane(350 * d.pitchMult, 0.03, 1.0, false),
-    hand_flat_slap: (d) => {
-      playMembrane(800 * d.pitchMult, 0.03, 1.0, true);
-      playNoise(0.04, 4500, state.currentTiltVolume * 1.2);
+    thigh_to_hand_bounce: (d, velocity = 1) => playMembrane(350 * d.pitchMult, 0.03, 1.0, false, velocity),
+    hand_flat_slap: (d, velocity = 1) => {
+      playMembrane(800 * d.pitchMult, 0.03, 1.0, true, velocity);
+      playNoise(0.04, 4500, (state.currentTiltVolume * 1.2) * velocity);
     }
   },
   touches: [

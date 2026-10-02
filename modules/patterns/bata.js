@@ -14,7 +14,7 @@ export default {
       ],
       4: [
         { drum: 2, sound: 'enu_abierto' },
-        { drum: 1, stroke: 'chacha_tapado' }
+        { drum: 1, sound: 'chacha_tapado' }
       ],
       6: [{ drum: 0, sound: 'chacha_abierto' }],
       8: [

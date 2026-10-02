@@ -81,12 +81,12 @@ export const zabumba = {
     }
   ],
   sounds: {
-    baqueta_bass: (d) => playMembrane(55 * d.pitchMult, 0.7, 1.3, false),
-    bacalhau_tap: (d) => playMembrane(520 * d.pitchMult, 0.08, 0.9, true),
-    hoop_click: (d) => playMembrane(950 * d.pitchMult, 0.04, 1.1, true),
-    hand_slap: (d) => {
-      playMembrane(180 * d.pitchMult, 0.12, 1.0, true);
-      playNoise(0.04, 2500, state.currentTiltVolume * 0.7);
+    ma_o: (d, velocity = 1) => playMembrane(55 * d.pitchMult, 0.7, 1.3, false, velocity),
+    bacalhau: (d, velocity = 1) => playMembrane(520 * d.pitchMult, 0.08, 1.0, true, velocity),
+    hoop_click: (d, velocity = 1) => playMembrane(950 * d.pitchMult, 0.04, 1.1, true, velocity),
+    hand_slap: (d, velocity = 1) => {
+      playMembrane(180 * d.pitchMult, 0.12, 1.0, true, velocity);
+      playNoise(0.04, 2500, (state.currentTiltVolume * 0.7) * velocity);
     }
   },
   touches: [
@@ -114,26 +114,26 @@ export const zabumba = {
   ],
   mappings: {
     left: {
-      up: 'baqueta_bass',
-      down: 'bacalhau_tap',
+      up: 'ma_o',
+      down: 'bacalhau',
       left: 'hoop_click',
       right: 'hand_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'baqueta_bass'
+      trigger: 'ma_o'
     },
     right: {
-      up: 'baqueta_bass',
-      down: 'bacalhau_tap',
+      up: 'ma_o',
+      down: 'bacalhau',
       left: 'hoop_click',
       right: 'hand_slap',
       upLong: '',
       downLong: '',
       leftLong: '',
       rightLong: '',
-      trigger: 'bacalhau_tap'
+      trigger: 'bacalhau'
     }
   }
 };

@@ -46,9 +46,9 @@ export const cabasa = {
     }
   ],
   sounds: {
-    cylinder_twist: (d) => playScrape(0.12, 35, 1800, state.currentTiltVolume * 1.1, false),
-    hand_tap: (d) => playNoise(0.04, 3200, state.currentTiltVolume * 1.3),
-    linear_shaft_tap: (d) => playAttackClick(0.08, 1200, state.currentTiltVolume * 0.8)
+    cylinder_twist: (d, velocity = 1) => playScrape(0.12, 35, 1800, (state.currentTiltVolume * 1.1) * velocity, false),
+    hand_tap: (d, velocity = 1) => playNoise(0.04, 3200, (state.currentTiltVolume * 1.3) * velocity),
+    linear_shaft_tap: (d, velocity = 1) => playAttackClick(0.08, 1200, (state.currentTiltVolume * 0.8) * velocity)
   },
   touches: [
     {

@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -71,11 +72,11 @@ export const darbuka = {
       // Rapid sequence of 3 cascading taps alternating pan
       playMembrane(330 * d.pitchMult, 0.06, 1.0, true, velocity * 0.85, 0.1);
       playAttackClick(0.006, 4000, 0.3 * velocity);
-      setTimeout(() => {
+      scheduleStrike(() => {
         playMembrane(320 * d.pitchMult, 0.06, 1.0, true, velocity * 0.7, -0.1);
         playAttackClick(0.006, 3800, 0.25 * velocity);
       }, 45);
-      setTimeout(() => {
+      scheduleStrike(() => {
         playMembrane(345 * d.pitchMult, 0.08, 1.0, true, velocity * 0.9, 0.15);
         playAttackClick(0.006, 4200, 0.35 * velocity);
       }, 90);

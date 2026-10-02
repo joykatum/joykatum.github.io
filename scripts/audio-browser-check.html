@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Native Web Audio regression check</title>
+<pre id="result">RUNNING</pre>
+<script type="module">
+  const result = document.getElementById('result');
+  const kind = new URLSearchParams(location.search).get('case') || 'bell';
+  // Use the browser's real audio implementation, rendered silently offline.
+  const context = new OfflineAudioContext(2, 44100 * 3, 44100);
+  context.resume = () => Promise.resolve();
+  window.AudioContext = function () { return context; };
+  try {
+    const audio = await import('../modules/audio.js');
+    const { state } = await import('../modules/state.js');
+    if (kind === 'bell') audio.playBell(500, 0.7, 0.7);
+    else if (kind === 'membrane') audio.playMembrane(150, 0.4, 1, false, 0.7);
+    else if (kind === 'tabla') audio.playTablaSlideUp(65, 125, 0.75, 0.7);
+    else if (kind === 'sample') {
+      const sf = await import('../modules/sf2Loader.js');
+      await sf.loadSoundFont('timpani', '../media/timpani.sf2');
+      state.transientSustain = -100;
+      if (!sf.playSoundFontSample('timpani', 'timpani-f', 1, 0.8)) throw Error('sample missing');
+    } else if (kind === 'catalogue') {
+      const { drumTypes, ensureInstrumentLoaded } = await import('../modules/drumTypes.js');
+      let count = 0;
+      for (const [name, spec] of Object.entries(drumTypes)) {
+        const inst = await ensureInstrumentLoaded(name);
+        if (!inst) throw Error(`missing ${name}`);
+        for (const fn of Object.values(inst.sounds)) {
+          for (const sustain of [-100, 0, 100]) {
+            state.transientSustain = sustain;
+            fn(spec.drums[0], 0.6);
+          }
+          count++;
+        }
+      }
+      result.dataset.sounds = count;
+    } else throw Error('unknown check');
+    const buffer = await context.startRendering();
+    let peak = 0;
+    let energy = 0;
+    for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+      for (const sample of buffer.getChannelData(channel)) {
+        if (!Number.isFinite(sample)) throw Error('non-finite PCM');
+        peak = Math.max(peak, Math.abs(sample));
+        energy += sample * sample;
+      }
+    }
+    if (peak < 0.00001) throw Error('silent output');
+    result.textContent = JSON.stringify({ status: 'PASS', case: kind, peak, rms: Math.sqrt(energy / (buffer.length * 2)), sounds: result.dataset.sounds || null });
+  } catch (error) {
+    result.textContent = JSON.stringify({ status: 'FAIL', case: kind, error: error.message });
+  }
+</script>

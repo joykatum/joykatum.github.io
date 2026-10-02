@@ -1314,7 +1314,7 @@ export async function handleInstrumentChange(newInst) {
 
   // Determine if this instrument needs a SoundFont
   let relevantSF = null;
-  if (newInst === 'conga' || newInst === 'bongo' || newInst === 'djembe' || newInst === 'bata') {
+  if (newInst === 'conga') {
     relevantSF = 'conga';
   } else if (newInst === 'cajon') {
     relevantSF = 'cajon';

@@ -98,6 +98,8 @@ export function initEffectsChain() {
   delayNode = audioCtx.createDelay(2.0);
   delayGainNode = audioCtx.createGain(); // feedback loop
   delayWetGainNode = audioCtx.createGain(); // wet output
+  delayGainNode.gain.value = 0;
+  delayWetGainNode.gain.value = 0;
 
   // Connect delay feedback loop: delayNode -> delayGainNode -> delayNode
   delayNode.connect(delayGainNode);
@@ -593,7 +595,10 @@ export function registerVoice(voice, decay) {
         oldNode.playContext &&
         oldNode.playContext.instrument === instrument &&
         oldNode.playContext.drumId === drumId &&
-        !oldNode.choked
+        oldNode.playContext.surface === voice.playContext.surface &&
+        !oldNode.choked &&
+        isMutedSound &&
+        oldNode.playContext.strikeId !== voice.playContext.strikeId
       ) {
         oldNode.choked = true;
         const chokeTime = isMutedSound ? 0.015 : 0.035;
@@ -650,6 +655,16 @@ export function registerVoice(voice, decay) {
     },
     decay * 1000 + 150
   );
+}
+
+// Rolls and scrapes retain the originating surface and strike for voice damping.
+export function scheduleStrike(callback, delay) {
+  const context = state.currentPlayContext;
+  return setTimeout(() => {
+    const previous = state.currentPlayContext;
+    state.currentPlayContext = context;
+    try { callback(); } finally { state.currentPlayContext = previous; }
+  }, delay);
 }
 
 // Helper to adjust decay based on Transient Designer's Sustain setting
@@ -877,7 +892,7 @@ export function playScrape(duration, rate = 20, baseFreq = 1500, vol = 1.0, isWo
 
   for (let i = 0; i < numRidges; i++) {
     const timeOffset = i * ridgeDuration;
-    setTimeout(() => {
+    scheduleStrike(() => {
       // Alternate frequencies slightly for a rough scrape texture
       const freqVar = baseFreq + (Math.random() - 0.5) * (isWooden ? 400 : 1200);
       playNoise(
@@ -1082,7 +1097,8 @@ export function playBell(freq, decay, velocity = 1.0, panValue = 0.0, isMuted = 
   ];
 
   const masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0;
+  // Modal envelopes supply the amplitude; the summing bus must remain audible.
+  masterGain.gain.value = 0.25;
   const sources = [];
 
   modes.forEach((mode) => {
@@ -1201,8 +1217,7 @@ export function playWavSample(url, pitchMult = 1.0, velocity = 1.0, panValue = 0
 
   gainNode.gain.setValueAtTime(velocity, audioCtx.currentTime);
 
-  const decayScale = 1.0 + (state.transientSustain / 100) * 1.5;
-  const duration = (audioBuffer.duration / finalPlaybackRate) * decayScale;
+  const duration = adjustDecayForSustain(audioBuffer.duration / finalPlaybackRate);
 
   source.start(0);
   source.stop(audioCtx.currentTime + duration);

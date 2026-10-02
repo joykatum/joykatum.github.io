@@ -46,9 +46,9 @@ export const kokiriko = {
     }
   ],
   sounds: {
-    cascading_wave: (d) => playNoise(0.08, 3000, state.currentTiltVolume * 1.2),
-    single_clatter_click: (d) => playNoise(0.05, 1000, state.currentTiltVolume * 0.4),
-    side_slat_tap: (d) => playNoise(0.08, 3000, state.currentTiltVolume * 1.2)
+    cascading_wave: (d, velocity = 1) => playNoise(0.08, 3000, (state.currentTiltVolume * 1.2) * velocity),
+    single_clatter_click: (d, velocity = 1) => playNoise(0.05, 1000, (state.currentTiltVolume * 0.4) * velocity),
+    side_slat_tap: (d, velocity = 1) => playNoise(0.08, 3000, (state.currentTiltVolume * 1.2) * velocity)
   },
   touches: [
     {

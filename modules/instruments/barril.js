@@ -54,10 +54,10 @@ export const barril = {
     }
   ],
   sounds: {
-    abierto: (d) => playMembrane((d.id === 0 ? 110 : 85) * d.pitchMult, 0.65, 1.1, false),
-    seco: (d) => playMembrane((d.id === 0 ? 160 : 120) * d.pitchMult, 0.15, 1.1, true),
-    cu: (d) => playMembrane((d.id === 0 ? 160 : 110) * d.pitchMult, 0.5, 1.0, false),
-    choking_hand: (d) => playMembrane((d.id === 0 ? 180 : 130) * d.pitchMult, 0.08, 1.0, false)
+    abierto: (d, velocity = 1) => playMembrane((d.id === 0 ? 110 : 85) * d.pitchMult, 0.65, 1.1, false, velocity),
+    seco: (d, velocity = 1) => playMembrane((d.id === 0 ? 160 : 120) * d.pitchMult, 0.15, 1.1, true, velocity),
+    cu: (d, velocity = 1) => playMembrane((d.id === 0 ? 160 : 110) * d.pitchMult, 0.5, 1.0, false, velocity),
+    choking_hand: (d, velocity = 1) => playMembrane((d.id === 0 ? 180 : 130) * d.pitchMult, 0.08, 1.0, false, velocity)
   },
   touches: [
     {

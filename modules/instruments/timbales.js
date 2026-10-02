@@ -79,17 +79,17 @@ export const timbales = {
     }
   ],
   sounds: {
-    timbales_open: (d) => playMembrane((d.id === 0 ? 320 : 210) * d.pitchMult, 0.4, 1.0, false),
-    rimshot: (d) => {
-      playMembrane((d.id === 0 ? 450 : 300) * d.pitchMult, 0.1, 1.1, true);
-      playNoise(0.08, d.id === 0 ? 2500 : 2000, state.currentTiltVolume * 1.1);
+    timbales_open: (d, velocity = 1) => playMembrane((d.id === 0 ? 320 : 210) * d.pitchMult, 0.4, 1.0, false, velocity),
+    rimshot: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 450 : 300) * d.pitchMult, 0.1, 1.1, true, velocity);
+      playNoise(0.08, d.id === 0 ? 2500 : 2000, (state.currentTiltVolume * 1.1) * velocity);
     },
-    paila: (d) => {
-      playBell(800 * d.pitchMult, 0.05, 1.0, d.id === 0 ? -0.1 : 0.1, true);
+    paila: (d, velocity = 1) => {
+      playBell(800 * d.pitchMult, 0.05, (1.0) * velocity, d.id === 0 ? -0.1 : 0.1, true);
     },
-    timbales_muff: (d) => playMembrane((d.id === 0 ? 350 : 250) * d.pitchMult, 0.1, 1.0, false),
-    bell: (d) => {
-      playBell(600 * d.pitchMult, 0.3, 1.0, 0, false); // synthetic cowbell
+    timbales_muff: (d, velocity = 1) => playMembrane((d.id === 0 ? 350 : 250) * d.pitchMult, 0.1, 1.0, false, velocity),
+    bell: (d, velocity = 1) => {
+      playBell(600 * d.pitchMult, 0.3, (1.0) * velocity, 0, false); // synthetic cowbell
     }
   },
   touches: [

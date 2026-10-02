@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -36,30 +37,30 @@ export const whistle_drum = {
     }
   ],
   sounds: {
-    clay_bass: (d) => playMembrane(82 * d.pitchMult, 0.4, 1.1),
-    sharp_chirp: (d) => {
-      playMembrane(900 * d.pitchMult, 0.12, 0.8, true);
-      playNoise(0.05, 3000, 0.2 * state.currentTiltVolume);
+    clay_bass: (d, velocity = 1) => playMembrane(82 * d.pitchMult, 0.4, 1.1, false, velocity),
+    sharp_chirp: (d, velocity = 1) => {
+      playMembrane(900 * d.pitchMult, 0.12, 0.8, true, velocity);
+      playNoise(0.05, 3000, (0.2 * state.currentTiltVolume) * velocity);
     },
-    bending_gliss: (d) => playTablaSlideUp(600 * d.pitchMult, 900 * d.pitchMult, 0.25),
-    rim_tap: (d) => {
-      playMembrane(400 * d.pitchMult, 0.06, 1.0);
-      playAttackClick(0.015, 2000, 0.4 * state.currentTiltVolume);
+    bending_gliss: (d, velocity = 1) => playTablaSlideUp(600 * d.pitchMult, 900 * d.pitchMult, 0.25, velocity),
+    rim_tap: (d, velocity = 1) => {
+      playMembrane(400 * d.pitchMult, 0.06, 1.0, false, velocity);
+      playAttackClick(0.015, 2000, (0.4 * state.currentTiltVolume) * velocity);
     },
-    slosh_splash: (d) => {
-      playNoise(0.35, 1200, 0.6 * state.currentTiltVolume);
-      playMembrane(120 * d.pitchMult, 0.2, 1.0);
+    slosh_splash: (d, velocity = 1) => {
+      playNoise(0.35, 1200, (0.6 * state.currentTiltVolume) * velocity);
+      playMembrane(120 * d.pitchMult, 0.2, 1.0, false, velocity);
     },
-    muted_pip: (d) => playMembrane(300 * d.pitchMult, 0.04, 1.0),
-    double_chirp: (d) => {
-      playMembrane(800 * d.pitchMult, 0.06, 1.0, true);
-      setTimeout(() => {
-        playMembrane(900 * d.pitchMult, 0.08, 1.0, true);
+    muted_pip: (d, velocity = 1) => playMembrane(300 * d.pitchMult, 0.04, 1.0, false, velocity),
+    double_chirp: (d, velocity = 1) => {
+      playMembrane(800 * d.pitchMult, 0.06, 1.0, true, velocity);
+      scheduleStrike(() => {
+        playMembrane(900 * d.pitchMult, 0.08, 1.0, true, velocity);
       }, 60);
     },
-    breath_echo: (d) => {
-      playNoise(0.6, 800, 0.35 * state.currentTiltVolume);
-      playMembrane(90 * d.pitchMult, 0.5, 1.0);
+    breath_echo: (d, velocity = 1) => {
+      playNoise(0.6, 800, (0.35 * state.currentTiltVolume) * velocity);
+      playMembrane(90 * d.pitchMult, 0.5, 1.0, false, velocity);
     }
   },
   touches: [

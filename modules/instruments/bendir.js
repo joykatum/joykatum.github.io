@@ -62,17 +62,17 @@ export const bendir = {
     }
   ],
   sounds: {
-    dum: (d) => playMembrane(75 * d.pitchMult, 0.8, 1.4, false),
-    tak: (d) => {
-      playMembrane(320 * d.pitchMult, 0.15, 0.95, true);
-      playNoise(0.12, 1400, state.currentTiltVolume * 0.85);
+    dum: (d, velocity = 1) => playMembrane(75 * d.pitchMult, 0.8, 1.4, false, velocity),
+    tak: (d, velocity = 1) => {
+      playMembrane(320 * d.pitchMult, 0.15, 0.95, true, velocity);
+      playNoise(0.12, 1400, (state.currentTiltVolume * 0.85) * velocity);
     },
-    kah: (d) => {
-      playMembrane(150 * d.pitchMult, 0.45, 1.1, false);
-      playNoise(0.06, 800, state.currentTiltVolume * 0.4);
+    kah: (d, velocity = 1) => {
+      playMembrane(150 * d.pitchMult, 0.45, 1.1, false, velocity);
+      playNoise(0.06, 800, (state.currentTiltVolume * 0.4) * velocity);
     },
-    snare_rattle_mute: (d) => playMembrane(180 * d.pitchMult, 0.1, 1.0, false),
-    fingernail_rim_rim: (d) => playNoise(0.08, 1000, state.currentTiltVolume * 0.5)
+    snare_rattle_mute: (d, velocity = 1) => playMembrane(180 * d.pitchMult, 0.1, 1.0, false, velocity),
+    fingernail_rim_rim: (d, velocity = 1) => playNoise(0.08, 1000, (state.currentTiltVolume * 0.5) * velocity)
   },
   touches: [
     {

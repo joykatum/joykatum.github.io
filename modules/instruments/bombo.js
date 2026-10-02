@@ -41,10 +41,10 @@ export const bombo = {
     }
   ],
   sounds: {
-    golpe_de_parche: (d) => playMembrane(72 * d.pitchMult, 0.6, 1.2, false),
-    golpe_de_parche_apagado: (d) => playMembrane(95 * d.pitchMult, 0.15, 1.0, true),
-    golpe_de_aro: (d) => playMembrane(480 * d.pitchMult, 0.08, 1.0, false),
-    golpe_de_casco: (d) => playMembrane(380 * d.pitchMult, 0.05, 1.0, false)
+    golpe_de_parche: (d, velocity = 1) => playMembrane(72 * d.pitchMult, 0.6, 1.2, false, velocity),
+    golpe_de_parche_apagado: (d, velocity = 1) => playMembrane(95 * d.pitchMult, 0.15, 1.0, true, velocity),
+    golpe_de_aro: (d, velocity = 1) => playMembrane(480 * d.pitchMult, 0.08, 1.0, false, velocity),
+    golpe_de_casco: (d, velocity = 1) => playMembrane(380 * d.pitchMult, 0.05, 1.0, false, velocity)
   },
   touches: [
     {

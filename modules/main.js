@@ -69,7 +69,7 @@ class Orchestrator {
 
     let relevantSF = null;
     const current = state.currentInstrument;
-    if (current === 'conga' || current === 'bongo' || current === 'djembe' || current === 'bata') {
+    if (current === 'conga') {
       relevantSF = 'conga';
     } else if (current === 'cajon') {
       relevantSF = 'cajon';

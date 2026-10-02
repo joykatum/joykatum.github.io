@@ -57,47 +57,47 @@ export const chinese = {
     }
   ],
   sounds: {
-    center_strike: (d) => {
+    center_strike: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
       if (baseId === 0) {
-        playMembrane(850 * d.pitchMult, 0.05, 0.7, false);
-        playNoise(0.05, 4500, state.currentTiltVolume * 0.5);
+        playMembrane(850 * d.pitchMult, 0.05, 0.7, false, velocity);
+        playNoise(0.05, 4500, (state.currentTiltVolume * 0.5) * velocity);
       } else if (baseId === 1) {
-        playMembrane(110 * d.pitchMult, 0.6, 1.2, false);
+        playMembrane(110 * d.pitchMult, 0.6, 1.2, false, velocity);
       } else {
-        playMembrane(45 * d.pitchMult, 0.95, 2.0, false);
+        playMembrane(45 * d.pitchMult, 0.95, 2.0, false, velocity);
       }
     },
-    glancing_blow: (d) => {
+    glancing_blow: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
       if (baseId === 0) {
-        playMembrane(750 * d.pitchMult, 0.06, 0.8, false);
+        playMembrane(750 * d.pitchMult, 0.06, 0.8, false, velocity);
       } else if (baseId === 1) {
-        playMembrane(140 * d.pitchMult, 0.1, 1.0, false);
+        playMembrane(140 * d.pitchMult, 0.1, 1.0, false, velocity);
       } else {
-        playMembrane(70 * d.pitchMult, 0.3, 1.2, false);
+        playMembrane(70 * d.pitchMult, 0.3, 1.2, false, velocity);
       }
     },
-    aro: (d) => {
+    aro: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
       if (baseId === 0) {
-        playMembrane(950 * d.pitchMult, 0.04, 0.6, false);
+        playMembrane(950 * d.pitchMult, 0.04, 0.6, false, velocity);
       } else if (baseId === 1) {
-        playMembrane(180 * d.pitchMult, 0.5, 1.0, false);
+        playMembrane(180 * d.pitchMult, 0.5, 1.0, false, velocity);
       } else {
-        playMembrane(55 * d.pitchMult, 0.85, 1.6, false);
+        playMembrane(55 * d.pitchMult, 0.85, 1.6, false, velocity);
       }
     },
-    stick_shaft_clack: (d) => {
+    stick_shaft_clack: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
       if (baseId === 0) {
-        playMembrane(1100 * d.pitchMult, 0.03, 0.5, true);
+        playMembrane(1100 * d.pitchMult, 0.03, 0.5, true, velocity);
       } else if (baseId === 1) {
-        playMembrane(550 * d.pitchMult, 0.05, 0.8, true);
-        playNoise(0.06, 3500, state.currentTiltVolume * 0.8);
+        playMembrane(550 * d.pitchMult, 0.05, 0.8, true, velocity);
+        playNoise(0.06, 3500, (state.currentTiltVolume * 0.8) * velocity);
       } else {
-        playMembrane(150 * d.pitchMult, 0.15, 1.2, true);
-        playNoise(0.12, 1200, state.currentTiltVolume * 1.1);
+        playMembrane(150 * d.pitchMult, 0.15, 1.2, true, velocity);
+        playNoise(0.12, 1200, (state.currentTiltVolume * 1.1) * velocity);
       }
     }
   },

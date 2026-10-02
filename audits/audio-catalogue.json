@@ -1,0 +1,864 @@
+{
+  "limitation": "Mock graph and parameter checks only. No listening or authenticity certification.",
+  "instruments": [
+    {
+      "name": "conga",
+      "sounds": 7,
+      "patterns": 23,
+      "hits": 178,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: conga"
+      ]
+    },
+    {
+      "name": "djembe",
+      "sounds": 5,
+      "patterns": 12,
+      "hits": 99,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: conga"
+      ]
+    },
+    {
+      "name": "bongo",
+      "sounds": 5,
+      "patterns": 11,
+      "hits": 81,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: conga"
+      ]
+    },
+    {
+      "name": "bata",
+      "sounds": 5,
+      "patterns": 22,
+      "hits": 160,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: conga"
+      ]
+    },
+    {
+      "name": "pandero",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 71,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "barril",
+      "sounds": 4,
+      "patterns": 18,
+      "hits": 174,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "bombo",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 55,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tabla",
+      "sounds": 5,
+      "patterns": 14,
+      "hits": 211,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "darbuka",
+      "sounds": 6,
+      "patterns": 10,
+      "hits": 58,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "timbales",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 70,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "cajon",
+      "sounds": 6,
+      "patterns": 11,
+      "hits": 79,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: cajon"
+      ]
+    },
+    {
+      "name": "candombe",
+      "sounds": 4,
+      "patterns": 15,
+      "hits": 159,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "gwoka",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 59,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tanbou",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 59,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "chinese",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 61,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "daiko",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 60,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "bodhran",
+      "sounds": 4,
+      "patterns": 15,
+      "hits": 95,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "talkingdrum",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 63,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "cuica",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 63,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "doira",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "uchiwadaiko",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "oceandrum",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 37,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "janggu",
+      "sounds": 4,
+      "patterns": 11,
+      "hits": 67,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "zabumba",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 60,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "mridangam",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 58,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "udu",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 56,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "thunderdrum",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 47,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "waterdrums",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 46,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "vibraslap",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 43,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "flexatone",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 44,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "waterphone",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 44,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "handpan",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 51,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "steelpan",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 67,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "ghatam",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "daf",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "riq",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "surdo",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "pandeiro",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tamborim",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "repinique",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "bendir",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 60,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "davul",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 63,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "ashiko",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 76,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "dunun",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "teponaztli",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "snare_drum",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "shekere",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 62,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "kanjira",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tammorra",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "framed_rumbla",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "lions_roar",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "chocalho",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "alfaia",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 76,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "log_drum",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "temple_blocks",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "frog_rasp",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "spring_drum",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "thongophone",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "gubguba",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "cabasa",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "rainstick",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "kokiriko",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "guiro",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "spoons_bones",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "washboard",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "friction_drum",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "kundu",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tar_drum",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "gome",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "boomwhackers",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "tank_drum",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "bell_tree",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "mark_tree",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "slide_whistle",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "ratchet",
+      "sounds": 2,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "angklung",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 74,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "jaw_harp",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 52,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "timpani",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 54,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: timpani"
+      ]
+    },
+    {
+      "name": "kotsuzumi",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 42,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "dhol",
+      "sounds": 3,
+      "patterns": 10,
+      "hits": 54,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "agogo",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 76,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": [
+        "SoundFont: agogo"
+      ]
+    },
+    {
+      "name": "claves",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 51,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "mechanical_keyboard",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 41,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "synsonics_drums",
+      "sounds": 5,
+      "patterns": 10,
+      "hits": 38,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "bop_it",
+      "sounds": 6,
+      "patterns": 10,
+      "hits": 35,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "pakhavaj",
+      "sounds": 7,
+      "patterns": 10,
+      "hits": 37,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "binzasara",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 28,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "caxixi",
+      "sounds": 4,
+      "patterns": 10,
+      "hits": 37,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "slap_tubes",
+      "sounds": 8,
+      "patterns": 10,
+      "hits": 60,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "whistle_drum",
+      "sounds": 8,
+      "patterns": 10,
+      "hits": 45,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "singing_bowl",
+      "sounds": 8,
+      "patterns": 10,
+      "hits": 36,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "quijada",
+      "sounds": 8,
+      "patterns": 10,
+      "hits": 38,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    },
+    {
+      "name": "centrifugal_bullroarer",
+      "sounds": 8,
+      "patterns": 10,
+      "hits": 35,
+      "unsupportedDrums": [],
+      "ignoresVelocity": [],
+      "sources": []
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "instruments": 93,
+    "sounds": 382,
+    "patterns": 982,
+    "hits": 5783,
+    "failures": 0
+  }
+}

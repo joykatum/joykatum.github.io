@@ -41,17 +41,17 @@ export const doira = {
     }
   ],
   sounds: {
-    doira_dum: (d) => playMembrane(120 * d.pitchMult, 0.48, 1.15, false),
-    doira_tak: (d) => playMembrane(175 * d.pitchMult, 0.38, 1.0, false),
-    doira_kah: (d) => {
-      playMembrane(310 * d.pitchMult, 0.12, 1.0, true);
-      playNoise(0.08, 2600, state.currentTiltVolume * 0.95);
+    doira_dum: (d, velocity = 1) => playMembrane(120 * d.pitchMult, 0.48, 1.15, false, velocity),
+    doira_tak: (d, velocity = 1) => playMembrane(175 * d.pitchMult, 0.38, 1.0, false, velocity),
+    doira_kah: (d, velocity = 1) => {
+      playMembrane(310 * d.pitchMult, 0.12, 1.0, true, velocity);
+      playNoise(0.08, 2600, (state.currentTiltVolume * 0.95) * velocity);
     },
-    doira_muff: (d) => {
-      playMembrane(215 * d.pitchMult, 0.1, 1.0, true);
-      playNoise(0.24, 4200, state.currentTiltVolume * 1.1);
+    doira_muff: (d, velocity = 1) => {
+      playMembrane(215 * d.pitchMult, 0.1, 1.0, true, velocity);
+      playNoise(0.24, 4200, (state.currentTiltVolume * 1.1) * velocity);
     },
-    doira_snap: (d) => playNoise(0.16, 4800, state.currentTiltVolume * 1.2)
+    doira_snap: (d, velocity = 1) => playNoise(0.16, 4800, (state.currentTiltVolume * 1.2) * velocity)
   },
   touches: [
     {

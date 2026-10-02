@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { playMembrane, playNoise } from '../audio.js';
 import { state } from '../state.js';
 import { playSoundFontSample } from '../sf2Loader.js';
@@ -97,7 +98,7 @@ export const bata = {
         playMembrane(f * 1.04, dynamicDecay, 1.0, false, velocity, pan);
 
         // Secondary lingering bass wave modeling the internal air column ring
-        setTimeout(() => {
+        scheduleStrike(() => {
           playMembrane(f * 0.96, dynamicDecay * 0.6, 0.4, false, velocity * 0.7, pan);
         }, 15);
       } else {
@@ -180,7 +181,7 @@ export const bata = {
 
       // Real-World Optimization 4: Sympathetic Chamber Resonance
       const lowResonanceFreq = baseId === 0 ? 190 : baseId === 1 ? 130 : 90;
-      setTimeout(() => {
+      scheduleStrike(() => {
         playMembrane(lowResonanceFreq * d.pitchMult, 0.08, 0.25, false, velocity * 0.3, pan);
       }, 8);
     },

@@ -46,20 +46,20 @@ export const framed_rumbla = {
     }
   ],
   sounds: {
-    rumbla_bass: (d) => {
-      playMembrane(70 * d.pitchMult, 0.5, 1.4);
-      playNoise(0.15, 800, state.currentTiltVolume * 0.25);
+    rumbla_bass: (d, velocity = 1) => {
+      playMembrane(70 * d.pitchMult, 0.5, 1.4, false, velocity);
+      playNoise(0.15, 800, (state.currentTiltVolume * 0.25) * velocity);
     },
-    rumbla_open: (d) => {
-      playMembrane(120 * d.pitchMult, 0.4, 1.1);
-      playNoise(0.12, 1000, state.currentTiltVolume * 0.3);
+    rumbla_open: (d, velocity = 1) => {
+      playMembrane(120 * d.pitchMult, 0.4, 1.1, false, velocity);
+      playNoise(0.12, 1000, (state.currentTiltVolume * 0.3) * velocity);
     },
-    rumbla_slap: (d) => {
-      playMembrane(220 * d.pitchMult, 0.15, 1.1, true);
-      playNoise(0.18, 2200, state.currentTiltVolume * 0.7);
+    rumbla_slap: (d, velocity = 1) => {
+      playMembrane(220 * d.pitchMult, 0.15, 1.1, true, velocity);
+      playNoise(0.18, 2200, (state.currentTiltVolume * 0.7) * velocity);
     },
-    rumbla_mute: (d) => playNoise(0.1, 1500, state.currentTiltVolume * 0.5),
-    rumbla_tap: (d) => playNoise(0.4, 1200, state.currentTiltVolume * 0.5)
+    rumbla_mute: (d, velocity = 1) => playNoise(0.1, 1500, (state.currentTiltVolume * 0.5) * velocity),
+    rumbla_tap: (d, velocity = 1) => playNoise(0.4, 1200, (state.currentTiltVolume * 0.5) * velocity)
   },
   touches: [
     {

@@ -75,10 +75,10 @@ export const repinique = {
     }
   ],
   sounds: {
-    mano: (d) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true),
-    baqueta: (d) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true),
-    rimshot_crack: (d) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true),
-    stick_slide_pitch_bend: (d) => playMembrane(160 * d.pitchMult, 0.45, 1.1, false)
+    mano: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true, velocity),
+    baqueta: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true, velocity),
+    rimshot_crack: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 0.9, true, velocity),
+    stick_slide_pitch_bend: (d, velocity = 1) => playMembrane(160 * d.pitchMult, 0.45, 1.1, false, velocity)
   },
   touches: [
     {

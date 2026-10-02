@@ -46,8 +46,8 @@ export const chocalho = {
     }
   ],
   sounds: {
-    linear_shake: (d) => playNoise(0.18, 1800, state.currentTiltVolume * 1.2),
-    accented_whip: (d) => playNoise(0.1, 2400, state.currentTiltVolume * 0.8)
+    linear_shake: (d, velocity = 1) => playNoise(0.18, 1800, (state.currentTiltVolume * 1.2) * velocity),
+    accented_whip: (d, velocity = 1) => playNoise(0.1, 2400, (state.currentTiltVolume * 0.8) * velocity)
   },
   touches: [
     {

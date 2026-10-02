@@ -2,6 +2,7 @@
 export default {
   teental: {
     name: '🥁 Teental (16-Beat Classical King)',
+    subdivision: 1,
     stepCount: 16,
     steps: {
       // Vibhag 1: Bhari (Resonant) - Dha Dhin Dhin Dha
@@ -76,6 +77,7 @@ export default {
   },
   keharwa: {
     name: '🥁 Keharwa Taal (8-Beat Folk/Ghazal)',
+    subdivision: 1,
     stepCount: 8,
     steps: {
       // Dha Ge Na Ti | Na Ka Dhin Na
@@ -97,6 +99,7 @@ export default {
   },
   roopak: {
     name: '🥁 Roopak Taal (7-Beat Classical)',
+    subdivision: 1,
     stepCount: 7,
     steps: {
       // Starts on Khali (Unique): Tin Tin Na | Dhin Na | Dhin Na
@@ -120,6 +123,7 @@ export default {
   },
   dadra: {
     name: '🥁 Dadra Taal (6-Beat Light-Classical)',
+    subdivision: 1,
     stepCount: 6,
     steps: {
       // Dha Dhi Na | Dha Tu Na
@@ -142,6 +146,7 @@ export default {
   },
   jhaptal: {
     name: '🥁 Jhaptal (10-Beat Deep Classical)',
+    subdivision: 1,
     stepCount: 10,
     steps: {
       // Dhi Na | Dhi Dhi Na | Ti Na | Dhi Dhi Na
@@ -177,6 +182,7 @@ export default {
   },
   ektal: {
     name: '🥁 Ektal (12-Beat Vilambit Tempo)',
+    subdivision: 1,
     stepCount: 12,
     steps: {
       // Dhin Dhin | Dhage Tin Na | Ka Ta | Dhage Dhin Na
@@ -211,6 +217,7 @@ export default {
   },
   bhajani: {
     name: '🥁 Bhajani Taal (Devotional Grooves)',
+    subdivision: 1,
     stepCount: 8,
     steps: {
       // Dynamic bouncing layout heard in traditional temples
@@ -238,6 +245,7 @@ export default {
   },
   chauka_taal: {
     name: '🥁 Chautal / Chauka (12-Beat Fast Dhrupad)',
+    subdivision: 1,
     stepCount: 12,
     steps: {
       // Dha Dha Dhin Ta | Kita Dha Dhin Ta | Tete Kata Gadi Gana
@@ -271,6 +279,7 @@ export default {
   },
   deepchandi: {
     name: '🥁 Deepchandi Taal (14-Beat Romantic Thumri)',
+    subdivision: 1,
     stepCount: 14,
     steps: {
       // Dha Dhin S | Dha Dha Dhin S | Ta Tin S | Dha Dha Dhin S
@@ -315,6 +324,7 @@ export default {
   },
   jhumra: {
     name: '🥁 Jhumra Taal (14-Beat Slow Khayal Frame)',
+    subdivision: 1,
     stepCount: 14,
     steps: {
       // Dhin-Dha-Te | Dhin-Dhin-Dhage | Tin-Ta-Te | Dhin-Dhin-Dhage
@@ -352,6 +362,7 @@ export default {
   },
   tilwada: {
     name: '🥁 Tilwada Taal (16-Beat Elegant Vilambit)',
+    subdivision: 1,
     stepCount: 16,
     steps: {
       // Dha Dhin Dhin Dha | Tit Kata Gadhi Gana | Ta Tin Tin Ta | Tit Kata Gadhi Gana
@@ -388,6 +399,7 @@ export default {
   },
   dadra_laggi: {
     name: '🥁 Fast Dadra Laggi (Crescendo/Climax)',
+    subdivision: 1,
     stepCount: 6,
     steps: {
       // Hyper-accelerated ending pattern used to wrap up live performances
@@ -410,6 +422,7 @@ export default {
   },
   punjabi_taal: {
     name: '🥁 Punjabi / Addha Taal (Folk Bhangra Drive)',
+    subdivision: 1,
     stepCount: 16,
     steps: {
       // Syncopated, bouncing folk layout
@@ -437,6 +450,7 @@ export default {
   },
   kaida_theme: {
     name: '🥁 Basic Kaida Practice Theme',
+    subdivision: 1,
     stepCount: 16,
     steps: {
       // Dha Te Te Dha Te Te Dha Dha | Ta Te Te Ta Te Te Dha Dha

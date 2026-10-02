@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -38,21 +39,21 @@ export const caxixi = {
     }
   ],
   sounds: {
-    straw_wall: (d) => {
-      playNoise(0.09, 4500, 0.45 * state.currentTiltVolume);
+    straw_wall: (d, velocity = 1) => {
+      playNoise(0.09, 4500, (0.45 * state.currentTiltVolume) * velocity);
     },
-    gourd_bottom: (d) => {
-      playAttackClick(0.025, 3600, 0.9 * state.currentTiltVolume);
-      playMembrane(850 * d.pitchMult, 0.03, 1.0);
+    gourd_bottom: (d, velocity = 1) => {
+      playAttackClick(0.025, 3600, (0.9 * state.currentTiltVolume) * velocity);
+      playMembrane(850 * d.pitchMult, 0.03, 1.0, false, velocity);
     },
-    flick_accent: (d) => {
-      playNoise(0.04, 5000, 0.6 * state.currentTiltVolume);
-      setTimeout(() => {
-        playNoise(0.04, 4800, 0.5 * state.currentTiltVolume);
+    flick_accent: (d, velocity = 1) => {
+      playNoise(0.04, 5000, (0.6 * state.currentTiltVolume) * velocity);
+      scheduleStrike(() => {
+        playNoise(0.04, 4800, (0.5 * state.currentTiltVolume) * velocity);
       }, 40);
     },
-    muted_swoosh: (d) => {
-      playNoise(0.16, 1800, 0.3 * state.currentTiltVolume);
+    muted_swoosh: (d, velocity = 1) => {
+      playNoise(0.16, 1800, (0.3 * state.currentTiltVolume) * velocity);
     }
   },
   touches: [

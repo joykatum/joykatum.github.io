@@ -58,10 +58,10 @@ export const ghatam = {
     }
   ],
   sounds: {
-    belly_vacuum_pop: (d) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true),
-    finger_flick_pop: (d) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true),
-    mouth_open_slap: (d) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true),
-    neck_rim_ring: (d) => playMembrane(300 * d.pitchMult, 0.3, 1.1, false)
+    belly_vacuum_pop: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true, velocity),
+    finger_flick_pop: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true, velocity),
+    mouth_open_slap: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 1.0, true, velocity),
+    neck_rim_ring: (d, velocity = 1) => playMembrane(300 * d.pitchMult, 0.3, 1.1, false, velocity)
   },
   touches: [
     {

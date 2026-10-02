@@ -68,13 +68,13 @@ export const gome = {
     }
   ],
   sounds: {
-    palm_bass: (d) => playTablaSlideUp(60 * d.pitchMult, 120 * d.pitchMult, 0.6),
-    corner_slap: (d) => playMembrane(130 * d.pitchMult, 0.45, 1.1, false),
-    foot_pitch_bend: (d) => {
-      playMembrane(220 * d.pitchMult, 0.15, 1.2, true);
-      playNoise(0.08, 1500, state.currentTiltVolume * 0.7);
+    palm_bass: (d, velocity = 1) => playTablaSlideUp(60 * d.pitchMult, 120 * d.pitchMult, 0.6, velocity),
+    corner_slap: (d, velocity = 1) => playMembrane(130 * d.pitchMult, 0.45, 1.1, false, velocity),
+    foot_pitch_bend: (d, velocity = 1) => {
+      playMembrane(220 * d.pitchMult, 0.15, 1.2, true, velocity);
+      playNoise(0.08, 1500, (state.currentTiltVolume * 0.7) * velocity);
     },
-    heel_stamp: (d) => playMembrane(130 * d.pitchMult, 0.45, 1.1, false)
+    heel_stamp: (d, velocity = 1) => playMembrane(130 * d.pitchMult, 0.45, 1.1, false, velocity)
   },
   touches: [
     {

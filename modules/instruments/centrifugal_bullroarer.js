@@ -33,32 +33,32 @@ export const centrifugal_bullroarer = {
     }
   ],
   sounds: {
-    low_wind_whine: (d) => {
-      playMembrane(65 * d.pitchMult, 0.6, 1.0);
-      playNoise(0.6, 600, 0.45 * state.currentTiltVolume);
+    low_wind_whine: (d, velocity = 1) => {
+      playMembrane(65 * d.pitchMult, 0.6, 1.0, false, velocity);
+      playNoise(0.6, 600, (0.45 * state.currentTiltVolume) * velocity);
     },
-    high_speed_scream: (d) => {
-      playMembrane(480 * d.pitchMult, 0.5, 0.9, true);
-      playNoise(0.4, 1800, 0.3 * state.currentTiltVolume);
+    high_speed_scream: (d, velocity = 1) => {
+      playMembrane(480 * d.pitchMult, 0.5, 0.9, true, velocity);
+      playNoise(0.4, 1800, (0.3 * state.currentTiltVolume) * velocity);
     },
-    string_snap: (d) => {
-      playAttackClick(0.04, 1100, 0.8 * state.currentTiltVolume);
-      playMembrane(140 * d.pitchMult, 0.08, 1.1);
+    string_snap: (d, velocity = 1) => {
+      playAttackClick(0.04, 1100, (0.8 * state.currentTiltVolume) * velocity);
+      playMembrane(140 * d.pitchMult, 0.08, 1.1, false, velocity);
     },
-    ground_slap: (d) => {
-      playMembrane(180 * d.pitchMult, 0.12, 1.0);
-      playNoise(0.12, 2200, 0.6 * state.currentTiltVolume);
+    ground_slap: (d, velocity = 1) => {
+      playMembrane(180 * d.pitchMult, 0.12, 1.0, false, velocity);
+      playNoise(0.12, 2200, (0.6 * state.currentTiltVolume) * velocity);
     },
-    air_rip_flutter: (d) => {
-      playMembrane(90 * d.pitchMult, 0.3, 1.0);
-      playNoise(0.35, 800, 0.5 * state.currentTiltVolume);
+    air_rip_flutter: (d, velocity = 1) => {
+      playMembrane(90 * d.pitchMult, 0.3, 1.0, false, velocity);
+      playNoise(0.35, 800, (0.5 * state.currentTiltVolume) * velocity);
     },
-    wood_spine_tap: (d) => {
-      playMembrane(350 * d.pitchMult, 0.05, 1.0);
-      playAttackClick(0.015, 1800, 0.5 * state.currentTiltVolume);
+    wood_spine_tap: (d, velocity = 1) => {
+      playMembrane(350 * d.pitchMult, 0.05, 1.0, false, velocity);
+      playAttackClick(0.015, 1800, (0.5 * state.currentTiltVolume) * velocity);
     },
-    cord_friction_rub: (d) => playNoise(0.25, 500, 0.45 * state.currentTiltVolume),
-    descending_whimper: (d) => playTablaSlideUp(300 * d.pitchMult, 90 * d.pitchMult, 0.55)
+    cord_friction_rub: (d, velocity = 1) => playNoise(0.25, 500, (0.45 * state.currentTiltVolume) * velocity),
+    descending_whimper: (d, velocity = 1) => playTablaSlideUp(300 * d.pitchMult, 90 * d.pitchMult, 0.55, velocity)
   },
   touches: [
     {

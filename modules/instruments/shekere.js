@@ -72,11 +72,11 @@ export const shekere = {
     }
   ],
   sounds: {
-    bottom_palm_bass_pop: (d) => playMembrane(95 * d.pitchMult, 0.45, 1.3, false),
-    bead_net_shake: (d) => playMembrane(95 * d.pitchMult, 0.45, 1.3, false),
-    net_twist_pull_rub: (d) => playNoise(0.3, 2200, state.currentTiltVolume * 1.25),
-    neck_tap: (d) => playNoise(0.18, 1800, state.currentTiltVolume * 0.75),
-    mouth_slap_pop: (d) => playNoise(0.3, 2200, state.currentTiltVolume * 1.25)
+    bottom_palm_bass_pop: (d, velocity = 1) => playMembrane(95 * d.pitchMult, 0.45, 1.3, false, velocity),
+    bead_net_shake: (d, velocity = 1) => playMembrane(95 * d.pitchMult, 0.45, 1.3, false, velocity),
+    net_twist_pull_rub: (d, velocity = 1) => playNoise(0.3, 2200, (state.currentTiltVolume * 1.25) * velocity),
+    neck_tap: (d, velocity = 1) => playNoise(0.18, 1800, (state.currentTiltVolume * 0.75) * velocity),
+    mouth_slap_pop: (d, velocity = 1) => playNoise(0.3, 2200, (state.currentTiltVolume * 1.25) * velocity)
   },
   touches: [
     {

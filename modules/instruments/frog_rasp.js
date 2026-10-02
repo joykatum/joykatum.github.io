@@ -83,9 +83,9 @@ export const frog_rasp = {
     }
   ],
   sounds: {
-    spine_scrape: (d) => playScrape(0.2, 25, 800, state.currentTiltVolume * 0.8, true),
-    mouth_poke: (d) => playMembrane(400 * d.pitchMult, 0.05, 1.0, true, state.currentTiltVolume * 0.4),
-    stick_tip_tap: (d) => playAttackClick(0.04, 800, state.currentTiltVolume * 0.4)
+    spine_scrape: (d, velocity = 1) => playScrape(0.2, 25, 800, (state.currentTiltVolume * 0.8) * velocity, true),
+    mouth_poke: (d, velocity = 1) => playMembrane(400 * d.pitchMult, 0.05, 1.0, true, (state.currentTiltVolume * 0.4) * velocity),
+    stick_tip_tap: (d, velocity = 1) => playAttackClick(0.04, 800, (state.currentTiltVolume * 0.4) * velocity)
   },
   touches: [
     {

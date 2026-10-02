@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -46,41 +47,41 @@ export const bop_it = {
     }
   ],
   sounds: {
-    bop_it: (d) => {
-      playMembrane(190 * d.pitchMult, 0.06, 1.05);
-      playAttackClick(0.01, 2200, 0.5 * state.currentTiltVolume);
-      speakPhrase('Bop it!', 1.2, 1.3, 1.0);
+    bop_it: (d, velocity = 1) => {
+      playMembrane(190 * d.pitchMult, 0.06, 1.05, false, velocity);
+      playAttackClick(0.01, 2200, (0.5 * state.currentTiltVolume) * velocity);
+      speakPhrase('Bop it!', 1.2, 1.3, (1.0) * velocity);
     },
-    twist_it: (d) => {
-      playAttackClick(0.01, 3500, 0.7 * state.currentTiltVolume);
-      setTimeout(() => {
-        playAttackClick(0.01, 3200, 0.6 * state.currentTiltVolume);
+    twist_it: (d, velocity = 1) => {
+      playAttackClick(0.01, 3500, (0.7 * state.currentTiltVolume) * velocity);
+      scheduleStrike(() => {
+        playAttackClick(0.01, 3200, (0.6 * state.currentTiltVolume) * velocity);
       }, 50);
-      setTimeout(() => {
-        playAttackClick(0.01, 2900, 0.5 * state.currentTiltVolume);
+      scheduleStrike(() => {
+        playAttackClick(0.01, 2900, (0.5 * state.currentTiltVolume) * velocity);
       }, 100);
-      speakPhrase('Twist it!', 1.1, 1.3, 1.0);
+      speakPhrase('Twist it!', 1.1, 1.3, (1.0) * velocity);
     },
-    pull_it: (d) => {
-      playTablaSlideUp(180 * d.pitchMult, 380 * d.pitchMult, 0.15);
-      speakPhrase('Pull it!', 1.0, 1.3, 1.0);
+    pull_it: (d, velocity = 1) => {
+      playTablaSlideUp(180 * d.pitchMult, 380 * d.pitchMult, 0.15, velocity);
+      speakPhrase('Pull it!', 1.0, 1.3, (1.0) * velocity);
     },
-    shout_it: (d) => {
-      playTablaSlideUp(1200 * d.pitchMult, 1500 * d.pitchMult, 0.1);
-      playNoise(0.08, 3000, 0.3 * state.currentTiltVolume);
-      speakPhrase('Shout it!', 1.3, 1.3, 1.0);
+    shout_it: (d, velocity = 1) => {
+      playTablaSlideUp(1200 * d.pitchMult, 1500 * d.pitchMult, 0.1, velocity);
+      playNoise(0.08, 3000, (0.3 * state.currentTiltVolume) * velocity);
+      speakPhrase('Shout it!', 1.3, 1.3, (1.0) * velocity);
     },
-    fail_buzz: (d) => {
-      playTablaSlideUp(180 * d.pitchMult, 90 * d.pitchMult, 0.6);
-      playNoise(0.4, 250, 0.4 * state.currentTiltVolume);
-      speakPhrase('Wah wah wah!', 0.8, 1.0, 1.0);
+    fail_buzz: (d, velocity = 1) => {
+      playTablaSlideUp(180 * d.pitchMult, 90 * d.pitchMult, 0.6, velocity);
+      playNoise(0.4, 250, (0.4 * state.currentTiltVolume) * velocity);
+      speakPhrase('Wah wah wah!', 0.8, 1.0, (1.0) * velocity);
     },
-    victory_chime: (d) => {
-      playMembrane(261.63 * d.pitchMult, 0.12, 1.0);
-      setTimeout(() => playMembrane(329.63 * d.pitchMult, 0.12, 1.0), 60);
-      setTimeout(() => playMembrane(392.0 * d.pitchMult, 0.12, 1.0), 120);
-      setTimeout(() => playMembrane(523.25 * d.pitchMult, 0.2, 1.0), 180);
-      speakPhrase('You win!', 1.25, 1.1, 1.0);
+    victory_chime: (d, velocity = 1) => {
+      playMembrane(261.63 * d.pitchMult, 0.12, 1.0, false, velocity);
+      scheduleStrike(() => playMembrane(329.63 * d.pitchMult, 0.12, 1.0, false, velocity), 60);
+      scheduleStrike(() => playMembrane(392.0 * d.pitchMult, 0.12, 1.0, false, velocity), 120);
+      scheduleStrike(() => playMembrane(523.25 * d.pitchMult, 0.2, 1.0, false, velocity), 180);
+      speakPhrase('You win!', 1.25, 1.1, (1.0) * velocity);
     }
   },
   touches: [

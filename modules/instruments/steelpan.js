@@ -1,5 +1,6 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
-import { playBell, playNoise, playAttackClick, speakPhrase, playWavSample } from '../audio.js';
+import { playBell, playNoise, playAttackClick, speakPhrase } from '../audio.js';
 
 export const steelpan = {
   origin: 'Trinidad and Tobago',
@@ -60,26 +61,21 @@ export const steelpan = {
   sounds: {
     indentation_strike: (d, velocity = 0.85) => {
       // Tuned convex note strike with rubber-tipped mallet
-      const success = playWavSample('/media/steelpan_strike.wav', d.pitchMult, velocity, 0.0);
-      if (!success) {
+      
         playBell(440 * d.pitchMult, 0.8, velocity, 0.0, false);
-      }
+      
     },
     rapid_chordal_roll: (d, velocity = 0.8) => {
       // Arpeggiated sweeping melodic chord roll across the pan in stereo
-      const success = playWavSample('/media/steelpan_strike.wav', d.pitchMult, velocity, -0.15);
-      if (success) {
-        setTimeout(() => playWavSample('/media/steelpan_strike.wav', d.pitchMult * 1.259, velocity * 0.9, 0.15), 45);
-        setTimeout(() => playWavSample('/media/steelpan_strike.wav', d.pitchMult * 1.498, velocity * 0.8, 0.0), 90);
-      } else {
+      
         playBell(440 * d.pitchMult, 0.4, velocity, -0.15, false);
-        setTimeout(() => {
+        scheduleStrike(() => {
           playBell(554 * d.pitchMult, 0.4, velocity * 0.9, 0.15, false);
         }, 45);
-        setTimeout(() => {
+        scheduleStrike(() => {
           playBell(659 * d.pitchMult, 0.4, velocity * 0.8, 0.0, false);
         }, 90);
-      }
+      
     },
     rim_ring: (d, velocity = 0.8) => {
       // Bright, industrial untuned metallic chrome skirt ring

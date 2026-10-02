@@ -1,3 +1,4 @@
+import { getPlayingSurface } from './playingSurface.js';
 // Gamepad API Input Processing Module
 import { state } from './state.js';
 import { drumTypes, getVisibleDrums, instrumentMappings } from './drumTypes.js';
@@ -139,28 +140,8 @@ export function processGamepadHit(key, gp, hand, shortSound, longSound, ignore =
   const triggerPlay = (drumDef, type) => {
     const instDef = drumTypes[state.currentInstrument] || drumTypes.conga;
     if (instDef && instDef.sounds && instDef.sounds[type]) {
-      let virtualDrum = drumDef;
-      if (state.currentInstrument === 'bongo') {
-        virtualDrum = Object.assign({}, drumDef, {
-          id: hand === 'l' ? 0 : 1,
-          pitchMult: hand === 'l' ? 1.4 : 0.9
-        });
-      } else if (state.currentInstrument === 'mridangam') {
-        virtualDrum = Object.assign({}, drumDef, {
-          id: hand === 'l' ? 0 : 1, // 0 = Thoppi, 1 = Valanthalai
-          pitchMult: hand === 'l' ? 0.8 : 1.4
-        });
-      } else if (state.currentInstrument === 'dhol') {
-        virtualDrum = Object.assign({}, drumDef, {
-          id: hand === 'l' ? 0 : 1, // 0 = Dagga, 1 = Tilli
-          pitchMult: hand === 'l' ? 0.8 : 1.25
-        });
-      } else if (state.currentInstrument === 'agogo') {
-        virtualDrum = Object.assign({}, drumDef, {
-          id: hand === 'l' ? 1 : 0,
-          pitchMult: hand === 'l' ? 1.35 : 1.0
-        });
-      }
+      const side = state.currentInstrument === 'agogo' ? (hand === 'l' ? 1 : 0) : (hand === 'l' ? 0 : 1);
+      const virtualDrum = getPlayingSurface(state.currentInstrument, drumDef, side);
       instDef.sounds[type](virtualDrum);
     }
   };

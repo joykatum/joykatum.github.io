@@ -1,4 +1,4 @@
-import { audioCtx, getAudioDestination, registerVoice } from './audio.js';
+import { audioCtx, getAudioDestination, registerVoice, adjustDecayForSustain } from './audio.js';
 import { state } from './state.js';
 
 export const loadedSoundFonts = {
@@ -109,7 +109,9 @@ function parseSoundFont(arrayBuffer) {
     const sampleType = view.getUint16(o + 44, true);
 
     const lengthInSamples = end - start;
-    if (lengthInSamples <= 0) continue;
+    if (lengthInSamples <= 0 || start >= smplWords.length || end > smplWords.length || sampleRate <= 0) {
+      throw new Error(`Invalid sample bounds for ${name}`);
+    }
 
     // Slice the sample words and create a Web Audio AudioBuffer
     const rawData = smplWords.subarray(start, end);
@@ -124,10 +126,37 @@ function parseSoundFont(arrayBuffer) {
       originalPitch,
       pitchCorrection,
       sampleRate,
-      audioBuffer
+      audioBuffer,
+      sampleIndex: i,
+      sampleLink,
+      sampleType
     });
   }
 
+  // SF2 stores linked stereo channels in separate sample headers. Recombine
+  // them before playback instead of silently discarding the other channel.
+  const stereoBuffers = new Map();
+  for (const sample of samples) {
+    if (sample.sampleType !== 2 && sample.sampleType !== 4) continue;
+    const partner = samples.find((other) => other.sampleIndex === sample.sampleLink);
+    if (!partner || partner.sampleRate !== sample.sampleRate || partner.sampleLink !== sample.sampleIndex ||
+        partner.sampleType !== (sample.sampleType === 2 ? 4 : 2)) {
+      throw new Error(`Invalid stereo sample link for ${sample.name}`);
+    }
+    const key = Math.min(sample.sampleIndex, partner.sampleIndex);
+    if (!stereoBuffers.has(key)) {
+      const left = sample.sampleType === 4 ? sample : partner;
+      const right = sample.sampleType === 2 ? sample : partner;
+      const length = Math.max(left.audioBuffer.getChannelData(0).length, right.audioBuffer.getChannelData(0).length);
+      const buffer = audioCtx.createBuffer(2, length, sample.sampleRate);
+      buffer.getChannelData(0).set(left.audioBuffer.getChannelData(0));
+      buffer.getChannelData(1).set(right.audioBuffer.getChannelData(0));
+      stereoBuffers.set(key, buffer);
+    }
+  }
+  for (const sample of samples) {
+    if (sample.sampleType === 2 || sample.sampleType === 4) sample.audioBuffer = stereoBuffers.get(Math.min(sample.sampleIndex, sample.sampleLink));
+  }
   return samples;
 }
 
@@ -201,13 +230,17 @@ export function playSoundFontSample(
   }
 
   const sf = loadedSoundFonts[soundfontName];
+  // A repitched conga recording does not establish bongo, djembe or batá timbre.
+  if (soundfontName === 'conga' && ['bongo', 'djembe', 'bata'].includes(state.currentPlayContext?.instrument)) {
+    return false;
+  }
   if (!sf) {
     return false; // Not loaded yet
   }
 
   // Find the sample matching the pattern (case-insensitive substring match)
   const query = sampleNamePattern.toLowerCase();
-  const matchedKey = Object.keys(sf).find((k) => k.includes(query));
+  const matchedKey = Object.hasOwn(sf, query) ? query : Object.keys(sf).find((k) => k.includes(query));
 
   if (!matchedKey) {
     console.warn(`[SF2Loader] No matching sample found for "${sampleNamePattern}" in "${soundfontName}"`);
@@ -225,22 +258,11 @@ export function playSoundFontSample(
   const pitchShiftFactor = Math.pow(2, state.pitchShiftSemitones / 12);
   let finalPlaybackRate = pitchMult * pitchShiftFactor;
 
-  // SOTA Anti-machine-gun:
-  // 1. Velocity influences pitch slightly (harder hits tighten the skin, raising pitch by up to 25 cents)
-  const velocityPitchCents = (velocity - 0.5) * 25;
-  // 2. Micro-pitch humanization (+/- 10 cents)
-  const humanizeCents = (Math.random() - 0.5) * 20;
-
-  const totalCentsShift = velocityPitchCents + humanizeCents;
-  const shiftFactor = Math.pow(2, totalCentsShift / 1200);
-  finalPlaybackRate *= shiftFactor;
-
   source.playbackRate.setValueAtTime(finalPlaybackRate, audioCtx.currentTime);
 
-  // SOTA: Velocity-sensitive Filter Envelope
-  // Hard hits are bright initially and decay quickly. Soft hits are dark.
+  // Preserve the recorded spectrum by default; tonal effects are user controlled.
   const filterNode = audioCtx.createBiquadFilter();
-  filterNode.type = 'lowpass';
+  filterNode.type = 'allpass';
 
   // Base cutoff scales non-linearly with velocity
   const baseCutoff = 800 + Math.pow(velocity, 2.0) * 16000;
@@ -261,7 +283,7 @@ export function playSoundFontSample(
 
   // Optional subtle saturation/distortion on hard hits for organic warmth
   const saturator = audioCtx.createWaveShaper();
-  if (velocity > 0.8) {
+  if (state.transientAttack > 0 && velocity > 0.8) {
     const curve = new Float32Array(256);
     for (let i = 0; i < 256; i++) {
       const x = (i * 2) / 255 - 1;
@@ -282,28 +304,28 @@ export function playSoundFontSample(
   pannerNode.connect(getAudioDestination());
 
   // Setup gain envelope
-  const decayScale = 1.0 + (state.transientSustain / 100) * 1.5;
-  const duration = (audioBuffer.duration / finalPlaybackRate) * decayScale;
-  const decay = customDecay !== null ? customDecay : duration;
+  const duration = adjustDecayForSustain(audioBuffer.duration / finalPlaybackRate);
+  const decay = Math.max(0.005, customDecay !== null ? customDecay : duration);
 
   // Humanize velocity volume slightly (+/- 3%)
-  const humanizedVelocity = Math.max(0.01, Math.min(1.0, velocity * (0.97 + Math.random() * 0.06)));
+  const humanizedVelocity = Math.max(0.001, Math.min(1.0, velocity));
 
   // Transient attack design
-  const attackTime = 0.003 + Math.random() * 0.002; // 3-5ms attack for variation
+  const attackTime = 0.003;
   let punch = 1.0;
   if (state.transientAttack > 0) {
     punch = 1.0 + (state.transientAttack / 100) * 1.5;
   }
 
   gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity * punch, audioCtx.currentTime + attackTime);
-  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity, audioCtx.currentTime + attackTime + 0.035);
-  gainNode.gain.setValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.max(0.01, decay - 0.08));
+  const safeAttack = Math.min(attackTime, decay * 0.1);
+  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity * punch, audioCtx.currentTime + safeAttack);
+  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.min(safeAttack + 0.035, decay * 0.5));
+  gainNode.gain.setValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.max(decay * 0.5, decay - 0.08));
   gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
 
   // Anti-machine-gun: Start sample slightly offset randomly (0-3ms)
-  const startOffset = Math.random() * 0.003;
+  const startOffset = 0;
 
   // Trigger playback
   source.start(0, startOffset);

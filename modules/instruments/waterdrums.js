@@ -49,20 +49,20 @@ export const waterdrums = {
     }
   ],
   sounds: {
-    gourd_boom: (d) => playMembrane(55 * d.pitchMult, 0.65, 1.5, false),
-    water_splash: (d) => {
-      playMembrane(130 * d.pitchMult, 0.45, 1.25, false);
-      playNoise(0.25, 1200, state.currentTiltVolume * 0.4);
+    gourd_boom: (d, velocity = 1) => playMembrane(55 * d.pitchMult, 0.65, 1.5, false, velocity),
+    water_splash: (d, velocity = 1) => {
+      playMembrane(130 * d.pitchMult, 0.45, 1.25, false, velocity);
+      playNoise(0.25, 1200, (state.currentTiltVolume * 0.4) * velocity);
     },
-    water_slap: (d) => {
-      playMembrane(220 * d.pitchMult, 0.3, 1.1, true);
-      playNoise(0.4, 2500, state.currentTiltVolume * 0.85);
+    water_slap: (d, velocity = 1) => {
+      playMembrane(220 * d.pitchMult, 0.3, 1.1, true, velocity);
+      playNoise(0.4, 2500, (state.currentTiltVolume * 0.85) * velocity);
     },
-    gourd_mute: (d) => {
-      playMembrane(110 * d.pitchMult, 0.15, 1.0, false);
-      playNoise(0.12, 1000, state.currentTiltVolume * 0.3);
+    gourd_mute: (d, velocity = 1) => {
+      playMembrane(110 * d.pitchMult, 0.15, 1.0, false, velocity);
+      playNoise(0.12, 1000, (state.currentTiltVolume * 0.3) * velocity);
     },
-    water_drip: (d) => playTablaSlideUp(75 * d.pitchMult, 160 * d.pitchMult, 0.5)
+    water_drip: (d, velocity = 1) => playTablaSlideUp(75 * d.pitchMult, 160 * d.pitchMult, 0.5, velocity)
   },
   touches: [
     {

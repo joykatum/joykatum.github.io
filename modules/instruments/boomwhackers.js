@@ -61,14 +61,14 @@ export const boomwhackers = {
     }
   ],
   sounds: {
-    surface_strike: (d) => playMembrane((d.id === 0 ? 170 : d.id === 1 ? 210 : 280) * d.pitchMult, 0.1, 1.0, false),
-    body_strike: (d) => {
-      playMembrane((d.id === 0 ? 260 : d.id === 1 ? 330 : 440) * d.pitchMult, 0.12, 1.0, true);
-      playNoise(0.04, 1500, state.currentTiltVolume * 0.4);
+    surface_strike: (d, velocity = 1) => playMembrane((d.id === 0 ? 170 : d.id === 1 ? 210 : 280) * d.pitchMult, 0.1, 1.0, false, velocity),
+    body_strike: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 260 : d.id === 1 ? 330 : 440) * d.pitchMult, 0.12, 1.0, true, velocity);
+      playNoise(0.04, 1500, (state.currentTiltVolume * 0.4) * velocity);
     },
-    end_cap_pop: (d) => {
-      playMembrane((d.id === 0 ? 260 : d.id === 1 ? 330 : 440) * d.pitchMult, 0.12, 1.0, true);
-      playNoise(0.04, 1500, state.currentTiltVolume * 0.4);
+    end_cap_pop: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 260 : d.id === 1 ? 330 : 440) * d.pitchMult, 0.12, 1.0, true, velocity);
+      playNoise(0.04, 1500, (state.currentTiltVolume * 0.4) * velocity);
     }
   },
   touches: [

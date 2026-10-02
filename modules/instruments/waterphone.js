@@ -41,12 +41,12 @@ export const waterphone = {
     }
   ],
   sounds: {
-    cello_rod_bow_stroke: (d) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5),
-    rod_mallet_tap: (d) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5),
-    basin_tilt_water_shift: (d) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5),
-    bottom_basin_hand_slap: (d) => {
-      playMembrane(900 * d.pitchMult, 1.4, 0.9, true);
-      playNoise(1.2, 4500, state.currentTiltVolume * 0.75);
+    cello_rod_bow_stroke: (d, velocity = 1) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5, velocity),
+    rod_mallet_tap: (d, velocity = 1) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5, velocity),
+    basin_tilt_water_shift: (d, velocity = 1) => playTablaSlideUp(280 * d.pitchMult, 580 * d.pitchMult, 1.5, velocity),
+    bottom_basin_hand_slap: (d, velocity = 1) => {
+      playMembrane(900 * d.pitchMult, 1.4, 0.9, true, velocity);
+      playNoise(1.2, 4500, (state.currentTiltVolume * 0.75) * velocity);
     }
   },
   touches: [

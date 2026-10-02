@@ -1,4 +1,5 @@
-import { playBell, playNoise, playAttackClick, playWavSample } from '../audio.js';
+import { scheduleStrike } from '../audio.js';
+import { playBell, playNoise, playAttackClick } from '../audio.js';
 import { state } from '../state.js';
 import { playSoundFontSample } from '../sf2Loader.js';
 
@@ -34,13 +35,14 @@ export const agogo = {
   ],
   sounds: {
     high_strike: (d, velocity = 0.8) => {
-      const success = playWavSample('/media/agogo_high.wav', d.pitchMult, velocity, -0.25);
+      const success = playSoundFontSample('agogo', 'high agogo(l)', d.pitchMult, velocity, -0.25);
       if (!success) {
         playBell(700 * d.pitchMult, 0.7, velocity, -0.25, false);
       }
     },
     low_strike: (d, velocity = 0.8) => {
-      const success = playWavSample('/media/agogo_low.wav', d.pitchMult, velocity, 0.25);
+      // The bundled bank contains only a high bell; synthesize the low bell.
+      const success = false;
       if (!success) {
         playBell(500 * d.pitchMult, 0.9, velocity, 0.25, false);
       }
@@ -54,20 +56,20 @@ export const agogo = {
     stick_drag: (d, velocity = 0.7) => {
       const success = playSoundFontSample('agogo', 'high agogo(r)', d.pitchMult * 1.2, velocity * 0.8, -0.2, 0.03);
       if (success) {
-        setTimeout(() => {
+        scheduleStrike(() => {
           playSoundFontSample('agogo', 'high agogo(l)', d.pitchMult * 1.3, velocity * 0.7, -0.1, 0.03);
         }, 50);
-        setTimeout(() => {
+        scheduleStrike(() => {
           playSoundFontSample('agogo', 'high agogo(r)', d.pitchMult * 1.4, velocity * 0.6, 0.1, 0.04);
         }, 100);
       } else {
         playBell(600 * d.pitchMult, 0.03, velocity * 0.8, -0.2, true);
         playNoise(0.04, 2500, velocity * 0.5, 'highpass');
-        setTimeout(() => {
+        scheduleStrike(() => {
           playBell(650 * d.pitchMult, 0.03, velocity * 0.7, -0.1, true);
           playNoise(0.03, 2800, velocity * 0.4, 'highpass');
         }, 50);
-        setTimeout(() => {
+        scheduleStrike(() => {
           playBell(700 * d.pitchMult, 0.04, velocity * 0.6, 0.1, true);
           playNoise(0.03, 3000, velocity * 0.3, 'highpass');
         }, 100);

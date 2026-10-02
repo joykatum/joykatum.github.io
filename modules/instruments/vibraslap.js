@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -50,7 +51,7 @@ export const vibraslap = {
       for (let i = 0; i < 15; i++) {
         const delay = Math.pow(i, 1.22) * 45; // slightly slowing rate
         const vol = velocity * Math.pow(0.83, i) * 1.3;
-        setTimeout(() => {
+        scheduleStrike(() => {
           playNoise(0.02, 2800 + i * 50, vol, 'highpass', 4.0);
         }, delay);
       }
@@ -67,7 +68,7 @@ export const vibraslap = {
     short_buzz: (d, velocity = 0.7) => {
       // Quick, short teeth-chattering rattle
       for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
+        scheduleStrike(() => {
           playNoise(0.015, 2400, velocity * Math.pow(0.8, i), 'highpass');
         }, i * 35);
       }

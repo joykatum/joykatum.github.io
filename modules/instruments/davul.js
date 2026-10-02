@@ -76,9 +76,9 @@ export const davul = {
     }
   ],
   sounds: {
-    tokmak: (d) => playMembrane(450 * d.pitchMult, 0.15, 0.8, true),
-    ubuk: (d) => playMembrane(50 * d.pitchMult, 1.3, 1.8, false),
-    hoop_edge_snapping: (d) => playMembrane(380 * d.pitchMult, 0.08, 0.85, false)
+    tokmak: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.15, 0.8, true, velocity),
+    ubuk: (d, velocity = 1) => playMembrane(50 * d.pitchMult, 1.3, 1.8, false, velocity),
+    hoop_edge_snapping: (d, velocity = 1) => playMembrane(380 * d.pitchMult, 0.08, 0.85, false, velocity)
   },
   touches: [
     {

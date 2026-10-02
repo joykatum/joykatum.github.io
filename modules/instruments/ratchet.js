@@ -41,8 +41,8 @@ export const ratchet = {
     }
   ],
   sounds: {
-    crank_spin_snap: (d) => playNoise(0.2, 1400, state.currentTiltVolume * 1.1),
-    slow_crank_creak: (d) => playNoise(0.2, 1400, state.currentTiltVolume * 1.1)
+    crank_spin_snap: (d, velocity = 1) => playNoise(0.2, 1400, (state.currentTiltVolume * 1.1) * velocity),
+    slow_crank_creak: (d, velocity = 1) => playNoise(0.2, 1400, (state.currentTiltVolume * 1.1) * velocity)
   },
   touches: [
     {

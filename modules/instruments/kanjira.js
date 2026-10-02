@@ -71,8 +71,8 @@ export const kanjira = {
     }
   ],
   sounds: {
-    split_finger_edge_tap: (d) => playTablaSlideUp(150 * d.pitchMult, 80 * d.pitchMult, 0.4),
-    inner_skin_pitch_glide: (d) => playTablaSlideUp(150 * d.pitchMult, 80 * d.pitchMult, 0.4)
+    split_finger_edge_tap: (d, velocity = 1) => playTablaSlideUp(150 * d.pitchMult, 80 * d.pitchMult, 0.4, velocity),
+    inner_skin_pitch_glide: (d, velocity = 1) => playTablaSlideUp(150 * d.pitchMult, 80 * d.pitchMult, 0.4, velocity)
   },
   touches: [
     {

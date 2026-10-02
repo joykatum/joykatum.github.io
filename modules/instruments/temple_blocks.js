@@ -87,11 +87,11 @@ export const temple_blocks = {
     }
   ],
   sounds: {
-    center_mallet_hit: (d) => {
-      playMembrane((d.id === 0 ? 360 : d.id === 1 ? 480 : 640) * d.pitchMult, 0.08, 1.0, true);
-      playNoise(0.02, 3500, state.currentTiltVolume * 0.6);
+    center_mallet_hit: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 360 : d.id === 1 ? 480 : 640) * d.pitchMult, 0.08, 1.0, true, velocity);
+      playNoise(0.02, 3500, (state.currentTiltVolume * 0.6) * velocity);
     },
-    lip_scrape: (d) => playMembrane((d.id === 0 ? 180 : d.id === 1 ? 240 : 320) * d.pitchMult, 0.22, 1.0, false)
+    lip_scrape: (d, velocity = 1) => playMembrane((d.id === 0 ? 180 : d.id === 1 ? 240 : 320) * d.pitchMult, 0.22, 1.0, false, velocity)
   },
   touches: [
     {

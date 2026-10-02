@@ -63,13 +63,13 @@ export const tar_drum = {
     }
   ],
   sounds: {
-    dum: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.4, false),
-    tak: (d) => {
-      playMembrane(240 * d.pitchMult, 0.15, 1.2, true);
-      playNoise(0.06, 2200, state.currentTiltVolume * 0.8);
+    dum: (d, velocity = 1) => playMembrane(65 * d.pitchMult, 0.7, 1.4, false, velocity),
+    tak: (d, velocity = 1) => {
+      playMembrane(240 * d.pitchMult, 0.15, 1.2, true, velocity);
+      playNoise(0.06, 2200, (state.currentTiltVolume * 0.8) * velocity);
     },
-    fingertip_roll_friction_drag: (d) => playNoise(0.05, 1800, state.currentTiltVolume * 0.5),
-    back_frame_scratch: (d) => playNoise(0.05, 1800, state.currentTiltVolume * 0.5)
+    fingertip_roll_friction_drag: (d, velocity = 1) => playNoise(0.05, 1800, (state.currentTiltVolume * 0.5) * velocity),
+    back_frame_scratch: (d, velocity = 1) => playNoise(0.05, 1800, (state.currentTiltVolume * 0.5) * velocity)
   },
   touches: [
     {

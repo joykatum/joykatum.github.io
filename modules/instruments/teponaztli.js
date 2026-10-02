@@ -64,9 +64,9 @@ export const teponaztli = {
     }
   ],
   sounds: {
-    long_tongue_strike: (d) => playMembrane(210 * d.pitchMult, 0.08, 0.8, false),
-    short_tongue_strike: (d) => playMembrane(240 * d.pitchMult, 0.45, 1.0, false),
-    side_body_hit: (d) => playMembrane(280 * d.pitchMult, 0.06, 0.95, false)
+    long_tongue_strike: (d, velocity = 1) => playMembrane(210 * d.pitchMult, 0.08, 0.8, false, velocity),
+    short_tongue_strike: (d, velocity = 1) => playMembrane(240 * d.pitchMult, 0.45, 1.0, false, velocity),
+    side_body_hit: (d, velocity = 1) => playMembrane(280 * d.pitchMult, 0.06, 0.95, false, velocity)
   },
   touches: [
     {

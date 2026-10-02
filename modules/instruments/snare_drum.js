@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -104,7 +105,7 @@ export const snare_drum = {
     buzz_press_roll: (d, velocity = 0.8) => {
       // Simulate rapid buzz by cascading multiple hits
       for (let i = 0; i < 6; i++) {
-        setTimeout(() => {
+        scheduleStrike(() => {
           const vol = velocity * Math.pow(0.85, i);
           playMembrane(320 * d.pitchMult, 0.05, 1.0, true, vol * 0.6);
           playNoise(0.12, 4000, vol * 0.8, 'highpass');

@@ -65,13 +65,13 @@ export const friction_drum = {
     }
   ],
   sounds: {
-    rub_low: (d) => {
-      playTablaSlideUp(70 * d.pitchMult, 120 * d.pitchMult, 0.5);
-      playNoise(0.5, 200, state.currentTiltVolume * 0.8);
+    rub_low: (d, velocity = 1) => {
+      playTablaSlideUp(70 * d.pitchMult, 120 * d.pitchMult, 0.5, velocity);
+      playNoise(0.5, 200, (state.currentTiltVolume * 0.8) * velocity);
     },
-    rub_high: (d) => {
-      playTablaSlideUp(140 * d.pitchMult, 80 * d.pitchMult, 0.5);
-      playNoise(0.5, 300, state.currentTiltVolume * 0.8);
+    rub_high: (d, velocity = 1) => {
+      playTablaSlideUp(140 * d.pitchMult, 80 * d.pitchMult, 0.5, velocity);
+      playNoise(0.5, 300, (state.currentTiltVolume * 0.8) * velocity);
     }
   },
   touches: [

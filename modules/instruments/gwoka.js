@@ -54,10 +54,10 @@ export const gwoka = {
     }
   ],
   sounds: {
-    boul: (d) => playMembrane((d.id === 0 ? 160 : 100) * d.pitchMult, 0.1, 1.0, false),
-    mak: (d) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.55, 1.1, false),
-    tak_rim_strike: (d) => playMembrane(450 * d.pitchMult, 0.05, 1.0, true),
-    choke_muff: (d) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.1, 0.8, true)
+    boul: (d, velocity = 1) => playMembrane((d.id === 0 ? 160 : 100) * d.pitchMult, 0.1, 1.0, false, velocity),
+    mak: (d, velocity = 1) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.55, 1.1, false, velocity),
+    tak_rim_strike: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.05, 1.0, true, velocity),
+    choke_muff: (d, velocity = 1) => playMembrane((d.id === 0 ? 175 : 110) * d.pitchMult, 0.1, 0.8, true, velocity)
   },
   touches: [
     {

@@ -1821,6 +1821,7 @@ function sanitizeHandMapping(handMap, availableTouches) {
 }
 
 const loadedInstruments = {};
+let strikeId = 0;
 
 export async function ensureInstrumentLoaded(instrumentName) {
   let name = instrumentName;
@@ -1848,15 +1849,25 @@ export async function ensureInstrumentLoaded(instrumentName) {
           const originalFn = originalSounds[soundKey];
           if (typeof originalFn === 'function') {
             instData.sounds[soundKey] = (drum, velocity, ...args) => {
+              if (velocity === 0) return;
+              const previous = state.currentPlayContext;
+              // Tabla bol names specify a head even when a controller hand or
+              // touch happens to have a different drum selected.
+              if (name === 'tabla') {
+                const headId = soundKey.startsWith('bayan_') ? 0 : 1;
+                drum = drumTypes.tabla.drums.find((head) => head.id === headId);
+              }
               state.currentPlayContext = {
                 instrument: name,
                 drumId: drum ? drum.id : 0,
-                sound: soundKey
+                sound: soundKey,
+                strikeId: ++strikeId,
+                surface: name === 'bata' ? soundKey.split('_')[0] : 'default'
               };
               try {
                 return originalFn(drum, velocity, ...args);
               } finally {
-                state.currentPlayContext = null;
+                state.currentPlayContext = previous;
               }
             };
           }
@@ -1868,7 +1879,8 @@ export async function ensureInstrumentLoaded(instrumentName) {
         name: drumTypes[name]?.name || name.charAt(0).toUpperCase() + name.slice(1),
         origin: instData.origin || 'Traditional / Regional',
         description:
-          instData.description || 'A traditional percussion instrument used in regional musical practices worldwide.',
+          (instData.description || '') +
+          ' Playback uses an electronic approximation or a bundled sample library. Acoustic fidelity and sample provenance have not been independently verified.',
         performers: instData.performers || [],
         songs: instData.songs || [],
         effectsSongs: instData.effectsSongs || []
@@ -1938,7 +1950,8 @@ export async function ensureInstrumentLoaded(instrumentName) {
 
       // Sanitize mappings to prevent duplicates and ensure all touches are mapped
       if (instData.mappings && instData.touches) {
-        const availableTouchIds = instData.touches.map((t) => t.id);
+        // Map playable sounds, including techniques missing from display metadata.
+        const availableTouchIds = Object.keys(instData.sounds || {});
         if (instData.mappings.left) {
           instData.mappings.left = sanitizeHandMapping(instData.mappings.left, availableTouchIds);
         }

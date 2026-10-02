@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -42,35 +43,35 @@ export const quijada = {
     }
   ],
   sounds: {
-    fist_slam_rattles: (d) => {
-      playNoise(0.65, 1600, 0.9 * state.currentTiltVolume, 'bandpass', 3.5);
-      playMembrane(120 * d.pitchMult, 0.15, 1.0);
+    fist_slam_rattles: (d, velocity = 1) => {
+      playNoise(0.65, 1600, (0.9 * state.currentTiltVolume) * velocity, 'bandpass', 3.5);
+      playMembrane(120 * d.pitchMult, 0.15, 1.0, false, velocity);
     },
-    teeth_rasp_scrape: (d) => playNoise(0.45, 2200, 0.7 * state.currentTiltVolume, 'bandpass', 4.5),
-    chin_bone_tap: (d) => {
-      playAttackClick(0.02, 1200, 0.6 * state.currentTiltVolume);
-      playMembrane(350 * d.pitchMult, 0.05, 1.0);
+    teeth_rasp_scrape: (d, velocity = 1) => playNoise(0.45, 2200, (0.7 * state.currentTiltVolume) * velocity, 'bandpass', 4.5),
+    chin_bone_tap: (d, velocity = 1) => {
+      playAttackClick(0.02, 1200, (0.6 * state.currentTiltVolume) * velocity);
+      playMembrane(350 * d.pitchMult, 0.05, 1.0, false, velocity);
     },
-    micro_flick: (d) => {
-      playNoise(0.12, 1800, 0.4 * state.currentTiltVolume, 'bandpass', 3.0);
-      playMembrane(250 * d.pitchMult, 0.03, 1.0);
+    micro_flick: (d, velocity = 1) => {
+      playNoise(0.12, 1800, (0.4 * state.currentTiltVolume) * velocity, 'bandpass', 3.0);
+      playMembrane(250 * d.pitchMult, 0.03, 1.0, false, velocity);
     },
-    reverse_scrape: (d) => playNoise(0.22, 2400, 0.6 * state.currentTiltVolume, 'bandpass', 3.5),
-    choked_jaw_pinch: (d) => {
-      playNoise(0.08, 1500, 0.7 * state.currentTiltVolume, 'bandpass', 5.0);
-      playMembrane(125 * d.pitchMult, 0.06, 1.0);
+    reverse_scrape: (d, velocity = 1) => playNoise(0.22, 2400, (0.6 * state.currentTiltVolume) * velocity, 'bandpass', 3.5),
+    choked_jaw_pinch: (d, velocity = 1) => {
+      playNoise(0.08, 1500, (0.7 * state.currentTiltVolume) * velocity, 'bandpass', 5.0);
+      playMembrane(125 * d.pitchMult, 0.06, 1.0, false, velocity);
     },
-    double_tap: (d) => {
-      playNoise(0.15, 1600, 0.8 * state.currentTiltVolume, 'bandpass', 3.5);
-      playMembrane(120 * d.pitchMult, 0.08, 1.0);
-      setTimeout(() => {
-        playNoise(0.15, 1600, 0.6 * state.currentTiltVolume, 'bandpass', 3.5);
-        playMembrane(120 * d.pitchMult, 0.08, 1.0);
+    double_tap: (d, velocity = 1) => {
+      playNoise(0.15, 1600, (0.8 * state.currentTiltVolume) * velocity, 'bandpass', 3.5);
+      playMembrane(120 * d.pitchMult, 0.08, 1.0, false, velocity);
+      scheduleStrike(() => {
+        playNoise(0.15, 1600, (0.6 * state.currentTiltVolume) * velocity, 'bandpass', 3.5);
+        playMembrane(120 * d.pitchMult, 0.08, 1.0, false, velocity);
       }, 70);
     },
-    hollow_socket_pop: (d) => {
-      playMembrane(180 * d.pitchMult, 0.12, 1.0);
-      playAttackClick(0.03, 900, 0.5 * state.currentTiltVolume);
+    hollow_socket_pop: (d, velocity = 1) => {
+      playMembrane(180 * d.pitchMult, 0.12, 1.0, false, velocity);
+      playAttackClick(0.03, 900, (0.5 * state.currentTiltVolume) * velocity);
     }
   },
   touches: [

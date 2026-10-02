@@ -49,19 +49,19 @@ export const kotsuzumi = {
     }
   ],
   sounds: {
-    pon: (d) => {
-      playMembrane(400 * d.pitchMult, 0.12, 1.1, true);
-      playNoise(0.04, 2500, state.currentTiltVolume * 0.4);
+    pon: (d, velocity = 1) => {
+      playMembrane(400 * d.pitchMult, 0.12, 1.1, true, velocity);
+      playNoise(0.04, 2500, (state.currentTiltVolume * 0.4) * velocity);
     },
-    chi: (d) => {
-      playMembrane(400 * d.pitchMult, 0.12, 1.1, true);
-      playNoise(0.04, 2500, state.currentTiltVolume * 0.4);
+    chi: (d, velocity = 1) => {
+      playMembrane(400 * d.pitchMult, 0.12, 1.1, true, velocity);
+      playNoise(0.04, 2500, (state.currentTiltVolume * 0.4) * velocity);
     },
-    pu: (d) => {
-      playMembrane(400 * d.pitchMult, 0.12, 1.1, true);
-      playNoise(0.04, 2500, state.currentTiltVolume * 0.4);
+    pu: (d, velocity = 1) => {
+      playMembrane(400 * d.pitchMult, 0.12, 1.1, true, velocity);
+      playNoise(0.04, 2500, (state.currentTiltVolume * 0.4) * velocity);
     },
-    hoop_strike: (d) => playMembrane(220 * d.pitchMult, 0.6, 1.15)
+    hoop_strike: (d, velocity = 1) => playMembrane(220 * d.pitchMult, 0.6, 1.15, false, velocity)
   },
   touches: [
     {

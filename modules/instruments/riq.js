@@ -41,10 +41,10 @@ export const riq = {
     }
   ],
   sounds: {
-    dum: (d) => playMembrane(130 * d.pitchMult, 0.4, 1.1, false),
-    tak: (d) => playMembrane(360 * d.pitchMult, 0.12, 0.9, true),
-    jingle_damp_split: (d) => playNoise(0.18, 4500, state.currentTiltVolume * 0.75),
-    jingle_shake: (d) => playNoise(0.25, 6000, state.currentTiltVolume * 0.85)
+    dum: (d, velocity = 1) => playMembrane(130 * d.pitchMult, 0.4, 1.1, false, velocity),
+    tak: (d, velocity = 1) => playMembrane(360 * d.pitchMult, 0.12, 0.9, true, velocity),
+    jingle_damp_split: (d, velocity = 1) => playNoise(0.18, 4500, (state.currentTiltVolume * 0.75) * velocity),
+    jingle_shake: (d, velocity = 1) => playNoise(0.25, 6000, (state.currentTiltVolume * 0.85) * velocity)
   },
   touches: [
     {

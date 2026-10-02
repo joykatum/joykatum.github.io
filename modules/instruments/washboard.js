@@ -54,12 +54,12 @@ export const washboard = {
     }
   ],
   sounds: {
-    thimble_ridge_scrape: (d) => {
-      playScrape(0.12, 30, 2200, state.currentTiltVolume * 1.1, false);
+    thimble_ridge_scrape: (d, velocity = 1) => {
+      playScrape(0.12, 30, 2200, (state.currentTiltVolume * 1.1) * velocity, false);
     },
-    mounted_accessory_tap: (d) => playBell(1200 * d.pitchMult, 0.4, state.currentTiltVolume * 0.8, 0, false),
-    spoon_click_clatter: (d) => {
-      playScrape(0.08, 15, 3000, state.currentTiltVolume * 0.8, false);
+    mounted_accessory_tap: (d, velocity = 1) => playBell(1200 * d.pitchMult, 0.4, (state.currentTiltVolume * 0.8) * velocity, 0, false),
+    spoon_click_clatter: (d, velocity = 1) => {
+      playScrape(0.08, 15, 3000, (state.currentTiltVolume * 0.8) * velocity, false);
     }
   },
   touches: [

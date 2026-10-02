@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -49,10 +50,10 @@ export const rainstick = {
     vertical_inversion_slide: (d, velocity = 0.8) => {
       // Beautiful long textured cascade using layered noise bursts with different decay and bandpass frequencies
       playNoise(2.2, 1200, velocity * 0.5, 'bandpass', 1.5);
-      setTimeout(() => {
+      scheduleStrike(() => {
         playNoise(1.8, 1500, velocity * 0.4, 'bandpass', 2.0);
       }, 150);
-      setTimeout(() => {
+      scheduleStrike(() => {
         playNoise(1.3, 1800, velocity * 0.3, 'highpass');
       }, 350);
     },

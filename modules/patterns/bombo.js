@@ -6,13 +6,13 @@ export default {
     steps: {
       0: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       2: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -24,7 +24,7 @@ export default {
       ],
       6: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -36,7 +36,7 @@ export default {
       ],
       10: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ]
@@ -54,13 +54,13 @@ export default {
       ],
       3: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_aro'
         }
       ],
       4: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -72,7 +72,7 @@ export default {
       ],
       10: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ]
@@ -84,7 +84,7 @@ export default {
     steps: {
       0: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -96,13 +96,13 @@ export default {
       ],
       4: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       6: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -114,7 +114,7 @@ export default {
       ],
       10: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ]
@@ -132,13 +132,13 @@ export default {
       ],
       2: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       3: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_aro'
         }
       ],
@@ -150,13 +150,13 @@ export default {
       ],
       8: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       9: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_aro'
         }
       ],
@@ -180,7 +180,7 @@ export default {
       ],
       3: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -198,13 +198,13 @@ export default {
       ],
       11: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       12: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_aro'
         }
       ],
@@ -228,7 +228,7 @@ export default {
       ],
       4: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_aro'
         }
       ],
@@ -252,7 +252,7 @@ export default {
       ],
       2: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -264,7 +264,7 @@ export default {
       ],
       6: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -288,7 +288,7 @@ export default {
       ],
       14: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ]
@@ -300,7 +300,7 @@ export default {
     steps: {
       0: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -312,7 +312,7 @@ export default {
       ],
       6: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -336,7 +336,7 @@ export default {
       ],
       4: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -354,13 +354,13 @@ export default {
     steps: {
       0: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
       2: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -372,7 +372,7 @@ export default {
       ],
       6: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ],
@@ -384,7 +384,7 @@ export default {
       ],
       10: [
         {
-          drum: 1,
+          drum: 0,
           sound: 'golpe_de_parche'
         }
       ]

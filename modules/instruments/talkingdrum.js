@@ -72,13 +72,13 @@ export const talkingdrum = {
     }
   ],
   sounds: {
-    squeeze_cord_pitch_glide: (d) => {
-      playMembrane(280 * d.pitchMult, 0.14, 1.1, true);
-      playNoise(0.06, 1500, state.currentTiltVolume * 0.8);
+    squeeze_cord_pitch_glide: (d, velocity = 1) => {
+      playMembrane(280 * d.pitchMult, 0.14, 1.1, true, velocity);
+      playNoise(0.06, 1500, (state.currentTiltVolume * 0.8) * velocity);
     },
-    curved_stick_strike: (d) => playTablaSlideUp(250 * d.pitchMult, 450 * d.pitchMult, 0.45),
-    non_dominant_finger_tap: (d) => playTablaSlideUp(150 * d.pitchMult, 300 * d.pitchMult, 0.55),
-    shell_knock: (d) => playTablaSlideUp(250 * d.pitchMult, 450 * d.pitchMult, 0.45)
+    curved_stick_strike: (d, velocity = 1) => playTablaSlideUp(250 * d.pitchMult, 450 * d.pitchMult, 0.45, velocity),
+    non_dominant_finger_tap: (d, velocity = 1) => playTablaSlideUp(150 * d.pitchMult, 300 * d.pitchMult, 0.55, velocity),
+    shell_knock: (d, velocity = 1) => playTablaSlideUp(250 * d.pitchMult, 450 * d.pitchMult, 0.45, velocity)
   },
   touches: [
     {

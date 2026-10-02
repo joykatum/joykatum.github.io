@@ -41,10 +41,10 @@ export const ashiko = {
     }
   ],
   sounds: {
-    bass_tone: (d) => playMembrane(60 * d.pitchMult, 0.75, 1.5, false),
-    open_tone: (d) => playMembrane(210 * d.pitchMult, 0.45, 1.0, false),
-    slap_tone: (d) => playMembrane(380 * d.pitchMult, 0.12, 1.0, true),
-    aro_golpe: (d) => playMembrane(380 * d.pitchMult, 0.12, 1.0, true)
+    bass_tone: (d, velocity = 1) => playMembrane(60 * d.pitchMult, 0.75, 1.5, false, velocity),
+    open_tone: (d, velocity = 1) => playMembrane(210 * d.pitchMult, 0.45, 1.0, false, velocity),
+    slap_tone: (d, velocity = 1) => playMembrane(380 * d.pitchMult, 0.12, 1.0, true, velocity),
+    aro_golpe: (d, velocity = 1) => playMembrane(380 * d.pitchMult, 0.12, 1.0, true, velocity)
   },
   touches: [
     {

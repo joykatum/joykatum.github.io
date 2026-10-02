@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -55,7 +56,7 @@ export const spring_drum = {
       // Thunder wobble: low-frequency sliding waves and rumbling lowpass noise
       playTablaSlideUp(45 * d.pitchMult, 110 * d.pitchMult, 1.6, velocity, 0.0);
       playNoise(1.8, 140, velocity * 0.8, 'lowpass');
-      setTimeout(() => {
+      scheduleStrike(() => {
         playTablaSlideUp(120 * d.pitchMult, 60 * d.pitchMult, 1.2, velocity * 0.6, 0.0);
       }, 150);
     },
@@ -63,7 +64,7 @@ export const spring_drum = {
       // Sharp counterhoop strike + spring reaction
       playMembrane(380 * d.pitchMult, 0.1, 1.0, true, velocity, 0.0);
       playAttackClick(0.012, 4000, 0.6 * velocity);
-      setTimeout(() => {
+      scheduleStrike(() => {
         playTablaSlideUp(150 * d.pitchMult, 45 * d.pitchMult, 1.2, velocity * 0.8, 0.0);
         playNoise(1.2, 350, velocity * 0.4, 'bandpass');
       }, 30);

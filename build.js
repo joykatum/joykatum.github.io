@@ -43,6 +43,7 @@ try {
   fs.copyFileSync(path.join(__dirname, 'favicon.ico'), path.join(destDir, 'favicon.ico'));
   fs.copyFileSync(path.join(__dirname, 'manifest.json'), path.join(destDir, 'manifest.json'));
   copyRecursive(path.join(__dirname, 'modules'), path.join(destDir, 'modules'));
+  copyRecursive(path.join(__dirname, 'media'), path.join(destDir, 'media'));
   console.log('Static build succeeded! All files copied to /dist');
 } catch (err) {
   console.error('Build failed:', err);

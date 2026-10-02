@@ -61,10 +61,10 @@ export const cuica = {
     }
   ],
   sounds: {
-    internal_stick_rub: (d) => playTablaSlideUp(750 * d.pitchMult, 1000 * d.pitchMult, 0.13),
-    external_thumb_press: (d) => playTablaSlideUp(450 * d.pitchMult, 850 * d.pitchMult, 0.22),
-    high_to_low_slide: (d) => playTablaSlideUp(1000 * d.pitchMult, 600 * d.pitchMult, 0.2),
-    rim_tap: (d) => playMembrane(600 * d.pitchMult, 0.05, 1.0, false)
+    internal_stick_rub: (d, velocity = 1) => playTablaSlideUp(750 * d.pitchMult, 1000 * d.pitchMult, 0.13, velocity),
+    external_thumb_press: (d, velocity = 1) => playTablaSlideUp(450 * d.pitchMult, 850 * d.pitchMult, 0.22, velocity),
+    high_to_low_slide: (d, velocity = 1) => playTablaSlideUp(1000 * d.pitchMult, 600 * d.pitchMult, 0.2, velocity),
+    rim_tap: (d, velocity = 1) => playMembrane(600 * d.pitchMult, 0.05, 1.0, false, velocity)
   },
   touches: [
     {

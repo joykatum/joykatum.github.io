@@ -61,10 +61,10 @@ export const thongophone = {
     }
   ],
   sounds: {
-    paddle_pipe_slap: (d) => playMembrane((d.id === 0 ? 82 : d.id === 1 ? 110 : 147) * d.pitchMult, 0.3, 1.4, false),
-    pipe_side_tap: (d) => {
-      playMembrane((d.id === 0 ? 110 : d.id === 1 ? 147 : 196) * d.pitchMult, 0.15, 1.8, true);
-      playNoise(0.06, 800, state.currentTiltVolume * 0.7);
+    paddle_pipe_slap: (d, velocity = 1) => playMembrane((d.id === 0 ? 82 : d.id === 1 ? 110 : 147) * d.pitchMult, 0.3, 1.4, false, velocity),
+    pipe_side_tap: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 110 : d.id === 1 ? 147 : 196) * d.pitchMult, 0.15, 1.8, true, velocity);
+      playNoise(0.06, 800, (state.currentTiltVolume * 0.7) * velocity);
     }
   },
   touches: [

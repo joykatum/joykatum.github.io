@@ -41,12 +41,12 @@ export const tamborim = {
     }
   ],
   sounds: {
-    toque_aberto: (d) => playMembrane(220 * d.pitchMult, 0.2, 0.8, false),
-    virada: (d) => playMembrane(450 * d.pitchMult, 0.08, 0.7, false),
-    muted_back_finger_press: (d) => playMembrane(300 * d.pitchMult, 0.05, 0.6, false),
-    rim_shot: (d) => {
-      playMembrane(580 * d.pitchMult, 0.05, 1.2, true);
-      playNoise(0.04, 4000, state.currentTiltVolume * 0.8);
+    toque_aberto: (d, velocity = 1) => playMembrane(220 * d.pitchMult, 0.2, 0.8, false, velocity),
+    virada: (d, velocity = 1) => playMembrane(450 * d.pitchMult, 0.08, 0.7, false, velocity),
+    muted_back_finger_press: (d, velocity = 1) => playMembrane(300 * d.pitchMult, 0.05, 0.6, false, velocity),
+    rim_shot: (d, velocity = 1) => {
+      playMembrane(580 * d.pitchMult, 0.05, 1.2, true, velocity);
+      playNoise(0.04, 4000, (state.currentTiltVolume * 0.8) * velocity);
     }
   },
   touches: [

@@ -59,9 +59,9 @@ export const slide_whistle = {
     }
   ],
   sounds: {
-    mouthpiece_blow: (d) => playMembrane(330 * d.pitchMult, 0.06, 1.0, false),
-    piston_glide: (d) => playTablaSlideUp(220 * d.pitchMult, 550 * d.pitchMult, 0.7),
-    piston_click: (d) => playMembrane(330 * d.pitchMult, 0.06, 1.0, false)
+    mouthpiece_blow: (d, velocity = 1) => playMembrane(330 * d.pitchMult, 0.06, 1.0, false, velocity),
+    piston_glide: (d, velocity = 1) => playTablaSlideUp(220 * d.pitchMult, 550 * d.pitchMult, 0.7, velocity),
+    piston_click: (d, velocity = 1) => playMembrane(330 * d.pitchMult, 0.06, 1.0, false, velocity)
   },
   touches: [
     {

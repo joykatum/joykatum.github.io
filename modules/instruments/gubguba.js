@@ -56,8 +56,8 @@ export const gubguba = {
     }
   ],
   sounds: {
-    string_pluck: (d) => playTablaSlideUp(160 * d.pitchMult, 90 * d.pitchMult, 0.5),
-    string_tension_bend: (d) => playTablaSlideUp(160 * d.pitchMult, 90 * d.pitchMult, 0.5)
+    string_pluck: (d, velocity = 1) => playTablaSlideUp(160 * d.pitchMult, 90 * d.pitchMult, 0.5, velocity),
+    string_tension_bend: (d, velocity = 1) => playTablaSlideUp(160 * d.pitchMult, 90 * d.pitchMult, 0.5, velocity)
   },
   touches: [
     {

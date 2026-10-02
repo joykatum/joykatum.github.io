@@ -62,35 +62,35 @@ export const daiko = {
     }
   ],
   sounds: {
-    don: (d) => {
+    don: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false);
-      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false);
-      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false);
+      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false, velocity);
+      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false, velocity);
+      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false, velocity);
     },
-    do_ko: (d) => {
+    do_ko: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false);
-      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false);
-      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false);
+      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false, velocity);
+      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false, velocity);
+      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false, velocity);
     },
-    k: (d) => {
+    k: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false);
-      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false);
-      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false);
+      if (baseId === 0) playMembrane(250 * d.pitchMult, 0.3, 0.7, false, velocity);
+      else if (baseId === 1) playMembrane(80 * d.pitchMult, 0.6, 1.2, false, velocity);
+      else playMembrane(40 * d.pitchMult, 0.85, 1.8, false, velocity);
     },
-    bachi_clack: (d) => {
+    bachi_clack: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
       if (baseId === 0) {
-        playMembrane(900 * d.pitchMult, 0.05, 0.6, true);
-        playNoise(0.04, 4000, state.currentTiltVolume * 0.7);
+        playMembrane(900 * d.pitchMult, 0.05, 0.6, true, velocity);
+        playNoise(0.04, 4000, (state.currentTiltVolume * 0.7) * velocity);
       } else if (baseId === 1) {
-        playMembrane(650 * d.pitchMult, 0.06, 0.8, true);
-        playNoise(0.06, 3200, state.currentTiltVolume * 0.9);
+        playMembrane(650 * d.pitchMult, 0.06, 0.8, true, velocity);
+        playNoise(0.06, 3200, (state.currentTiltVolume * 0.9) * velocity);
       } else {
-        playMembrane(450 * d.pitchMult, 0.08, 1.1, true);
-        playNoise(0.08, 2500, state.currentTiltVolume * 1.1);
+        playMembrane(450 * d.pitchMult, 0.08, 1.1, true, velocity);
+        playNoise(0.08, 2500, (state.currentTiltVolume * 1.1) * velocity);
       }
     }
   },

@@ -58,9 +58,9 @@ export const jaw_harp = {
     }
   ],
   sounds: {
-    trigger_pluck: (d) => playTablaSlideUp(75 * d.pitchMult, 110 * d.pitchMult, 0.5),
-    mouth_cavity_filtering: (d) => playTablaSlideUp(110 * d.pitchMult, 220 * d.pitchMult, 0.4),
-    inward_breath_draw: (d) => playTablaSlideUp(75 * d.pitchMult, 110 * d.pitchMult, 0.5)
+    trigger_pluck: (d, velocity = 1) => playTablaSlideUp(75 * d.pitchMult, 110 * d.pitchMult, 0.5, velocity),
+    mouth_cavity_filtering: (d, velocity = 1) => playTablaSlideUp(110 * d.pitchMult, 220 * d.pitchMult, 0.4, velocity),
+    inward_breath_draw: (d, velocity = 1) => playTablaSlideUp(75 * d.pitchMult, 110 * d.pitchMult, 0.5, velocity)
   },
   touches: [
     {

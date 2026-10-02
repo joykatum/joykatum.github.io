@@ -61,15 +61,15 @@ export const angklung = {
     }
   ],
   sounds: {
-    sentak: (d) => {
-      playMembrane((d.id === 0 ? 440 : d.id === 1 ? 554 : 660) * d.pitchMult, 0.3, 1.0, true);
-      playNoise(0.2, 1800, state.currentTiltVolume * 0.8);
+    sentak: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 440 : d.id === 1 ? 554 : 660) * d.pitchMult, 0.3, 1.0, true, velocity);
+      playNoise(0.2, 1800, (state.currentTiltVolume * 0.8) * velocity);
     },
-    geter: (d) => {
-      playMembrane((d.id === 0 ? 440 : d.id === 1 ? 554 : 660) * d.pitchMult, 0.3, 1.0, true);
-      playNoise(0.2, 1800, state.currentTiltVolume * 0.8);
+    geter: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 440 : d.id === 1 ? 554 : 660) * d.pitchMult, 0.3, 1.0, true, velocity);
+      playNoise(0.2, 1800, (state.currentTiltVolume * 0.8) * velocity);
     },
-    frame_knock: (d) => playMembrane((d.id === 0 ? 220 : d.id === 1 ? 277 : 330) * d.pitchMult, 0.08, 1.0, false)
+    frame_knock: (d, velocity = 1) => playMembrane((d.id === 0 ? 220 : d.id === 1 ? 277 : 330) * d.pitchMult, 0.08, 1.0, false, velocity)
   },
   touches: [
     {

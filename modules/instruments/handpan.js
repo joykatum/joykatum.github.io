@@ -66,10 +66,10 @@ export const handpan = {
     }
   ],
   sounds: {
-    ding: (d) => playBell(120 * d.pitchMult, 1.2, 1.0, 0, false),
-    gu: (d) => playBell(120 * d.pitchMult, 0.8, 1.0, 0, false),
-    tone_field_tap: (d) => playBell(240 * d.pitchMult, 1.8, 1.0, 0, false),
-    interstitial_tap: (d) => playBell(85 * d.pitchMult, 1.5, 0.5, 0, true)
+    ding: (d, velocity = 1) => playBell(120 * d.pitchMult, 1.2, (1.0) * velocity, 0, false),
+    gu: (d, velocity = 1) => playBell(120 * d.pitchMult, 0.8, (1.0) * velocity, 0, false),
+    tone_field_tap: (d, velocity = 1) => playBell(240 * d.pitchMult, 1.8, (1.0) * velocity, 0, false),
+    interstitial_tap: (d, velocity = 1) => playBell(85 * d.pitchMult, 1.5, (0.5) * velocity, 0, true)
   },
   touches: [
     {

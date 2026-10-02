@@ -37,12 +37,12 @@ export const dhol = {
     }
   ],
   sounds: {
-    dagga: (d) => {
-      playMembrane(450 * d.pitchMult, 0.1, 1.1, true);
-      playNoise(0.08, 3000, state.currentTiltVolume * 0.8);
+    dagga: (d, velocity = 1) => {
+      playMembrane(450 * d.pitchMult, 0.1, 1.1, true, velocity);
+      playNoise(0.08, 3000, (state.currentTiltVolume * 0.8) * velocity);
     },
-    tilli: (d) => playMembrane(240 * d.pitchMult, 0.08, 1.0, true),
-    stick_slide_glissando: (d) => playMembrane(240 * d.pitchMult, 0.08, 1.0, true)
+    tilli: (d, velocity = 1) => playMembrane(240 * d.pitchMult, 0.08, 1.0, true, velocity),
+    stick_slide_glissando: (d, velocity = 1) => playMembrane(240 * d.pitchMult, 0.08, 1.0, true, velocity)
   },
   generateSVG: (id, colorType) => {
     let skinGradient = '';

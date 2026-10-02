@@ -41,10 +41,10 @@ export const pandeiro = {
     }
   ],
   sounds: {
-    polegar: (d) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true),
-    manoteo: (d) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true),
-    chacoalho: (d) => playNoise(0.12, 3800, state.currentTiltVolume * 0.7),
-    rim_click: (d) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true)
+    polegar: (d, velocity = 1) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true, velocity),
+    manoteo: (d, velocity = 1) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true, velocity),
+    chacoalho: (d, velocity = 1) => playNoise(0.12, 3800, (state.currentTiltVolume * 0.7) * velocity),
+    rim_click: (d, velocity = 1) => playMembrane(260 * d.pitchMult, 0.15, 0.9, true, velocity)
   },
   touches: [
     {

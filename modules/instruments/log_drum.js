@@ -81,12 +81,12 @@ export const log_drum = {
     }
   ],
   sounds: {
-    slat_center_tongue_pop: (d) => {
-      playMembrane((d.id === 0 ? 330 : 440) * d.pitchMult, 0.1, 1.0, true);
-      playNoise(0.04, 2000, state.currentTiltVolume * 0.4);
+    slat_center_tongue_pop: (d, velocity = 1) => {
+      playMembrane((d.id === 0 ? 330 : 440) * d.pitchMult, 0.1, 1.0, true, velocity);
+      playNoise(0.04, 2000, (state.currentTiltVolume * 0.4) * velocity);
     },
-    slat_edge_dead_stroke: (d) => playMembrane((d.id === 0 ? 120 : 160) * d.pitchMult, 0.08, 1.0, false),
-    bridge_strike: (d) => playMembrane((d.id === 0 ? 250 : 300) * d.pitchMult, 0.05, 1.0, false)
+    slat_edge_dead_stroke: (d, velocity = 1) => playMembrane((d.id === 0 ? 120 : 160) * d.pitchMult, 0.08, 1.0, false, velocity),
+    bridge_strike: (d, velocity = 1) => playMembrane((d.id === 0 ? 250 : 300) * d.pitchMult, 0.05, 1.0, false, velocity)
   },
   touches: [
     {

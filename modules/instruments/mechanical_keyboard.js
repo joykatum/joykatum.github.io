@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -79,27 +80,27 @@ export const mechanical_keyboard = {
     }
   ],
   sounds: {
-    key_click: (d) => {
-      playAttackClick(0.02, 3000, 0.8 * state.currentTiltVolume);
-      playMembrane(350 * d.pitchMult, 0.03, 1.05);
+    key_click: (d, velocity = 1) => {
+      playAttackClick(0.02, 3000, (0.8 * state.currentTiltVolume) * velocity);
+      playMembrane(350 * d.pitchMult, 0.03, 1.05, false, velocity);
     },
-    spacebar: (d) => {
-      playMembrane(100 * d.pitchMult, 0.08, 1.02);
-      playNoise(0.06, 600, 0.4 * state.currentTiltVolume);
+    spacebar: (d, velocity = 1) => {
+      playMembrane(100 * d.pitchMult, 0.08, 1.02, false, velocity);
+      playNoise(0.06, 600, (0.4 * state.currentTiltVolume) * velocity);
     },
-    enter_key: (d) => {
-      playMembrane(180 * d.pitchMult, 0.12, 1.05);
-      playAttackClick(0.04, 2000, 1.0 * state.currentTiltVolume);
-      playNoise(0.08, 1000, 0.3 * state.currentTiltVolume);
+    enter_key: (d, velocity = 1) => {
+      playMembrane(180 * d.pitchMult, 0.12, 1.05, false, velocity);
+      playAttackClick(0.04, 2000, (1.0 * state.currentTiltVolume) * velocity);
+      playNoise(0.08, 1000, (0.3 * state.currentTiltVolume) * velocity);
     },
-    shift_hold: (d) => {
-      playMembrane(120 * d.pitchMult, 0.05, 1.0);
-      playNoise(0.02, 1500, 0.15 * state.currentTiltVolume);
+    shift_hold: (d, velocity = 1) => {
+      playMembrane(120 * d.pitchMult, 0.05, 1.0, false, velocity);
+      playNoise(0.02, 1500, (0.15 * state.currentTiltVolume) * velocity);
     },
-    backspace: (d) => {
-      playAttackClick(0.015, 3200, 0.6 * state.currentTiltVolume);
-      setTimeout(() => {
-        playAttackClick(0.015, 3000, 0.5 * state.currentTiltVolume);
+    backspace: (d, velocity = 1) => {
+      playAttackClick(0.015, 3200, (0.6 * state.currentTiltVolume) * velocity);
+      scheduleStrike(() => {
+        playAttackClick(0.015, 3000, (0.5 * state.currentTiltVolume) * velocity);
       }, 70);
     }
   },

@@ -47,12 +47,12 @@ export const uchiwadaiko = {
     }
   ],
   sounds: {
-    fan_head_slap: (d) => playMembrane(480 * d.pitchMult, 0.04, 0.95, true),
-    handle_knock: (d) => playMembrane(190 * d.pitchMult, 0.05, 1.0, false),
-    rim_click: (d) => playMembrane(720 * d.pitchMult, 0.03, 1.0, true),
-    rapid_drum_roll: (d) => {
-      playNoise(0.18, 1200, state.currentTiltVolume * 0.5);
-      playMembrane(480 * d.pitchMult, 0.12, 0.8, false);
+    fan_head_slap: (d, velocity = 1) => playMembrane(480 * d.pitchMult, 0.04, 0.95, true, velocity),
+    handle_knock: (d, velocity = 1) => playMembrane(190 * d.pitchMult, 0.05, 1.0, false, velocity),
+    rim_click: (d, velocity = 1) => playMembrane(720 * d.pitchMult, 0.03, 1.0, true, velocity),
+    rapid_drum_roll: (d, velocity = 1) => {
+      playNoise(0.18, 1200, (state.currentTiltVolume * 0.5) * velocity);
+      playMembrane(480 * d.pitchMult, 0.12, 0.8, false, velocity);
     }
   },
   touches: [

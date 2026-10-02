@@ -41,16 +41,16 @@ export const thunderdrum = {
     }
   ],
   sounds: {
-    spring_mallet_strike: (d) => {
-      playMembrane(75 * d.pitchMult, 1.5, 1.3, false);
-      playNoise(1.2, 500, state.currentTiltVolume * 0.7);
+    spring_mallet_strike: (d, velocity = 1) => {
+      playMembrane(75 * d.pitchMult, 1.5, 1.3, false, velocity);
+      playNoise(1.2, 500, (state.currentTiltVolume * 0.7) * velocity);
     },
-    cylinder_shake_rumble: (d) => playTablaSlideUp(50 * d.pitchMult, 120 * d.pitchMult, 1.2),
-    head_tap: (d) => {
-      playMembrane(110 * d.pitchMult, 1.8, 1.1, true);
-      playNoise(1.5, 900, state.currentTiltVolume * 0.95);
+    cylinder_shake_rumble: (d, velocity = 1) => playTablaSlideUp(50 * d.pitchMult, 120 * d.pitchMult, 1.2, velocity),
+    head_tap: (d, velocity = 1) => {
+      playMembrane(110 * d.pitchMult, 1.8, 1.1, true, velocity);
+      playNoise(1.5, 900, (state.currentTiltVolume * 0.95) * velocity);
     },
-    spring_scrape: (d) => playNoise(0.4, 2500, state.currentTiltVolume * 0.6)
+    spring_scrape: (d, velocity = 1) => playNoise(0.4, 2500, (state.currentTiltVolume * 0.6) * velocity)
   },
   touches: [
     {

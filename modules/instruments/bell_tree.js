@@ -1,5 +1,6 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
-import { playBell, playMembrane, playNoise, playAttackClick, speakPhrase, playWavSample } from '../audio.js';
+import { playBell, playMembrane, playNoise, playAttackClick, speakPhrase } from '../audio.js';
 
 export const bell_tree = {
   origin: 'Europe / Modern Studio Percussion',
@@ -45,9 +46,8 @@ export const bell_tree = {
     }
   ],
   sounds: {
-    glissando_sweep: (d) => {
-      const success = playWavSample('/media/bell_tree_sweep.wav', d.pitchMult, 1.0, 0.0);
-      if (!success) {
+    glissando_sweep: (d, velocity = 1) => {
+      
         // Fallback rapid sequence of bells to simulate a sweep
         const numBells = 24;
         const sweepDurationMs = 800; // ms
@@ -60,14 +60,14 @@ export const bell_tree = {
           // Exponential frequency sweep
           const freq = startFreq * Math.pow(endFreq / startFreq, progress) * d.pitchMult;
 
-          setTimeout(() => {
-            playBell(freq, 0.4 + Math.random() * 0.2, 0.6 + Math.random() * 0.3, (Math.random() - 0.5) * 0.5);
+          scheduleStrike(() => {
+            playBell(freq, 0.4 + Math.random() * 0.2, (0.6 + Math.random() * 0.3) * velocity, (Math.random() - 0.5) * 0.5);
           }, timeOffset);
         }
-      }
+      
     },
-    single_bell_tap: (d) => {
-      playBell(4200 * d.pitchMult, 1.2, 1.0, 0);
+    single_bell_tap: (d, velocity = 1) => {
+      playBell(4200 * d.pitchMult, 1.2, (1.0) * velocity, 0);
     }
   },
   touches: [

@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -51,19 +52,19 @@ export const pakhavaj = {
     }
   ],
   sounds: {
-    tha: (d) => playMembrane(65 * d.pitchMult, 0.7, 1.02),
-    dhin: (d) => playMembrane(80 * d.pitchMult, 1.1, 1.0),
-    ta: (d) => {
-      playMembrane(380 * d.pitchMult, 0.12, 1.04, true);
-      playNoise(0.04, 2500, 0.3 * state.currentTiltVolume);
+    tha: (d, velocity = 1) => playMembrane(65 * d.pitchMult, 0.7, 1.02, false, velocity),
+    dhin: (d, velocity = 1) => playMembrane(80 * d.pitchMult, 1.1, 1.0, false, velocity),
+    ta: (d, velocity = 1) => {
+      playMembrane(380 * d.pitchMult, 0.12, 1.04, true, velocity);
+      playNoise(0.04, 2500, (0.3 * state.currentTiltVolume) * velocity);
     },
-    ki: (d) => playMembrane(190 * d.pitchMult, 0.04, 1.0, true),
-    na: (d) => playMembrane(280 * d.pitchMult, 0.5, 1.0),
-    tete: (d) => {
-      playMembrane(310 * d.pitchMult, 0.03, 1.0);
-      setTimeout(() => playMembrane(290 * d.pitchMult, 0.03, 1.0), 60);
+    ki: (d, velocity = 1) => playMembrane(190 * d.pitchMult, 0.04, 1.0, true, velocity),
+    na: (d, velocity = 1) => playMembrane(280 * d.pitchMult, 0.5, 1.0, false, velocity),
+    tete: (d, velocity = 1) => {
+      playMembrane(310 * d.pitchMult, 0.03, 1.0, false, velocity);
+      scheduleStrike(() => playMembrane(290 * d.pitchMult, 0.03, 1.0, false, velocity), 60);
     },
-    ghe: (d) => playTablaSlideUp(65 * d.pitchMult, 105 * d.pitchMult, 0.65)
+    ghe: (d, velocity = 1) => playTablaSlideUp(65 * d.pitchMult, 105 * d.pitchMult, 0.65, velocity)
   },
   touches: [
     {

@@ -5,7 +5,7 @@ import {
   playTablaSlideUp,
   playAttackClick,
   speakPhrase,
-  playWavSample,
+  
   playBell
 } from '../audio.js';
 
@@ -70,15 +70,14 @@ export const flexatone = {
     }
   ],
   sounds: {
-    handle_shake_roll: (d) => playTablaSlideUp(440 * d.pitchMult, 880 * d.pitchMult, 0.5),
-    thumb_pitch_bend: (d) => {
-      const success = playWavSample('/media/flexatone_bend.wav', d.pitchMult, 1.0, 0.0);
-      if (!success) {
-        playTablaSlideUp(250 * d.pitchMult, 750 * d.pitchMult, 0.8);
-      }
+    handle_shake_roll: (d, velocity = 1) => playTablaSlideUp(440 * d.pitchMult, 880 * d.pitchMult, 0.5, velocity),
+    thumb_pitch_bend: (d, velocity = 1) => {
+      
+        playTablaSlideUp(250 * d.pitchMult, 750 * d.pitchMult, 0.8, velocity);
+      
     },
-    frame_knock: (d) => playMembrane(950 * d.pitchMult, 0.04, 1.2, true),
-    blade_flick_down: (d) => playTablaSlideUp(880 * d.pitchMult, 330 * d.pitchMult, 0.6)
+    frame_knock: (d, velocity = 1) => playMembrane(950 * d.pitchMult, 0.04, 1.2, true, velocity),
+    blade_flick_down: (d, velocity = 1) => playTablaSlideUp(880 * d.pitchMult, 330 * d.pitchMult, 0.6, velocity)
   },
   touches: [
     {

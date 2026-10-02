@@ -46,15 +46,15 @@ export const mark_tree = {
     }
   ],
   sounds: {
-    linear_wand_sweep: (d) => {
-      playNoise(1.2, 5000, state.currentTiltVolume * 0.8);
+    linear_wand_sweep: (d, velocity = 1) => {
+      playNoise(1.2, 5000, (state.currentTiltVolume * 0.8) * velocity);
     },
-    hand_ruffle_shimmer: (d) => {
-      playNoise(0.4, 6000, state.currentTiltVolume * 1.3);
+    hand_ruffle_shimmer: (d, velocity = 1) => {
+      playNoise(0.4, 6000, (state.currentTiltVolume * 1.3) * velocity);
     },
-    wand_chime_ring: (d) => {
-      playTablaSlideUp(600 * d.pitchMult, 1200 * d.pitchMult, 0.8);
-      playNoise(0.8, 4000, state.currentTiltVolume * 0.6);
+    wand_chime_ring: (d, velocity = 1) => {
+      playTablaSlideUp(600 * d.pitchMult, 1200 * d.pitchMult, 0.8, velocity);
+      playNoise(0.8, 4000, (state.currentTiltVolume * 0.6) * velocity);
     }
   },
   touches: [

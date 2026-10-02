@@ -75,25 +75,25 @@ export const janggu = {
     }
   ],
   sounds: {
-    kung: (d) => {
+    kung: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false);
-      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false);
+      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false, velocity);
+      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false, velocity);
     },
-    chae: (d) => {
+    chae: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false);
-      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false);
+      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false, velocity);
+      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false, velocity);
     },
-    hoop_rim_click: (d) => {
+    hoop_rim_click: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(72 * d.pitchMult, 0.78, 1.38, false);
-      else playMembrane(210 * d.pitchMult, 0.32, 1.0, false);
+      if (baseId === 0) playMembrane(72 * d.pitchMult, 0.78, 1.38, false, velocity);
+      else playMembrane(210 * d.pitchMult, 0.32, 1.0, false, velocity);
     },
-    center_stick_mute: (d) => {
+    center_stick_mute: (d, velocity = 1) => {
       const baseId = parseInt(d.id);
-      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false);
-      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false);
+      if (baseId === 0) playMembrane(88 * d.pitchMult, 0.14, 1.0, false, velocity);
+      else playMembrane(230 * d.pitchMult, 0.08, 1.0, false, velocity);
     }
   },
   touches: [

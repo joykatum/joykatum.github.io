@@ -48,10 +48,10 @@ export const daf = {
     }
   ],
   sounds: {
-    dum: (d) => playMembrane(60 * d.pitchMult, 0.8, 1.5, false),
-    tak: (d) => playMembrane(280 * d.pitchMult, 0.2, 1.0, true),
-    zanjir: (d) => playMembrane(120 * d.pitchMult, 0.5, 1.2, false),
-    frame_slap: (d) => playMembrane(280 * d.pitchMult, 0.2, 1.0, true)
+    dum: (d, velocity = 1) => playMembrane(60 * d.pitchMult, 0.8, 1.5, false, velocity),
+    tak: (d, velocity = 1) => playMembrane(280 * d.pitchMult, 0.2, 1.0, true, velocity),
+    zanjir: (d, velocity = 1) => playMembrane(120 * d.pitchMult, 0.5, 1.2, false, velocity),
+    frame_slap: (d, velocity = 1) => playMembrane(280 * d.pitchMult, 0.2, 1.0, true, velocity)
   },
   touches: [
     {

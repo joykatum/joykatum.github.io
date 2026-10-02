@@ -46,17 +46,17 @@ export const tammorra = {
     }
   ],
   sounds: {
-    bass_center_pulse: (d) => {
-      playMembrane(60 * d.pitchMult, 0.6, 1.4);
-      playNoise(0.2, 400, state.currentTiltVolume * 0.3);
+    bass_center_pulse: (d, velocity = 1) => {
+      playMembrane(60 * d.pitchMult, 0.6, 1.4, false, velocity);
+      playNoise(0.2, 400, (state.currentTiltVolume * 0.3) * velocity);
     },
-    finger_roll_friction_drag: (d) => {
-      playMembrane(110 * d.pitchMult, 0.4, 1.1);
-      playNoise(0.12, 1200, state.currentTiltVolume * 0.4);
+    finger_roll_friction_drag: (d, velocity = 1) => {
+      playMembrane(110 * d.pitchMult, 0.4, 1.1, false, velocity);
+      playNoise(0.12, 1200, (state.currentTiltVolume * 0.4) * velocity);
     },
-    rim_wood_crack: (d) => {
-      playMembrane(210 * d.pitchMult, 0.15, 1.2, true);
-      playNoise(0.2, 2800, state.currentTiltVolume * 1.1);
+    rim_wood_crack: (d, velocity = 1) => {
+      playMembrane(210 * d.pitchMult, 0.15, 1.2, true, velocity);
+      playNoise(0.2, 2800, (state.currentTiltVolume * 1.1) * velocity);
     }
   },
   touches: [

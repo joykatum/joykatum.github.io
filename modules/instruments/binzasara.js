@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { state } from '../state.js';
 import { playMembrane, playNoise, playTablaSlideUp, playAttackClick, speakPhrase } from '../audio.js';
 
@@ -46,28 +47,28 @@ export const binzasara = {
     }
   ],
   sounds: {
-    furu: (d) => {
+    furu: (d, velocity = 1) => {
       for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-          playAttackClick(0.02, 1800 - i * 150, 0.5 * state.currentTiltVolume);
-          playMembrane((350 - i * 20) * d.pitchMult, 0.02, 1.0);
+        scheduleStrike(() => {
+          playAttackClick(0.02, 1800 - i * 150, (0.5 * state.currentTiltVolume) * velocity);
+          playMembrane((350 - i * 20) * d.pitchMult, 0.02, 1.0, false, velocity);
         }, i * 40);
       }
     },
-    clap: (d) => {
-      playMembrane(450 * d.pitchMult, 0.07, 1.15, true);
-      playNoise(0.06, 1500, 0.7 * state.currentTiltVolume);
+    clap: (d, velocity = 1) => {
+      playMembrane(450 * d.pitchMult, 0.07, 1.15, true, velocity);
+      playNoise(0.06, 1500, (0.7 * state.currentTiltVolume) * velocity);
     },
-    rattle: (d) => {
+    rattle: (d, velocity = 1) => {
       for (let i = 0; i < 8; i++) {
-        setTimeout(() => {
-          playAttackClick(0.015, 2500 + (i % 2) * 500, 0.4 * state.currentTiltVolume);
+        scheduleStrike(() => {
+          playAttackClick(0.015, 2500 + (i % 2) * 500, (0.4 * state.currentTiltVolume) * velocity);
         }, i * 25);
       }
     },
-    snap: (d) => {
-      playMembrane(550 * d.pitchMult, 0.03, 1.05, true);
-      playAttackClick(0.01, 3000, 0.8 * state.currentTiltVolume);
+    snap: (d, velocity = 1) => {
+      playMembrane(550 * d.pitchMult, 0.03, 1.05, true, velocity);
+      playAttackClick(0.01, 3000, (0.8 * state.currentTiltVolume) * velocity);
     }
   },
   touches: [

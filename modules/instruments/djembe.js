@@ -1,3 +1,4 @@
+import { scheduleStrike } from '../audio.js';
 import { playMembrane, playNoise } from '../audio.js';
 import { state } from '../state.js';
 import { playSoundFontSample } from '../sf2Loader.js';
@@ -74,12 +75,12 @@ export const djembe = {
     flam_roll: (d, velocity = 0.8) => {
       const success = playSoundFontSample('conga', 'conga tone', d.pitchMult * 1.3, velocity * 0.75, -0.15);
       if (success) {
-        setTimeout(() => {
+        scheduleStrike(() => {
           playSoundFontSample('conga', 'conga tone', d.pitchMult * 1.38, velocity * 0.9, 0.15);
         }, 45);
       } else {
         playMembrane(260 * d.pitchMult, 0.12, 1.0, true, velocity * 0.75, -0.15);
-        setTimeout(() => {
+        scheduleStrike(() => {
           playMembrane(275 * d.pitchMult, 0.15, 1.0, false, velocity * 0.9, 0.15);
         }, 45);
       }

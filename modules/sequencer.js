@@ -4,8 +4,15 @@ import { state } from './state.js';
 import { drumTypes, getVisibleDrums } from './drumTypes.js';
 import { initAudio } from './audio.js';
 import { CONFIG } from './config.js';
+import { getPlayingSurface } from './playingSurface.js';
 
 let onStepTriggeredCallback = null;
+let activeSubdivision = CONFIG.SEQUENCER.SUBDIVISION;
+let playbackGeneration = 0;
+
+export function getPatternStepDuration(pattern, bpm) {
+  return 60000 / bpm / (pattern?.subdivision || CONFIG.SEQUENCER.SUBDIVISION);
+}
 
 export function setOnStepTriggered(cb) {
   onStepTriggeredCallback = cb;
@@ -16,6 +23,7 @@ export function startPattern(isPreview = false) {
     stopPattern();
   }
   state.isPatternPlaying = true;
+  const generation = ++playbackGeneration;
   state.isPreviewPlaying = isPreview;
 
   const playBtn = isPreview
@@ -43,21 +51,24 @@ export function startPattern(isPreview = false) {
   }
 
   state.currentPatternStep = 0;
-  const tickTime =
-    (CONFIG.SEQUENCER.SECONDS_PER_MINUTE / state.patternBpm / CONFIG.SEQUENCER.SUBDIVISION) *
-    CONFIG.SEQUENCER.MS_PER_SECOND; // 16th note step in ms
-
-  state.patternIntervalId = setInterval(() => {
+  const tick = () => {
+    if (!state.isPatternPlaying || generation !== playbackGeneration) return;
     playPatternStep();
-  }, tickTime);
+    if (state.isPatternPlaying) {
+      state.patternIntervalId = setTimeout(tick, getPatternStepDuration({ subdivision: activeSubdivision }, state.patternBpm));
+    }
+  };
+  // Begin on the downbeat; subsequent ticks follow the pattern's own grid.
+  void initAudio().then(tick);
 }
 
 export function stopPattern() {
   if (!state.isPatternPlaying) return;
   state.isPatternPlaying = false;
+  playbackGeneration++;
 
   if (state.patternIntervalId) {
-    clearInterval(state.patternIntervalId);
+    clearTimeout(state.patternIntervalId);
     state.patternIntervalId = null;
   }
 
@@ -122,6 +133,7 @@ export function playPatternStep() {
   }
 
   if (!pattern) return;
+  activeSubdivision = pattern.subdivision || CONFIG.SEQUENCER.SUBDIVISION;
 
   const instDef = drumTypes[inst] || drumTypes.conga;
 
@@ -135,19 +147,11 @@ export function playPatternStep() {
       d = visibleDrums[numDrumIdx % visibleDrums.length];
     }
     if (d && instDef && instDef.sounds && instDef.sounds[soundType]) {
-      let virtualDrum = d;
+      let virtualDrum = getPlayingSurface(inst, d, numDrumIdx);
       let finalDrumId = d.id;
       if (inst === 'bongo') {
-        virtualDrum = Object.assign({}, d, {
-          id: numDrumIdx === 0 ? 0 : 1,
-          pitchMult: numDrumIdx === 0 ? 1.4 : 0.9
-        });
         finalDrumId = `${d.id}_${numDrumIdx === 0 ? 'macho' : 'hembra'}`;
       } else if (inst === 'agogo') {
-        virtualDrum = Object.assign({}, d, {
-          id: numDrumIdx === 1 ? 1 : 0,
-          pitchMult: numDrumIdx === 1 ? 1.35 : 1.0
-        });
         finalDrumId = `${d.id}_${numDrumIdx === 1 ? 'high' : 'low'}`;
       }
 
@@ -160,23 +164,12 @@ export function playPatternStep() {
         } else if (hit.accent === false) {
           finalVelocity = 0.58; // Softer ghost stroke
         } else {
-          // If no explicit velocity or accent is in the pattern, apply automatic musical phrasing/groove:
-          const isDownbeat = step % 4 === 0;
-          const isSyncopated = step % 2 !== 0;
-
-          if (isDownbeat) {
-            finalVelocity = 0.95;
-          } else if (isSyncopated) {
-            finalVelocity = 0.68; // Softer off-beats for natural lift and groove
-          } else {
-            finalVelocity = 0.82;
-          }
+          finalVelocity = 0.8;
         }
       }
 
-      // Add subtle organic humanization (slight volume/velocity fluctuations)
-      const humanization = (Math.random() - 0.5) * 0.08;
-      finalVelocity = Math.max(0.12, Math.min(1.0, finalVelocity + humanization));
+      finalVelocity = Math.max(0, Math.min(1.0, finalVelocity));
+      if (finalVelocity === 0) return;
 
       instDef.sounds[soundType](virtualDrum, finalVelocity);
       if (onStepTriggeredCallback) {

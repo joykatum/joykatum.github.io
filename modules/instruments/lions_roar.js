@@ -55,10 +55,10 @@ export const lions_roar = {
     }
   ],
   sounds: {
-    rope_friction_pull_push: (d) => playNoise(0.3, 200, state.currentTiltVolume * 0.5),
-    cylinder_tap: (d) => {
-      playTablaSlideUp(160 * d.pitchMult, 70 * d.pitchMult, 0.8);
-      playNoise(0.8, 300, state.currentTiltVolume * 0.8);
+    rope_friction_pull_push: (d, velocity = 1) => playNoise(0.3, 200, (state.currentTiltVolume * 0.5) * velocity),
+    cylinder_tap: (d, velocity = 1) => {
+      playTablaSlideUp(160 * d.pitchMult, 70 * d.pitchMult, 0.8, velocity);
+      playNoise(0.8, 300, (state.currentTiltVolume * 0.8) * velocity);
     }
   },
   touches: [

@@ -1,16 +1,12 @@
 // Rhythm patterns for claves.
 export default {
   claves_1: {
+    source: 'https://pulse.berklee.edu/?id=4&lesson=14',
+    subdivision: 4,
     name: '🥁 Son Clave 3-2',
-    stepCount: 16,
+    stepCount: 32,
     steps: {
       0: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
-      3: [
         {
           drum: 0,
           sound: 'strike'
@@ -22,13 +18,19 @@ export default {
           sound: 'strike'
         }
       ],
-      10: [
+      12: [
         {
           drum: 0,
           sound: 'strike'
         }
       ],
-      12: [
+      20: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ],
+      24: [
         {
           drum: 0,
           sound: 'strike'
@@ -37,15 +39,11 @@ export default {
     }
   },
   claves_2: {
+    source: 'https://pulse.berklee.edu/?id=4&lesson=14',
+    subdivision: 4,
     name: '🥁 Son Clave 2-3',
-    stepCount: 16,
+    stepCount: 32,
     steps: {
-      2: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
       4: [
         {
           drum: 0,
@@ -58,7 +56,39 @@ export default {
           sound: 'strike'
         }
       ],
-      11: [
+      16: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ],
+      22: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ],
+      28: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ]
+    }
+  },
+  claves_3: {
+    source: 'https://pulse.berklee.edu/?id=4&lesson=14',
+    subdivision: 4,
+    name: '🥁 Rumba Clave 3-2',
+    stepCount: 32,
+    steps: {
+      0: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ],
+      6: [
         {
           drum: 0,
           sound: 'strike'
@@ -69,38 +99,14 @@ export default {
           drum: 0,
           sound: 'strike'
         }
-      ]
-    }
-  },
-  claves_3: {
-    name: '🥁 Rumba Clave 3-2',
-    stepCount: 16,
-    steps: {
-      0: [
+      ],
+      20: [
         {
           drum: 0,
           sound: 'strike'
         }
       ],
-      3: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
-      7: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
-      10: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
-      12: [
+      24: [
         {
           drum: 0,
           sound: 'strike'
@@ -109,15 +115,11 @@ export default {
     }
   },
   claves_4: {
+    source: 'https://pulse.berklee.edu/?id=4&lesson=14',
+    subdivision: 4,
     name: '🥁 Rumba Clave 2-3',
-    stepCount: 16,
+    stepCount: 32,
     steps: {
-      2: [
-        {
-          drum: 0,
-          sound: 'strike'
-        }
-      ],
       4: [
         {
           drum: 0,
@@ -130,13 +132,19 @@ export default {
           sound: 'strike'
         }
       ],
-      11: [
+      16: [
         {
           drum: 0,
           sound: 'strike'
         }
       ],
-      13: [
+      22: [
+        {
+          drum: 0,
+          sound: 'strike'
+        }
+      ],
+      30: [
         {
           drum: 0,
           sound: 'strike'

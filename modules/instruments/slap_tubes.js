@@ -45,20 +45,20 @@ export const slap_tubes = {
     }
   ],
   sounds: {
-    bass_boom: (d) => playMembrane(98 * d.pitchMult, 0.35, 1.2),
-    low_pop: (d) => playMembrane(130 * d.pitchMult, 0.25, 1.1),
-    mid_bounce: (d) => playMembrane(165 * d.pitchMult, 0.2, 1.0),
-    high_snap: (d) => playMembrane(196 * d.pitchMult, 0.15, 1.0, true),
-    paddle_slap: (d) => {
-      playMembrane(220 * d.pitchMult, 0.08, 1.0, true);
-      playNoise(0.05, 1500, 0.4 * state.currentTiltVolume);
+    bass_boom: (d, velocity = 1) => playMembrane(98 * d.pitchMult, 0.35, 1.2, false, velocity),
+    low_pop: (d, velocity = 1) => playMembrane(130 * d.pitchMult, 0.25, 1.1, false, velocity),
+    mid_bounce: (d, velocity = 1) => playMembrane(165 * d.pitchMult, 0.2, 1.0, false, velocity),
+    high_snap: (d, velocity = 1) => playMembrane(196 * d.pitchMult, 0.15, 1.0, true, velocity),
+    paddle_slap: (d, velocity = 1) => {
+      playMembrane(220 * d.pitchMult, 0.08, 1.0, true, velocity);
+      playNoise(0.05, 1500, (0.4 * state.currentTiltVolume) * velocity);
     },
-    pipe_rim_click: (d) => {
-      playAttackClick(0.02, 2800, 0.7 * state.currentTiltVolume);
-      playMembrane(600 * d.pitchMult, 0.02, 1.0);
+    pipe_rim_click: (d, velocity = 1) => {
+      playAttackClick(0.02, 2800, (0.7 * state.currentTiltVolume) * velocity);
+      playMembrane(600 * d.pitchMult, 0.02, 1.0, false, velocity);
     },
-    muted_thud: (d) => playMembrane(85 * d.pitchMult, 0.08, 1.0),
-    slide_slur: (d) => playTablaSlideUp(165 * d.pitchMult, 110 * d.pitchMult, 0.3)
+    muted_thud: (d, velocity = 1) => playMembrane(85 * d.pitchMult, 0.08, 1.0, false, velocity),
+    slide_slur: (d, velocity = 1) => playTablaSlideUp(165 * d.pitchMult, 110 * d.pitchMult, 0.3, velocity)
   },
   touches: [
     {

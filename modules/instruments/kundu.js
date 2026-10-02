@@ -54,12 +54,12 @@ export const kundu = {
     }
   ],
   sounds: {
-    center_skin_tap: (d) => playMembrane(180 * d.pitchMult, 0.4, 1.1, false),
-    rim_edge_pop: (d) => {
-      playMembrane(320 * d.pitchMult, 0.12, 1.2, true);
-      playNoise(0.05, 2000, state.currentTiltVolume * 0.6);
+    center_skin_tap: (d, velocity = 1) => playMembrane(180 * d.pitchMult, 0.4, 1.1, false, velocity),
+    rim_edge_pop: (d, velocity = 1) => {
+      playMembrane(320 * d.pitchMult, 0.12, 1.2, true, velocity);
+      playNoise(0.05, 2000, (state.currentTiltVolume * 0.6) * velocity);
     },
-    shell_scrape: (d) => playMembrane(130 * d.pitchMult, 0.08, 1.0, false)
+    shell_scrape: (d, velocity = 1) => playMembrane(130 * d.pitchMult, 0.08, 1.0, false, velocity)
   },
   touches: [
     {

@@ -41,13 +41,13 @@ export const oceandrum = {
     }
   ],
   sounds: {
-    rolling_swirl: (d) => playNoise(0.55, 950, state.currentTiltVolume * 0.75),
-    frame_tap: (d) => playMembrane(220 * d.pitchMult, 0.08, 1.0, true),
-    sudden_frame_tilt: (d) => {
-      playMembrane(95 * d.pitchMult, 0.65, 1.35, false);
-      playNoise(0.14, 1100, state.currentTiltVolume * 0.45);
+    rolling_swirl: (d, velocity = 1) => playNoise(0.55, 950, (state.currentTiltVolume * 0.75) * velocity),
+    frame_tap: (d, velocity = 1) => playMembrane(220 * d.pitchMult, 0.08, 1.0, true, velocity),
+    sudden_frame_tilt: (d, velocity = 1) => {
+      playMembrane(95 * d.pitchMult, 0.65, 1.35, false, velocity);
+      playNoise(0.14, 1100, (state.currentTiltVolume * 0.45) * velocity);
     },
-    bead_shake_shimmer: (d) => playNoise(0.2, 4500, state.currentTiltVolume * 0.6)
+    bead_shake_shimmer: (d, velocity = 1) => playNoise(0.2, 4500, (state.currentTiltVolume * 0.6) * velocity)
   },
   touches: [
     {

@@ -46,15 +46,15 @@ export const tanbou = {
     }
   ],
   sounds: {
-    center_palm_strike: (d) => {
-      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4);
+    center_palm_strike: (d, velocity = 1) => {
+      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4, velocity);
     },
-    edge_finger_snap: (d) => playMembrane(65 * d.pitchMult, 0.75, 1.4, false),
-    hand_foot_pitch_bend_press: (d) => {
-      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4);
+    edge_finger_snap: (d, velocity = 1) => playMembrane(65 * d.pitchMult, 0.75, 1.4, false, velocity),
+    hand_foot_pitch_bend_press: (d, velocity = 1) => {
+      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4, velocity);
     },
-    side_stave_strike: (d) => {
-      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4);
+    side_stave_strike: (d, velocity = 1) => {
+      playTablaSlideUp(110 * d.pitchMult, 180 * d.pitchMult, 0.4, velocity);
     }
   },
   touches: [
