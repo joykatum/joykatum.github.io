@@ -8,6 +8,40 @@ export const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 export let effectsInputNode = null;
 export let effectsOutputNode = null;
 export let masterOutputNode = null;
+export let masterLimiterNode = null;
+export let masterSafetyNode = null;
+let outputDestination = null;
+
+// All sound, effects and recording paths share headroom and output protection.
+// The compressor handles musical peaks; the final bounded transfer is a guard
+// against extreme feedback or a dense chord exceeding digital full scale.
+export function initMasterOutput() {
+  if (masterOutputNode && outputDestination === audioCtx.destination) return;
+  outputDestination = audioCtx.destination;
+  masterOutputNode = audioCtx.createGain();
+  masterOutputNode.gain.value = 0.32;
+  masterLimiterNode = audioCtx.createDynamicsCompressor();
+  masterLimiterNode.threshold.value = -6;
+  masterLimiterNode.knee.value = 6;
+  masterLimiterNode.ratio.value = 12;
+  masterLimiterNode.attack.value = 0.003;
+  masterLimiterNode.release.value = 0.12;
+  masterSafetyNode = audioCtx.createWaveShaper();
+  const curve = new Float32Array(4097);
+  for (let i = 0; i < curve.length; i++) {
+    const x = (i * 2) / (curve.length - 1) - 1;
+    // Unity gain below -6dB; smooth limiting beyond it, bounded to +/-0.95.
+    const magnitude = Math.abs(x);
+    curve[i] = Math.sign(x) * (magnitude <= 0.5 ? magnitude : 0.5 + 0.45 * Math.tanh((magnitude - 0.5) / 0.45));
+  }
+  masterSafetyNode.curve = curve;
+  masterSafetyNode.oversample = 'none';
+  masterOutputNode.connect(masterLimiterNode);
+  masterLimiterNode.connect(masterSafetyNode);
+  masterSafetyNode.connect(outputDestination);
+  streamDestination = audioCtx.createMediaStreamDestination();
+  masterSafetyNode.connect(streamDestination);
+}
 
 // Individual effects nodes
 export let reverbNode = null;
@@ -192,6 +226,7 @@ export function initEffectsChain() {
   ringModDry = audioCtx.createGain();
   ringModWet = audioCtx.createGain();
   ringModProduct = audioCtx.createGain();
+  ringModProduct.gain.value = 0; // Multiply by the carrier without a DC offset.
   ringModCarrier = audioCtx.createOscillator();
   ringModCarrier.type = 'sine';
   ringModCarrier.frequency.value = 200;
@@ -276,13 +311,7 @@ export function initEffectsChain() {
   // AutoPan -> effectsOutputNode
   autoPanNode.connect(effectsOutputNode);
 
-  // Create master output node
-  masterOutputNode = audioCtx.createGain();
-  masterOutputNode.connect(audioCtx.destination);
-
-  // Initialize recording destination
-  streamDestination = audioCtx.createMediaStreamDestination();
-  masterOutputNode.connect(streamDestination);
+  initMasterOutput();
 
   // Finally connect effects output to master output
   effectsOutputNode.connect(masterOutputNode);
@@ -325,7 +354,7 @@ export function updateReverbImpulse(presetSize) {
     // Exponentially decaying noise algorithm
     const val = (Math.random() * 2 - 1) * Math.pow(1 - percent, decay);
     left[i] = val;
-    right[i] = val;
+    right[i] = (Math.random() * 2 - 1) * Math.pow(1 - percent, decay);
   }
 
   reverbNode.buffer = impulse;
@@ -506,6 +535,7 @@ export function updateSpectralFreeze() {
 
 // Get final destination for drum hits depending on effects toggle
 export function getAudioDestination() {
+  initMasterOutput();
   if (state.formantVowel === 'sweep') {
     updateFormant();
   }
@@ -520,9 +550,10 @@ export function stopAllSounds() {
   state.currentNodes.forEach((node) => {
     try {
       if (node.gain) {
-        node.gain.cancelScheduledValues(now);
-        node.gain.setValueAtTime(node.gain.value, now);
-        node.gain.linearRampToValueAtTime(0, now + 0.02);
+        const envelope = node.gain.gain || node.gain;
+        envelope.cancelScheduledValues(now);
+        envelope.setValueAtTime(envelope.value, now);
+        envelope.linearRampToValueAtTime(0, now + 0.02);
       }
       if (node.sources) {
         node.sources.forEach((src) => {
@@ -604,9 +635,10 @@ export function registerVoice(voice, decay) {
         const chokeTime = isMutedSound ? 0.015 : 0.035;
         try {
           if (oldNode.gain) {
-            oldNode.gain.cancelScheduledValues(now);
-            oldNode.gain.setValueAtTime(oldNode.gain.value || 1.0, now);
-            oldNode.gain.linearRampToValueAtTime(0.0001, now + chokeTime);
+            const envelope = oldNode.gain.gain || oldNode.gain;
+            envelope.cancelScheduledValues(now);
+            envelope.setValueAtTime(envelope.value, now);
+            envelope.linearRampToValueAtTime(0.0001, now + chokeTime);
           }
           if (oldNode.sources) {
             oldNode.sources.forEach((src) => {
@@ -630,9 +662,10 @@ export function registerVoice(voice, decay) {
       const now = audioCtx.currentTime;
       try {
         if (oldest.gain) {
-          oldest.gain.cancelScheduledValues(now);
-          oldest.gain.setValueAtTime(oldest.gain.value, now);
-          oldest.gain.linearRampToValueAtTime(0.0001, now + 0.04); // Fast, click-free fade
+          const envelope = oldest.gain.gain || oldest.gain;
+          envelope.cancelScheduledValues(now);
+          envelope.setValueAtTime(envelope.value, now);
+          envelope.linearRampToValueAtTime(0.0001, now + 0.04); // Fast, click-free fade
         }
         if (oldest.sources) {
           oldest.sources.forEach((src) => {

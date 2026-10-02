@@ -1,44 +1,84 @@
 <!doctype html>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <title>Native Web Audio regression check</title>
 <pre id="result">RUNNING</pre>
 <script type="module">
   const result = document.getElementById('result');
   const kind = new URLSearchParams(location.search).get('case') || 'bell';
-  // Use the browser's real audio implementation, rendered silently offline.
-  const context = new OfflineAudioContext(2, 44100 * 3, 44100);
-  context.resume = () => Promise.resolve();
-  window.AudioContext = function () { return context; };
-  try {
-    const audio = await import('../modules/audio.js');
-    const { state } = await import('../modules/state.js');
-    if (kind === 'bell') audio.playBell(500, 0.7, 0.7);
-    else if (kind === 'membrane') audio.playMembrane(150, 0.4, 1, false, 0.7);
-    else if (kind === 'tabla') audio.playTablaSlideUp(65, 125, 0.75, 0.7);
-    else if (kind === 'sample') {
-      const sf = await import('../modules/sf2Loader.js');
-      await sf.loadSoundFont('timpani', '../media/timpani.sf2');
-      state.transientSustain = -100;
-      if (!sf.playSoundFontSample('timpani', 'timpani-f', 1, 0.8)) throw Error('sample missing');
-    } else if (kind === 'catalogue') {
-      const { drumTypes, ensureInstrumentLoaded } = await import('../modules/drumTypes.js');
-      let count = 0;
-      for (const [name, spec] of Object.entries(drumTypes)) {
-        const inst = await ensureInstrumentLoaded(name);
-        if (!inst) throw Error(`missing ${name}`);
-        for (const fn of Object.values(inst.sounds)) {
-          for (const sustain of [-100, 0, 100]) {
-            state.transientSustain = sustain;
-            fn(spec.drums[0], 0.6);
+  let context,
+    time = 0,
+    speechCalls = 0;
+  let timers = [];
+  const realSetTimeout = window.setTimeout;
+  const resetContext = () => {
+    context = new OfflineAudioContext(2, 44100 * 3, 44100);
+    time = 0;
+    timers = [];
+    speechCalls = 0;
+  };
+  resetContext();
+  // Every voice renders through real browser nodes in a fresh offline context.
+  // Forward the shared module's context so voices can be tested independently.
+  const facade = new Proxy(
+    {},
+    {
+      get(_, key) {
+        if (key === 'currentTime') return time;
+        if (key === 'state') return 'running';
+        if (key === 'resume') return () => Promise.resolve();
+        if (key === 'createMediaStreamDestination') return () => context.createGain();
+        const value = context[key];
+        if (typeof value !== 'function') return value;
+        return (...args) => {
+          const node = value.apply(context, args);
+          if (key === 'createOscillator' || key === 'createBufferSource') {
+            const start = node.start.bind(node);
+            node.start = (when, ...rest) => start(when === undefined || when === 0 ? time : when, ...rest);
           }
-          count++;
-        }
+          return node;
+        };
       }
-      result.dataset.sounds = count;
-    } else throw Error('unknown check');
+    }
+  );
+  window.AudioContext = function () {
+    return facade;
+  };
+  window.setTimeout = (callback, delay = 0) => {
+    const task = { callback, time: time + delay / 1000 };
+    timers.push(task);
+    return task;
+  };
+  window.clearTimeout = (task) => {
+    timers = timers.filter((item) => item !== task);
+  };
+  // Speech output is outside Web Audio and cannot be certified by offline PCM.
+  Object.defineProperty(window, 'speechSynthesis', {
+    value: {
+      cancel() {},
+      getVoices() {
+        return [];
+      },
+      speak() {
+        speechCalls++;
+      }
+    }
+  });
+  const flushTimers = () => {
+    let count = 0;
+    while (timers.length && count++ < 2000) {
+      timers.sort((a, b) => a.time - b.time);
+      const task = timers.shift();
+      if (task.time >= 3) break;
+      time = task.time;
+      task.callback();
+    }
+    if (count >= 2000) throw Error('unbounded delayed triggers');
+  };
+  const render = async () => {
+    flushTimers();
     const buffer = await context.startRendering();
-    let peak = 0;
-    let energy = 0;
+    let peak = 0,
+      energy = 0;
     for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
       for (const sample of buffer.getChannelData(channel)) {
         if (!Number.isFinite(sample)) throw Error('non-finite PCM');
@@ -46,9 +86,113 @@
         energy += sample * sample;
       }
     }
-    if (peak < 0.00001) throw Error('silent output');
-    result.textContent = JSON.stringify({ status: 'PASS', case: kind, peak, rms: Math.sqrt(energy / (buffer.length * 2)), sounds: result.dataset.sounds || null });
+    return { peak, rms: Math.sqrt(energy / (buffer.length * 2)), speechCalls };
+  };
+  try {
+    const audio = await import('../modules/audio.js');
+    const { state } = await import('../modules/state.js');
+    if (kind === 'catalogue') {
+      const { drumTypes, ensureInstrumentLoaded } = await import('../modules/drumTypes.js');
+      const sf = await import('../modules/sf2Loader.js');
+      for (const name of Object.keys(sf.loadedSoundFonts)) {
+        if (!(await sf.loadSoundFont(name, `../media/${name}.sf2`))) throw Error(`sample bank missing: ${name}`);
+      }
+      const checks = [],
+        failures = [];
+      for (const [name, spec] of Object.entries(drumTypes)) {
+        const inst = await ensureInstrumentLoaded(name);
+        if (!inst) throw Error(`missing ${name}`);
+        for (const [sound, fn] of Object.entries(inst.sounds)) {
+          for (const drum of spec.drums) {
+            for (const sustain of [-100, 0, 100]) {
+              resetContext();
+              state.currentNodes = [];
+              state.transientSustain = sustain;
+              const check = { instrument: name, sound, drum: drum.id, sustain };
+              try {
+                fn(drum, 0.6);
+                Object.assign(check, await render());
+                check.status = check.peak > 0.00001 ? 'PASS' : check.speechCalls ? 'EXTERNAL_SPEECH' : 'FAIL';
+                if (check.status === 'FAIL') throw Error('silent output');
+              } catch (error) {
+                check.status = 'FAIL';
+                check.error = error.message;
+                failures.push(check);
+              }
+              checks.push(check);
+            }
+          }
+        }
+      }
+      result.textContent = JSON.stringify({
+        status: failures.length ? 'FAIL' : 'PASS',
+        case: kind,
+        instruments: Object.keys(drumTypes).length,
+        checks: checks.length,
+        failures,
+        externalSpeech: checks.filter((c) => c.status === 'EXTERNAL_SPEECH').length,
+        overFullScale: checks.filter((c) => c.peak > 1).length,
+        results: checks,
+        limitation:
+          'Three-second offline PCM; delayed callbacks scheduled on a virtual timeline. No perceptual timbre certification. Speech is checked separately and is not rendered.'
+      });
+    } else {
+      if (kind === 'bell') audio.playBell(500, 0.7, 0.7);
+      else if (kind === 'membrane') audio.playMembrane(150, 0.4, 1, false, 0.7);
+      else if (kind === 'tabla') audio.playTablaSlideUp(65, 125, 0.75, 0.7);
+      else if (kind.startsWith('effects')) {
+        audio.initEffectsChain();
+        state.effectsEnabled = true;
+        if (kind === 'effects-delay') {
+          audio.delayNode.delayTime.value = 0.15;
+          audio.delayGainNode.gain.value = 0.4;
+          audio.delayWetGainNode.gain.value = 0.4;
+        } else if (kind === 'effects-reverb') {
+          audio.reverbGainNode.gain.value = 0.5;
+        } else if (kind === 'effects-distortion') {
+          audio.updateDistortion(30);
+        } else if (kind === 'effects-resonator') {
+          state.resonatorType = 'metal';
+          audio.updateResonator();
+        } else if (kind === 'effects-formant') {
+          state.formantVowel = 'A';
+          state.formantMix = 50;
+          audio.updateFormant();
+        } else if (kind === 'effects-bitcrusher') {
+          state.bitCrusherBits = 4;
+          state.bitCrusherMix = 50;
+          audio.updateBitCrusher();
+        } else if (kind === 'effects-ringmod') {
+          state.ringModDepth = 50;
+          audio.updateRingMod();
+        } else if (kind === 'effects-pan') {
+          state.panDepth = 50;
+          audio.updateSpatialPan();
+        } else if (kind === 'effects-filter') {
+          state.filterType = 'lowpass';
+          audio.updateFilter();
+        } else if (kind !== 'effects' && kind !== 'effects-freeze') throw Error('unknown effect check');
+        audio.playMembrane(150, 0.4, 1, false, 0.7);
+        if (kind === 'effects-freeze') {
+          time = 0.15;
+          state.spectralFreeze = true;
+          audio.updateSpectralFreeze();
+        }
+      } else if (kind === 'sample') {
+        const sf = await import('../modules/sf2Loader.js');
+        await sf.loadSoundFont('timpani', '../media/timpani.sf2');
+        if (sf.playSoundFontSample('timpani', 'timpani-f', 1, 0.8)) throw Error('silent sample was accepted');
+        await sf.loadSoundFont('conga', '../media/conga.sf2');
+        state.transientSustain = -100;
+        if (!sf.playSoundFontSample('conga', 'conga tone', 1, 0.8)) throw Error('sample missing');
+      } else throw Error('unknown check');
+      const pcm = await render();
+      if (pcm.peak < 0.00001) throw Error('silent output');
+      result.textContent = JSON.stringify({ status: 'PASS', case: kind, ...pcm });
+    }
   } catch (error) {
     result.textContent = JSON.stringify({ status: 'FAIL', case: kind, error: error.message });
+  } finally {
+    window.setTimeout = realSetTimeout;
   }
 </script>

@@ -117,8 +117,10 @@ function parseSoundFont(arrayBuffer) {
     const rawData = smplWords.subarray(start, end);
     const audioBuffer = audioCtx.createBuffer(1, lengthInSamples, sampleRate);
     const channelData = audioBuffer.getChannelData(0);
+    let peak = 0;
     for (let j = 0; j < lengthInSamples; j++) {
       channelData[j] = rawData[j] / 32768.0; // convert 16-bit PCM to float
+      peak = Math.max(peak, Math.abs(channelData[j]));
     }
 
     samples.push({
@@ -129,7 +131,8 @@ function parseSoundFont(arrayBuffer) {
       audioBuffer,
       sampleIndex: i,
       sampleLink,
-      sampleType
+      sampleType,
+      peak
     });
   }
 
@@ -139,9 +142,15 @@ function parseSoundFont(arrayBuffer) {
   for (const sample of samples) {
     if (sample.sampleType !== 2 && sample.sampleType !== 4) continue;
     const partner = samples.find((other) => other.sampleIndex === sample.sampleLink);
-    if (!partner || partner.sampleRate !== sample.sampleRate || partner.sampleLink !== sample.sampleIndex ||
-        partner.sampleType !== (sample.sampleType === 2 ? 4 : 2)) {
-      throw new Error(`Invalid stereo sample link for ${sample.name}`);
+    if (
+      !partner ||
+      partner.sampleRate !== sample.sampleRate ||
+      partner.sampleLink !== sample.sampleIndex ||
+      partner.sampleType !== (sample.sampleType === 2 ? 4 : 2) ||
+      partner.audioBuffer.getChannelData(0).length !== sample.audioBuffer.getChannelData(0).length
+    ) {
+      console.warn(`[SF2Loader] Using mono channel for invalid stereo link: ${sample.name}`);
+      continue;
     }
     const key = Math.min(sample.sampleIndex, partner.sampleIndex);
     if (!stereoBuffers.has(key)) {
@@ -155,7 +164,10 @@ function parseSoundFont(arrayBuffer) {
     }
   }
   for (const sample of samples) {
-    if (sample.sampleType === 2 || sample.sampleType === 4) sample.audioBuffer = stereoBuffers.get(Math.min(sample.sampleIndex, sample.sampleLink));
+    if (sample.sampleType === 2 || sample.sampleType === 4) {
+      const buffer = stereoBuffers.get(Math.min(sample.sampleIndex, sample.sampleLink));
+      if (buffer) sample.audioBuffer = buffer;
+    }
   }
   return samples;
 }
@@ -248,6 +260,8 @@ export function playSoundFontSample(
   }
 
   const sample = sf[matchedKey];
+  // Placeholder recordings must not suppress the instrument's audible fallback.
+  if (sample.peak <= 0.00001) return false;
   const audioBuffer = sample.audioBuffer;
 
   // Create standard source node
@@ -320,7 +334,10 @@ export function playSoundFontSample(
   gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
   const safeAttack = Math.min(attackTime, decay * 0.1);
   gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity * punch, audioCtx.currentTime + safeAttack);
-  gainNode.gain.exponentialRampToValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.min(safeAttack + 0.035, decay * 0.5));
+  gainNode.gain.exponentialRampToValueAtTime(
+    humanizedVelocity,
+    audioCtx.currentTime + Math.min(safeAttack + 0.035, decay * 0.5)
+  );
   gainNode.gain.setValueAtTime(humanizedVelocity, audioCtx.currentTime + Math.max(decay * 0.5, decay - 0.08));
   gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
 
