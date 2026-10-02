@@ -54,6 +54,16 @@ instrument models. It intentionally contains no “tabla preset”, “conga pre
 etc. until those parameters are calibrated against recordings or acoustic
 measurements.
 
+The kernel bounds untrusted numeric controls before they reach Web Audio
+automation or buffer allocation. Invalid numeric values fall back to a
+documented neutral/default value; unusually large durations, gains, filter
+frequencies, Q values, and particle densities are capped. These limits protect
+runtime stability and do not make a model acoustically accurate. Instrument
+modules that use the kernel still need calibrated modal data and explicit
+articulation/technique mappings. `playMembrane`, `playTablaSlideUp`, and
+`playBell` in `modules/audio.js` are separate legacy synthesis paths and are
+not validated by the kernel's parameter safeguards.
+
 ## 4. Timing accuracy
 
 Do not trigger musical events from wall-clock callback arrival time. Use a
@@ -81,7 +91,7 @@ For patterns, tests should validate metadata and event topology (cycle length,
 strokes, accent locations, deterministic variation). “It sounds plausible” is
 not a regression test.
 
-Run:
+The existing manual audit utilities can be run with:
 
 ```sh
 node scripts/audit-accuracy.mjs .

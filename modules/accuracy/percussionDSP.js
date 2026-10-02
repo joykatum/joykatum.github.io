@@ -6,12 +6,17 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function finiteNumber(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
 function centsToRatio(cents) {
   return 2 ** (cents / 1200);
 }
 
 function safeTimeConstant(seconds) {
-  return Math.max(0.001, Number(seconds) || 0.001);
+  return clamp(finiteNumber(seconds, 0.001), 0.001, 60);
 }
 
 function createNoiseBuffer(context, seconds = 0.1) {
@@ -38,7 +43,7 @@ function createNoiseBuffer(context, seconds = 0.1) {
 
 function softClipCurve(amount = 0.7, size = 2048) {
   const curve = new Float32Array(size);
-  const drive = 1 + clamp(amount, 0, 1) * 8;
+  const drive = 1 + clamp(finiteNumber(amount, 0.7), 0, 1) * 8;
   const norm = Math.tanh(drive);
   for (let i = 0; i < size; i += 1) {
     const x = (i / (size - 1)) * 2 - 1;
@@ -59,20 +64,20 @@ export function createPercussionBus(context, destination = context.destination, 
   const limiter = context.createDynamicsCompressor();
   const output = context.createGain();
 
-  input.gain.value = options.inputGain ?? 0.7;
+  input.gain.value = clamp(finiteNumber(options.inputGain, 0.7), 0, 4);
   dcBlock.type = 'highpass';
-  dcBlock.frequency.value = options.dcCutoffHz ?? 20;
+  dcBlock.frequency.value = clamp(finiteNumber(options.dcCutoffHz, 20), 1, context.sampleRate * 0.45);
   dcBlock.Q.value = 0.707;
 
   saturation.curve = softClipCurve(options.saturation ?? 0.14);
   saturation.oversample = '4x';
 
-  limiter.threshold.value = options.thresholdDb ?? -4;
-  limiter.knee.value = options.kneeDb ?? 3;
-  limiter.ratio.value = options.ratio ?? 12;
-  limiter.attack.value = options.attackSeconds ?? 0.002;
-  limiter.release.value = options.releaseSeconds ?? 0.08;
-  output.gain.value = options.outputGain ?? 0.92;
+  limiter.threshold.value = clamp(finiteNumber(options.thresholdDb, -4), -100, 0);
+  limiter.knee.value = clamp(finiteNumber(options.kneeDb, 3), 0, 40);
+  limiter.ratio.value = clamp(finiteNumber(options.ratio, 12), 1, 20);
+  limiter.attack.value = clamp(finiteNumber(options.attackSeconds, 0.002), 0, 1);
+  limiter.release.value = clamp(finiteNumber(options.releaseSeconds, 0.08), 0, 1);
+  output.gain.value = clamp(finiteNumber(options.outputGain, 0.92), 0, 4);
 
   input.connect(dcBlock);
   dcBlock.connect(saturation);
@@ -132,14 +137,14 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
     throw new TypeError('model.modes must be a non-empty array');
   }
 
-  const when = Math.max(context.currentTime, Number(event.when ?? context.currentTime));
+  const when = Math.max(context.currentTime, finiteNumber(event.when, context.currentTime));
   const technique = model.techniques?.[event.stroke] ?? {};
-  const velocity = clamp(Number(event.velocity ?? 0.75), 0, 1);
-  const baseHz = Math.max(20, Number(event.baseHz ?? technique.baseHz ?? model.baseHz ?? 180));
-  const strikePosition = clamp(Number(event.strikePosition ?? technique.strikePosition ?? model.strikePosition ?? 0.35), 0, 1);
-  const hardness = clamp(Number(event.hardness ?? technique.hardness ?? model.hardness ?? 0.55), 0, 1);
-  const damping = clamp(Number(event.damping ?? technique.damping ?? 0), 0, 0.98);
-  const decayScale = Math.max(0.05, Number(event.decayScale ?? technique.decayScale ?? 1));
+  const velocity = clamp(finiteNumber(event.velocity, 0.75), 0, 1);
+  const baseHz = clamp(finiteNumber(event.baseHz ?? technique.baseHz ?? model.baseHz, 180), 20, context.sampleRate * 0.45);
+  const strikePosition = clamp(finiteNumber(event.strikePosition ?? technique.strikePosition ?? model.strikePosition, 0.35), 0, 1);
+  const hardness = clamp(finiteNumber(event.hardness ?? technique.hardness ?? model.hardness, 0.55), 0, 1);
+  const damping = clamp(finiteNumber(event.damping ?? technique.damping, 0), 0, 0.98);
+  const decayScale = clamp(finiteNumber(event.decayScale ?? technique.decayScale, 1), 0.05, 20);
   const random = seededRandom(event.seed ?? `${model.id ?? 'modal'}:${event.stroke ?? 'default'}:${when.toFixed(6)}`);
   const group = event.chokeGroup ?? technique.chokeGroup ?? model.chokeGroup ?? null;
   const chokeOthers = event.chokeOthers ?? technique.chokeOthers ?? false;
@@ -153,25 +158,25 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
   voiceGain.connect(destination?.input ?? destination);
 
   const excitation = { ...(model.excitation ?? {}), ...(technique.excitation ?? {}) };
-  const excitationDuration = Math.max(0.004, excitation.duration ?? 0.035);
+  const excitationDuration = clamp(finiteNumber(excitation.duration, 0.035), 0.004, 2);
   const noise = context.createBufferSource();
   noise.buffer = createNoiseBuffer(context, Math.max(0.06, excitationDuration * 2));
   noise.playbackRate.setValueAtTime(0.985 + random() * 0.03, when);
 
   const excHP = context.createBiquadFilter();
   excHP.type = 'highpass';
-  excHP.frequency.setValueAtTime(excitation.highpassHz ?? 45, when);
+  excHP.frequency.setValueAtTime(clamp(finiteNumber(excitation.highpassHz, 45), 1, context.sampleRate * 0.45), when);
   excHP.Q.value = 0.707;
 
   const excLP = context.createBiquadFilter();
   excLP.type = 'lowpass';
   // Harder strikes inject proportionally more high-frequency energy.
-  const baseCutoff = excitation.lowpassHz ?? 5200;
+  const baseCutoff = finiteNumber(excitation.lowpassHz, 5200);
   excLP.frequency.setValueAtTime(clamp(baseCutoff * (0.55 + hardness * 0.9), 500, 18000), when);
   excLP.Q.value = 0.55;
 
   const excGain = context.createGain();
-  const excitationLevel = (0.18 + 0.82 * velocity) * (excitation.gain ?? 1);
+  const excitationLevel = (0.18 + 0.82 * velocity) * clamp(finiteNumber(excitation.gain, 1), 0, 8);
   excGain.gain.setValueAtTime(Math.max(1e-5, excitationLevel), when);
   excGain.gain.exponentialRampToValueAtTime(1e-5, when + excitationDuration);
 
@@ -187,22 +192,22 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
     const resonator = context.createBiquadFilter();
     resonator.type = 'bandpass';
 
-    const randomCents = (mode.randomCents ?? model.randomCents ?? 2) * bipolar(random);
+    const randomCents = clamp(finiteNumber(mode.randomCents ?? model.randomCents, 2), 0, 1200) * bipolar(random);
     const modeHz = clamp(
-      baseHz * Number(mode.ratio ?? 1) * centsToRatio(randomCents),
+      baseHz * clamp(finiteNumber(mode.ratio, 1), 0.01, 100) * centsToRatio(randomCents),
       20,
       context.sampleRate * 0.45,
     );
     resonator.frequency.setValueAtTime(modeHz, when);
-    resonator.Q.setValueAtTime(Math.max(0.5, Number(mode.q ?? 18)), when);
+    resonator.Q.setValueAtTime(clamp(finiteNumber(mode.q, 18), 0.5, 1000), when);
 
     const modeGain = context.createGain();
-    const edgeSensitivity = Number(mode.edgeSensitivity ?? 0);
+    const edgeSensitivity = clamp(finiteNumber(mode.edgeSensitivity, 0), -10, 10);
     const positionWeight = clamp(1 + edgeSensitivity * (strikePosition * 2 - 1), 0.03, 2.5);
     const velocityBrightness = 0.72 + velocity * (0.28 + i * 0.015);
-    const techniqueModeGain = Array.isArray(technique.modeGains) ? Number(technique.modeGains[i] ?? 1) : 1;
-    const level = Math.max(1e-5, Number(mode.gain ?? 1) * techniqueModeGain * positionWeight * velocityBrightness);
-    const decay = Math.max(0.015, Number(mode.decay ?? 0.45) * decayScale * (1 - damping * 0.92));
+    const techniqueModeGain = Array.isArray(technique.modeGains) ? finiteNumber(technique.modeGains[i], 1) : 1;
+    const level = clamp(finiteNumber(mode.gain, 1) * finiteNumber(techniqueModeGain, 1) * positionWeight * velocityBrightness, 1e-5, 8);
+    const decay = clamp(finiteNumber(mode.decay, 0.45) * decayScale * (1 - damping * 0.92), 0.015, 30);
     longestDecay = Math.max(longestDecay, decay);
 
     modeGain.gain.setValueAtTime(level, when);
@@ -220,9 +225,10 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
     const click = context.createOscillator();
     const clickGain = context.createGain();
     click.type = 'sine';
-    click.frequency.setValueAtTime(excitation.clickHz ?? 1600, when);
-    click.frequency.exponentialRampToValueAtTime(Math.max(80, (excitation.clickHz ?? 1600) * 0.35), when + 0.008);
-    clickGain.gain.setValueAtTime((excitation.clickGain ?? 0.08) * velocity, when);
+    const clickHz = clamp(finiteNumber(excitation.clickHz, 1600), 80, context.sampleRate * 0.45);
+    click.frequency.setValueAtTime(clickHz, when);
+    click.frequency.exponentialRampToValueAtTime(Math.max(80, clickHz * 0.35), when + 0.008);
+    clickGain.gain.setValueAtTime(clamp(finiteNumber(excitation.clickGain, 0.08), 0, 4) * velocity, when);
     clickGain.gain.exponentialRampToValueAtTime(1e-5, when + 0.012);
     click.connect(clickGain);
     clickGain.connect(voiceGain);
@@ -242,15 +248,15 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
     ended,
     choke(at = context.currentTime, release = 0.012) {
       if (stopped) return;
-      const t = Math.max(context.currentTime, Number(at));
-      const r = Math.max(0.002, Number(release));
+      const t = Math.max(context.currentTime, finiteNumber(at, context.currentTime));
+      const r = clamp(finiteNumber(release, 0.012), 0.002, 10);
       holdAudioParam(voiceGain.gain, t);
       voiceGain.gain.exponentialRampToValueAtTime(1e-5, t + r);
     },
     stop(at = context.currentTime) {
       if (stopped) return;
       stopped = true;
-      const t = Math.max(context.currentTime, Number(at));
+      const t = Math.max(context.currentTime, finiteNumber(at, context.currentTime));
       holdAudioParam(voiceGain.gain, t);
       voiceGain.gain.exponentialRampToValueAtTime(1e-5, t + 0.005);
     },
@@ -284,11 +290,11 @@ export function triggerModalPercussion(context, destination, model, event = {}, 
  * This is intentionally a family model, not a claim about any named instrument.
  */
 export function triggerParticlePercussion(context, destination, model, event = {}) {
-  const when = Math.max(context.currentTime, Number(event.when ?? context.currentTime));
-  const velocity = clamp(Number(event.velocity ?? 0.75), 0, 1);
+  const when = Math.max(context.currentTime, finiteNumber(event.when, context.currentTime));
+  const velocity = clamp(finiteNumber(event.velocity, 0.75), 0, 1);
   const particle = model?.particle ?? {};
-  const duration = Math.max(0.03, Number(event.duration ?? particle.duration ?? 0.28));
-  const densityHz = Math.max(1, Number(event.densityHz ?? particle.densityHz ?? 85) * (0.7 + velocity * 0.65));
+  const duration = clamp(finiteNumber(event.duration ?? particle.duration, 0.28), 0.03, 10);
+  const densityHz = clamp(finiteNumber(event.densityHz ?? particle.densityHz, 85) * (0.7 + velocity * 0.65), 1, 4000);
   const random = seededRandom(event.seed ?? `${model?.id ?? 'particle'}:${when.toFixed(6)}`);
   const frameCount = Math.ceil(duration * context.sampleRate);
   const buffer = context.createBuffer(1, frameCount, context.sampleRate);
@@ -303,7 +309,8 @@ export function triggerParticlePercussion(context, destination, model, event = {
     frame += Math.max(1, Math.round(intervalSeconds * context.sampleRate));
     if (frame >= frameCount) break;
     const progress = frame / frameCount;
-    const envelope = Math.sin(Math.PI * clamp(progress, 0, 1)) ** (particle.envelopePower ?? 0.7);
+    const envelopePower = clamp(finiteNumber(particle.envelopePower, 0.7), 0.1, 8);
+    const envelope = Math.sin(Math.PI * clamp(progress, 0, 1)) ** envelopePower;
     const amplitude = velocity * envelope * (0.35 + random() * 0.65);
     data[frame] += amplitude * bipolar(random);
     if (frame + 1 < frameCount) data[frame + 1] += amplitude * 0.45 * bipolar(random);
@@ -316,13 +323,13 @@ export function triggerParticlePercussion(context, destination, model, event = {
   const lowpass = context.createBiquadFilter();
   const gain = context.createGain();
   highpass.type = 'highpass';
-  highpass.frequency.setValueAtTime(particle.highpassHz ?? 650, when);
+  highpass.frequency.setValueAtTime(clamp(finiteNumber(particle.highpassHz, 650), 1, context.sampleRate * 0.45), when);
   highpass.Q.value = 0.7;
   lowpass.type = 'lowpass';
-  const cutoff = clamp((particle.lowpassHz ?? 9000) * (0.68 + velocity * 0.5), 1200, context.sampleRate * 0.45);
+  const cutoff = clamp(finiteNumber(particle.lowpassHz, 9000) * (0.68 + velocity * 0.5), 1200, context.sampleRate * 0.45);
   lowpass.frequency.setValueAtTime(cutoff, when);
-  lowpass.Q.value = particle.lowpassQ ?? 0.55;
-  gain.gain.setValueAtTime(Math.max(1e-5, Number(particle.gain ?? 0.55)), when);
+  lowpass.Q.value = clamp(finiteNumber(particle.lowpassQ, 0.55), 0.5, 1000);
+  gain.gain.setValueAtTime(clamp(finiteNumber(particle.gain, 0.55), 1e-5, 8), when);
 
   source.connect(highpass);
   highpass.connect(lowpass);
@@ -334,11 +341,11 @@ export function triggerParticlePercussion(context, destination, model, event = {
       const filter = context.createBiquadFilter();
       const resonantGain = context.createGain();
       filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(clamp(Number(resonance.frequencyHz), 20, context.sampleRate * 0.45), when);
-      filter.Q.setValueAtTime(Math.max(0.5, Number(resonance.q ?? 8)), when);
-      const decay = Math.max(0.02, Number(resonance.decay ?? 0.12));
+      filter.frequency.setValueAtTime(clamp(finiteNumber(resonance.frequencyHz, 1000), 20, context.sampleRate * 0.45), when);
+      filter.Q.setValueAtTime(clamp(finiteNumber(resonance.q, 8), 0.5, 1000), when);
+      const decay = clamp(finiteNumber(resonance.decay, 0.12), 0.02, 30);
       tail = Math.max(tail, duration + decay);
-      resonantGain.gain.setValueAtTime(Math.max(1e-5, Number(resonance.gain ?? 0.25)), when);
+      resonantGain.gain.setValueAtTime(clamp(finiteNumber(resonance.gain, 0.25), 1e-5, 8), when);
       resonantGain.gain.setTargetAtTime(1e-5, when + duration * 0.65, safeTimeConstant(decay / 6.9));
       gain.connect(filter);
       filter.connect(resonantGain);

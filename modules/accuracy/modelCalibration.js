@@ -19,9 +19,10 @@ export function modelFromMeasuredModes({ id, frequenciesHz, decaySeconds, gains,
     throw new TypeError('frequenciesHz must contain positive finite values');
   }
 
-  const fundamental = Number(baseHz) > 0 ? Number(baseHz) : Math.min(...freqs);
+  const requestedBaseHz = Number(baseHz);
+  const fundamental = Number.isFinite(requestedBaseHz) && requestedBaseHz > 0 ? requestedBaseHz : Math.min(...freqs);
   const decays = Array.isArray(decaySeconds) ? decaySeconds.map(Number) : [];
-  const validDecays = decays.filter(Number.isFinite);
+  const validDecays = decays.filter((value) => Number.isFinite(value) && value > 0);
   const levels = Array.isArray(gains) ? gains.map(Number) : [];
 
   return {
@@ -34,8 +35,8 @@ export function modelFromMeasuredModes({ id, frequenciesHz, decaySeconds, gains,
     },
     modes: freqs.map((frequency, index) => ({
       ratio: frequency / fundamental,
-      gain: Number.isFinite(levels[index]) ? levels[index] : 1 / (1 + index * 0.35),
-      decay: Number.isFinite(decays[index]) ? Math.max(0.015, decays[index]) : 0.4 / (1 + index * 0.08),
+      gain: Number.isFinite(levels[index]) ? Math.max(0, levels[index]) : 1 / (1 + index * 0.35),
+      decay: Number.isFinite(decays[index]) && decays[index] > 0 ? Math.max(0.015, decays[index]) : 0.4 / (1 + index * 0.08),
       q: 14 + index * 1.5,
     })),
   };
@@ -43,13 +44,21 @@ export function modelFromMeasuredModes({ id, frequenciesHz, decaySeconds, gains,
 
 export function compareModeModel(model, measuredFrequenciesHz) {
   const baseHz = Number(model?.baseHz);
-  if (!(baseHz > 0) || !Array.isArray(model?.modes)) {
+  if (!Number.isFinite(baseHz) || !(baseHz > 0) || !Array.isArray(model?.modes)) {
     throw new TypeError('model must include baseHz and modes');
   }
+  if (!Array.isArray(measuredFrequenciesHz)) throw new TypeError('measuredFrequenciesHz must be an array');
   const predicted = model.modes.map((mode) => baseHz * Number(mode.ratio));
   const measured = measuredFrequenciesHz.map(Number);
   const count = Math.min(predicted.length, measured.length);
   if (count === 0) return { count: 0, meanAbsoluteCents: null, errorsCents: [] };
+
+  if (predicted.some((frequency) => !Number.isFinite(frequency) || frequency <= 0)) {
+    throw new TypeError('model modes must contain positive finite ratios');
+  }
+  if (measured.some((frequency) => !Number.isFinite(frequency) || frequency <= 0)) {
+    throw new TypeError('measuredFrequenciesHz must contain positive finite values');
+  }
 
   const errorsCents = [];
   for (let i = 0; i < count; i += 1) {
